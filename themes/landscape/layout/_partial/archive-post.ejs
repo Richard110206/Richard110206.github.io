@@ -1,0 +1,11 @@
+<article class="archive-article archive-type-<%= post.layout %>">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <% if (post.thumbnail) { %>
+        <img src="<%= post.thumbnail %>" alt="Thumbnail" style="width: 32px; height: auto; vertical-align: middle; margin-right: 8px;">
+      <% } %>
+      <%- partial('post/date', {class_name: 'archive-article-date', date_format: 'MMM D'}) %>
+      <%- partial('post/title', {class_name: 'archive-article-title'}) %>
+    </header>
+  </div>
+</article>
