@@ -23,6 +23,27 @@
   
   
   <entry>
+    <title>Hexo,Unleash Your Blogging Magic</title>
+    <link href="/2025/07/12/Hexo-Hacks-Unleash-Your-Blogging-Magic/"/>
+    <url>/2025/07/12/Hexo-Hacks-Unleash-Your-Blogging-Magic/</url>
+    
+    <content type="html"><![CDATA[<p><strong>本文简单介绍了Hexo搭建个人博客的丰富玩法和不同平台撰写博客上的适配差异。</strong></p> <span id="more"></span><h2 id="一、玩转Hexo"><a href="#一、玩转Hexo" class="headerlink" title="一、玩转Hexo"></a>一、玩转<code>Hexo</code></h2><p>不同主题的Hexo主题博客，大致特点如下：</p><table><thead><tr><th>主题</th><th>特点</th></tr></thead><tbody><tr><td><strong>Fluid</strong></td><td>加载速度快，有简单的动态效果，移动端适配佳</td></tr><tr><td><strong>Butterfly</strong></td><td>功能全面，社区活跃，高度可定制</td></tr><tr><td><strong>Landscape</strong></td><td>默认主题，轻量级，简洁易上手（有较多限制）</td></tr></tbody></table><p>博主尝试了这几种后对<code>fluid</code>追一见钟情，遂使用此主题。</p><h3 id="（一）更换主题"><a href="#（一）更换主题" class="headerlink" title="（一）更换主题"></a>（一）更换主题</h3><p><strong>1. 安装 <code>Fluid</code> 主题</strong></p><p>在 Hexo 博客根目录（<code>/HexoData</code>）运行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install --save hexo-theme-fluid<br></code></pre></td></tr></table></figure><p><strong>2. 修改 <code>Hexo</code> 主配置</strong></p><p>打开<code>_config.yml</code>（位于博客根目录），找到<code>theme</code>字段，修改为：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">theme:</span> <span class="hljs-string">fluid</span><br></code></pre></td></tr></table></figure><p>如需要可以将 <code>language</code> 设置为中文：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">language:</span> <span class="hljs-string">zh-CN</span><br></code></pre></td></tr></table></figure><p><strong>3. 创建 Fluid 的配置文件</strong></p><p><code>Fluid</code>主题的配置需要额外文件：<br>在博客根目录下创建<code>_config.fluid.yml</code>文件：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> node_modules/hexo-theme-fluid/_config.yml _config.fluid.yml<br></code></pre></td></tr></table></figure><p>编辑<code>_config.fluid.yml</code>来自定义主题（如菜单、颜色、字体等）。</p><p><strong>4. 迁移 Landscape 的内容（可选）</strong></p><p>自定义样式&#x2F;脚本：将 <code>Landscape</code> 的 <code>source/css</code> 或 <code>source/js</code> 文件复制到 <code>Fluid</code> 的 <code>source</code> 目录。<br>文章&#x2F;页面：<code>_posts</code> 和<code> _pages</code> 内容无需迁移，<code>Hexo</code> 会自动读取。</p><p><strong>5. 清理并重新生成</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s<br></code></pre></td></tr></table></figure><p>访问 <a href="http://localhost:4000/">http://localhost:4000</a> 查看效果。</p><h3 id="（二）添加评论系统"><a href="#（二）添加评论系统" class="headerlink" title="（二）添加评论系统"></a>（二）添加评论系统</h3><p><a href="https://blog.csdn.net/Neter_Leon/article/details/107064603?ops_request_misc=&request_id=&biz_id=102&utm_term=hexo%E7%9A%84fulid%E4%B8%8D%E5%90%8C%E7%8E%A9%E6%B3%95&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-107064603.142%5Ev102%5Epc_search_result_base2&spm=1018.2226.3001.4187">Hexo快速构建个人小站-Fulid主题下添加Valine评论系统(三)</a><br>注意<code>comments</code>在(<code>\themes\你的主题名\_config.yml</code>)文件中，Hexo 主配置文件(<code>_config.yml</code>)通常用于全局配置（如博客标题、作者等），添加评论系统的配置不在这个文件中。将<code>appid</code>和<code>appkey</code>填入，同时记得根据选择的插件修改博客评论系统的<code>type</code>！</p><h3 id="（三）添加背景音乐"><a href="#（三）添加背景音乐" class="headerlink" title="（三）添加背景音乐"></a>（三）添加背景音乐</h3><p><a href="https://blog.csdn.net/weixin_43471926/article/details/109798928?ops_request_misc=%257B%2522request%255Fid%2522%253A%25224db07d60e8ad014b04fcc3b6dc2a5cdf%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=4db07d60e8ad014b04fcc3b6dc2a5cdf&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-109798928-null-null.142%5Ev102%5Epc_search_result_base2&utm_term=hexo%20fluid%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E6%92%AD%E6%94%BE%E9%9F%B3%E4%B9%90&spm=1018.2226.3001.4187">Hexo-Fluid主题添加音乐页面</a></p><h3 id="（四）给每篇博客添加封面-背景"><a href="#（四）给每篇博客添加封面-背景" class="headerlink" title="（四）给每篇博客添加封面&#x2F;背景"></a>（四）给每篇博客添加封面&#x2F;背景</h3><p>在<code>source</code>文件夹下新建<code>medias</code>文件夹用于存放图片，在每篇博客文章<code>front-matter</code>的区域添加：<br><strong>背景图片：</strong></p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">banner<span class="hljs-emphasis">_img: 图片路径（/medias/图片文件名）</span><br></code></pre></td></tr></table></figure><p><strong>封面图片预览：</strong></p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">index<span class="hljs-emphasis">_img: 图片路径（/medias/图片文件名）</span><br></code></pre></td></tr></table></figure><h2 id="二、CSDN与Hexo撰写差异"><a href="#二、CSDN与Hexo撰写差异" class="headerlink" title="二、CSDN与Hexo撰写差异"></a>二、CSDN与Hexo撰写差异</h2><p><strong>1. 插入图片</strong><br>插入图片的语法如下：<code>![插入图片的注释](插入图片的连接或本地路径)</code><br>&emsp;&emsp;CSDN 不支持本地图片链接：如果你在 CSDN 写博客时插入本地图片路径，其他用户无法访问你的本地文件。<br>&emsp;&emsp;使用Hexo进行博客撰写时，图片可以放在<code>source/images/ 文件夹（可以自行创建）</code>使用相对路径，避免文件迁移后路径找不到而导致问题，建议一篇博客单独创建一个文件夹进行图片的存储便于管理。<br>&emsp;&emsp;CSDN中的图片注释无法显示，必须通过在图片下添加<code>&lt;center&gt;添加图片注释&lt;/font&lt;/center&gt;</code>的方式进行注释。</p><blockquote><center>添加图片注释</font</center></blockquote><p>&emsp;&emsp;网上其他博主也有推荐使用<a href="https://portal.qiniu.com/signin?redirect=/home">七牛云存储</a>的，将图片从本地上传到七牛云存储仓库。得到一个外链地址，将外链地址作为图片的URL地址写进文章。</p><p><strong>2.数学公式</strong><br>CSDN中默认<code>latex</code>的格式是可以进行渲染的，而在<code>Hexo</code>中需要在全局配置文件中进行修改：</p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-section"># 数学公式，开启之前需要更换 Markdown 渲染器，否则复杂公式会有兼容问题，具体请见：https://hexo.fluid-dev.com/docs/guide/##latex-数学公式</span><br><span class="hljs-section"># Mathematical formula. If enable, you need to change the Markdown renderer, see: https://hexo.fluid-dev.com/docs/en/guide/#math</span><br>math:<br>  # 开启后文章默认可用，自定义页面如需使用，需在 Front-matter 中指定 <span class="hljs-code">`math: true`</span><br>  # If you want to use math on the custom page, you need to set <span class="hljs-code">`math: true`</span> in Front-matter<br>  enable: true<br><br>  # 开启后，只有在文章 Front-matter 里指定 <span class="hljs-code">`math: true`</span> 才会在文章页启动公式转换，以便在页面不包含公式时提高加载速度<br>  # If true, only set <span class="hljs-code">`math: true`</span> in Front-matter will enable math, to load faster when the page does not contain math<br>  specific: false<br></code></pre></td></tr></table></figure><p>封面来源：<a href="https://www.youtube.com/watch?v=XiMVwkxu3hU">如何使用Hexo+Github Pages 搭建个人博客，手把手最新教程</a></p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Hexo</tag>
+      
+      <tag>Blogging</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>From OpenCV to YOLOv5</title>
     <link href="/2025/07/11/From-OpenCV-to-YOLOv5-Object-Detection-from-Theory-to-Practice/"/>
     <url>/2025/07/11/From-OpenCV-to-YOLOv5-Object-Detection-from-Theory-to-Practice/</url>
@@ -56,11 +77,11 @@
     
     <tags>
       
-      <tag>queue</tag>
-      
       <tag>hashtable</tag>
       
       <tag>sort</tag>
+      
+      <tag>queue</tag>
       
     </tags>
     
@@ -81,9 +102,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>huffman treem</tag>
-      
       <tag>queue</tag>
+      
+      <tag>huffman treem</tag>
       
       <tag>Dijkstra</tag>
       
@@ -106,9 +127,9 @@
     
     <tags>
       
-      <tag>stack</tag>
-      
       <tag>binary tree</tag>
+      
+      <tag>stack</tag>
       
       <tag>algorithm</tag>
       
@@ -129,9 +150,9 @@
     
     <tags>
       
-      <tag>binary tree</tag>
-      
       <tag>DFS</tag>
+      
+      <tag>binary tree</tag>
       
       <tag>search，graph，sort</tag>
       
@@ -165,7 +186,7 @@
     <link href="/2025/06/04/About%20Me%20and%20My%20Blog/"/>
     <url>/2025/06/04/About%20Me%20and%20My%20Blog/</url>
     
-    <content type="html"><![CDATA[<p><strong>简单的自我介绍和部署自己博客的动机<code>motivation</code>!!!</strong></p> <span id="more"></span><h2 id="Before-The-Blog"><a href="#Before-The-Blog" class="headerlink" title="Before The Blog"></a>Before The Blog</h2><p>&emsp;&emsp;从高中到大学，我一直保持着系统化记笔记的学习习惯。然而，计算机专业的独特性让我一度感到不适应——知识的海洋如此浩瀚，技术栈的广度令人惊叹，传统的应试学习方法在这里显得捉襟见肘。</p><p>&emsp;&emsp;机缘巧合之下我在牛客等招聘网站上看到优秀求职者的技术博客链接，又注意到同学在朋友圈分享的博客文章，相互交换博客链接，相互学习。这些见闻就像一粒种子，在我心中悄然生根发芽。</p><p>&emsp;&emsp;但向来语文表达能力欠佳的我，对于博客撰写还是稍有抵触态度的，只是在CSDN上慢慢开始了尝试，逐渐发现在<strong>AI大模型</strong>语言润色写作的支持下，或许并不困难。甚至这种<strong>将知识咀嚼在二次消化的“反刍”过程</strong>，使我内心产生了巨大的<strong>成就感</strong>！</p><p>这里引用一下我的这位同学博客里的原话：</p><div class="note note-primary">            <p>&emsp;&emsp;“无论是解题、写作，还是费曼学习法，其本质都是<strong>通过输出来强化知识</strong>的吸收。当你能够流畅地演绎一道数学题的多种解法，或是将庞杂的知识梳理成清晰的逻辑链条，甚至写成一篇能让读者受益的博客时，你便完成了<strong>从输入到输出</strong>的有效做功。而这一过程，不仅让知识真正内化，更赋予人莫大的成就感。”</p>          </div><div class="note note-primary">            <p>&emsp;&emsp;“然而，写作——尤其是高质量的博客写作——远非简单的文字堆砌。回想高中写议论文时的经历，你是否也曾感到一种“言不尽意”的挫败？<strong>灵感的闪现 ≠ 逻辑的成型 ≠ 语言的表达 ≠ 理想的呈现</strong>。很多时候，我们脑海中的所谓“灵感”，不过是零星的思维火花，距离一篇结构严谨、论证充分、兼具深度与可读性的文章，仍有漫长的路要走。”</p>          </div><div class="note note-primary">            <p>&emsp;&emsp;“而这，正是博客写作的真正挑战，也是它最珍贵的训练价值——<strong>如何将飘忽的灵感锤炼成扎实的文字，在逻辑与专业之间找到平衡，最终实现清晰而有力的表达。</strong>”</p>          </div><p>&emsp;&emsp;在CSDN的简单试水中，我收获了莫大的自信，遂趁着期末周刚结束，全身心地投入到Github个人博客的创建中来！</p><p><img src="/images/About-Me-and-My-Blog/%E5%9B%BE%E7%89%871.png" alt="截止2025年7月13日CSDN状态图"></p><h2 id="About-Myself"><a href="#About-Myself" class="headerlink" title="About Myself"></a>About Myself</h2> <div class="note note-primary">            <p>I am <strong>Li Qinxuan (李沁轩)</strong>, a dedicated Computer Science and Technology scholar at <strong>China University of Mining and Technology (中国矿业大学)</strong>. My academic pursuits encompass diverse domains of computing, with specialized expertise and fervent enthusiasm for <strong>computer vision</strong> and <strong>algorithmic design</strong>.</p>          </div><div style="text-align: center;">  <strong style="color: red; font-size: 2em;">KEEP CODING!!!</strong></div><h3 id="My-Email"><a href="#My-Email" class="headerlink" title="My Email"></a>My Email</h3><ul><li><a href="mailto:&#108;&#113;&#x78;&#x33;&#x32;&#50;&#x32;&#52;&#56;&#x32;&#x35;&#51;&#x37;&#x40;&#113;&#x71;&#x2e;&#x63;&#x6f;&#x6d;">lqx3222482537@qq.com</a></li><li><a href="mailto:&#114;&#x69;&#x63;&#104;&#x61;&#x72;&#x64;&#108;&#x69;&#x2e;&#x31;&#49;&#x2e;&#x30;&#x32;&#x2e;&#48;&#54;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#109;">richardli.11.02.06@gmail.com</a></li><li><a href="mailto:&#x30;&#x38;&#x32;&#x34;&#49;&#49;&#50;&#x30;&#64;&#99;&#x75;&#x6d;&#x74;&#46;&#x65;&#100;&#x75;&#x2e;&#99;&#x6e;">08241120@cumt.edu.cn</a></li></ul><h3 id="My-Blog-in-CSDN"><a href="#My-Blog-in-CSDN" class="headerlink" title="My Blog in CSDN"></a>My Blog in CSDN</h3><p><a href="https://blog.csdn.net/2401_86849688?type=blog">不在了情绪的CSDN博客账号</a><br>(其实两边可能是同步更新的哈)</p><p>网站使用Github Pages 和 Hexo静态部署，相关链接地址如下：</p><ul><li><a href="https://hexo.fluid-dev.com/docs/guide/#%E5%85%B3%E4%BA%8E%E6%8C%87%E5%8D%97">Hexo Fluid 用户手册</a></li><li><a href="https://github.com/fluid-dev/hexo-theme-fluid">fluid-dev for hexo theme</a></li><li><a href="https://fluid-dev.github.io/hexo-fluid-docs/start/">开始使用 | Hexo Fluid 用户手册</a></li><li><a href="https://fluid-dev.github.io/hexo-fluid-docs/guide/">配置指南 | Hexo Fluid 用户手册</a></li></ul><p>如果大家有任何疑问，欢迎提issue，也欢迎通过邮箱联系我，我们一起进步！</p><p>封面来源：<a href="https://www.youtube.com/watch?v=GWGbOjlJDkU">Who are you?</a></p>]]></content>
+    <content type="html"><![CDATA[<p><strong>简单的自我介绍和部署自己博客的动机<code>motivation</code>!!!</strong></p> <span id="more"></span><h2 id="Before-The-Blog"><a href="#Before-The-Blog" class="headerlink" title="Before The Blog"></a>Before The Blog</h2><p>&emsp;&emsp;从高中到大学，我一直保持着系统化记笔记的学习习惯。然而，计算机专业的独特性让我一度感到不适应——知识的海洋如此浩瀚，技术栈的广度令人惊叹，传统的应试学习方法在这里显得捉襟见肘。</p><p>&emsp;&emsp;机缘巧合之下我在牛客等招聘网站上看到优秀求职者的技术博客链接，又注意到同学在朋友圈分享的博客文章，相互交换博客链接，相互学习。这些见闻就像一粒种子，在我心中悄然生根发芽。</p><p>&emsp;&emsp;但向来语文表达能力欠佳的我，对于博客撰写还是稍有抵触态度的，只是在CSDN上慢慢开始了尝试，逐渐发现在<strong>AI大模型</strong>语言润色写作的支持下，或许并不困难。甚至这种<strong>将知识咀嚼在二次消化的“反刍”过程</strong>，使我内心产生了巨大的<strong>成就感</strong>！</p><p>这里引用一下我的这位同学博客里的原话：</p><div class="note note-primary">            <p>&emsp;&emsp;“无论是解题、写作，还是费曼学习法，其本质都是<strong>通过输出来强化知识</strong>的吸收。当你能够流畅地演绎一道数学题的多种解法，或是将庞杂的知识梳理成清晰的逻辑链条，甚至写成一篇能让读者受益的博客时，你便完成了<strong>从输入到输出</strong>的有效做功。而这一过程，不仅让知识真正内化，更赋予人莫大的成就感。”</p>          </div><div class="note note-primary">            <p>&emsp;&emsp;“然而，写作——尤其是高质量的博客写作——远非简单的文字堆砌。回想高中写议论文时的经历，你是否也曾感到一种“言不尽意”的挫败？<strong>灵感的闪现 ≠ 逻辑的成型 ≠ 语言的表达 ≠ 理想的呈现</strong>。很多时候，我们脑海中的所谓“灵感”，不过是零星的思维火花，距离一篇结构严谨、论证充分、兼具深度与可读性的文章，仍有漫长的路要走。”</p>          </div><div class="note note-primary">            <p>&emsp;&emsp;“而这，正是博客写作的真正挑战，也是它最珍贵的训练价值——<strong>如何将飘忽的灵感锤炼成扎实的文字，在逻辑与专业之间找到平衡，最终实现清晰而有力的表达。</strong>”</p>          </div><p>&emsp;&emsp;在CSDN的简单试水中，我收获了莫大的自信，遂趁着期末周刚结束，全身心地投入到Github个人博客的创建中来！</p><p><img src="/images/About-Me-and-My-Blog/%E5%9B%BE%E7%89%871.png" alt="截止2025年7月13日CSDN状态图"></p><h2 id="About-Myself"><a href="#About-Myself" class="headerlink" title="About Myself"></a>About Myself</h2> <div class="note note-primary">            <p>I am <strong>Li Qinxuan (李沁轩)</strong>, a dedicated Computer Science and Technology scholar at <strong>China University of Mining and Technology (中国矿业大学)</strong>. My academic pursuits encompass diverse domains of computing, with specialized expertise and fervent enthusiasm for <strong>computer vision</strong> and <strong>algorithmic design</strong>.</p>          </div><div style="text-align: center;">  <strong style="color: red; font-size: 2em;">KEEP CODING!!!</strong></div><h3 id="My-Email"><a href="#My-Email" class="headerlink" title="My Email"></a>My Email</h3><ul><li><a href="mailto:&#108;&#113;&#120;&#x33;&#50;&#x32;&#50;&#52;&#56;&#x32;&#x35;&#x33;&#55;&#64;&#x71;&#113;&#x2e;&#x63;&#x6f;&#x6d;">lqx3222482537@qq.com</a></li><li><a href="mailto:&#x72;&#x69;&#99;&#104;&#x61;&#x72;&#x64;&#x6c;&#105;&#46;&#x31;&#x31;&#x2e;&#x30;&#x32;&#46;&#x30;&#54;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;">richardli.11.02.06@gmail.com</a></li><li><a href="mailto:&#48;&#x38;&#50;&#x34;&#49;&#x31;&#50;&#48;&#x40;&#x63;&#x75;&#109;&#116;&#x2e;&#x65;&#x64;&#117;&#x2e;&#99;&#110;">08241120@cumt.edu.cn</a></li></ul><h3 id="My-Blog-in-CSDN"><a href="#My-Blog-in-CSDN" class="headerlink" title="My Blog in CSDN"></a>My Blog in CSDN</h3><p><a href="https://blog.csdn.net/2401_86849688?type=blog">不在了情绪的CSDN博客账号</a><br>(其实两边可能是同步更新的哈)</p><p>网站使用Github Pages 和 Hexo静态部署，相关链接地址如下：</p><ul><li><a href="https://hexo.fluid-dev.com/docs/guide/#%E5%85%B3%E4%BA%8E%E6%8C%87%E5%8D%97">Hexo Fluid 用户手册</a></li><li><a href="https://github.com/fluid-dev/hexo-theme-fluid">fluid-dev for hexo theme</a></li><li><a href="https://fluid-dev.github.io/hexo-fluid-docs/start/">开始使用 | Hexo Fluid 用户手册</a></li><li><a href="https://fluid-dev.github.io/hexo-fluid-docs/guide/">配置指南 | Hexo Fluid 用户手册</a></li></ul><p>如果大家有任何疑问，欢迎提issue，也欢迎通过邮箱联系我，我们一起进步！</p><p>封面来源：<a href="https://www.youtube.com/watch?v=GWGbOjlJDkU">Who are you?</a></p>]]></content>
     
     
     
