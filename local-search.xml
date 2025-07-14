@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>life-musings</title>
+    <link href="/2025/07/14/life-musings/"/>
+    <url>/2025/07/14/life-musings/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Life-musings"><a href="#Life-musings" class="headerlink" title="Life-musings"></a>Life-musings</h1><p><strong>生活随想录</strong> ：smile：</p><hr><p>记录生活中一点小事！<br>保持每天更新的节奏！</p><h1 id="2025-7-14"><a href="#2025-7-14" class="headerlink" title="2025.7.14"></a>2025.7.14</h1><p>来到睢宁支教了，教学楼相当Modern！<br><strong>cool！</strong></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Simple Git Project Management Guide</title>
     <link href="/2025/07/13/Simple-Git-Project-Management-Guide/"/>
     <url>/2025/07/13/Simple-Git-Project-Management-Guide/</url>
@@ -77,11 +90,11 @@
     
     <tags>
       
-      <tag>queue</tag>
-      
       <tag>hashtable</tag>
       
       <tag>sort</tag>
+      
+      <tag>queue</tag>
       
     </tags>
     
@@ -102,9 +115,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>huffman treem</tag>
-      
       <tag>queue</tag>
+      
+      <tag>huffman treem</tag>
       
       <tag>Dijkstra</tag>
       
@@ -186,7 +199,7 @@
     <link href="/2025/06/04/About%20Me%20and%20My%20Blog/"/>
     <url>/2025/06/04/About%20Me%20and%20My%20Blog/</url>
     
-    <content type="html"><![CDATA[<p><strong>Brief Self-Introduction and the Motivation Behind Deploying My Blog!!!</strong></p> <span id="more"></span><h2 id="Before-The-Blog"><a href="#Before-The-Blog" class="headerlink" title="Before The Blog"></a>Before The Blog</h2><p>&emsp;&emsp;从高中到大学，我一直保持着系统化记笔记的学习习惯。然而，计算机专业的独特性让我一度感到不适应——知识的海洋如此浩瀚，技术栈的广度令人惊叹，传统的应试学习方法在这里显得捉襟见肘。</p><p>&emsp;&emsp;机缘巧合之下我在牛客等招聘网站上看到优秀求职者的技术博客链接，又注意到同学在朋友圈分享的博客文章，相互交换博客链接，相互学习。这些见闻就像一粒种子，在我心中悄然生根发芽。</p><p>&emsp;&emsp;但向来语文表达能力欠佳的我，对于博客撰写还是稍有抵触态度的，只是在CSDN上慢慢开始了尝试，逐渐发现在<strong>AI大模型</strong>语言润色写作的支持下，或许并不困难。甚至这种<strong>将知识咀嚼在二次消化的“反刍”过程</strong>，使我内心产生了巨大的<strong>成就感</strong>！</p><p>这里引用一下我的这位同学博客里的原话：</p><div class="note note-primary">            <p>&emsp;&emsp;“无论是解题、写作，还是费曼学习法，其本质都是<strong>通过输出来强化知识</strong>的吸收。当你能够流畅地演绎一道数学题的多种解法，或是将庞杂的知识梳理成清晰的逻辑链条，甚至写成一篇能让读者受益的博客时，你便完成了<strong>从输入到输出</strong>的有效做功。而这一过程，不仅让知识真正内化，更赋予人莫大的成就感。”</p>          </div><div class="note note-primary">            <p>&emsp;&emsp;“然而，写作——尤其是高质量的博客写作——远非简单的文字堆砌。回想高中写议论文时的经历，你是否也曾感到一种“言不尽意”的挫败？<strong>灵感的闪现 ≠ 逻辑的成型 ≠ 语言的表达 ≠ 理想的呈现</strong>。很多时候，我们脑海中的所谓“灵感”，不过是零星的思维火花，距离一篇结构严谨、论证充分、兼具深度与可读性的文章，仍有漫长的路要走。”</p>          </div><div class="note note-primary">            <p>&emsp;&emsp;“而这，正是博客写作的真正挑战，也是它最珍贵的训练价值——<strong>如何将飘忽的灵感锤炼成扎实的文字，在逻辑与专业之间找到平衡，最终实现清晰而有力的表达。</strong>”</p>          </div><p>&emsp;&emsp;在CSDN的简单试水中，我收获了莫大的自信，遂趁着期末周刚结束，全身心地投入到Github个人博客的创建中来！</p><p><img src="/images/About-Me-and-My-Blog/%E5%9B%BE%E7%89%871.png" alt="截止2025年7月13日CSDN状态图"></p><h2 id="About-Myself"><a href="#About-Myself" class="headerlink" title="About Myself"></a>About Myself</h2> <div class="note note-primary">            <p>I am <strong>Li Qinxuan (李沁轩)</strong>, a dedicated Computer Science and Technology scholar at <strong>China University of Mining and Technology (中国矿业大学)</strong>. My academic pursuits encompass diverse domains of computing, with specialized expertise and fervent enthusiasm for <strong>computer vision</strong> and <strong>algorithmic design</strong>.</p>          </div><div style="text-align: center;">  <strong style="color: red; font-size: 2em;">KEEP CODING!!!</strong></div><h3 id="My-Email"><a href="#My-Email" class="headerlink" title="My Email"></a>My Email</h3><ul><li><a href="mailto:&#x6c;&#113;&#x78;&#51;&#x32;&#50;&#50;&#52;&#x38;&#x32;&#53;&#x33;&#55;&#x40;&#x71;&#113;&#46;&#99;&#111;&#x6d;">lqx3222482537@qq.com</a></li><li><a href="mailto:&#x72;&#x69;&#99;&#104;&#97;&#x72;&#x64;&#108;&#105;&#46;&#x31;&#x31;&#46;&#x30;&#x32;&#46;&#48;&#x36;&#x40;&#x67;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;">richardli.11.02.06@gmail.com</a></li><li><a href="mailto:&#x30;&#56;&#x32;&#52;&#49;&#49;&#50;&#48;&#64;&#x63;&#x75;&#x6d;&#x74;&#46;&#101;&#x64;&#x75;&#x2e;&#99;&#x6e;">08241120@cumt.edu.cn</a></li></ul><h3 id="My-Blog-in-CSDN"><a href="#My-Blog-in-CSDN" class="headerlink" title="My Blog in CSDN"></a>My Blog in CSDN</h3><p><a href="https://blog.csdn.net/2401_86849688?type=blog">不在了情绪的CSDN博客账号</a><br>(其实两边可能是同步更新的哈)</p><p>网站使用Github Pages 和 Hexo静态部署，相关链接地址如下：</p><ul><li><a href="https://hexo.fluid-dev.com/docs/guide/#%E5%85%B3%E4%BA%8E%E6%8C%87%E5%8D%97">Hexo Fluid 用户手册</a></li><li><a href="https://github.com/fluid-dev/hexo-theme-fluid">fluid-dev for hexo theme</a></li><li><a href="https://fluid-dev.github.io/hexo-fluid-docs/start/">开始使用 | Hexo Fluid 用户手册</a></li><li><a href="https://fluid-dev.github.io/hexo-fluid-docs/guide/">配置指南 | Hexo Fluid 用户手册</a></li></ul><p>如果大家有任何疑问，欢迎提issue，也欢迎通过邮箱联系我，我们一起进步！</p><p>封面来源：<a href="https://www.youtube.com/watch?v=GWGbOjlJDkU">Who are you?</a></p>]]></content>
+    <content type="html"><![CDATA[<p><strong>Brief Self-Introduction and the Motivation Behind Deploying My Blog!!!</strong></p> <span id="more"></span><h2 id="Before-The-Blog"><a href="#Before-The-Blog" class="headerlink" title="Before The Blog"></a>Before The Blog</h2><p>&emsp;&emsp;从高中到大学，我一直保持着系统化记笔记的学习习惯。然而，计算机专业的独特性让我一度感到不适应——知识的海洋如此浩瀚，技术栈的广度令人惊叹，传统的应试学习方法在这里显得捉襟见肘。</p><p>&emsp;&emsp;机缘巧合之下我在牛客等招聘网站上看到优秀求职者的技术博客链接，又注意到同学在朋友圈分享的博客文章，相互交换博客链接，相互学习。这些见闻就像一粒种子，在我心中悄然生根发芽。</p><p>&emsp;&emsp;但向来语文表达能力欠佳的我，对于博客撰写还是稍有抵触态度的，只是在CSDN上慢慢开始了尝试，逐渐发现在<strong>AI大模型</strong>语言润色写作的支持下，或许并不困难。甚至这种<strong>将知识咀嚼在二次消化的“反刍”过程</strong>，使我内心产生了巨大的<strong>成就感</strong>！</p><p>这里引用一下我的这位同学博客里的原话：</p><div class="note note-primary">            <p>&emsp;&emsp;“无论是解题、写作，还是费曼学习法，其本质都是<strong>通过输出来强化知识</strong>的吸收。当你能够流畅地演绎一道数学题的多种解法，或是将庞杂的知识梳理成清晰的逻辑链条，甚至写成一篇能让读者受益的博客时，你便完成了<strong>从输入到输出</strong>的有效做功。而这一过程，不仅让知识真正内化，更赋予人莫大的成就感。”</p>          </div><div class="note note-primary">            <p>&emsp;&emsp;“然而，写作——尤其是高质量的博客写作——远非简单的文字堆砌。回想高中写议论文时的经历，你是否也曾感到一种“言不尽意”的挫败？<strong>灵感的闪现 ≠ 逻辑的成型 ≠ 语言的表达 ≠ 理想的呈现</strong>。很多时候，我们脑海中的所谓“灵感”，不过是零星的思维火花，距离一篇结构严谨、论证充分、兼具深度与可读性的文章，仍有漫长的路要走。”</p>          </div><div class="note note-primary">            <p>&emsp;&emsp;“而这，正是博客写作的真正挑战，也是它最珍贵的训练价值——<strong>如何将飘忽的灵感锤炼成扎实的文字，在逻辑与专业之间找到平衡，最终实现清晰而有力的表达。</strong>”</p>          </div><p>&emsp;&emsp;在CSDN的简单试水中，我收获了莫大的自信，遂趁着期末周刚结束，全身心地投入到Github个人博客的创建中来！</p><p><img src="/images/About-Me-and-My-Blog/%E5%9B%BE%E7%89%871.png" alt="截止2025年7月13日CSDN状态图"></p><h2 id="About-Myself"><a href="#About-Myself" class="headerlink" title="About Myself"></a>About Myself</h2> <div class="note note-primary">            <p>I am <strong>Li Qinxuan (李沁轩)</strong>, a dedicated Computer Science and Technology scholar at <strong>China University of Mining and Technology (中国矿业大学)</strong>. My academic pursuits encompass diverse domains of computing, with specialized expertise and fervent enthusiasm for <strong>computer vision</strong> and <strong>algorithmic design</strong>.</p>          </div><div style="text-align: center;">  <strong style="color: red; font-size: 2em;">KEEP CODING!!!</strong></div><h3 id="My-Email"><a href="#My-Email" class="headerlink" title="My Email"></a>My Email</h3><ul><li><a href="mailto:&#108;&#113;&#x78;&#51;&#x32;&#x32;&#x32;&#x34;&#56;&#50;&#x35;&#x33;&#x37;&#x40;&#113;&#113;&#46;&#x63;&#111;&#109;">lqx3222482537@qq.com</a></li><li><a href="mailto:&#114;&#105;&#99;&#104;&#97;&#114;&#100;&#x6c;&#x69;&#46;&#49;&#x31;&#x2e;&#x30;&#x32;&#46;&#48;&#54;&#x40;&#103;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#x63;&#111;&#x6d;">richardli.11.02.06@gmail.com</a></li><li><a href="mailto:&#48;&#56;&#50;&#52;&#49;&#49;&#x32;&#48;&#64;&#x63;&#x75;&#x6d;&#116;&#46;&#101;&#100;&#x75;&#46;&#x63;&#x6e;">08241120@cumt.edu.cn</a></li></ul><h3 id="My-Blog-in-CSDN"><a href="#My-Blog-in-CSDN" class="headerlink" title="My Blog in CSDN"></a>My Blog in CSDN</h3><p><a href="https://blog.csdn.net/2401_86849688?type=blog">不在了情绪的CSDN博客账号</a><br>(其实两边可能是同步更新的哈)</p><p>网站使用Github Pages 和 Hexo静态部署，相关链接地址如下：</p><ul><li><a href="https://hexo.fluid-dev.com/docs/guide/#%E5%85%B3%E4%BA%8E%E6%8C%87%E5%8D%97">Hexo Fluid 用户手册</a></li><li><a href="https://github.com/fluid-dev/hexo-theme-fluid">fluid-dev for hexo theme</a></li><li><a href="https://fluid-dev.github.io/hexo-fluid-docs/start/">开始使用 | Hexo Fluid 用户手册</a></li><li><a href="https://fluid-dev.github.io/hexo-fluid-docs/guide/">配置指南 | Hexo Fluid 用户手册</a></li></ul><p>如果大家有任何疑问，欢迎提issue，也欢迎通过邮箱联系我，我们一起进步！</p><p>封面来源：<a href="https://www.youtube.com/watch?v=GWGbOjlJDkU">Who are you?</a></p>]]></content>
     
     
     
