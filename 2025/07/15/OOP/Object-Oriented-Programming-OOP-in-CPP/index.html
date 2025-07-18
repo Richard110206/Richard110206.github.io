@@ -1,0 +1,901 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="&emsp;&emsp;现在才发现自己学习的c++不过是cin&#x2F;cout的c语言罢了，其关键的面向对象的四大特性：抽象、封装、继承、多态，早已被我抛之脑后，暑假进行复习，整理遂成此文！ Why OOP? 面向过程的局限性：将描述事物的数据与处理数据的函数分开。  若所描述事物的数据结构发生变化时，这些成员函数也必须重新设计！  在主函数中对数据进行修改，仅仅需要执行一条赋值语句，数据安全">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Object-Oriented Programming (OOP) in C++">
+<meta property="og:url" content="http://example.com/2025/07/15/OOP/Object-Oriented-Programming-OOP-in-CPP/index.html">
+<meta property="og:site_name" content="Welcome To My Blog！">
+<meta property="og:description" content="&emsp;&emsp;现在才发现自己学习的c++不过是cin&#x2F;cout的c语言罢了，其关键的面向对象的四大特性：抽象、封装、继承、多态，早已被我抛之脑后，暑假进行复习，整理遂成此文！ Why OOP? 面向过程的局限性：将描述事物的数据与处理数据的函数分开。  若所描述事物的数据结构发生变化时，这些成员函数也必须重新设计！  在主函数中对数据进行修改，仅仅需要执行一条赋值语句，数据安全">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/medias/Object-Oriented-Programming-OOP-in-CPP.png">
+<meta property="article:published_time" content="2025-07-15T10:08:55.000Z">
+<meta property="article:modified_time" content="2025-07-18T05:43:40.561Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="OOP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/medias/Object-Oriented-Programming-OOP-in-CPP.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Object-Oriented Programming (OOP) in C++ - Welcome To My Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>介绍</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>其他</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/life-musings/" target="_self">
+                    
+                    <span>生活随想录</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Object-Oriented Programming (OOP) in C++"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-15 18:08" pubdate>
+          2025年7月15日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Object-Oriented Programming (OOP) in C++</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>&emsp;&emsp;现在才发现自己学习的c++不过是cin&#x2F;cout的c语言罢了，其关键的<strong>面向对象的四大特性</strong>：<strong>抽象</strong>、<strong>封装</strong>、<strong>继承</strong>、<strong>多态</strong>，早已被我抛之脑后，暑假进行复习，整理遂成此文！</p>
+<h2 id="Why-OOP"><a href="#Why-OOP" class="headerlink" title="Why OOP?"></a>Why OOP?</h2><ul>
+<li><p>面向过程的局限性：将描述事物的数据与处理数据的函数分开。</p>
+<ul>
+<li><p>若所描述事物的数据结构发生变化时，这些成员函数也必须重新设计！</p>
+</li>
+<li><p>在主函数中对数据进行修改，仅仅需要执行一条赋值语句，数据安全性得不到保障！</p>
+</li>
+</ul>
+</li>
+<li><p>面向对象的优势：将描述事物的数据与处理函数<strong>封装</strong>成一个整体，称为类。</p>
+<ul>
+<li><p>封装在类中的函数和数据不受外界的影响，即类使数据具有良好的<strong>独立性</strong>和<strong>可维护性</strong>！</p>
+</li>
+<li><p>类中的数据在类的外部不能直接调用，外部只能通过<strong>公共接口函数</strong>来处理类中的数据，从而保障了<strong>数据的安全性</strong>！</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h2><h3 id="类："><a href="#类：" class="headerlink" title="类："></a>类：</h3><p>&emsp;&emsp;类描述了某一类事物应该具有哪些<strong>特征</strong>和<strong>行为</strong>。比如我们想描述一个“商品”类别，类就会告诉我们商品的名称、编号、进货价格、售出价格等特征，但是这个“商品”并不是一真正的商品，类只告诉了我们“商品”是什么样的、应该具有的特征。类是对象的抽象表示，它<strong>本身不占用内存空间</strong>。</p>
+<p>类<code>class</code>与结构体<code>struct</code>形式相似，关键字不同！</p>
+<ul>
+<li><code>class</code>的成员默认是<code>private</code>的</li>
+<li><code>struct</code>的成员默认是<code>public</code>的</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp">  <span class="hljs-keyword">class</span> 类名 &#123;<br>     <span class="hljs-keyword">private</span>:<br>	<span class="hljs-comment">//私有数据成员和成员函数</span><br>     <span class="hljs-keyword">protected</span>:<br>	<span class="hljs-comment">//保护数据成员和成员函数</span><br>     <span class="hljs-keyword">public</span>:<br>	<span class="hljs-comment">//共有数据成员和成员函数</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>private</code>:只能被类本身的成员函数、友元函数、友元函数的成员函数访问，派生类也无法访问。</li>
+<li><code>protected</code>:除派生类可以进行访问，其余与<code>private</code>相同。</li>
+<li><code>public</code>:可以被程序中任意代码访问。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">cgoods</span>&#123;<span class="hljs-comment">//商品类</span><br>     <span class="hljs-keyword">private</span>:<br>        string ID; <span class="hljs-comment">//商品编号</span><br>        string name; <span class="hljs-comment">//商品名称</span><br>        <span class="hljs-type">double</span> Purchasingprice; <span class="hljs-comment">//进货价格</span><br>        <span class="hljs-type">double</span> Sellingprice; <span class="hljs-comment">//售出价格</span><br>        <span class="hljs-type">int</span> SellCount; <span class="hljs-comment">//售出数量</span><br>        <span class="hljs-type">static</span> <span class="hljs-type">double</span> Profit; <span class="hljs-comment">//总利润</span><br>     <span class="hljs-keyword">protected</span>:<span class="hljs-comment">//无</span><br>     <span class="hljs-keyword">public</span>:<br>        <span class="hljs-built_in">cgoods</span>(string id, string name, <span class="hljs-type">double</span> purchasingprice)&#123;<span class="hljs-comment">//构造函数</span><br>        <span class="hljs-comment">//函数体</span><br>        &#125;<br>        ~<span class="hljs-built_in">cgoods</span>()&#123;<span class="hljs-comment">//析构函数</span><br>        &#125; <br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">SetPurchasingprice</span><span class="hljs-params">(<span class="hljs-type">double</span> purchasingprice)</span></span>&#123;<span class="hljs-comment">//设置进货价格</span><br>        <span class="hljs-comment">//函数体</span><br>        &#125;<br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">SetSellingprice</span><span class="hljs-params">(<span class="hljs-type">double</span> sellingprice)</span></span>&#123;<span class="hljs-comment">//设置出货价格</span><br>        <span class="hljs-comment">//函数体</span><br>        &#125;<br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setSellingcount</span><span class="hljs-params">(<span class="hljs-type">int</span> sellcount)</span></span>&#123;<span class="hljs-comment">//设置出货商品价格</span><br>        <span class="hljs-comment">//函数体</span><br>        &#125;<br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Sell</span><span class="hljs-params">(<span class="hljs-type">double</span> sellingprice,<span class="hljs-type">int</span> sellcount)</span></span>&#123;<br>        <span class="hljs-comment">//函数体</span><br>        &#125;<br>        <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">double</span> <span class="hljs-title">getProfit</span><span class="hljs-params">()</span></span>&#123;<span class="hljs-comment">//获取总利润，静态成员函数</span><br>        <span class="hljs-comment">//函数体</span><br>        &#125;<br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-comment">//函数体</span><br>        &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="对象："><a href="#对象：" class="headerlink" title="对象："></a>对象：</h3><p>&emsp;&emsp;对象则是根据类创建出来的具体实例。比如我们创建一个叫“手机”的“商品”，他有自己的具体的编号、进货价格、售出价格等，所有的特征都是独一无二的，不会与其他商品相同。每一个对象都是根据类创建的具有其属性和方法的实例，并且具有唯一的身份标识（如内存地址）和自己独特的属性值。 <strong>对象是占用内存空间的</strong>，它的<strong>属性值可以在运行时动态地改变</strong>。</p>
+<p>定义对象的三种方法：</p>
+<ul>
+<li>先定义类的类型，再定义对象：</li>
+</ul>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> 类名&#123;<br>    成员表;<br>&#125;;<br>[<span class="hljs-keyword">class</span>]可选 类名 对象名列表;<br></code></pre></td></tr></table></figure>
+
+<p>例如：</p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">class</span> cgoods <span class="hljs-title">goods1</span><span class="hljs-params">(<span class="hljs-string">&quot;1001001&quot;</span>,<span class="hljs-string">&quot;元气森林&quot;</span>)</span></span>;<span class="hljs-comment">//创建对象goods1</span><br><span class="hljs-function">cgoods <span class="hljs-title">goods</span><span class="hljs-params">(<span class="hljs-string">&quot;1001001&quot;</span>,<span class="hljs-string">&quot;元气森林&quot;</span>)</span></span>;<span class="hljs-comment">//两种方法等价</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在定义类类型时<strong>同时创建对象</strong>：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> 类名&#123;<br>    成员表;<br>&#125;对象名表;<br></code></pre></td></tr></table></figure>
+
+<p>例如：</p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">cgoods</span>&#123;<br>    <span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">public</span>:<br>&#125;<span class="hljs-built_in">goods1</span>(<span class="hljs-string">&quot;1001001&quot;</span>,<span class="hljs-string">&quot;元气森林&quot;</span>)；<br></code></pre></td></tr></table></figure>
+<ul>
+<li>不出现类名<strong>直接定义对象</strong>：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> &#123;<br>     成员表;<br> &#125;对象名表;<br></code></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> &#123;<br>    <span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">public</span>:<br>&#125;<span class="hljs-built_in">goods1</span>(<span class="hljs-string">&quot;1001001&quot;</span>,<span class="hljs-string">&quot;元气森林&quot;</span>)；<br></code></pre></td></tr></table></figure>
+
+<p>此方法由于没有类名，所以只能<strong>一次性声明多个对象</strong>，此后再无法声明此类对象！</p>
+<h2 id="抽象性-Abstract"><a href="#抽象性-Abstract" class="headerlink" title="抽象性 (Abstract)"></a>抽象性 (Abstract)</h2><p>提取事物的本质特征，找出共性，忽略非本质特征！</p>
+<ul>
+<li><h3 id="数据抽象"><a href="#数据抽象" class="headerlink" title="数据抽象"></a>数据抽象</h3></li>
+</ul>
+<p>抽象出对象的属性和状态的描述。（变量）</p>
+<ul>
+<li><h3 id="行为抽象"><a href="#行为抽象" class="headerlink" title="行为抽象"></a>行为抽象</h3></li>
+</ul>
+<p>抽象出对象行为的描述。（成员函数）</p>
+<h2 id="封装性-Encapsulation"><a href="#封装性-Encapsulation" class="headerlink" title="封装性 (Encapsulation)"></a>封装性 (Encapsulation)</h2><ol>
+<li><p>设计者将对象的全部属性和行为封装在对象内部，对象的属性值（变量）只能由这个对象的行为（成员函数）来读取和修改！</p>
+</li>
+<li><p>使用者无需关心内部结构，只需关心能做什么、如何使用！</p>
+</li>
+</ol>
+<h3 id="成员函数的定义："><a href="#成员函数的定义：" class="headerlink" title="成员函数的定义："></a>成员函数的定义：</h3><ul>
+<li><p>关键词<code>private</code>、<code>protected</code>、<code>public</code>在类中使用的先后次序无关紧要，且<strong>可以多次使用</strong>。</p>
+</li>
+<li><p>因为类是一种数据类型，系统<strong>不会为其分配内存空间</strong>，所以在定义类中的数据成员时，不能对其进行初始化，也不能指定其存储类型。对于类内<strong>非static数据成员的初始化</strong>通常<strong>使用构造函数</strong>进行。</p>
+</li>
+</ul>
+<ol>
+<li>在<strong>类内</strong>定义成员函数</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">cgoods</span>&#123;<span class="hljs-comment">//商品类</span><br>     <br>     <span class="hljs-keyword">private</span>:<br>        string ID; <span class="hljs-comment">//商品编号</span><br>        string name; <span class="hljs-comment">//商品名称</span><br>        <span class="hljs-type">double</span> Purchasingprice; <span class="hljs-comment">//进货价格</span><br>        <span class="hljs-type">double</span> Sellingprice; <span class="hljs-comment">//售出价格</span><br>        <span class="hljs-type">int</span> SellCount; <span class="hljs-comment">//售出数量</span><br>        <span class="hljs-type">static</span> <span class="hljs-type">double</span> Profit; <span class="hljs-comment">//总利润</span><br>     <br>     <span class="hljs-keyword">protected</span>:<span class="hljs-comment">//无</span><br>     <br>     <span class="hljs-keyword">public</span>:<br>        <span class="hljs-built_in">cgoods</span>(string id, string name, <span class="hljs-type">double</span> purchasingprice)&#123;<span class="hljs-comment">//构造函数</span><br>        ID=id;<br>        Name=name;<br>        &#125;<br><br>        <span class="hljs-built_in">cgoods</span>(string id, string name, <span class="hljs-type">double</span> purchasingprice)&#123;<span class="hljs-comment">//构造函数</span><br>        ID=id;<br>        Name=name;<br>        Purchasingprice=purchasingprice;<br>        &#125;<br><br>        ~<span class="hljs-built_in">cgoods</span>()&#123;<span class="hljs-comment">//析构函数</span><br>        &#125; <br><br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">SetPurchasingprice</span><span class="hljs-params">(<span class="hljs-type">double</span> purchasingprice)</span></span>&#123;<span class="hljs-comment">//设置进货价格</span><br>        Purchasingprice=purchasingprice;<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">SetSellingprice</span><span class="hljs-params">(<span class="hljs-type">double</span> sellingprice)</span></span>&#123;<span class="hljs-comment">//设置出货价格</span><br>        Sellingprice=sellingprice;<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span></span>&#123;<br>        cout&lt;&lt;<span class="hljs-string">&quot;编号&quot;</span>&lt;&lt;ID&lt;&lt;endl;<br>        cout&lt;&lt;<span class="hljs-string">&quot;名称&quot;</span>&lt;&lt;Name&lt;&lt;endl;<br>        cout&lt;&lt;<span class="hljs-string">&quot;进货价格&quot;</span>&lt;&lt;Purchasingprice&lt;&lt;endl;<br>        cout&lt;&lt;<span class="hljs-string">&quot;出货价格&quot;</span>&lt;&lt;Sellingprice&lt;&lt;endl;<br>        &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>在<strong>类外</strong>定义成员函数</li>
+</ol>
+<p>成员函数<strong>在类体内进行声明</strong>，而将成员函数的<strong>定义放在类外</strong>，相比于类内定义成员函数，成员函数名前要多<strong>加上“类名::”</strong>,“::”是作用于运算符，以说明这个函数是属于那类的成员函数，否则编译器就会认为该函数是一个普通函数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">返回类型 类名::成员函数名(参数说明)&#123;<br>     函数体<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">cgoods</span>&#123;<span class="hljs-comment">//商品类</span><br>     <br>     <span class="hljs-keyword">private</span>:<br>        string ID; <span class="hljs-comment">//商品编号</span><br>        string name; <span class="hljs-comment">//商品名称</span><br>        <span class="hljs-type">double</span> Purchasingprice; <span class="hljs-comment">//进货价格</span><br>        <span class="hljs-type">double</span> Sellingprice; <span class="hljs-comment">//售出价格</span><br>        <span class="hljs-type">int</span> SellCount; <span class="hljs-comment">//售出数量</span><br>        <span class="hljs-type">static</span> <span class="hljs-type">double</span> Profit; <span class="hljs-comment">//总利润</span><br>     <br>     <span class="hljs-keyword">protected</span>:<span class="hljs-comment">//无</span><br>     <br>     <span class="hljs-keyword">public</span>:<br>        <br>        <span class="hljs-built_in">cgoods</span>(string id, string name, <span class="hljs-type">double</span> purchasingprice);<span class="hljs-comment">//构造函数</span><br>        <br>        <span class="hljs-built_in">cgoods</span>(string id, string name, <span class="hljs-type">double</span> purchasingprice);<span class="hljs-comment">//构造函数</span><br>        <br>        ~<span class="hljs-built_in">cgoods</span>();<span class="hljs-comment">//析构函数</span><br><br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">SetPurchasingprice</span><span class="hljs-params">(<span class="hljs-type">double</span> purchasingprice)</span></span>;<span class="hljs-comment">//设置进货价格</span><br><br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">SetSellingprice</span><span class="hljs-params">(<span class="hljs-type">double</span> sellingprice)</span></span>;<span class="hljs-comment">//设置出货价格</span><br><br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span></span>;<span class="hljs-comment">//显示商品信息</span><br>&#125;<br><br>        cgoods::<span class="hljs-built_in">cgoods</span>(string id, string name)&#123;<span class="hljs-comment">//构造函数</span><br>        ID=id;<br>        Name=name;<br>        &#125;<br><br>        cgoods::<span class="hljs-built_in">cgoods</span>(string id, string name, <span class="hljs-type">double</span> purchasingprice)&#123;<span class="hljs-comment">//构造函数</span><br>        ID=id;<br>        Name=name;<br>        Purchasingprice=purchasingprice;<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cgoods::SetPurchasingprice</span><span class="hljs-params">(<span class="hljs-type">double</span> purchasingprice)</span></span>&#123;<span class="hljs-comment">//设置进货价格</span><br>        Purchasingprice=purchasingprice;<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cgoods::SetSellingprice</span><span class="hljs-params">(<span class="hljs-type">double</span> sellingprice)</span></span>&#123;<span class="hljs-comment">//设置出货价格</span><br>        Sellingprice=sellingprice;<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">cgoods::display</span><span class="hljs-params">()</span></span>&#123;<span class="hljs-comment">//显示商品信息</span><br>        cout&lt;&lt;<span class="hljs-string">&quot;编号&quot;</span>&lt;&lt;ID&lt;&lt;endl;<br>        cout&lt;&lt;<span class="hljs-string">&quot;名称&quot;</span>&lt;&lt;Name&lt;&lt;endl;<br>        cout&lt;&lt;<span class="hljs-string">&quot;进货价格&quot;</span>&lt;&lt;Purchasingprice&lt;&lt;endl;<br>        cout&lt;&lt;<span class="hljs-string">&quot;出货价格&quot;</span>&lt;&lt;Sellingprice&lt;&lt;endl;<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="继承性-Inherit"><a href="#继承性-Inherit" class="headerlink" title="继承性 (Inherit)"></a>继承性 (Inherit)</h2><p>派生类既能有自己新定义的属性和行为，又能够继承父类的所有属性和行为，无需重复定义，这种允许和鼓励类的重用的继承设计对于提高软件开发效率有着重要意义！</p>
+<h2 id="多态性-Polymorphism"><a href="#多态性-Polymorphism" class="headerlink" title="多态性 (Polymorphism)"></a>多态性 (Polymorphism)</h2><p>多态性使得可以通过相同的调用方式来调用这些具有不同功能的同名函数，这样同一个属性在父类和派生类中具有不同的语义！</p>
+<p>封面来源：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=m_MQYyJpIjg">Fundamental Concepts of Object Oriented Programming</a></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1]《C++程序设计基础教程》</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/OOP/" class="category-chain-item">OOP</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C/" class="print-no-link">#C++</a>
+      
+        <a href="/tags/OOP/" class="print-no-link">#OOP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Object-Oriented Programming (OOP) in C++</div>
+      <div>http://example.com/2025/07/15/OOP/Object-Oriented-Programming-OOP-in-CPP/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/14/life-musings/" title="life-musings">
+                        <span class="hidden-mobile">life-musings</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
