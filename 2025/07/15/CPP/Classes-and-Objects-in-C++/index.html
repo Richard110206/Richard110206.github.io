@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/medias/Object-Oriented-Programming-OOP-in-CPP.png">
 <meta property="article:published_time" content="2025-07-15T10:08:55.688Z">
-<meta property="article:modified_time" content="2025-07-19T14:58:59.480Z">
+<meta property="article:modified_time" content="2025-07-20T13:49:08.727Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="OOP">
@@ -294,7 +294,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.9k 字
+          4.5k 字
         
       </span>
     
@@ -305,7 +305,7 @@
         
         
         
-          33 分钟
+          38 分钟
         
       </span>
     
@@ -586,7 +586,25 @@
 <li><strong>static定义</strong>的对象：在首次到达对象定义位置时调用构造函数，程序结束时调用析构函数。</li>
 <li><strong>new动态生成</strong>的对象：产生对象时调用构造函数，用delete释放对象时，才调用析构函数。若不使用delete运算符来撤销动态生成的对象，则析构函数不会被调用。</li>
 </ol>
-<h3 id="this指针"><a href="#this指针" class="headerlink" title="this指针"></a>this指针</h3><h3 id="对象的动态建立和释放"><a href="#对象的动态建立和释放" class="headerlink" title="对象的动态建立和释放"></a>对象的动态建立和释放</h3><h3 id="静态成员"><a href="#静态成员" class="headerlink" title="静态成员"></a>静态成员</h3><h3 id="友元类"><a href="#友元类" class="headerlink" title="友元类"></a>友元类</h3><p>封面来源：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=m_MQYyJpIjg">Fundamental Concepts of Object Oriented Programming</a></p>
+<h3 id="对象的动态建立和释放"><a href="#对象的动态建立和释放" class="headerlink" title="对象的动态建立和释放"></a>对象的动态建立和释放</h3><ul>
+<li>new运算符建立对象：先为类的对象分配内存空间，然后自动调用构造函数初始化对象的数据成员，最后将变量的起始地址返还给指针变量。</li>
+<li>delete运算符释放对象：只有在delete运算符释放对象时，才会调用析构函数将对象销毁。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-comment">// 定义一个复数类</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Complex</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// 构造函数：初始化实部和虚部</span><br>    <span class="hljs-built_in">Complex</span>(<span class="hljs-type">double</span> r, <span class="hljs-type">double</span> i) &#123;<br>        real = r;    <span class="hljs-comment">// 设置实部值</span><br>        imag = i;    <span class="hljs-comment">// 设置虚部值</span><br>        cout &lt;&lt; <span class="hljs-string">&quot;构造函数被调用&quot;</span> &lt;&lt; endl;<br>    &#125;<br><br>    <span class="hljs-comment">// 析构函数：对象销毁时自动调用</span><br>    ~<span class="hljs-built_in">Complex</span>() &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;析构函数被调用&quot;</span> &lt;&lt; endl;<br>    &#125;<br><br>    <span class="hljs-comment">// 显示复数的方法</span><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> </span>&#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;(&quot;</span> &lt;&lt; real &lt;&lt; <span class="hljs-string">&quot;,&quot;</span> &lt;&lt; imag &lt;&lt; <span class="hljs-string">&quot;)&quot;</span> &lt;&lt; endl;<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">double</span> real;  <span class="hljs-comment">// 复数的实部</span><br>    <span class="hljs-type">double</span> imag;  <span class="hljs-comment">// 复数的虚部</span><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 动态创建一个Complex对象</span><br>    Complex* pc1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Complex</span>(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>);<br><br>    <span class="hljs-comment">// 调用display方法显示复数</span><br>    pc1-&gt;<span class="hljs-built_in">display</span>();  <span class="hljs-comment">// 等价于 (*pc1).display();</span><br><br>    <span class="hljs-comment">// 释放对象内存</span><br>    <span class="hljs-keyword">delete</span> pc1;<br><br>    cout &lt;&lt; <span class="hljs-string">&quot;程序结束&quot;</span> &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scss">构造函数被调用<br>(<span class="hljs-number">3</span>,<span class="hljs-number">4</span>)<br>析构函数被调用<br>程序结束<br></code></pre></td></tr></table></figure>
+<h3 id="静态成员"><a href="#静态成员" class="headerlink" title="静态成员"></a>静态成员</h3><p>声明为static的类成员称为静态成员，可以被类的所有对象共享。</p>
+<ul>
+<li>静态数据成员：描述这一类对象所共有的数据，所有对象公用这一部分存储空间。</li>
+<li>静态数据函数</li>
+</ul>
+<p>eg:Profit和 static double getProfit() ，总利润是出售所有商品获得的，并不隶属于哪一个商品对象。</p>
+<h4 id="为什么不使用全局变量？"><a href="#为什么不使用全局变量？" class="headerlink" title="为什么不使用全局变量？"></a>为什么不使用全局变量？</h4><ol>
+<li>违背了OOP封装性的精神，任何地方都可以对全局变量进行访问，破坏了信息隐藏原则。</li>
+<li>过多使用全局变量会产生重名冲突。</li>
+<li>能够明确归属，直接表明它是类的一部分，便于进行初始化。</li>
+</ol>
+<h4 id="静态数据成员"><a href="#静态数据成员" class="headerlink" title="静态数据成员"></a>静态数据成员</h4><p>在类的定义中的数据成员声明前加上关键字<code>static</code>，表示该成员是静态数据成员。由于静态数据成员<strong>由类的所有对象共享</strong>，所以静态成员的存储空间<strong>不会随着对象的产生而分配</strong>，也<strong>不会随着对象的消失而释放</strong>，因此静态数据成员不能在类体内进行初始化，而只能在<strong>类体内进行声明</strong>，在<strong>类体外进行初始化</strong>。</p>
+<h3 id="this指针"><a href="#this指针" class="headerlink" title="this指针"></a>this指针</h3><h3 id="友元类"><a href="#友元类" class="headerlink" title="友元类"></a>友元类</h3><p>封面来源：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=m_MQYyJpIjg">Fundamental Concepts of Object Oriented Programming</a></p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1]《C++程序设计基础教程》</p>
 
                 
@@ -697,8 +715,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/07/14/life-musings/" title="life-musings">
-                        <span class="hidden-mobile">life-musings</span>
+                      <a href="/2025/07/14/life-musings/" title="Life-musings">
+                        <span class="hidden-mobile">Life-musings</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
