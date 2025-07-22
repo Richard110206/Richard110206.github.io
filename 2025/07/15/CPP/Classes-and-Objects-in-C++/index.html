@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/medias/Object-Oriented-Programming-OOP-in-CPP.png">
 <meta property="article:published_time" content="2025-07-15T10:08:55.688Z">
-<meta property="article:modified_time" content="2025-07-21T16:06:34.276Z">
+<meta property="article:modified_time" content="2025-07-22T15:52:47.135Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="OOP">
@@ -294,7 +294,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.2k 字
+          6.5k 字
         
       </span>
     
@@ -305,7 +305,7 @@
         
         
         
-          52 分钟
+          55 分钟
         
       </span>
     
@@ -664,10 +664,19 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">长方体的体积为：960<br></code></pre></td></tr></table></figure>
 
 <p>这里将类<code>Cuboid</code>的成员函数<code>Volume()</code>声明为类<code>Rectangle</code>的友元函数，这样在<code>Volume()</code>中就可以使用Rectangle中的私有数据成员<code>Width</code>、<code>Length</code>。</p>
-<p><strong>注释</strong>：<br>程序第三行对Rectangle的提前声明引用，只包含类名，不包含类体。提前声明的原因是：在类Cuboid中调用Volume()函数时，需要使用类Rectangle中的数据成员Length和Width，但是类Rectangle还没有定义。如果将Rectangle的定义提到前面呢？同样不可以，因为在类Rectangle中又包含了Cuboid的成员！但是不能因为提前声明，而去定义一个对象！例如：</p>
+<p><strong>注释</strong>：<br>程序第三行对<code>Rectangle</code>的提前声明引用，只包含类名，不包含类体。提前声明的原因是：在类<code>Cuboid</code>中调用<code>Volume()</code>函数时，需要使用类<code>Rectangle</code>中的数据成员<code>Length</code>和<code>Width</code>，但是类<code>Rectangle</code>还没有定义。那如果将<code>Rectangle</code>的定义提到前面呢？同样是不可以的，因为在类<code>Rectangle</code>中又包含了<code>Cuboid</code>的成员！但是不能因为提前声明，而去定义一个对象！例如：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Rectangle</span>;<span class="hljs-comment">//提前引用声明</span><br>Rectangle r1;<span class="hljs-comment">//紧接着定义一个Rectangle对象，这是不允许的！</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Rectangle</span>&#123;...&#125;;<br></code></pre></td></tr></table></figure>
 
+<h4 id="友元类-1"><a href="#友元类-1" class="headerlink" title="友元类"></a>友元类</h4><p>将一个类声明为另一个类的友元：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">A</span>&#123;<br>    ...<br>    <span class="hljs-keyword">friend</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">B</span>;<span class="hljs-comment">//类B声明为当前类A的友元类</span><br>    ...<br>&#125;<br>此时，类B中的所有成员函数都是当前类A的友元函数，因此类B中的所有成员函数都可以访问当前类A的`<span class="hljs-keyword">private</span>`成员或`<span class="hljs-keyword">protected</span>`成员<br>```cpp<br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Rectangle</span>; <span class="hljs-comment">// 前向声明</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Cuboid</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> Height;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Cuboid</span>(<span class="hljs-type">int</span> h) &#123;<br>        Height = h;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Volume</span><span class="hljs-params">(Rectangle&amp; r)</span></span>;<br>&#125;;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Rectangle</span> &#123;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> Width, Length;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Rectangle</span>(<span class="hljs-type">int</span> w, <span class="hljs-type">int</span> len) &#123;<br>        Width = w;<br>        Length = len;  <span class="hljs-comment">// 添加了分号</span><br>    &#125;<br>    <span class="hljs-keyword">friend</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Cuboid</span>; <span class="hljs-comment">// 声明类Cuboid是类Rectangle的友元类</span><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Cuboid::Volume</span><span class="hljs-params">(Rectangle&amp; r)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> r.Length * r.Width * Height;  <span class="hljs-comment">// 正确的体积计算公式</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-function">Rectangle <span class="hljs-title">r</span><span class="hljs-params">(<span class="hljs-number">6</span>, <span class="hljs-number">8</span>)</span></span>;<br>    <span class="hljs-function">Cuboid <span class="hljs-title">C</span><span class="hljs-params">(<span class="hljs-number">20</span>)</span></span>;<br>    cout &lt;&lt; <span class="hljs-string">&quot;长方体的体积为：&quot;</span> &lt;&lt; C.<span class="hljs-built_in">Volume</span>(r) &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">长方体的体积为：960<br></code></pre></td></tr></table></figure>
+<p><strong>注意</strong>：</p>
+<ol>
+<li>友元关系不是传递的，“附庸的附庸不是我的附庸”，比如类A是类B的友元类，类B是类C的友元类，类C不是类A的友元类。</li>
+<li>友元关系不具有交换性，比如类A是类B的友元类，类B不一定是类A的友元</li>
+<li>友元关系是不能继承的，比如类A是类B的友元类，类C继承类B，类C不是类A的友元类</li>
+</ol>
 <p>封面来源：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=m_MQYyJpIjg">Fundamental Concepts of Object Oriented Programming</a></p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>以上大部分代码均取自《C++程序设计基础教程》</p>
 
