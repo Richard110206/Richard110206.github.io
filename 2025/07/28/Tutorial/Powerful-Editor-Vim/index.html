@@ -19,27 +19,26 @@
   <meta name="author" content="Li Qinxuan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="本文简单介绍了Hexo搭建个人博客的丰富玩法和不同平台撰写博客上的适配差异。">
+    <meta name="description" content="A brief tutorial of Editor Vim,including the Unique Philosophy and Basic Commands!">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo,Unleash Your Blogging Magic">
-<meta property="og:url" content="http://example.com/2025/07/12/Tutorial/Hexo-Hacks-Unleash-Your-Blogging-Magic/index.html">
+<meta property="og:title" content="Powerful Editor:Vim">
+<meta property="og:url" content="http://example.com/2025/07/28/Tutorial/Powerful-Editor-Vim/index.html">
 <meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
-<meta property="og:description" content="本文简单介绍了Hexo搭建个人博客的丰富玩法和不同平台撰写博客上的适配差异。">
+<meta property="og:description" content="A brief tutorial of Editor Vim,including the Unique Philosophy and Basic Commands!">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/medias/Hexo-Hacks-Unleash-Your-Blogging-Magic.png">
-<meta property="article:published_time" content="2025-07-12T14:15:10.000Z">
-<meta property="article:modified_time" content="2025-07-19T14:31:54.085Z">
+<meta property="og:image" content="http://example.com/medias/Powerful%20Editor%20Vim.jpg">
+<meta property="article:published_time" content="2025-07-28T08:33:00.000Z">
+<meta property="article:modified_time" content="2025-07-28T08:45:39.132Z">
 <meta property="article:author" content="Li Qinxuan">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="Blogging">
+<meta property="article:tag" content="vim">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/medias/Hexo-Hacks-Unleash-Your-Blogging-Magic.png">
+<meta name="twitter:image" content="http://example.com/medias/Powerful%20Editor%20Vim.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Hexo,Unleash Your Blogging Magic - Welcome To Li Qinxuan&#39;s Blog！</title>
+  <title>Powerful Editor:Vim - Welcome To Li Qinxuan&#39;s Blog！</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -273,7 +272,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hexo,Unleash Your Blogging Magic"></span>
+            <span id="subtitle" data-typed-text="Powerful Editor:Vim"></span>
           
         </div>
 
@@ -284,8 +283,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-12 22:15" pubdate>
-          2025年7月12日 晚上
+        <time datetime="2025-07-28 16:33" pubdate>
+          2025年7月28日 下午
         </time>
       </span>
     
@@ -296,7 +295,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1k 字
+          761 字
         
       </span>
     
@@ -307,7 +306,7 @@
         
         
         
-          9 分钟
+          7 分钟
         
       </span>
     
@@ -382,7 +381,7 @@
       
         <a href="/2025/07/12/Tutorial/Hexo-Hacks-Unleash-Your-Blogging-Magic/" title="Hexo,Unleash Your Blogging Magic"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">Hexo,Unleash Your Blogging Magic</span>
         </a>
       
@@ -391,7 +390,7 @@
       
         <a href="/2025/07/28/Tutorial/Powerful-Editor-Vim/" title="Powerful Editor:Vim"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">Powerful Editor:Vim</span>
         </a>
       
@@ -441,88 +440,278 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Hexo,Unleash Your Blogging Magic</h1>
+            <h1 id="seo-header">Powerful Editor:Vim</h1>
             
             
               <div class="markdown-body">
                 
-                <p><strong>本文简单介绍了Hexo搭建个人博客的丰富玩法和不同平台撰写博客上的适配差异。</strong></p>
- <span id="more"></span>
-<h2 id="一、玩转Hexo">一、玩转<code>Hexo</code></h2>
-<p>不同主题的Hexo主题博客，大致特点如下：</p>
+                <p>A brief tutorial of Editor Vim,including the Unique Philosophy and Basic Commands!</p>
+<span id="more"></span>
+<div class="note note-primary">
+            <p>“Writing English words and writing code are very different activities. When programming, you spend more time switching files, reading, navigating, and editing code compared to writing a long stream.”—— &lt; The Missing Semester of Your CS Education &gt;</p>
+          </div>
+<p><code>Vim</code> 是一个<strong>模态编辑器</strong>（modal editor），它的设计哲学是：编辑操作应当通过<strong>键盘组合</strong>完成，而非依赖鼠标或菜单。</p>
+<div class="note note-primary">
+            <p>“Vim avoids the use of the mouse, because it’s too slow; Vim even avoids using the arrow keys because it requires too much movement.”—— &lt; The Missing Semester of Your CS Education &gt;</p>
+          </div>
+<p><code>Vim</code>认为使用鼠标浪费时间，会降低效率，因为手从鼠标移动到键盘需要一定时间，对程序员来说反复来回的切换是很<code>annoying</code>的。因此，所有的<code>vim</code>功能都可以通过键盘操作，或许一开始你并不习惯，但等你使用久了，便能发现它得到程序员青睐的原因！😊</p>
+<p>课程相关视频与讲义：<a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/2020/editors/">Editors (Vim)</a></p>
+<h2 id="核心特性">核心特性</h2>
+<ul>
+<li><code>普通模式</code>：用于导航和操作文本（默认模式）</li>
+<li><code>插入模式</code>：像常规编辑器一样输入文本（按 <code>i</code> 进入）</li>
+<li><code>可视模式</code>：选择文本块（按 <code>v</code> 进入）</li>
+<li><code>命令行模式</code>：执行保存/退出等命令（按 <code>:</code> 进入）</li>
+</ul>
+<h2 id="基础操作">基础操作</h2>
+<p>使用 <code>Vim</code> 时会经常使用<code>&lt;ESC&gt;</code>键，而它不在主键盘区，显然不那么方便，于是很多程序员考虑将 <code>Caps Lock</code> 重新映射到 <code>Escape</code>或使用简单的键序列创建替代映射！</p>
+<h3 id="模式切换">模式切换</h3>
 <table>
 <thead>
 <tr>
-<th>主题</th>
-<th>特点</th>
+<th>操作</th>
+<th>功能</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Fluid</strong></td>
-<td>加载速度快，有简单的动态效果，移动端适配佳</td>
+<td><code>vim</code></td>
+<td>进入vim编辑器</td>
 </tr>
 <tr>
-<td><strong>Butterfly</strong></td>
-<td>功能全面，社区活跃，高度可定制</td>
+<td><code>vim 文件名</code></td>
+<td>打开特定文件（不存在时会新建）</td>
 </tr>
 <tr>
-<td><strong>Landscape</strong></td>
-<td>默认主题，轻量级，简洁易上手（有较多限制）</td>
+<td><code>i</code>(<code>insert</code>)</td>
+<td>进入插入模式</td>
+</tr>
+<tr>
+<td><code>Esc</code></td>
+<td>返回普通模式</td>
+</tr>
+<tr>
+<td><code>:</code></td>
+<td>进入命令行模式</td>
 </tr>
 </tbody>
 </table>
-<p>博主尝试了这几种后对<code>fluid</code>追一见钟情，遂使用此主题。</p>
-<h3 id="（一）更换主题">（一）更换主题</h3>
-<p><strong>1. 安装 <code>Fluid</code> 主题</strong></p>
-<p>在 Hexo 博客根目录（<code>/HexoData</code>）运行：</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install --save hexo-theme-fluid<br></code></pre></td></tr></tbody></table></figure>
-<p><strong>2. 修改 <code>Hexo</code> 主配置</strong></p>
-<p>打开<code>_config.yml</code>（位于博客根目录），找到<code>theme</code>字段，修改为：</p>
-<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">theme:</span> <span class="hljs-string">fluid</span><br></code></pre></td></tr></tbody></table></figure>
-<p>如需要可以将 <code>language</code> 设置为中文：</p>
-<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">language:</span> <span class="hljs-string">zh-CN</span><br></code></pre></td></tr></tbody></table></figure>
-<p><strong>3. 创建 Fluid 的配置文件</strong></p>
-<p><code>Fluid</code>主题的配置需要额外文件：<br>
-在博客根目录下创建<code>_config.fluid.yml</code>文件：</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> node_modules/hexo-theme-fluid/_config.yml _config.fluid.yml<br></code></pre></td></tr></tbody></table></figure>
-<p>编辑<code>_config.fluid.yml</code>来自定义主题（如菜单、颜色、字体等）。</p>
-<p><strong>4. 迁移 Landscape 的内容（可选）</strong></p>
-<p>自定义样式/脚本：将 <code>Landscape</code> 的 <code>source/css</code> 或 <code>source/js</code> 文件复制到 <code>Fluid</code> 的 <code>source</code> 目录。<br>
-文章/页面：<code>_posts</code> 和<code> _pages</code> 内容无需迁移，<code>Hexo</code> 会自动读取。</p>
-<p><strong>5. 清理并重新生成</strong></p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s<br></code></pre></td></tr></tbody></table></figure>
-<p>访问 <a target="_blank" rel="noopener" href="http://localhost:4000">http://localhost:4000</a> 查看效果。</p>
-<h3 id="（二）添加评论系统">（二）添加评论系统</h3>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Neter_Leon/article/details/107064603?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=hexo%E7%9A%84fulid%E4%B8%8D%E5%90%8C%E7%8E%A9%E6%B3%95&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-107064603.142%5Ev102%5Epc_search_result_base2&amp;spm=1018.2226.3001.4187">Hexo快速构建个人小站-Fulid主题下添加Valine评论系统(三)</a><br>
-注意<code>comments</code>在(<code>\themes\你的主题名\_config.yml</code>)文件中，Hexo 主配置文件(<code>_config.yml</code>)通常用于全局配置（如博客标题、作者等），添加评论系统的配置不在这个文件中。将<code>appid</code>和<code>appkey</code>填入，同时记得根据选择的插件修改博客评论系统的<code>type</code>！</p>
-<h3 id="（三）添加背景音乐">（三）添加背景音乐</h3>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43471926/article/details/109798928?ops_request_misc=%257B%2522request%255Fid%2522%253A%25224db07d60e8ad014b04fcc3b6dc2a5cdf%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&amp;request_id=4db07d60e8ad014b04fcc3b6dc2a5cdf&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-109798928-null-null.142%5Ev102%5Epc_search_result_base2&amp;utm_term=hexo%20fluid%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E6%92%AD%E6%94%BE%E9%9F%B3%E4%B9%90&amp;spm=1018.2226.3001.4187">Hexo-Fluid主题添加音乐页面</a></p>
-<h3 id="（四）给每篇博客添加封面-背景">（四）给每篇博客添加封面/背景</h3>
-<p>在<code>source</code>文件夹下新建<code>medias</code>文件夹用于存放图片，在每篇博客文章<code>front-matter</code>的区域添加：<br>
-<strong>背景图片：</strong></p>
-<figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">banner<span class="hljs-emphasis">_img: 图片路径（/medias/图片文件名）</span><br></code></pre></td></tr></tbody></table></figure>
-<p><strong>封面图片预览：</strong></p>
-<figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">index<span class="hljs-emphasis">_img: 图片路径（/medias/图片文件名）</span><br></code></pre></td></tr></tbody></table></figure>
-<p>其他丰富玩法参考官方文档：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://fluid-dev.github.io/hexo-fluid-docs/start/">开始使用 | Hexo Fluid 用户手册</a></li>
-<li><a target="_blank" rel="noopener" href="https://fluid-dev.github.io/hexo-fluid-docs/guide/">配置指南 | Hexo Fluid 用户手册</a></li>
-</ul>
-<h2 id="二、CSDN与Hexo撰写差异">二、CSDN与Hexo撰写差异</h2>
-<p><strong>1. 插入图片</strong><br>
-插入图片的语法如下：<code>![插入图片的注释](插入图片的连接或本地路径)</code><br>
-  CSDN 不支持本地图片链接：如果你在 CSDN 写博客时插入本地图片路径，其他用户无法访问你的本地文件。<br>
-  使用Hexo进行博客撰写时，图片可以放在<code>source/images/ 文件夹（可以自行创建）</code>使用相对路径，避免文件迁移后路径找不到而导致问题，建议一篇博客单独创建一个文件夹进行图片的存储便于管理。<br>
-  CSDN中的图片注释无法显示，必须通过在图片下添加<code>&lt;center&gt;添加图片注释&lt;/font&lt;/center&gt;</code>的方式进行注释。</p>
-<blockquote>
-<center>添加图片注释
-</center></blockquote>
-<p>  网上其他博主也有推荐使用<a target="_blank" rel="noopener" href="https://portal.qiniu.com/signin?redirect=%2Fhome">七牛云存储</a>的，将图片从本地上传到七牛云存储仓库。得到一个外链地址，将外链地址作为图片的URL地址写进文章。</p>
-<p><strong>2.数学公式</strong><br>
-CSDN中默认<code>latex</code>的格式是可以进行渲染的，而在<code>Hexo</code>中需要在全局配置文件中进行修改：</p>
-<figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-section"># 数学公式，开启之前需要更换 Markdown 渲染器，否则复杂公式会有兼容问题，具体请见：https://hexo.fluid-dev.com/docs/guide/##latex-数学公式</span><br><span class="hljs-section"># Mathematical formula. If enable, you need to change the Markdown renderer, see: https://hexo.fluid-dev.com/docs/en/guide/#math</span><br>math:<br>  # 开启后文章默认可用，自定义页面如需使用，需在 Front-matter 中指定 <span class="hljs-code">`math: true`</span><br>  # If you want to use math on the custom page, you need to set <span class="hljs-code">`math: true`</span> in Front-matter<br>  enable: true<br><br>  # 开启后，只有在文章 Front-matter 里指定 <span class="hljs-code">`math: true`</span> 才会在文章页启动公式转换，以便在页面不包含公式时提高加载速度<br>  # If true, only set <span class="hljs-code">`math: true`</span> in Front-matter will enable math, to load faster when the page does not contain math<br>  specific: false<br></code></pre></td></tr></tbody></table></figure>
-<p>封面来源：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=XiMVwkxu3hU">如何使用Hexo+Github Pages 搭建个人博客，手把手最新教程</a></p>
+<h3 id="光标移动">光标移动</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h</code> <code>j</code> <code>k</code> <code>l</code></td>
+<td>左/下/上/右移动</td>
+</tr>
+<tr>
+<td><code>0</code></td>
+<td>移动到行首</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>移动到行尾</td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>移动到行首非空字符</td>
+</tr>
+<tr>
+<td><code>G</code></td>
+<td>移动到文件底部</td>
+</tr>
+<tr>
+<td><code>gg</code></td>
+<td>移动到文件顶部</td>
+</tr>
+<tr>
+<td><code>H</code></td>
+<td>移动到窗口顶部</td>
+</tr>
+<tr>
+<td><code>L</code></td>
+<td>移动到窗口底部</td>
+</tr>
+<tr>
+<td><code>Ctrl+u</code></td>
+<td>上翻半页</td>
+</tr>
+<tr>
+<td><code>Ctrl+d</code></td>
+<td>下翻半页</td>
+</tr>
+<tr>
+<td><code>Ctrl+b</code></td>
+<td>上翻整页</td>
+</tr>
+<tr>
+<td><code>Ctrl+f</code></td>
+<td>下翻整页</td>
+</tr>
+</tbody>
+</table>
+<h2 id="编辑功能">编辑功能</h2>
+<h3 id="文本操作">文本操作</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>o</code></td>
+<td>下方新建行并插入</td>
+</tr>
+<tr>
+<td><code>O</code></td>
+<td>上方新建行并插入</td>
+</tr>
+<tr>
+<td><code>u</code></td>
+<td>撤销</td>
+</tr>
+<tr>
+<td><code>Ctrl+r</code></td>
+<td>重做</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td>删除字符</td>
+</tr>
+<tr>
+<td><code>dw</code></td>
+<td>删除单词</td>
+</tr>
+<tr>
+<td><code>dd</code></td>
+<td>删除整行</td>
+</tr>
+<tr>
+<td><code>cc</code></td>
+<td>删除并进入插入模式</td>
+</tr>
+</tbody>
+</table>
+<h3 id="复制粘贴">复制粘贴</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>y</code> (<code>yank</code>)</td>
+<td>复制</td>
+</tr>
+<tr>
+<td><code>yy</code></td>
+<td>复制当前行</td>
+</tr>
+<tr>
+<td><code>yw</code></td>
+<td>复制单词</td>
+</tr>
+<tr>
+<td><code>p</code>(<code>paste</code>)</td>
+<td>粘贴</td>
+</tr>
+</tbody>
+</table>
+<h3 id="可视化模式">可视化模式</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>v</code></td>
+<td>字符可视化</td>
+<td>按字符选择</td>
+</tr>
+<tr>
+<td><code>V</code></td>
+<td>行可视化</td>
+<td>按行选择</td>
+</tr>
+<tr>
+<td><code>Ctrl+v</code></td>
+<td>块可视化</td>
+<td>矩形选择</td>
+</tr>
+</tbody>
+</table>
+<h2 id="高级功能">高级功能</h2>
+<h3 id="搜索与替换">搜索与替换</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>f+字符</code></td>
+<td>向前查找字符</td>
+</tr>
+<tr>
+<td><code>F+字符</code></td>
+<td>向后查找字符</td>
+</tr>
+<tr>
+<td><code>~</code></td>
+<td>大小写转换</td>
+</tr>
+</tbody>
+</table>
+<h3 id="批量操作">批量操作</h3>
+<p><code>数字+指令</code>可以进行批量化操作</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">4j <span class="hljs-comment">#向下移动4行 </span><br>3ee <span class="hljs-comment">#选择3个单词 </span><br>7dw <span class="hljs-comment">#删除7个单词</span><br></code></pre></td></tr></tbody></table></figure>
+<h2 id="文件操作">文件操作</h2>
+<h3 id="保存与退出">保存与退出</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:w</code>(<code>write</code>)</td>
+<td>保存文件</td>
+</tr>
+<tr>
+<td><code>:q</code>(<code>quit</code>)</td>
+<td>退出</td>
+</tr>
+<tr>
+<td><code>:qa</code>(<code>all</code>)</td>
+<td>退出所有窗口</td>
+</tr>
+<tr>
+<td><code>:wq</code></td>
+<td>保存并退出</td>
+</tr>
+</tbody>
+</table>
+<h3 id="实战演示">实战演示</h3>
+<p>学习了上面那么多的指令不妨自己创建一个<code>python</code>文件，结合之前学习的<code>shell</code>命令，在实践中感受<code>Vim</code>的魅力吧！😄</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys <span class="hljs-comment">#导入sys来接受shell中的参数</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">fizz_buzz</span>(<span class="hljs-params">limit</span>):<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, limit + <span class="hljs-number">1</span>):<br>        <span class="hljs-keyword">if</span> i % <span class="hljs-number">3</span> != <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> i % <span class="hljs-number">5</span> != <span class="hljs-number">0</span>:<br>            <span class="hljs-built_in">print</span>(i)<br>        <span class="hljs-keyword">elif</span> i % <span class="hljs-number">3</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> i % <span class="hljs-number">5</span> != <span class="hljs-number">0</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">'fizz'</span>)<br>        <span class="hljs-keyword">elif</span> i % <span class="hljs-number">5</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> i % <span class="hljs-number">3</span> != <span class="hljs-number">0</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">'buzz'</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">'fizzbuzz'</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    fizz_buzz(<span class="hljs-built_in">int</span>(sys.argv[<span class="hljs-number">1</span>]))<br><br><span class="hljs-keyword">if</span> __name__==<span class="hljs-string">'__main__'</span>:<br>    main()<br></code></pre></td></tr></tbody></table></figure>
+   <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs bash">   $ python3 fizzbuzz.py 30<br>1<br>2<br>fizz<br>4<br>buzz<br>fizz<br>7<br>8<br>fizz<br>buzz<br>11<br>fizz<br>13<br>14<br>fizzbuzz<br>16<br>17<br>fizz<br>19<br>buzz<br>fizz<br>22<br>23<br>fizz<br>buzz<br>26<br>fizz<br>28<br>29<br>fizzbuzz<br></code></pre></td></tr></tbody></table></figure>
 
                 
               </div>
@@ -556,9 +745,7 @@ CSDN中默认<code>latex</code>的格式是可以进行渲染的，而在<code>H
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Hexo/" class="print-no-link">#Hexo</a>
-      
-        <a href="/tags/Blogging/" class="print-no-link">#Blogging</a>
+        <a href="/tags/vim/" class="print-no-link">#vim</a>
       
     </div>
   
@@ -570,8 +757,8 @@ CSDN中默认<code>latex</code>的格式是可以进行渲染的，而在<code>H
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hexo,Unleash Your Blogging Magic</div>
-      <div>http://example.com/2025/07/12/Tutorial/Hexo-Hacks-Unleash-Your-Blogging-Magic/</div>
+      <div>Powerful Editor:Vim</div>
+      <div>http://example.com/2025/07/28/Tutorial/Powerful-Editor-Vim/</div>
     </div>
     <div class="license-meta">
       
@@ -583,7 +770,7 @@ CSDN中默认<code>latex</code>的格式是可以进行渲染的，而在<code>H
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年7月12日</div>
+          <div>2025年7月28日</div>
         </div>
       
       
@@ -615,18 +802,12 @@ CSDN中默认<code>latex</code>的格式是可以进行渲染的，而在<code>H
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/07/13/Tutorial/Simple-Git-Project-Management-Guide/" title="Simple Git Project Management Guide">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Simple Git Project Management Guide</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/07/11/From-OpenCV-to-YOLOv5-Object-Detection-from-Theory-to-Practice/" title="From OpenCV to YOLOv5">
-                        <span class="hidden-mobile">From OpenCV to YOLOv5</span>
+                      <a href="/2025/07/27/Tutorial/Shell-Magic-Notes-from-The-Missing-Semester/" title="Shell Magic: Notes from MIT">
+                        <span class="hidden-mobile">Shell Magic: Notes from MIT</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

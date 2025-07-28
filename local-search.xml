@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Powerful Editor:Vim</title>
+    <link href="/2025/07/28/Tutorial/Powerful-Editor-Vim/"/>
+    <url>/2025/07/28/Tutorial/Powerful-Editor-Vim/</url>
+    
+    <content type="html"><![CDATA[<p>A brief tutorial of Editor Vim,including the Unique Philosophy and Basic Commands!</p><span id="more"></span><div class="note note-primary">            <p>“Writing English words and writing code are very different activities. When programming, you spend more time switching files, reading, navigating, and editing code compared to writing a long stream.”—— &lt; The Missing Semester of Your CS Education &gt;</p>          </div><p><code>Vim</code> 是一个<strong>模态编辑器</strong>（modal editor），它的设计哲学是：编辑操作应当通过<strong>键盘组合</strong>完成，而非依赖鼠标或菜单。</p><div class="note note-primary">            <p>“Vim avoids the use of the mouse, because it’s too slow; Vim even avoids using the arrow keys because it requires too much movement.”—— &lt; The Missing Semester of Your CS Education &gt;</p>          </div><p><code>Vim</code>认为使用鼠标浪费时间，会降低效率，因为手从鼠标移动到键盘需要一定时间，对程序员来说反复来回的切换是很<code>annoying</code>的。因此，所有的<code>vim</code>功能都可以通过键盘操作，或许一开始你并不习惯，但等你使用久了，便能发现它得到程序员青睐的原因！😊</p><p>课程相关视频与讲义：<a href="https://missing.csail.mit.edu/2020/editors/">Editors (Vim)</a></p><h2 id="核心特性">核心特性</h2><ul><li><code>普通模式</code>：用于导航和操作文本（默认模式）</li><li><code>插入模式</code>：像常规编辑器一样输入文本（按 <code>i</code> 进入）</li><li><code>可视模式</code>：选择文本块（按 <code>v</code> 进入）</li><li><code>命令行模式</code>：执行保存/退出等命令（按 <code>:</code> 进入）</li></ul><h2 id="基础操作">基础操作</h2><p>使用 <code>Vim</code> 时会经常使用<code>&lt;ESC&gt;</code>键，而它不在主键盘区，显然不那么方便，于是很多程序员考虑将 <code>Caps Lock</code> 重新映射到 <code>Escape</code>或使用简单的键序列创建替代映射！</p><h3 id="模式切换">模式切换</h3><table><thead><tr><th>操作</th><th>功能</th></tr></thead><tbody><tr><td><code>vim</code></td><td>进入vim编辑器</td></tr><tr><td><code>vim 文件名</code></td><td>打开特定文件（不存在时会新建）</td></tr><tr><td><code>i</code>(<code>insert</code>)</td><td>进入插入模式</td></tr><tr><td><code>Esc</code></td><td>返回普通模式</td></tr><tr><td><code>:</code></td><td>进入命令行模式</td></tr></tbody></table><h3 id="光标移动">光标移动</h3><table><thead><tr><th>操作</th><th>功能</th></tr></thead><tbody><tr><td><code>h</code> <code>j</code> <code>k</code> <code>l</code></td><td>左/下/上/右移动</td></tr><tr><td><code>0</code></td><td>移动到行首</td></tr><tr><td><code>$</code></td><td>移动到行尾</td></tr><tr><td><code>^</code></td><td>移动到行首非空字符</td></tr><tr><td><code>G</code></td><td>移动到文件底部</td></tr><tr><td><code>gg</code></td><td>移动到文件顶部</td></tr><tr><td><code>H</code></td><td>移动到窗口顶部</td></tr><tr><td><code>L</code></td><td>移动到窗口底部</td></tr><tr><td><code>Ctrl+u</code></td><td>上翻半页</td></tr><tr><td><code>Ctrl+d</code></td><td>下翻半页</td></tr><tr><td><code>Ctrl+b</code></td><td>上翻整页</td></tr><tr><td><code>Ctrl+f</code></td><td>下翻整页</td></tr></tbody></table><h2 id="编辑功能">编辑功能</h2><h3 id="文本操作">文本操作</h3><table><thead><tr><th>操作</th><th>功能</th></tr></thead><tbody><tr><td><code>o</code></td><td>下方新建行并插入</td></tr><tr><td><code>O</code></td><td>上方新建行并插入</td></tr><tr><td><code>u</code></td><td>撤销</td></tr><tr><td><code>Ctrl+r</code></td><td>重做</td></tr><tr><td><code>x</code></td><td>删除字符</td></tr><tr><td><code>dw</code></td><td>删除单词</td></tr><tr><td><code>dd</code></td><td>删除整行</td></tr><tr><td><code>cc</code></td><td>删除并进入插入模式</td></tr></tbody></table><h3 id="复制粘贴">复制粘贴</h3><table><thead><tr><th>操作</th><th>功能</th></tr></thead><tbody><tr><td><code>y</code> (<code>yank</code>)</td><td>复制</td></tr><tr><td><code>yy</code></td><td>复制当前行</td></tr><tr><td><code>yw</code></td><td>复制单词</td></tr><tr><td><code>p</code>(<code>paste</code>)</td><td>粘贴</td></tr></tbody></table><h3 id="可视化模式">可视化模式</h3><table><thead><tr><th>操作</th><th>功能</th><th>说明</th></tr></thead><tbody><tr><td><code>v</code></td><td>字符可视化</td><td>按字符选择</td></tr><tr><td><code>V</code></td><td>行可视化</td><td>按行选择</td></tr><tr><td><code>Ctrl+v</code></td><td>块可视化</td><td>矩形选择</td></tr></tbody></table><h2 id="高级功能">高级功能</h2><h3 id="搜索与替换">搜索与替换</h3><table><thead><tr><th>操作</th><th>功能</th></tr></thead><tbody><tr><td><code>f+字符</code></td><td>向前查找字符</td></tr><tr><td><code>F+字符</code></td><td>向后查找字符</td></tr><tr><td><code>~</code></td><td>大小写转换</td></tr></tbody></table><h3 id="批量操作">批量操作</h3><p><code>数字+指令</code>可以进行批量化操作</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">4j <span class="hljs-comment">#向下移动4行 </span><br>3ee <span class="hljs-comment">#选择3个单词 </span><br>7dw <span class="hljs-comment">#删除7个单词</span><br></code></pre></td></tr></tbody></table></figure><h2 id="文件操作">文件操作</h2><h3 id="保存与退出">保存与退出</h3><table><thead><tr><th>操作</th><th>功能</th></tr></thead><tbody><tr><td><code>:w</code>(<code>write</code>)</td><td>保存文件</td></tr><tr><td><code>:q</code>(<code>quit</code>)</td><td>退出</td></tr><tr><td><code>:qa</code>(<code>all</code>)</td><td>退出所有窗口</td></tr><tr><td><code>:wq</code></td><td>保存并退出</td></tr></tbody></table><h3 id="实战演示">实战演示</h3><p>学习了上面那么多的指令不妨自己创建一个<code>python</code>文件，结合之前学习的<code>shell</code>命令，在实践中感受<code>Vim</code>的魅力吧！😄</p><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys <span class="hljs-comment">#导入sys来接受shell中的参数</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">fizz_buzz</span>(<span class="hljs-params">limit</span>):<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, limit + <span class="hljs-number">1</span>):<br>        <span class="hljs-keyword">if</span> i % <span class="hljs-number">3</span> != <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> i % <span class="hljs-number">5</span> != <span class="hljs-number">0</span>:<br>            <span class="hljs-built_in">print</span>(i)<br>        <span class="hljs-keyword">elif</span> i % <span class="hljs-number">3</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> i % <span class="hljs-number">5</span> != <span class="hljs-number">0</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">'fizz'</span>)<br>        <span class="hljs-keyword">elif</span> i % <span class="hljs-number">5</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> i % <span class="hljs-number">3</span> != <span class="hljs-number">0</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">'buzz'</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">'fizzbuzz'</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    fizz_buzz(<span class="hljs-built_in">int</span>(sys.argv[<span class="hljs-number">1</span>]))<br><br><span class="hljs-keyword">if</span> __name__==<span class="hljs-string">'__main__'</span>:<br>    main()<br></code></pre></td></tr></tbody></table></figure>   <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs bash">   $ python3 fizzbuzz.py 30<br>1<br>2<br>fizz<br>4<br>buzz<br>fizz<br>7<br>8<br>fizz<br>buzz<br>11<br>fizz<br>13<br>14<br>fizzbuzz<br>16<br>17<br>fizz<br>19<br>buzz<br>fizz<br>22<br>23<br>fizz<br>buzz<br>26<br>fizz<br>28<br>29<br>fizzbuzz<br></code></pre></td></tr></tbody></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Tutorial</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>vim</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Shell Magic: Notes from MIT</title>
     <link href="/2025/07/27/Tutorial/Shell-Magic-Notes-from-The-Missing-Semester/"/>
     <url>/2025/07/27/Tutorial/Shell-Magic-Notes-from-The-Missing-Semester/</url>
@@ -299,11 +324,11 @@
     
     <tags>
       
+      <tag>queue</tag>
+      
       <tag>hashtable</tag>
       
       <tag>sort</tag>
-      
-      <tag>queue</tag>
       
     </tags>
     
@@ -330,9 +355,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>queue</tag>
-      
       <tag>huffman treem</tag>
+      
+      <tag>queue</tag>
       
       <tag>Dijkstra</tag>
       
