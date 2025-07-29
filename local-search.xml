@@ -224,7 +224,7 @@
     <link href="/2025/07/14/life-musings/"/>
     <url>/2025/07/14/life-musings/</url>
     
-    <content type="html"><![CDATA[<h1>Life-musings</h1><p><strong>生活随想录~</strong></p><hr><p>记录生活中一点小事！<br>保持更新的节奏！</p><h2 id="2025-7-14">2025.7.14</h2><p>搬宿舍忙一上午，累瘫了！<br>来到睢宁支教了，教学楼相当Modern！<br><strong>cool！</strong></p><h2 id="2025-7-16">2025.7.16</h2><p>Turtle in Python 大win特win！</p><h2 id="2025-7-17">2025.7.17</h2><p>昨晚备课到两点…<br>逐渐适应老师的身份！<br>制作课件的过程中也顺便二次学习Python语法！</p><h2 id="2025-7-18">2025.7.18</h2><p>成功给blog添加category功能！</p><h2 id="2025-7-22">2025.7.22</h2><p>上知网阅读相关论文，着手准备26大创pre！<br>在roboflow上找到几个感觉适配的数据集！<br>但是还是感觉有些缺失，需要自己想办法解决…</p><h2 id="2025-7-23">2025.7.23</h2><p>参考数据结构教材，重新梳理了几种常见的排序算法的核心思路！<br>自己敲了敲各种排序算法的代码，interesting！</p><h2 id="2025-7-24">2025.7.24</h2><p>试图给博客添加vercel进行自动化部署，<br>似乎不是很成功，哭！</p><h2 id="2025-7-25">2025.7.25</h2><p>听了UC Berkeley的CS61A 感觉US的CS课程比国内超前太多了！<br>图文并茂、简洁利索、一目了然的！<br>他们注重编程思想的培养，和项目实战，在实践中感受编程的魅力！<br>而我们的老师总是长篇累牍的教授语法知识，煞是枯燥无味！</p><h2 id="2025-7-26">2025.7.26</h2><p>The Missing Semester of Your CS Education！<br><code>shell</code>篇，受益匪浅！</p><h2 id="2025-7-27">2025.7.27</h2><p>先是赛车，再是足球！忙活一天！<br>回来总算是吧<code>shell</code>篇的笔记写完了！<br>还顺带配置了博客emoji！😄<br>以后终于不再是文文并茂了😢</p>]]></content>
+    <content type="html"><![CDATA[<h1>Life-musings</h1><p><strong>生活随想录~</strong></p><hr><p>记录生活中一点小事！<br>保持更新的节奏！</p><h2 id="2025-7-14">2025.7.14</h2><p>搬宿舍忙一上午，累瘫了！<br>来到睢宁支教了，教学楼相当Modern！<br><strong>cool！</strong></p><h2 id="2025-7-16">2025.7.16</h2><p>Turtle in Python 大win特win！</p><h2 id="2025-7-17">2025.7.17</h2><p>昨晚备课到两点…<br>逐渐适应老师的身份！<br>制作课件的过程中也顺便二次学习Python语法！</p><h2 id="2025-7-18">2025.7.18</h2><p>成功给blog添加category功能！</p><h2 id="2025-7-22">2025.7.22</h2><p>上知网阅读相关论文，着手准备26大创pre！<br>在roboflow上找到几个感觉适配的数据集！<br>但是还是感觉有些缺失，需要自己想办法解决…</p><h2 id="2025-7-23">2025.7.23</h2><p>参考数据结构教材，重新梳理了几种常见的排序算法的核心思路！<br>自己敲了敲各种排序算法的代码，interesting！</p><h2 id="2025-7-24">2025.7.24</h2><p>试图给博客添加vercel进行自动化部署，<br>似乎不是很成功，哭！</p><h2 id="2025-7-25">2025.7.25</h2><p>听了UC Berkeley的CS61A 感觉US的CS课程比国内超前太多了！<br>图文并茂、简洁利索、一目了然的！<br>他们注重编程思想的培养，和项目实战，在实践中感受编程的魅力！<br>而我们的老师总是长篇累牍的教授语法知识，煞是枯燥无味！</p><h2 id="2025-7-26">2025.7.26</h2><p>The Missing Semester of Your CS Education！<br><code>shell</code>篇，受益匪浅！</p><h2 id="2025-7-27">2025.7.27</h2><p>先是赛车，再是足球！忙活一天！<br>回来总算是吧<code>shell</code>篇的笔记写完了！<br>还顺带配置了博客emoji！😄<br>以后终于不再是文文并茂了😢</p><h2 id="2025-7-28">2025.7.28</h2><p>继续[missing semster]，学完了<code>vim</code>篇！</p><h2 id="2025-7-29">2025.7.29</h2><p>完善<code>Git</code>篇！<br>捣鼓我的<code>mac</code>！</p>]]></content>
     
     
     
@@ -237,7 +237,7 @@
     <link href="/2025/07/13/Tutorial/Simple-Git-Project-Management-Guide/"/>
     <url>/2025/07/13/Tutorial/Simple-Git-Project-Management-Guide/</url>
     
-    <content type="html"><![CDATA[<p><strong>本文简单介绍了使用Git进行项目管理的操作。</strong></p> <span id="more"></span><p>  Git 是一个分布式版本控制系统，它允许多个人在同一项目上工作。通过 Git，我们可以记录项目的每一次更改，并且可以将代码推送到 GitHub，方便以后查看和分享（便于多人的协作开发）。以下是Git进行代码版本管理的基本操作：</p><h3 id="1、在本地初始化git仓库">1、在本地初始化git仓库</h3><p>  打开命令行工具（Windows 用户可以使用 PowerShell，Mac 和 Linux 用户可以使用终端），确保你进入了项目文件夹（命令：<code>cd path</code>），然后输入以下命令来初始化 Git 仓库：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git init<br></code></pre></td></tr></tbody></table></figure><p><strong>解释：</strong><code>git init</code>会在当前文件夹中创建一个新的 Git 仓库。现在，你的项目文件夹已经开始被 Git 追踪，之后的每一次文件修改都可以通过 Git 来记录。</p><h3 id="2、添加文件到暂存区">2、添加文件到暂存区</h3><p>  暂存区是一个准备提交的区域，只有在将文件添加到暂存区后，才能将它们提交到本地仓库中。</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git add<br></code></pre></td></tr></tbody></table></figure><p><strong>解释</strong>:<code>git add.</code>会将当前文件夹下的所有文件添加到暂存区。这意味着 Git 现在知道这些文件已经被修改，并准备将它们保存到版本历史中。</p><h3 id="3、提交文件到本地仓库">3、提交文件到本地仓库</h3><p>暂存区中的文件提交到本地仓库。输入以下命令：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git commit -m <span class="hljs-string">"feat: "</span><br></code></pre></td></tr></tbody></table></figure><p><strong>解释：</strong><code>git commit -m</code> 命令用于提交更改到本地仓库，并且 -m 参数后面跟着的是你为此次提交添加的描述信息，也就是提交信息（commit message）。提交信息是对此次提交所做更改的简短描述，它帮助团队成员或其他查看项目历史的人理解每次提交的目的或内容。</p><p>这些是特定的标签或标识符来说明提交的类型：</p><ul><li><code>feat</code>: 表示新功能的增加（feature）</li><li><code>fix</code>: 表示修复了一个bug</li><li><code>docs</code>: 表示文档更新</li><li><code>refactor</code>: 表示代码重构（既不是修复bug也不是添加新功能）</li><li><code>style</code>: 改进代码格式但不影响逻辑</li><li><code>test</code>: 添加或修正测试用例</li></ul><h3 id="4-创建远程仓库">4. 创建远程仓库</h3><p>  前往 GitHub，创建一个新的远程仓库，并命名，注意：不要勾选“初始化仓库”，因为我们已经在本地初始化了仓库。</p><h3 id="5-关联本地仓库">5. 关联本地仓库</h3><p>  在命令行中，输入以下命令来将本地仓库和 GitHub 的远程仓库关联起来：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git remote set-url origin https://令牌@github.com/用户名/远程仓库名<br></code></pre></td></tr></tbody></table></figure><h3 id="6、推送代码到-GitHub">6、推送代码到 GitHub</h3><p>最后一步，我们将本地仓库中的更改推送到 GitHub 上的远程仓库：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git push -u origin main<br></code></pre></td></tr></tbody></table></figure><p><strong>解释：</strong><code>git push</code> 命令会将本地仓库中的代码上传到 GitHub 的远程仓库。<code>-u</code> 参数会将本地的 main 分支与远程仓库的 main 分支关联起来，确保以后每次推送都不需要重复指定分支。</p><h2 id="总结">总结</h2><p>  至此，你学会了如何通过 Git 管理项目的版本历史，最终将项目代码推送到 GitHub。整个过程包括了从初始化仓库、添加文件、提交文件到推送到远程仓库的完整步骤。通过这些操作，你便已经具备了基本的版本控制能力。<br>封面来源：<a href="https://www.youtube.com/watch?v=hwP7WQkmECE">Git Explained in 100 Seconds</a></p>]]></content>
+    <content type="html"><![CDATA[<p><strong>本文简单介绍了使用Git进行项目管理的操作。</strong></p> <span id="more"></span><p><code>Git</code> 是一个分布式版本控制系统(<code>Vision Control Systems</code>)，它允许多个人在同一项目上工作。通过<code> Git</code>，我们可以记录项目的每一次更改，并且可以将代码推送到 <code>GitHub</code>，方便以后查看和分享（多人的协作开发）。以下是<code>Git</code>进行代码版本管理的基本操作：</p><h1>基本操作</h1><h2 id="1、在本地初始化git仓库">1、在本地初始化git仓库</h2><p>打开命令行工具（<code>Windows</code> 用户可以使用 <code>PowerShell</code>，<code>Mac</code> 和 <code>Linux</code> 用户可以使用终端），确保你进入了项目文件夹（命令：<code>cd path</code>），然后输入以下命令来初始化 <code>Git</code> 仓库：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git init<br></code></pre></td></tr></tbody></table></figure><p><strong>解释：</strong><code>git init</code>会在当前文件夹中创建一个新的 Git 仓库。现在，你的项目文件夹已经开始被 Git 追踪，之后的每一次文件修改都可以通过 Git 来记录。</p><h2 id="2、添加文件到暂存区">2、添加文件到暂存区</h2><p>暂存区是一个准备提交的区域，只有在将文件添加到暂存区后，才能将它们提交到本地仓库中。</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git add<br></code></pre></td></tr></tbody></table></figure><p><strong>解释</strong>:<code>git add.</code>会将当前文件夹下的所有文件添加到暂存区。这意味着 Git 现在知道这些文件已经被修改，并准备将它们保存到版本历史中。</p><h2 id="3、提交文件到本地仓库">3、提交文件到本地仓库</h2><p>暂存区中的文件提交到本地仓库。输入以下命令：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git commit -m <span class="hljs-string">"feat: "</span><br></code></pre></td></tr></tbody></table></figure><p><strong>解释：</strong><code>git commit -m</code> 命令用于提交更改到本地仓库，并且 <code>-m</code> 参数后面跟着的是你为此次提交添加的描述信息，也就是提交信息（<code>commit message</code>）。提交信息是对此次提交所做更改的简短描述，它帮助团队成员或其他查看项目历史的人理解每次提交的目的或内容。</p><p>这些是特定的标签或标识符来说明提交的类型：</p><ul><li><code>feat</code>: 表示新功能的增加（<code>feature</code>）</li><li><code>fix</code>: 表示修复了一个<code>bug</code></li><li><code>docs</code>: 表示文档更新</li><li><code>refactor</code>: 表示代码重构（既不是修复bug也不是添加新功能）</li><li><code>style</code>: 改进代码格式但不影响逻辑</li><li><code>test</code>: 添加或修正测试用例</li></ul><h2 id="4-创建远程仓库">4. 创建远程仓库</h2><p>前往 <code>GitHub</code>，创建一个新的远程仓库，并命名，注意：不要勾选“初始化仓库”，因为我们已经在本地初始化了仓库。</p><h3 id="5-关联本地仓库">5. 关联本地仓库</h3><p>在命令行中，输入以下命令来将本地仓库和 GitHub 的远程仓库关联起来：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git remote set-url origin https://令牌@github.com/用户名/远程仓库名`<br></code></pre></td></tr></tbody></table></figure><h2 id="6、推送代码到-GitHub">6、推送代码到 GitHub</h2><p>最后一步，我们将本地仓库中的更改推送到 <code>GitHub</code> 上的远程仓库：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git push -u origin main<br></code></pre></td></tr></tbody></table></figure><p><strong>解释：</strong><code>git push</code> 命令会将本地仓库中的代码上传到 <code>GitHub</code> 的远程仓库。<code>-u</code> 参数会将本地的 <code>main</code> 分支与远程仓库的 <code>main</code> 分支关联起来，确保以后每次推送都不需要重复指定分支。</p><h1>底层实现</h1><p><code>VCS</code> 通过一系列快照跟踪文件夹及其内容的更改，其中每个快照都封装了顶级目录中文件/文件夹的完整状态，其还维护元数据，例如每个快照的创建者、与每个快照相关的消息等等。</p><h2 id="快照">快照</h2><p><code>Git</code> 将某个顶级目录中文件和文件夹集合的历史记录建模为一系列快照。文件/文件夹的树模型：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">&lt;root&gt; (tree)<br>|<br>+- foo (tree)<br>|  |<br>|  + bar.txt (blob, contents = <span class="hljs-string">"hello world"</span>)<br>|<br>+- baz.txt (blob, contents = <span class="hljs-string">"git is wonderful"</span>)<br></code></pre></td></tr></tbody></table></figure><h2 id="关联快照">关联快照</h2><blockquote><p>不知你是否有过疑惑。如果我和我的伙伴并行共同完成一个项目的两个特性应该如何处理？是将他的那部分完成后让我在复制到我的版本上吗？显然那样做太过麻烦！</p></blockquote><p>在<code>Git</code>中，历史记录是快照的<strong>有向无环图</strong> (<code>DAG</code>)。这意味着<code>Git </code>中的每个快照都指向一组“父级”，即它之前的快照。它是一组父级，而不是单个父级（线性历史记录中的情况），因为快照可能源自多个父级，例如，由于合并（合并）两个并行的开发分支。<code>Git</code> 将这些快照称为“提交”。可视化提交历史记录可能如下所示：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">o &lt;-- o &lt;-- o &lt;-- o<br>            ^<br>             \<br>              --- o &lt;-- o<br></code></pre></td></tr></tbody></table></figure><p><code> o</code>s代表单个提交（快照），理解为提交的文件（夹）</p> <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">o &lt;-- o &lt;-- o &lt;-- o &lt;---- o<br>           ^            /<br>            \          v<br>             --- o &lt;-- o<br></code></pre></td></tr></tbody></table></figure><p>这里意味着并行开发项目的两个功能，并进行合并，创建了一个包含两个功能的快照，<code>Git</code>会自行合并处理两个快照，若出现冲突无法解决时，则需要人工进行调整！</p><blockquote><p>如果我上线测试时突然发现了一个<code>bug</code>，而我不知道他是他是何时产生的应该怎么办呢？</p></blockquote><p><code>Git</code>也会提供相应的二分历史记录查找！</p><h1>总结</h1><p>至此，你学会了如何通过 <code>Git</code> 管理项目的版本历史，最终将项目代码推送到 <code>GitHub</code>。整个过程包括了从初始化仓库、添加文件、提交文件到推送到远程仓库的完整步骤。通过这些操作，你便已经具备了基本的版本控制能力。</p><p>封面来源：<a href="https://www.youtube.com/watch?v=hwP7WQkmECE">Git Explained in 100 Seconds</a></p>]]></content>
     
     
     <categories>
@@ -324,11 +324,11 @@
     
     <tags>
       
-      <tag>queue</tag>
-      
       <tag>hashtable</tag>
       
       <tag>sort</tag>
+      
+      <tag>queue</tag>
       
     </tags>
     
@@ -355,9 +355,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>huffman treem</tag>
-      
       <tag>queue</tag>
+      
+      <tag>huffman treem</tag>
       
       <tag>Dijkstra</tag>
       
@@ -386,9 +386,9 @@
     
     <tags>
       
-      <tag>binary tree</tag>
-      
       <tag>stack</tag>
+      
+      <tag>binary tree</tag>
       
       <tag>algorithm</tag>
       
@@ -415,9 +415,9 @@
     
     <tags>
       
-      <tag>DFS</tag>
-      
       <tag>binary tree</tag>
+      
+      <tag>DFS</tag>
       
       <tag>search，graph，sort</tag>
       
