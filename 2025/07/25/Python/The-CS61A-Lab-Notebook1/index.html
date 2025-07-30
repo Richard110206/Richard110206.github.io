@@ -1,0 +1,1013 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="This blog will document my notes and insights as I work through this challenging yet rewarding curriculum!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The CS61A Lab Notebook1">
+<meta property="og:url" content="http://example.com/2025/07/25/Python/The-CS61A-Lab-Notebook1/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="This blog will document my notes and insights as I work through this challenging yet rewarding curriculum!">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/medias/The-CS61A-Lab-Notebook.png">
+<meta property="article:published_time" content="2025-07-25T15:11:35.000Z">
+<meta property="article:modified_time" content="2025-07-26T15:54:07.864Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="function">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/medias/The-CS61A-Lab-Notebook.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>The CS61A Lab Notebook1 - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>介绍</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>其他</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/life-musings/" target="_self">
+                    
+                    <span>生活随想录</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="The CS61A Lab Notebook1"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-25 23:11" pubdate>
+          2025年7月25日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Python"
+        id="heading-a7f5f35426b927411fc9231b56382173" role="tab" data-toggle="collapse" href="#collapse-a7f5f35426b927411fc9231b56382173"
+        aria-expanded="true"
+      >
+        Python
+        <span class="list-group-count">(1)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-a7f5f35426b927411fc9231b56382173"
+           role="tabpanel" aria-labelledby="heading-a7f5f35426b927411fc9231b56382173">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2025/07/25/Python/The-CS61A-Lab-Notebook1/" title="The CS61A Lab Notebook1"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">The CS61A Lab Notebook1</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">The CS61A Lab Notebook1</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>This blog will document my notes and insights as I work through this challenging yet rewarding curriculum!</p>
+<span id="more"></span>
+<blockquote>
+<p>笔者在学校仅仅学习了C++，对其他语言知之甚少，然而在实际应用中，Python的应用场景之广泛令人惊叹：无论是数学建模中的数据可视化、数据分析，还是计算机视觉领域的机器学习与深度学习，Python都展现出无可替代的重要性。虽然高中时曾对Python有所涉猎，但不成体系。</p>
+</blockquote>
+<blockquote>
+<p>我深知在计算机领域，自主学习能力至关重要。然而平日既要应对繁重的课业，又要准备各类竞赛，实在分身乏术。值此暑假时间充裕之际，我决定研读计算机领域的标杆课程——CS61A。希望能够有所收获！以下是我的学习笔记，大家共勉！</p>
+</blockquote>
+<h2 id="What’s-the-CS61A">What’s the CS61A?</h2>
+<p>  <code>CS61A</code>是加州大学伯克利分校（<code>UC Berkeley</code>）计算机科学专业的入门课程，全称为"计算机程序的结构与解释"(<code>Structure and Interpretation of Computer Programs</code>)。这门课程<strong>采用<code>Python</code>作为主要教学语言</strong>，同时涵盖<code>Scheme</code>和<code>SQL</code>。课程核心在于<strong>培养计算思维</strong>而非单纯编程技巧，<strong>重点教授抽象思想、函数式编程和元语言抽象</strong>，被誉为"真正教会学生如何思考的计算入门课"！</p>
+<p>这里是<a target="_blank" rel="noopener" href="https://cs61a.org/">CS61A官方网站</a>，里面包含了相关的<code>videos</code>、<code>slides</code>和<code>homework</code>帮助你学习！<br>
+英语和我一样不很出彩的可以观看b站双语翻译版本：<br>
+<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1sy411z7nA?spm_id_from=333.788.videopod.sections&amp;vd_source=54c2981c1a7a8e0433b7d23096150b7a">【完结】【CS61A精翻双语·英文原声】伯克利大学《计算机程序的结构与解释》(2024)</a></p>
+<h2 id="Functions">Functions</h2>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> &lt;name&gt;(&lt;formal parameters&gt;):<br>    <span class="hljs-keyword">return</span> &lt;<span class="hljs-keyword">return</span> expression&gt;<br></code></pre></td></tr></tbody></table></figure>
+<p>函数与变量的区别：变量是<strong>一次性赋值</strong>的，函数在<strong>每次调用时会重新计算</strong>。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>radius=<span class="hljs-number">10</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>area=mul(radius,radius)*pi<br><span class="hljs-meta">&gt;&gt;&gt; </span>area<br><span class="hljs-number">314.1592653589793</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>radius=<span class="hljs-number">20</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>area<br><span class="hljs-number">314.1592653589793</span><br></code></pre></td></tr></tbody></table></figure>
+<p>这里我们发现变量<code>area</code>在第一次进行赋值后，尽管<code>radius</code>进行改变，但是其值不再发生变化，可见赋值是一次性的，不是动态的！</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">def</span> <span class="hljs-title function_">area</span>():<br><span class="hljs-meta">... </span>    <span class="hljs-keyword">return</span> mul(radius,radius)*pi<br>...<br><span class="hljs-meta">&gt;&gt;&gt; </span>area()<br><span class="hljs-number">1256.6370614359173</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>radius=<span class="hljs-number">10</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>area()<br><span class="hljs-number">314.1592653589793</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>radius=<span class="hljs-number">1</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>area()<br><span class="hljs-number">3.141592653589793</span><br></code></pre></td></tr></tbody></table></figure>
+<p>于是我们考虑将<code>area</code>变成函数，发现每次调用<code>area()</code>时，<code>area()</code>都会根据表达式的值重新计算，做到了动态变化！</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(<span class="hljs-built_in">print</span>(<span class="hljs-number">1</span>),<span class="hljs-built_in">print</span>(<span class="hljs-number">2</span>))<br><span class="hljs-number">1</span><br><span class="hljs-number">2</span><br><span class="hljs-literal">None</span> <span class="hljs-literal">None</span><br></code></pre></td></tr></tbody></table></figure>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>代码</th>
+<th>行为</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>print(1)</code></td>
+<td>调用 <code>print(1)</code>，打印 <code>1</code>，返回 <code>None</code></td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>print(2)</code></td>
+<td>调用 <code>print(2)</code>，打印 <code>2</code>，返回 <code>None</code></td>
+<td><code>2</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>print(None, None)</code></td>
+<td>调用 <code>print(None, None)</code>，打印 <code>None None</code></td>
+<td><code>None None</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>Python</code>会先计算所有参数，再执行外层函数，<code>print()</code>的<strong>返回值永远是 <code>None</code></strong>，但它会先执行打印。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> operator <span class="hljs-keyword">import</span> floordiv,mod<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">divide_exact</span>(<span class="hljs-params">N,D</span>):<br>    <span class="hljs-string">"""Return the quotient and remainder of dividing N by D.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &gt;&gt;&gt;q,r=divide_exact(2013,10)</span><br><span class="hljs-string">    &gt;&gt;&gt;q</span><br><span class="hljs-string">    201</span><br><span class="hljs-string">    &gt;&gt;&gt;r</span><br><span class="hljs-string">    3</span><br><span class="hljs-string">    """</span><br>    <span class="hljs-keyword">return</span> floordiv(N,D),mod(N,D)<br></code></pre></td></tr></tbody></table></figure>
+<p>项目中函数的<strong>形式参数用大写字母表示</strong>，提供<strong>文档字符串</strong>：在函数定义<code>def</code>的第一行添加注释，<strong>表明这个函数的作用</strong>，并<strong>添加一个实例说明</strong>（可以在<code>python</code><strong>交互式界面</strong>进行演示）。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">fib</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-string">"""Compute the nth Fibonacci number?"""</span><br><br>    pred,curr=<span class="hljs-number">1</span>,<span class="hljs-number">0</span><br>    k=<span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> k &lt; n:<br>        pred,curr=curr,curr+pred<br>        k=k+<span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> curr<br></code></pre></td></tr></tbody></table></figure>
+<p>通过<code>while</code>控制语句实现求值斐波那契数列索引的元素值！</p>
+<h2 id="Higher-Order-Functions">Higher-Order Functions</h2>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">"""Generalization."""</span><br><br><span class="hljs-keyword">from</span> math <span class="hljs-keyword">import</span> pi,sqrt<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">area</span>(<span class="hljs-params">r,shape_constant</span>):<br>    <span class="hljs-keyword">assert</span> r&gt;<span class="hljs-number">0</span>,<span class="hljs-string">"A length must be positive"</span><br>    <span class="hljs-keyword">return</span> r*r*shape_constant<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">area_square</span>(<span class="hljs-params">r</span>):<br>    <span class="hljs-keyword">return</span> area(r,<span class="hljs-number">1</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">area_circle</span>(<span class="hljs-params">r</span>):<br>    <span class="hljs-keyword">return</span> area(r,pi)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">area_hexagon</span>(<span class="hljs-params">r</span>):<br>    <span class="hljs-keyword">return</span> area(r,<span class="hljs-number">3</span>*sqrt(<span class="hljs-number">3</span>)/<span class="hljs-number">2</span>)<br></code></pre></td></tr></tbody></table></figure>
+<ol>
+<li><code>assert</code> 的防御性编程作用：<strong>防止非法的负值或零值输入</strong>导致数学错误！</li>
+</ol>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pythono">assert r &gt; 0, "A length must be positive"<br></code></pre></td></tr></tbody></table></figure>
+<ol start="2">
+<li>将不同图形的面积计算<strong>抽象为统一公式</strong>：<code>r² × 形状系数</code>：</li>
+</ol>
+<ul>
+<li>
+<p><strong>避免为每个图形重复编写</strong><code>r*r</code>的计算逻辑</p>
+</li>
+<li>
+<p>新增图形时<strong>只需提供对应的形状常数</strong>，<strong>无需修改核心算法</strong>，<strong>增强代码整体的泛化能力</strong></p>
+</li>
+<li>
+<p><strong>集中维护输入验证逻辑</strong>（如<code>assert</code>检查）</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">"""Generalization."""</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">identity</span>(<span class="hljs-params">k</span>):<br>    <span class="hljs-keyword">return</span> k<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">cube</span>(<span class="hljs-params">k</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">pow</span>(k,<span class="hljs-number">3</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">summation</span>(<span class="hljs-params">n,term</span>):<br>    <span class="hljs-string">"""Sum the first N terms of a sequence.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &gt;&gt;&gt; summation(5,cube)</span><br><span class="hljs-string">    225</span><br><span class="hljs-string">    """</span><br>    total,k=<span class="hljs-number">0</span>,<span class="hljs-number">1</span><br>    <span class="hljs-keyword">while</span> k&lt;=n:<br>        total,k=total+term(k),k+<span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> total<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">sum_naturals</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-string">"""Sum the first N natural numbers.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &lt;&lt;&lt; sum_naturals(5)</span><br><span class="hljs-string">    15</span><br><span class="hljs-string">    """</span><br>    <span class="hljs-keyword">return</span> summation(n,identity)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">sum_cubes</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-string">""" Sum the first N cubes of natural numbers.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &gt;&gt;&gt; sum_cubes(5)</span><br><span class="hljs-string">    225</span><br><span class="hljs-string">    """</span><br>    <span class="hljs-keyword">return</span> summation(n,cube)<br></code></pre></td></tr></tbody></table></figure>
+<p>这里传入的参数<code>term</code>是一个已定义的函数名，我们通过参数<code>term</code>对求和类型进行修改和新定义，而<strong>整体框架无需改动</strong>。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">"""Generalization."""</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">make_adder</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-string">"""Return a function that takes one argument</span><br><span class="hljs-string">    K and return K+N.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &gt;&gt;&gt; add_three=make_adder(3)</span><br><span class="hljs-string">    &gt;&gt;&gt; add_three(4)</span><br><span class="hljs-string">    7</span><br><span class="hljs-string">    &gt;&gt;&gt; make_adder(3)(4)</span><br><span class="hljs-string">    7</span><br><span class="hljs-string">    """</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">adder</span>(<span class="hljs-params">k</span>):<br>        <span class="hljs-keyword">return</span> k+n<br>    <span class="hljs-keyword">return</span> adder<br></code></pre></td></tr></tbody></table></figure>
+<p>这是一个返回值为函数的函数（函数的嵌套）叫作：</p>
+<ul>
+<li>函数工厂（<code>Factory Pattern</code>）:<br>
+<code>make_adder</code> 是一个 生成函数的函数（工厂）<br>
+根据参数 n 动态生成不同功能的加法函数</li>
+</ul>
+<p>以上表明函数与编程语言中的其他值一样，可以<strong>作为参数传递</strong>也可以<strong>作为返回值返回</strong>，这就是<strong>高阶函数</strong>(<strong>Higher-Order Function</strong>)。</p>
+<h2 id="Environments">Environments</h2>
+<h3 id="lambda表达式">lambda表达式</h3>
+<p><code>def</code>和<code>lambda</code>表达式的区别：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Lambda 表达式</th>
+<th>普通函数 (<code>def</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>语法</strong></td>
+<td>单行匿名表达式：<code>lambda x: x + 1</code></td>
+<td>多行命名定义：<code>def func(x): return x + 1</code></td>
+</tr>
+<tr>
+<td><strong>名称</strong></td>
+<td>匿名（无函数名）</td>
+<td>有函数名（可通过 <code>func.__name__</code> 获取）</td>
+</tr>
+<tr>
+<td><strong>代码复杂度</strong></td>
+<td>仅限单个表达式（不能包含语句）</td>
+<td>可包含多行语句、循环、条件等复杂逻辑</td>
+</tr>
+<tr>
+<td><strong>返回值</strong></td>
+<td>自动返回表达式结果</td>
+<td>需显式使用 <code>return</code></td>
+</tr>
+<tr>
+<td><strong>作用域</strong></td>
+<td>只能访问全局变量和参数</td>
+<td>可访问全局、局部变量，支持闭包</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>简单逻辑、临时函数</td>
+<td>复杂逻辑、需复用的功能</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Function-Currying-函数柯里化">Function Currying(函数柯里化)</h3>
+<p>  <strong>柯里化</strong>（<code>Currying</code>）是一种将接受多个参数的函数转换为一系列只接受单个参数的函数链式调用的技术，其核心特点是分步传递参数和延迟计算。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">curry</span>(<span class="hljs-params">f</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">g</span>(<span class="hljs-params">x</span>):<br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">h</span>(<span class="hljs-params">y</span>):<br>            <span class="hljs-keyword">return</span> f(x,y)<br>        <span class="hljs-keyword">return</span> h<br>    <span class="hljs-keyword">return</span> g<br></code></pre></td></tr></tbody></table></figure>
+<p>  在这个例子中我们发现柯里化进行了<strong>参数分解</strong>：原始函数<code>f(x,y)</code>需要同时接收两个参数，而柯里化后通过<code>curry(f)</code> 生成的新函数链 <code>g(x)(y)</code> 允许先传<code>x</code>再传 <code>y</code>。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">a=<span class="hljs-number">1</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">g</span>):<br>    a=<span class="hljs-number">2</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> y:a*g(y)<br>f(<span class="hljs-keyword">lambda</span> y:a+y)(a)<br></code></pre></td></tr></tbody></table></figure>
+<p>  在这个例子中，先定义了<code>a=1</code>全局变量（<code>local frame</code>），在函数<code>f</code>内部定义局部变量<code>a=2</code>（<code>global frame</code>）所以结果是（<code>2*(1+1)</code>）！</p>
+<h2 id="Abstraction">Abstraction</h2>
+<p>  函数抽象是给某个计算过程起个名字，然后整个项目过程都引用这个名字，而不用担心具体的实现细节。</p>
+<ul>
+<li>需要知道函数需要<strong>传递几个参数</strong></li>
+<li>需要知道<strong>函数的功能</strong></li>
+<li>不需要知道函数的<strong>实现过程</strong></li>
+</ul>
+<p>比如平方函数：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">square</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> x*x<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> operator <span class="hljs-keyword">import</span> mul<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">square</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> mul(x,x-<span class="hljs-number">1</span>)+x<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">square</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">pow</span>(x,<span class="hljs-number">2</span>)<br></code></pre></td></tr></tbody></table></figure>
+<p>封面来源于<code>CS61A</code>中<code>lecture1</code>的<code>slide</code>，是其标志性的表达式树！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python/" class="category-chain-item">Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/" class="print-no-link">#Python</a>
+      
+        <a href="/tags/function/" class="print-no-link">#function</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>The CS61A Lab Notebook1</div>
+      <div>http://example.com/2025/07/25/Python/The-CS61A-Lab-Notebook1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/07/27/Tutorial/Shell-Magic-Notes-from-The-Missing-Semester/" title="Shell Magic: Notes from MIT">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Shell Magic: Notes from MIT</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/24/Data%20structure/Essential-Sorting-Algorithms-Explained/" title="Essential Sorting Algorithms Explained">
+                        <span class="hidden-mobile">Essential Sorting Algorithms Explained</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
