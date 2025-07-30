@@ -2,7 +2,7 @@
 title: Hello World！
 index_img: /medias/hello-world.png
 ---
-这是我的第一篇博客内容，简单记录了博客的撰写和每次更新的流程！
+**这是我的第一篇博客内容，简单记录了博客的撰写和每次更新的流程！**
 
 <!-- more -->
 

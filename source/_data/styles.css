@@ -1,0 +1,10 @@
+/* 覆盖 Fluid 主题的 .note 样式 */
+.note {
+  &.note-primary {
+    font-size: 18px !important;
+
+    p, strong, em, span {
+      font-size: inherit !important;
+    }
+  }
+}
