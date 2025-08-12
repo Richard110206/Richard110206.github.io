@@ -224,7 +224,7 @@
     <link href="/2025/07/14/life-musings/"/>
     <url>/2025/07/14/life-musings/</url>
     
-    <content type="html"><![CDATA[<h1>Life-musings</h1><p><strong>生活随想录~</strong></p><hr><p>记录生活中一点小事！<br>保持更新的节奏！</p><h2 id="2025-7-14">2025.7.14</h2><p>搬宿舍忙一上午，累瘫了！<br>来到睢宁支教了，教学楼相当 Modern！<br><strong>cool！</strong></p><h2 id="2025-7-16">2025.7.16</h2><p>Turtle in Python 大win特win！</p><h2 id="2025-7-17">2025.7.17</h2><p>昨晚备课到两点…<br>逐渐适应老师的身份！<br>制作课件的过程中也顺便二次学习Python语法！</p><h2 id="2025-7-18">2025.7.18</h2><p>成功给 blog 添加 category 功能！</p><h2 id="2025-7-22">2025.7.22</h2><p>上知网阅读相关论文，<strong>着手准备26大创pre</strong>！<br>在roboflow上找到几个感觉适配的<strong>数据集</strong>！<br>但是还是感觉有些缺失，需要自己想办法解决…</p><h2 id="2025-7-23">2025.7.23</h2><p>参考数据结构教材，重新梳理了几种常见的<strong>排序算法的核心思路</strong>！<br>自己敲了敲各种排序算法的代码，interesting！</p><h2 id="2025-7-24">2025.7.24</h2><p>试图给博客添加vercel进行<strong>自动化部署</strong>，<br>似乎不是很成功 😢</p><h2 id="2025-7-25">2025.7.25</h2><p>听了UC Berkeley的CS61A 感觉US的CS课程比国内超前太多了！<br>图文并茂、简洁利索、一目了然的！<br>他们注重编程思想的培养，和项目实战，在实践中感受编程的魅力！<br>而我们的老师总是长篇累牍的教授语法知识，煞是枯燥无味！</p><h2 id="2025-7-26">2025.7.26</h2><p>The Missing Semester of Your CS Education！<br><code>shell</code>篇，受益匪浅！</p><h2 id="2025-7-27">2025.7.27</h2><p>先是赛车，再是足球！忙活一天！<br>回来总算是吧<code>shell</code>篇的博客写完了！<br>还顺带配置了博客 emoji 😄<br>以后终于不再是文文并茂了😢</p><h2 id="2025-7-28">2025.7.28</h2><p>继续[missing semster]，学完了<code>vim</code>篇！</p><h2 id="2025-7-29">2025.7.29</h2><p>完善<code>Git</code>篇！<br>捣鼓我的 mac！</p><h2 id="2025-7-30">2025.7.30</h2><p>终于在 macbook 上成功配置博客环境！<br>单人多设备假装自己是多人协作开发大项目😄</p><h2 id="2025-7-31">2025.7.31</h2><p>mac 中尝试在<code>vim</code>写、编译运行<code>c++</code>！<br><strong>skilled programmer</strong> 既视感😄</p><h2 id="2025-8-1">2025.8.1</h2><p>入门<strong>dynamic programming</strong>！<br>祝好运😉</p><h2 id="2025-8-6">2025.8.6</h2><p>归来！准备数学建模！</p><h2 id="2025-8-7">2025.8.7</h2><p><strong>LaTex</strong>简单入门，优雅，太优雅了！😊<br>果然学习才是<strong>祛魅</strong>的最好方式！<br><strong>overleaf</strong>在线共享编辑，真是个好东西！😄</p><h2 id="2025-8-8">2025.8.8</h2><p>LaTex 太灾难了😢<br>还是更喜欢<strong>WYSWYG</strong>😊</p><h2 id="2025-8-9">2025.8.9</h2><p>LaTex 还得是在实战中学习！</p><p>但感觉花大量时间学习性价比不太高😢<br>AI辅助 LaTex就很舒服😀</p><h2 id="2025-8-10">2025.8.10</h2><p>终于整完了，呼~~<br>要投身算法学习哩！<br>不能再依靠 life-musings 栏目苟延残喘更新速度了😡</p><h2 id="2025-8-11">2025.8.11</h2><p>summer vacation assignment😡</p>]]></content>
+    <content type="html"><![CDATA[<h1>Life-musings</h1><p><strong>生活随想录~</strong></p><hr><p>记录生活中一点小事！<br>保持更新的节奏！</p><h2 id="2025-7-14">2025.7.14</h2><p>搬宿舍忙一上午，累瘫了！<br>来到睢宁支教了，教学楼相当 Modern！<br><strong>cool！</strong></p><h2 id="2025-7-16">2025.7.16</h2><p>Turtle in Python 大win特win！</p><h2 id="2025-7-17">2025.7.17</h2><p>昨晚备课到两点…<br>逐渐适应老师的身份！<br>制作课件的过程中也顺便二次学习Python语法！</p><h2 id="2025-7-18">2025.7.18</h2><p>成功给 blog 添加 category 功能！</p><h2 id="2025-7-22">2025.7.22</h2><p>上知网阅读相关论文，<strong>着手准备26大创pre</strong>！<br>在roboflow上找到几个感觉适配的<strong>数据集</strong>！<br>但是还是感觉有些缺失，需要自己想办法解决…</p><h2 id="2025-7-23">2025.7.23</h2><p>参考数据结构教材，重新梳理了几种常见的<strong>排序算法的核心思路</strong>！<br>自己敲了敲各种排序算法的代码，interesting！</p><h2 id="2025-7-24">2025.7.24</h2><p>试图给博客添加vercel进行<strong>自动化部署</strong>，<br>似乎不是很成功 😢</p><h2 id="2025-7-25">2025.7.25</h2><p>听了UC Berkeley的CS61A 感觉US的CS课程比国内超前太多了！<br>图文并茂、简洁利索、一目了然的！<br>他们注重编程思想的培养，和项目实战，在实践中感受编程的魅力！<br>而我们的老师总是长篇累牍的教授语法知识，煞是枯燥无味！</p><h2 id="2025-7-26">2025.7.26</h2><p>The Missing Semester of Your CS Education！<br><code>shell</code>篇，受益匪浅！</p><h2 id="2025-7-27">2025.7.27</h2><p>先是赛车，再是足球！忙活一天！<br>回来总算是吧<code>shell</code>篇的博客写完了！<br>还顺带配置了博客 emoji 😄<br>以后终于不再是文文并茂了😢</p><h2 id="2025-7-28">2025.7.28</h2><p>继续[missing semster]，学完了<code>vim</code>篇！</p><h2 id="2025-7-29">2025.7.29</h2><p>完善<code>Git</code>篇！<br>捣鼓我的 mac！</p><h2 id="2025-7-30">2025.7.30</h2><p>终于在 macbook 上成功配置博客环境！<br>单人多设备假装自己是多人协作开发大项目😄</p><h2 id="2025-7-31">2025.7.31</h2><p>mac 中尝试在<code>vim</code>写、编译运行<code>c++</code>！<br><strong>skilled programmer</strong> 既视感😄</p><h2 id="2025-8-1">2025.8.1</h2><p>入门<strong>dynamic programming</strong>！<br>祝好运😉</p><h2 id="2025-8-6">2025.8.6</h2><p>归来！准备数学建模！</p><h2 id="2025-8-7">2025.8.7</h2><p><strong>LaTex</strong>简单入门，优雅，太优雅了！😊<br>果然学习才是<strong>祛魅</strong>的最好方式！<br><strong>overleaf</strong>在线共享编辑，真是个好东西！😄</p><h2 id="2025-8-8">2025.8.8</h2><p>LaTex 太灾难了😢<br>还是更喜欢<strong>WYSWYG</strong>😊</p><h2 id="2025-8-9">2025.8.9</h2><p>LaTex 还得是在实战中学习！</p><p>但感觉花大量时间学习性价比不太高😢<br>AI辅助 LaTex就很舒服😀</p><h2 id="2025-8-10">2025.8.10</h2><p>终于整完了，呼~~<br>要投身算法学习哩！<br>不能再依靠 life-musings 栏目苟延残喘更新速度了😡</p><h2 id="2025-8-11">2025.8.11</h2><p>summer vacation assignment😡</p><h2 id="2025-8-12">2025.8.12</h2><p>今天看了几个视频，颇有感触！<br>在AI高速发展的当下，我们计算机专业的学习也应该与时俱进，从前我总是习惯于看书学习，从最基础的点开始将知识吸收，往往还没做出什么成果，学习的热情就被消耗殆尽，感叹一句“真难啊”！但是现在有了AI的帮助，我们的学习或许可以不那么注重细节，可以自顶向下的，得“意”忘“形”的，我们只需先了解其大致框架、工作原理，再利用AI在框架中缝缝补补，哪里有问题去学哪里，这样不仅可以短时间内做出一定成果提升成就感，同时也避免的花费大量时间摄入无用或极少使用的知识！</p>]]></content>
     
     
     
@@ -326,9 +326,9 @@
       
       <tag>queue</tag>
       
-      <tag>hashtable</tag>
-      
       <tag>sort</tag>
+      
+      <tag>hashtable</tag>
       
     </tags>
     
@@ -386,11 +386,11 @@
     
     <tags>
       
-      <tag>stack</tag>
+      <tag>algorithm</tag>
       
       <tag>binary tree</tag>
       
-      <tag>algorithm</tag>
+      <tag>stack</tag>
       
     </tags>
     
@@ -415,9 +415,9 @@
     
     <tags>
       
-      <tag>binary tree</tag>
-      
       <tag>DFS</tag>
+      
+      <tag>binary tree</tag>
       
       <tag>search，graph，sort</tag>
       
