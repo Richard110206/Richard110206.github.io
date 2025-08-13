@@ -343,11 +343,11 @@
     
     <tags>
       
+      <tag>queue</tag>
+      
       <tag>hashtable</tag>
       
       <tag>sort</tag>
-      
-      <tag>queue</tag>
       
     </tags>
     
@@ -374,9 +374,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>queue</tag>
-      
       <tag>huffman treem</tag>
+      
+      <tag>queue</tag>
       
       <tag>Dijkstra</tag>
       
