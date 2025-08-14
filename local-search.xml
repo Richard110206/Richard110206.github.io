@@ -31,6 +31,14 @@
     </categories>
     
     
+    <tags>
+      
+      <tag>html</tag>
+      
+      <tag>css</tag>
+      
+    </tags>
+    
   </entry>
   
   
@@ -418,11 +426,11 @@
     
     <tags>
       
+      <tag>algorithm</tag>
+      
       <tag>stack</tag>
       
       <tag>binary tree</tag>
-      
-      <tag>algorithm</tag>
       
     </tags>
     
