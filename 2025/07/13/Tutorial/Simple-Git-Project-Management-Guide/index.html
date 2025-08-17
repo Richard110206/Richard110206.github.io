@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/Simple-Git-Project-Management-Guide.png">
 <meta property="article:published_time" content="2025-07-13T03:16:13.000Z">
-<meta property="article:modified_time" content="2025-08-13T07:26:46.538Z">
+<meta property="article:modified_time" content="2025-08-17T16:11:42.453Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
@@ -303,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          1.8k 字
         
       </span>
     
@@ -314,7 +314,7 @@
         
         
         
-          12 分钟
+          15 分钟
         
       </span>
     
@@ -458,9 +458,14 @@
 <p><code>Git</code> 是一个分布式版本控制系统(<code>Vision Control Systems</code>)，它允许多个人在同一项目上工作。通过<code> Git</code>，我们可以记录项目的每一次更改，并且可以将代码推送到 <code>GitHub</code>，方便以后查看和分享（多人的协作开发）。以下是<code>Git</code>进行代码版本管理的基本操作：</p>
 <h2 id="基本操作">基本操作</h2>
 <h3 id="1、在本地初始化git仓库">1、在本地初始化git仓库</h3>
-<p>打开命令行工具（<code>Windows</code> 用户可以使用 <code>PowerShell</code>，<code>Mac</code> 和 <code>Linux</code> 用户可以使用终端），确保你进入了项目文件夹（命令：<code>cd path</code>），然后输入以下命令来初始化 <code>Git</code> 仓库：</p>
+<p>打开命令行工具（<code>Windows</code> 用户可以使用 <code>PowerShell</code>，<code>Mac</code> 和 <code>Linux</code> 用户可以使用终端<code>terminal</code>），确保你进入了项目文件夹（命令：<code>cd path</code>），然后输入以下命令来初始化 <code>Git</code> 仓库：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git init<br></code></pre></td></tr></tbody></table></figure>
-<p><strong>解释：</strong><code>git init</code>会在当前文件夹中创建一个新的 Git 仓库。现在，你的项目文件夹已经开始被 Git 追踪，之后的每一次文件修改都可以通过 Git 来记录。</p>
+<p><strong>解释：</strong><code>git init</code>会在当前文件夹中创建一个新的 Git 仓库（<code>.git</code>目录），这个目录里存储着管理当前目录内容所需要的仓库数据。现在，你的项目文件夹已经开始被 Git 追踪，之后的每一次文件修改都可以通过 Git 来记录。</p>
+<ul>
+<li>使用<code>git status</code>命令可以查看当前仓库的状态，包括哪些文件被修改了，哪些文件被添加到暂存区了，哪些文件还没有被跟踪等。</li>
+<li></li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git status<br><span class="hljs-comment"># on branch master</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># Initial commit</span><br><span class="hljs-comment">#</span><br>nothing to commit (creat/copy files and use <span class="hljs-string">"git add"</span> to track)<br></code></pre></td></tr></tbody></table></figure>
 <h3 id="2、添加文件到暂存区">2、添加文件到暂存区</h3>
 <p>暂存区是一个准备提交的区域，只有在将文件添加到暂存区后，才能将它们提交到本地仓库中。</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git add<br></code></pre></td></tr></tbody></table></figure>
@@ -469,6 +474,13 @@
 <p>暂存区中的文件提交到本地仓库。输入以下命令：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git commit -m <span class="hljs-string">"feat: "</span><br></code></pre></td></tr></tbody></table></figure>
 <p><strong>解释：</strong><code>git commit -m</code> 命令用于提交更改到本地仓库，并且 <code>-m</code> 参数后面跟着的是你为此次提交添加的描述信息，也就是提交信息（<code>commit message</code>）。提交信息是对此次提交所做更改的简短描述，它帮助团队成员或其他查看项目历史的人理解每次提交的目的或内容。</p>
+<ul>
+<li><code>git log</code>可以查看以往仓库中提交的日志，包括什么人在什么时候进行了提交或合并，以及操作前后有什么差别。</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@RicharddeMacBook-Air leetcode % git <span class="hljs-built_in">log</span><br>commit 03748e1b5410364249cb10d78ae72f443682dc24 (HEAD -&gt; main)<br>Author: Richard110206 &lt;lqx3222482537@qq.com&gt;<br>Date:   Sun Aug 17 23:28:22 2025 +0800<br><br>    First Commit<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>git diff</code>可以查看当前工作目录和暂存区之间的差异。“+”表示添加的行，"-“表示删除的行，”~"表示修改的行。</li>
+</ul>
 <p>这些是特定的标签或标识符来说明提交的类型：</p>
 <ul>
 <li><code>feat</code>: 表示新功能的增加（<code>feature</code>）</li>
@@ -501,6 +513,20 @@
 <p><code> o</code>s代表单个提交（快照），理解为提交的文件（夹）</p>
  <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">o &lt;-- o &lt;-- o &lt;-- o &lt;---- o<br>           ^            /<br>            \          v<br>             --- o &lt;-- o<br></code></pre></td></tr></tbody></table></figure>
 <p>这里意味着并行开发项目的两个功能，并进行合并，创建了一个包含两个功能的快照，<code>Git</code>会自行合并处理两个快照，若出现冲突无法解决时，则需要人工进行调整！</p>
+<ul>
+<li><code>git branch</code>可以将分支名列表显示，同时可以确认当前所在的分支</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git branch<br>* main<br></code></pre></td></tr></tbody></table></figure>
+<p>分支<code>main</code>左上角带有星号<code>*</code>表示这是我们当前所在的分支，也就是说我们正在<code>main</code>分支下进行开发，同时没有其他分支名，表示本地仓库只存在main一个分支。（以往<code>Git</code>默认分支是<code>master</code>，但现在改为了<code>main</code>）</p>
+<ul>
+<li><code>git checkout -b</code>创建并切换到新的分支</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git checkout -b feature-A<br></code></pre></td></tr></tbody></table></figure>
+<p>可以创建并切换到新的分支<code>feature-A</code></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git branch feature-A<br>$ git checkout feature-A<br></code></pre></td></tr></tbody></table></figure>
+<p>实际上，连续执行以上两条命令也能收到相同的的效果。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git branch<br>* feature-A<br>  main<br></code></pre></td></tr></tbody></table></figure>
+<p>这时再来查看我们的分支，就会发现我们正处在<code>feature-A</code>分支下，但我们在正常开发、执行<code>git add</code>命令并进行<code>commit</code>时，代码就会提交至<code>feature-A</code>分支，我们称为“培育分支”，这样我们就能在不相互影响的情况下同时进行多个功能的开发！</p>
 <div class="note note-warning">
             <p>如果我上线测试时突然发现了一个<code>bug</code>，而我不知道他是他是何时产生的应该怎么办呢？</p>
           </div>
