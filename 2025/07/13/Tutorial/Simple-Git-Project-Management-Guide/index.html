@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/Simple-Git-Project-Management-Guide.png">
 <meta property="article:published_time" content="2025-07-13T03:16:13.000Z">
-<meta property="article:modified_time" content="2025-08-17T17:47:58.261Z">
+<meta property="article:modified_time" content="2025-08-17T17:57:48.983Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
@@ -303,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k 字
+          2.3k 字
         
       </span>
     
@@ -314,7 +314,7 @@
         
         
         
-          19 分钟
+          20 分钟
         
       </span>
     
@@ -518,7 +518,32 @@
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/用户名/仓库名.git<br></code></pre></td></tr></tbody></table></figure>
 <p>当前本地仓库的<code>main</code>分支和<code>Github</code>仓库的<code>main</code>分支在内容上是完全相同的。</p>
 <p><code>git pull</code>可以从远程仓库分支获取最新的代码到本地，这样只要在本地进行提交再<code>push</code>给远程仓库，就可以与其他开发者同时在同一个分支中进行作业，而如果两个人同时修改了同意部分的源代码，<code>push</code>时就很容易<strong>发生冲突</strong>，因此建议<strong>更频繁的进行</strong><code>push</code>和<code>pull</code>操作！</p>
-<h2 id="底层实现">底层实现</h2>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th><code>git clone</code></th>
+<th><code>git pull</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>用途</strong></td>
+<td>首次下载远程仓库到本地</td>
+<td>更新本地已有代码</td>
+</tr>
+<tr>
+<td><strong>执行前提</strong></td>
+<td>本地没有仓库时使用</td>
+<td>必须在已有<code>Git</code>仓库的目录内执行</td>
+</tr>
+<tr>
+<td><strong>操作内容</strong></td>
+<td>下载完整仓库、自动创建远程跟踪分支</td>
+<td>获取远程最新变更<code>git fetch</code><br> 自动合并到当前分支<code>git merge</code></td>
+</tr>
+</tbody>
+</table>
 <p><code>VCS</code> 通过一系列快照跟踪文件夹及其内容的更改，其中每个快照都封装了顶级目录中文件/文件夹的完整状态，其还维护元数据，例如每个快照的创建者、与每个快照相关的消息等等。</p>
 <h3 id="快照">快照</h3>
 <p><code>Git</code> 将某个顶级目录中文件和文件夹集合的历史记录建模为一系列快照。文件/文件夹的树模型：</p>
