@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/Shell%20Magic%20Notes%20from%20The%20Missing%20Semeste.jpeg">
 <meta property="article:published_time" content="2025-07-27T14:34:30.000Z">
-<meta property="article:modified_time" content="2025-08-21T13:15:43.876Z">
+<meta property="article:modified_time" content="2025-08-21T13:37:14.626Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary_large_image">
@@ -303,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k 字
+          2.3k 字
         
       </span>
     
@@ -314,7 +314,7 @@
         
         
         
-          19 分钟
+          20 分钟
         
       </span>
     
@@ -467,7 +467,7 @@
           </div>
 <p>相关课程在b站也有双语翻译（大部分应该都能听懂，就是有个好像是西班牙的老师带点口音听起来有点不适应😢）<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uc411N7eK/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=54c2981c1a7a8e0433b7d23096150b7a">[自制双语字幕] 计算机教育缺失的一课(2020) - 第1讲 - 课程概览与 shell</a></p>
 <h2 id="Shell">Shell</h2>
-<p>  当熟悉的可视化界面无法实现你想要的功能时，<code>Shell</code>将成为你与计算机交互的强大工具。相比图形界面有限的按钮和滑块，命令行提供了更灵活、更强大的控制方式，允许你通过文本命令和脚本实现自动化操作。本文基于<code>VMware</code>虚拟机中的<code>Ubuntu 22.04</code>发行版演示基础<code>Shell</code>操作：</p>
+<p>  当熟悉的<strong>可视化界面</strong>无法实现你想要的功能时，<code>Shell</code>将成为你与计算机交互的强大工具。相比<strong>图形界面有限的按钮和滑块</strong>，命令行提供了更灵活、更强大的控制方式，允许你通过<strong>文本命令和脚本实现自动化操作</strong>。本文基于<code>VMware</code>虚拟机中的<code>Ubuntu 22.04</code>发行版演示基础<code>Shell</code>操作：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">date</span><br>Sat Jul 26 03:27:54 PM CST 2025<br></code></pre></td></tr></tbody></table></figure>
 <p>第一行通常是用户名、机器名称和当前所在路径</p>
 <div class="note note-danger">
@@ -477,27 +477,31 @@
 <div class="note note-warning">
             <ul><li>相对路径：相对于当前位置的路径</li><li>绝对路径：完整路径，从顶部开始</li></ul>
           </div>
+<hr>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello World"</span><br>Hello World<br></code></pre></td></tr></tbody></table></figure>
-<p><code>echo</code>可以将后面的参数打印在屏幕上</p>
+<p><code>echo</code>可以将后面的参数<strong>打印</strong>在屏幕上</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">which</span> <span class="hljs-built_in">echo</span><br>/usr/bin/echo<br></code></pre></td></tr></tbody></table></figure>
-<p><code>which</code>可以用于寻找后面参数文件的绝对位置</p>
+<p><code>which</code>可以用于<strong>寻找后面参数文件的绝对位置</strong></p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">pwd</span><br>/home/richard<br></code></pre></td></tr></tbody></table></figure>
-<p><code>pwd</code>（<code>Print Working Directory</code>）打印当前所在路径</p>
+<p><code>pwd</code>（<code>Print Working Directory</code>）<strong>打印当前所在路径</strong></p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">cd</span> /home<br>richard@richard-VMware-Virtual-Platform:/home$ <br></code></pre></td></tr></tbody></table></figure>
 <p><code>cd</code>（<code>Change Directory</code>）表示更改当前目录</p>
-<p>这是更方便切换目录的方式：</p>
+<p>这是更方便<strong>切换目录</strong>的方式：</p>
 <div class="note note-warning">
             <ul><li><code>.</code>表示<strong>当前</strong>目录</li><li><code>..</code>表示<strong>父</strong>目录</li></ul>
           </div>
 <p><strong>注意</strong>：使用相对路径能提高命令在不同电脑上的<strong>兼容性</strong>！</p>
+<hr>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:/$ <span class="hljs-built_in">ls</span><br>bin                home               mnt   sbin.usr-is-merged  usr<br>bin.usr-is-merged  lib                opt   snap                var<br>boot               lib64              proc  srv<br>cdrom              lib.usr-is-merged  root  swap.img<br>dev                lost+found         run   sys<br>etc                media              sbin  tmp<br></code></pre></td></tr></tbody></table></figure>
-<p><code>ls</code>会列出当前目中的文件，这能够快速浏览文件</p>
+<p><code>ls</code>会列出当前目录中的文件，这能够快速浏览文件</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:/home$ <span class="hljs-built_in">cd</span> ~<br>richard@richard-VMware-Virtual-Platform:~$<br></code></pre></td></tr></tbody></table></figure>
 <div class="note note-warning">
-            <ul><li><code>cd ~</code>能够快速回到用户主目录</li><li><code>cd -</code>切换到上一个工作目录</li></ul>
+            <ul><li><code>cd ~</code>能够快速<strong>回到用户主目录</strong></li><li><code>cd -</code>切换到<strong>上一个工作目录</strong></li></ul>
           </div>
+<hr>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> --<span class="hljs-built_in">help</span><br>Usage: <span class="hljs-built_in">ls</span> [OPTION]... [FILE]...<br>List information about the FILEs (the current directory by default).<br>Sort entries alphabetically <span class="hljs-keyword">if</span> none of -cftuvSUX nor --<span class="hljs-built_in">sort</span> is specified.<br></code></pre></td></tr></tbody></table></figure>
-<p><code>--help</code>参数显示命令帮助信息</p>
+<p><code>--help</code>参数显示<strong>命令帮助信息</strong></p>
+<hr>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> -l<br>total 40<br>drwxr-xr-x 2 richard richard 4096 Mar  9 10:21 Desktop<br>drwxr-xr-x 2 richard richard 4096 Mar  9 10:21 Documents<br><br>lrwxrwxrwx   1 root root          7 Apr 22  2024 bin -&gt; usr/bin<br>drwxr-xr-x   2 root root       4096 Feb 26  2024 bin.usr-is-merged<br><span class="hljs-comment"># 仅列举部分进行展示说明</span><br></code></pre></td></tr></tbody></table></figure>
 <p><strong>文件类型</strong>（第<code>1</code>个字符）</p>
 <table>
@@ -617,21 +621,26 @@
 <div class="note note-danger">
             <p>⚠️<strong>注意</strong>：</p><ol><li>即使文件本身有 <code>w</code> 权限，如果所在目录没有<code> w</code>，你只能<strong>清空或删除文件内容</strong>，却仍然<strong>无法删除或重命名</strong>它</li><li>如果我想要访问一个目录，<strong>必须拥有其所有父目录的权限</strong>：<code>/usr/bin/echo</code>我必须拥有<code>/usr</code> <code>/bin</code>目录的权限，否则我将不被允许访问该文件，因为我将无法进入其中的目录</li></ol>
           </div>
-<p><code>mv</code>能将文件修改位置并重命名<br>
-<code>cp</code>复制文件 需要两个参数 一个是要复制的文件路径 一个目标文件路径<br>
-<code>rm</code>用于删除文件<br>
-<code>rmdir</code>能删除一个目录 但它只能删除空目录 防止不小心删除一大堆文件<br>
-<code>mkdir</code>创建目录</p>
+<p><code>mv</code>能将文件<strong>修改位置并重命名</strong><br>
+<code>cp</code>复制文件 需要两个参数 一个要<strong>复制的文件路径</strong> <strong>一个目标文件路径</strong><br>
+<code>rm</code>用于<strong>删除文件</strong><br>
+<code>rmdir</code>能<strong>删除一个目录</strong> 但它只能删除<strong>空目录</strong> 防止不小心删除一大堆文件<br>
+<code>mkdir</code><strong>创建目录</strong></p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> My Photos<br></code></pre></td></tr></tbody></table></figure>
 <p><code>mkdir</code>创建目录</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> <span class="hljs-string">"My Photos"</span><br></code></pre></td></tr></tbody></table></figure>
-<p>这里如果不加上上引号则会创建两个目录<br>
-<code>man+指令</code> 查找手册<br>
-<code>ctrl+l</code>清空窗口</p>
+<p>这里如果不加上上引号则会创建"My"和"Photos"两个目录，因为<code>Bash</code>（或其他 <code>Shell</code>）会<strong>将空格视为命令参数的分隔符</strong>，相当于<strong>命令收到了两个独立的参数</strong>，因此它会创建两个独立的目录！</p>
+<div class="note note-info">
+            <p>或者使用<strong>反斜杠</strong>来转义空格，反斜杠会告诉 Shell：下一个字符是普通字符，不要把它当做特殊符号处理！</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> My\ Photos<br></code></pre></td></tr></tbody></table></figure>
+          </div>
+<p><code>man+指令</code> 查找手册</p>
+<p><code>ctrl</code>+<code>l</code>清空窗口</p>
 <h3 id="输入流和输出流">输入流和输出流</h3>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> hello &gt; hello.txt<br></code></pre></td></tr></tbody></table></figure>
-<p><code>&gt;</code>覆盖输出到文件<br>
-<code>&lt;</code>从文件读取输入</p>
+<div class="note note-warning">
+            <ul><li><code>&gt;</code>覆盖输出到文件</li><li><code>&lt;</code>从文件读取输入</li></ul>
+          </div>
+<hr>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">cat</span> hello.txt<br>hello<br></code></pre></td></tr></tbody></table></figure>
 <p>通过<code>cat</code>指令输出文件内容</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">cat</span> &lt;hello.txt&gt;hello2.txt<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">cat</span> hello2.txt<br>hello<br></code></pre></td></tr></tbody></table></figure>
@@ -641,20 +650,25 @@
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> -l|<span class="hljs-built_in">tail</span> -n1<br>drwxrwxr-x 3 richard richard 4096 Mar  9 12:26 web<br></code></pre></td></tr></tbody></table></figure>
 <p>管道运算符<code>|</code>作用是将<strong>左侧命令的输出</strong>作为<strong>右侧命令的输入</strong>：可以连接多个命令形成<strong>处理流水线</strong></p>
 <p><code>tail</code>将输出最后一行的内容</p>
+<hr>
 <h3 id="用户权限管理">用户权限管理</h3>
-<p><code>root</code>相当于<code>Windows</code>的管理员权限，是一位<strong>超级用户</strong>，可以做任何想做的事情，倘若一直使用<code>root</code>用户操作计算机，如果运行了错误的程序，那会彻底毁坏你的电脑！</p>
+<p><code>root</code>相当于<code>Windows</code>的管理员权限，是一位<strong>超级用户</strong>，可以做任何想做的事情，但是倘若一直使用<code>root</code>用户操作计算机，如果运行了错误的程序，那会彻底毁坏你的电脑！</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:/sys/class/backlight$ <span class="hljs-built_in">sudo</span> su<br>[<span class="hljs-built_in">sudo</span>] password <span class="hljs-keyword">for</span> richard: <br>root@richard-VMware-Virtual-Platform:/sys/class/backlight# <br></code></pre></td></tr></tbody></table></figure>
 <p>通过<code>sudo su</code>来进入<code>root</code>身份，同时提示符由<code>$</code>变为<code>#</code></p>
+<hr>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@richard-VMware-Virtual-Platform:/sys/class/backlight# <span class="hljs-built_in">exit</span><br><span class="hljs-built_in">exit</span><br>richard@richard-VMware-Virtual-Platform:/sys/class/backlight$<br></code></pre></td></tr></tbody></table></figure>
 <p><code>exit</code>来退出用户权限</p>
+<hr>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ xdg-open hello.txt<br></code></pre></td></tr></tbody></table></figure>
 <p>这样就可以直接在<code>terminal</code>打开文件！</p>
+<hr>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ foo=bar<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-variable">$foo</span><br>bar<br></code></pre></td></tr></tbody></table></figure>
 <p>在<code>shell</code>中，<code>$</code>符号是一个特殊字符，主要用于变量展开。当你在变量名前面加上$时，<code>shell</code>会将其替换为该变量的值！</p>
 <ul>
 <li><code> foo</code> 会被<code>Shell</code>视为普通字符串</li>
 <li><code>$foo</code> 告诉<code>Shell</code>这是一个需要展开的变量</li>
 </ul>
+<hr>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello"</span><br>Hello<br>richard@richard-VMware-Virtual-Platform:~$ foo=World<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello foo"</span><br>Hello foo<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello <span class="hljs-variable">$foo</span>"</span><br>Hello World<br></code></pre></td></tr></tbody></table></figure>
 <p>在<code>shell</code>中我们一定要非常注意<strong>空格</strong><code>space</code>的使用，它是用作不同参数间的分隔符，倘若多打一个可能就会出现报错！</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-literal">false</span><br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> $?<br>1<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-literal">true</span><br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> $?<br>0<br></code></pre></td></tr></tbody></table></figure>
@@ -676,6 +690,7 @@
 <p><code>shell</code>中<code>||</code>同样遵循<strong>短路原则</strong>，<code>&amp;&amp;</code>同理！</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"We are now at <span class="hljs-subst">$(pwd)</span>"</span><br>We are now at /home/richard<br></code></pre></td></tr></tbody></table></figure>
 <p><code>shell</code>中使用<code>$(command)</code>进行<strong>命令替换</strong></p>
+<hr>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span><br>Desktop    Downloads   hello.txt  Pictures  snap       Videos<br>Documents  hello2.txt  Music      Public    Templates  web<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> *.txt<br>hello2.txt  hello.txt<br></code></pre></td></tr></tbody></table></figure>
 <p><code>*</code>是一个<strong>通配符</strong>（<code>globbing</code>）：表示<strong>匹配任意数量的任意字符</strong>（<strong>包括零个字符</strong>）。<code>Shell</code>会在执行<code>ls</code> 前先展开 <code>*.txt</code>，将其替换为所有匹配的文件名，相当于寻找所有后缀为<code>.txt</code>的文件！</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> hello?.txt<br>hello2.txt<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> hello*.txt<br>hello2.txt  hello.txt<br></code></pre></td></tr></tbody></table></figure>
