@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/Shell%20Magic%20Notes%20from%20The%20Missing%20Semeste.jpeg">
 <meta property="article:published_time" content="2025-07-27T14:34:30.000Z">
-<meta property="article:modified_time" content="2025-08-21T09:45:58.570Z">
+<meta property="article:modified_time" content="2025-08-21T13:15:43.876Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary_large_image">
@@ -462,23 +462,21 @@
             
               <div class="markdown-body">
                 
-                <blockquote>
-<p>对计算机的学生而言，许多开发工具是未来老师或企业默认你已经“精通”的，然而未经学校系统培训的我们或许会对此感到迷茫，正如 MIT 课程 <strong><a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/">The Missing Semester of Your CS Education</a></strong> 所强调的： <strong>“掌握基础工具是程序员的核心竞争力”</strong>。这个课程会帮助你入门、了解一些计算机常用的开发工具，也算是程序员的自我修养吧！<strong>Let’s Go！</strong>😄</p>
-</blockquote>
+                <div class="note note-info">
+            <p>对计算机的学生而言，许多开发工具是未来老师或企业默认你已经“精通”的，然而未经学校系统培训的我们或许会对此感到迷茫，正如 MIT 课程 <strong><a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/">The Missing Semester of Your CS Education</a></strong> 所强调的： <strong>“掌握基础工具是程序员的核心竞争力”</strong>。这个课程会帮助你入门、了解一些计算机常用的开发工具，也算是程序员的自我修养吧！<strong>Let’s Go！</strong>😄</p>
+          </div>
 <p>相关课程在b站也有双语翻译（大部分应该都能听懂，就是有个好像是西班牙的老师带点口音听起来有点不适应😢）<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uc411N7eK/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=54c2981c1a7a8e0433b7d23096150b7a">[自制双语字幕] 计算机教育缺失的一课(2020) - 第1讲 - 课程概览与 shell</a></p>
 <h2 id="Shell">Shell</h2>
 <p>  当熟悉的可视化界面无法实现你想要的功能时，<code>Shell</code>将成为你与计算机交互的强大工具。相比图形界面有限的按钮和滑块，命令行提供了更灵活、更强大的控制方式，允许你通过文本命令和脚本实现自动化操作。本文基于<code>VMware</code>虚拟机中的<code>Ubuntu 22.04</code>发行版演示基础<code>Shell</code>操作：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">date</span><br>Sat Jul 26 03:27:54 PM CST 2025<br></code></pre></td></tr></tbody></table></figure>
 <p>第一行通常是用户名、机器名称和当前所在路径</p>
-<ul>
-<li><code>Windows</code>中路径通常使用<strong>反斜杠</strong><code>\</code>分隔，每个驱动器都有一个单独的路径结构。</li>
-<li><code>Linux</code> / <code>macOS</code> 中这些路径使用<strong>正斜杠</strong><code>/</code>分隔，他们挂载在同一个命名空间下。</li>
-</ul>
+<div class="note note-danger">
+            <ul><li><code>Windows</code>中路径通常使用<strong>反斜杠</strong><code>\</code>分隔，每个驱动器都有一个单独的路径结构。</li><li><code>Linux</code> / <code>macOS</code> 中这些路径使用<strong>正斜杠</strong><code>/</code>分隔，他们挂载在同一个命名空间下。</li></ul>
+          </div>
 <p>开头的斜杠表示从文件系统的顶部开始。</p>
-<ul>
-<li>相对路径：相对于当前位置的路径</li>
-<li>绝对路径：完整路径，从顶部开始</li>
-</ul>
+<div class="note note-warning">
+            <ul><li>相对路径：相对于当前位置的路径</li><li>绝对路径：完整路径，从顶部开始</li></ul>
+          </div>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello World"</span><br>Hello World<br></code></pre></td></tr></tbody></table></figure>
 <p><code>echo</code>可以将后面的参数打印在屏幕上</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">which</span> <span class="hljs-built_in">echo</span><br>/usr/bin/echo<br></code></pre></td></tr></tbody></table></figure>
@@ -488,18 +486,16 @@
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">cd</span> /home<br>richard@richard-VMware-Virtual-Platform:/home$ <br></code></pre></td></tr></tbody></table></figure>
 <p><code>cd</code>（<code>Change Directory</code>）表示更改当前目录</p>
 <p>这是更方便切换目录的方式：</p>
-<ul>
-<li><code>.</code>表示<strong>当前</strong>目录</li>
-<li><code>..</code>表示<strong>父</strong>目录</li>
-</ul>
+<div class="note note-warning">
+            <ul><li><code>.</code>表示<strong>当前</strong>目录</li><li><code>..</code>表示<strong>父</strong>目录</li></ul>
+          </div>
 <p><strong>注意</strong>：使用相对路径能提高命令在不同电脑上的<strong>兼容性</strong>！</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:/$ <span class="hljs-built_in">ls</span><br>bin                home               mnt   sbin.usr-is-merged  usr<br>bin.usr-is-merged  lib                opt   snap                var<br>boot               lib64              proc  srv<br>cdrom              lib.usr-is-merged  root  swap.img<br>dev                lost+found         run   sys<br>etc                media              sbin  tmp<br></code></pre></td></tr></tbody></table></figure>
 <p><code>ls</code>会列出当前目中的文件，这能够快速浏览文件</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:/home$ <span class="hljs-built_in">cd</span> ~<br>richard@richard-VMware-Virtual-Platform:~$<br></code></pre></td></tr></tbody></table></figure>
-<ul>
-<li><code>cd ~</code>能够快速回到用户主目录</li>
-<li><code>cd -</code>切换到上一个工作目录</li>
-</ul>
+<div class="note note-warning">
+            <ul><li><code>cd ~</code>能够快速回到用户主目录</li><li><code>cd -</code>切换到上一个工作目录</li></ul>
+          </div>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> --<span class="hljs-built_in">help</span><br>Usage: <span class="hljs-built_in">ls</span> [OPTION]... [FILE]...<br>List information about the FILEs (the current directory by default).<br>Sort entries alphabetically <span class="hljs-keyword">if</span> none of -cftuvSUX nor --<span class="hljs-built_in">sort</span> is specified.<br></code></pre></td></tr></tbody></table></figure>
 <p><code>--help</code>参数显示命令帮助信息</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> -l<br>total 40<br>drwxr-xr-x 2 richard richard 4096 Mar  9 10:21 Desktop<br>drwxr-xr-x 2 richard richard 4096 Mar  9 10:21 Documents<br><br>lrwxrwxrwx   1 root root          7 Apr 22  2024 bin -&gt; usr/bin<br>drwxr-xr-x   2 root root       4096 Feb 26  2024 bin.usr-is-merged<br><span class="hljs-comment"># 仅列举部分进行展示说明</span><br></code></pre></td></tr></tbody></table></figure>
@@ -618,11 +614,9 @@
 </tr>
 </tbody>
 </table>
-<p><strong>注意</strong>：</p>
-<ol>
-<li>即使文件本身有 <code>w</code> 权限，如果所在目录没有<code> w</code>，你只能<strong>清空或删除文件内容</strong>，却仍然<strong>无法删除或重命名</strong>它</li>
-<li>如果我想要访问一个目录，<strong>必须拥有其所有父目录的权限</strong>：<code>/usr/bin/echo</code>我必须拥有<code>/usr</code> <code>/bin</code>目录的权限，否则我将不被允许访问该文件，因为我将无法进入其中的目录</li>
-</ol>
+<div class="note note-danger">
+            <p>⚠️<strong>注意</strong>：</p><ol><li>即使文件本身有 <code>w</code> 权限，如果所在目录没有<code> w</code>，你只能<strong>清空或删除文件内容</strong>，却仍然<strong>无法删除或重命名</strong>它</li><li>如果我想要访问一个目录，<strong>必须拥有其所有父目录的权限</strong>：<code>/usr/bin/echo</code>我必须拥有<code>/usr</code> <code>/bin</code>目录的权限，否则我将不被允许访问该文件，因为我将无法进入其中的目录</li></ol>
+          </div>
 <p><code>mv</code>能将文件修改位置并重命名<br>
 <code>cp</code>复制文件 需要两个参数 一个是要复制的文件路径 一个目标文件路径<br>
 <code>rm</code>用于删除文件<br>
@@ -661,14 +655,13 @@
 <li><code> foo</code> 会被<code>Shell</code>视为普通字符串</li>
 <li><code>$foo</code> 告诉<code>Shell</code>这是一个需要展开的变量</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">ichard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello"</span><br>Hello<br>richard@richard-VMware-Virtual-Platform:~$ foo=World<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello foo"</span><br>Hello foo<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello <span class="hljs-variable">$foo</span>"</span><br>Hello World<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello"</span><br>Hello<br>richard@richard-VMware-Virtual-Platform:~$ foo=World<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello foo"</span><br>Hello foo<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello <span class="hljs-variable">$foo</span>"</span><br>Hello World<br></code></pre></td></tr></tbody></table></figure>
 <p>在<code>shell</code>中我们一定要非常注意<strong>空格</strong><code>space</code>的使用，它是用作不同参数间的分隔符，倘若多打一个可能就会出现报错！</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-literal">false</span><br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> $?<br>1<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-literal">true</span><br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> $?<br>0<br></code></pre></td></tr></tbody></table></figure>
 <p><code>$? </code>是一个特殊变量，存储上一个命令的退出状态码</p>
-<ul>
-<li><code>false</code> 是一个 Shell 内置命令，返回非零退出状态（失败）设置退出状态码为 1（表示失败）</li>
-<li><code>true</code> 也是一个 Shell 内置命令，返回零退出状态（成功）退出状态码被设为 0（表示成功）</li>
-</ul>
+<div class="note note-warning">
+            <ul><li><code>false</code> 是一个 Shell 内置命令，返回非零退出状态（失败）设置退出状态码为 1（表示失败）</li><li><code>true</code> 也是一个 Shell 内置命令，返回零退出状态（成功）退出状态码被设为 0（表示成功）</li></ul>
+          </div>
 <p>  这里看上去有点反常理，我们学的其他编程语言中<code>0</code>是<code>false</code>，非零是<code>true</code>，为什么这里反过来了？<br>
   当我们想到<code>c</code>、<code>c++</code>中<code>main</code><strong>函数结束的返回值</strong>或许就不奇怪了！<code>main() </code>函数默认返回<code>0</code> 表示成功，非零表示错误（如 <code>return 1</code>;）。</p>
 <p>再考虑到程序运行只有两种可能：</p>
@@ -676,12 +669,9 @@
 <li>完全成功（<strong>唯一状态 0</strong>）</li>
 <li>失败（可能有多种原因，<strong>用不同非零值区分</strong>）：</li>
 </ol>
-<ul>
-<li>0 = 没有错误（成功）</li>
-<li>1 = 通用错误</li>
-<li>2 = 参数错误</li>
-<li>3 = 文件不存在</li>
-</ul>
+<div class="note note-warning">
+            <ul><li>0 = 没有错误（成功）</li><li>1 = 通用错误</li><li>2 = 参数错误</li><li>3 = 文件不存在</li></ul>
+          </div>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-literal">false</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"Oops fail"</span><br>Oops fail<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-literal">true</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"Will be not be printed"</span><br>richard@richard-VMware-Virtual-Platform:~$<br></code></pre></td></tr></tbody></table></figure>
 <p><code>shell</code>中<code>||</code>同样遵循<strong>短路原则</strong>，<code>&amp;&amp;</code>同理！</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"We are now at <span class="hljs-subst">$(pwd)</span>"</span><br>We are now at /home/richard<br></code></pre></td></tr></tbody></table></figure>
