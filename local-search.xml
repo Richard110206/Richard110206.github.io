@@ -4,16 +4,41 @@
   
   
   <entry>
-    <title>Linkedlist</title>
-    <link href="/2025/08/22/Algorithm/Linkedlist/"/>
-    <url>/2025/08/22/Algorithm/Linkedlist/</url>
+    <title>Huashu Cup Conclusion</title>
+    <link href="/2025/08/22/Mathematical%20Modeling%20Tutorial/Huashu%20Cup%20Conclusion/"/>
+    <url>/2025/08/22/Mathematical%20Modeling%20Tutorial/Huashu%20Cup%20Conclusion/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<p>  在“华数杯”数学建模竞赛中，我们的队伍仅仅获得“<strong>优秀奖</strong>”，草草收场，于我，上次的一等奖让我有些心高气傲，很多<strong>细节方面</strong>没有关注到位，间接导致了失败，现根据官方提供的评价进行<strong>自我剖析</strong>，为即将到来的国赛摩拳擦掌！</p><p><img src="https://github.com/Richard110206/Blog-image/blob/main/article/Huashu-Cup-Conclusion/assessment.jpg?raw=true" alt="华数杯官方评语"></p><p>比赛论文如下：</p><iframe src="https://cdn.jsdelivr.net/gh/Richard110206/Blog-image@main/article/Huashu-Cup-Conclusion/CCM2501873.pdf" width="100%" height="800px"></iframe><p>⚠️⚠️⚠️</p><ul><li>摘要是论文的门面，需要将使用的<strong>关键数学模型</strong>（依据的外部资料标准）、<strong>求解步骤</strong>进行呈现，最后还要“结果显示”，将<strong>重点求解结果进行描述</strong>！</li><li>一个模型求解完成后，不能仅仅呈现图表作为结尾，要<strong>用语言文字对图表求解结果进行分析</strong>！</li><li>绘制图表的格式要更加多样，注意<strong>颜色的搭配</strong>，字体<strong>字号</strong>的呈现！</li></ul>]]></content>
     
     
     <categories>
       
-      <category>Algorithm</category>
+      <category>Mathematical Modeling Tutorial</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>review</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Array and Linkedlist</title>
+    <link href="/2025/08/22/Data%20structure/Linkedlist/"/>
+    <url>/2025/08/22/Data%20structure/Linkedlist/</url>
+    
+    <content type="html"><![CDATA[<h1>Introduction</h1><p>  博主上学期结束了数据结构的学习，但是由于高数、线代、离散等课程积压，课程进度过快，数据结构学的粗枝大叶，很多地方蜻蜓点水般一笔带过，甚至是理论课学思想，实践课STL直接上，很多地方没有仔细钻研，考虑到下学期<strong>程序综合实践有“CCF-CSP认证”</strong>，以及数据结构 &amp;&amp; 算法的重要性，遂打算再次进行学习相关内容，但相对的会有详略取舍！</p><h2 id="Physical-Structure">Physical Structure</h2><p>内存是<strong>所有程序的共享资源</strong>，当某块内存被某个程序占用时，则无法被其他程序同时使用。就正如我们平时买电子产品时，讨论的8G、16G、32G的内存，当你同时打开开多个程序时就可能发生卡顿的现象。因此在数据结构和算法设计中，<strong>内存资源</strong>是一个很重要的考虑因素。</p><div class="note note-info">            <p>比如，算法所占用的内存峰值不应超过系统剩余空闲内存；如果<strong>缺少连续大块的内存空间</strong>，那么所选用的数据结构必须能够<strong>存储在分散的内存空间</strong>里！</p>          </div><p><img src="https://github.com/Richard110206/Blog-image/blob/main/article/DataStructure/Physical-Storage-Address.png?raw=true" alt="物理存储方式"></p><p>所有的数据结构都是基于<strong>数组</strong>（<strong>连续空间存储</strong>）、<strong>链表</strong>（<strong>分散空间存储</strong>）或二者的组合实现的！</p><ul><li>基于<strong>数组</strong>可实现：栈、队列、哈希表、树、堆、图、矩阵、张量等</li><li>基于<strong>链表</strong>可实现：栈、队列、哈希表、树、堆、图、等</li></ul><h2 id="Array">Array</h2><p><img src="https://github.com/Richard110206/Blog-image/blob/main/article/DataStructure/Address-Caculate.png?raw=true" alt="数组地址计算"></p><ul><li>数组的索引本质上是<strong>内存地址的偏移量</strong></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Data Structure</category>
       
     </categories>
     
@@ -102,7 +127,7 @@
     <link href="/2025/08/13/other/Casual-Chronicles/"/>
     <url>/2025/08/13/other/Casual-Chronicles/</url>
     
-    <content type="html"><![CDATA[<h1>Casual Chronicles （生活杂谈）</h1><p>记录对学习、生活、社会的<strong>一点想法</strong>，或是一些看到的<strong>有意思的内容</strong>！</p><h1>2025</h1><h2 id="7-25">7.25</h2><p>  听了UC Berkeley的CS61A 感觉US的CS课程比国内超前太多了！图文并茂、简洁利索、一目了然的！他们注重<strong>编程思想的培养</strong>，和<strong>项目实战</strong>，在实践中感受编程的魅力！而我们的老师总是长篇累牍的教授语法知识，煞是枯燥无味！</p><h2 id="8-12">8.12</h2><p>  在AI高速发展的当下，我们计算机专业的学习也应该与时俱进，从前我总是习惯于看书学习，从最基础的点开始将知识吸收，往往还没做出什么成果，学习的热情就被消耗殆尽，感叹一句“真难啊”！但是现在有了AI的帮助，我们的学习或许可以不那么注重细节，可以<strong>自顶向下的</strong>，<strong>得“意”忘“形”的</strong>，我们只需先了解其大致框架、工作原理，再利用AI在框架中缝缝补补，哪里有问题去学哪里，这样不仅可以短时间内做出一定成果提升成就感，同时也避免的花费大量时间摄入无用或极少使用的知识！</p><h2 id="8-15">8.15</h2><p>  今天和高中同学聚餐，聊完心里挺多感触的——不同学校的教材、教学进度和深度，差别真的太大了。<br>  之前刷手机看到BUAA的学生，大一上学期专业课的期末大作业，那难度望而生畏；饭桌上也听同学说，他们课堂上在学用MATLAB做人脸识别，可我们现在还在跟基本语法死磕。<br>  回头想想自己的进度，才更真切地感受到学校层次带来的差异。好学校的学生和老师要求本就更紧迫，反观自己，如果没有这种外界的推力，恐怕真会像温水煮青蛙，在不知不觉中就被环境带着，慢慢落后于时代，也落后于那些本来就走在前面的同学。<br>  尤其佩服一位在top3的同学，大一学年不仅保持rank1的高绩点，还能从零开始，一年里啃下那么多CS基础知识，跟着导师做各种项目。<br>  我也知道<strong>不能好高骛远</strong>，但还是得时时抬头看看更高的山。不用急着跟别人比，但得给自己找些“<strong>自驱力</strong>”，别停下往前走的脚步。</p><h2 id="8-16">8.16</h2><p>  看到同学学习进度之快、掌握之扎实，瞠目结舌！<br>  确实之前不应该焦急的广泛学习各种语言，c++、Python、MATLAB，现在发现其实仅仅需要学明白c++，其他语言的学习都是以天可以进行速通的，AI时代纠结于底层语法更是没有什么必要的，“AI能完成的 都不需要我们进行学习”，这意味着我们可以更高效的进行项目的学习和开发，速度与效率大大提升！</p><h2 id="8-18">8.18</h2><p>  看到<a href="https://waylau.com/">老卫（柳伟卫）的博客 - 关注编程、系统架构、性能优化</a><br>  从2009-2025年，<strong>持续不断的进行博客创作</strong>，从开始的<code>Github</code>教程，这一步步见证了<strong>从小白到大佬的蜕变之路</strong>，也更加坚定了我持续学习进行博客创作的动力！</p><h2 id="8-22">8.22</h2><p>  开会区up主太精辟了！<img src="https://www.bilibili.com/video/BV1Y6uFztEgS/?spm_id_from=333.1387.homepage.video_card.click&amp;vd_source=54c2981c1a7a8e0433b7d23096150b7a" alt="暑假，越来越形同虚设了"></p><div class="note note-info">            <p>“不要在迷茫的时候，盲目堆积工作量来麻痹自己”</p>          </div>]]></content>
+    <content type="html"><![CDATA[<h1>Casual Chronicles （生活杂谈）</h1><p>记录对学习、生活、社会的<strong>一点想法</strong>，或是一些看到的<strong>有意思的内容</strong>！</p><h1>2025</h1><h2 id="7-25">7.25</h2><p>  听了UC Berkeley的CS61A 感觉US的CS课程比国内超前太多了！图文并茂、简洁利索、一目了然的！他们注重<strong>编程思想的培养</strong>，和<strong>项目实战</strong>，在实践中感受编程的魅力！而我们的老师总是长篇累牍的教授语法知识，煞是枯燥无味！</p><h2 id="8-12">8.12</h2><p>  在AI高速发展的当下，我们计算机专业的学习也应该与时俱进，从前我总是习惯于看书学习，从最基础的点开始将知识吸收，往往还没做出什么成果，学习的热情就被消耗殆尽，感叹一句“真难啊”！但是现在有了AI的帮助，我们的学习或许可以不那么注重细节，可以<strong>自顶向下的</strong>，<strong>得“意”忘“形”的</strong>，我们只需先了解其大致框架、工作原理，再利用AI在框架中缝缝补补，哪里有问题去学哪里，这样不仅可以短时间内做出一定成果提升成就感，同时也避免的花费大量时间摄入无用或极少使用的知识！</p><h2 id="8-15">8.15</h2><p>  今天和高中同学聚餐，聊完心里挺多感触的——不同学校的教材、教学进度和深度，差别真的太大了。<br>  之前刷手机看到BUAA的学生，大一上学期专业课的期末大作业，那难度望而生畏；饭桌上也听同学说，他们课堂上在学用MATLAB做人脸识别，可我们现在还在跟基本语法死磕。<br>  回头想想自己的进度，才更真切地感受到学校层次带来的差异。好学校的学生和老师要求本就更紧迫，反观自己，如果没有这种外界的推力，恐怕真会像温水煮青蛙，在不知不觉中就被环境带着，慢慢落后于时代，也落后于那些本来就走在前面的同学。<br>  尤其佩服一位在top3的同学，大一学年不仅保持rank1的高绩点，还能从零开始，一年里啃下那么多CS基础知识，跟着导师做各种项目。<br>  我也知道<strong>不能好高骛远</strong>，但还是得时时抬头看看更高的山。不用急着跟别人比，但得给自己找些“<strong>自驱力</strong>”，别停下往前走的脚步。</p><h2 id="8-16">8.16</h2><p>  看到同学学习进度之快、掌握之扎实，瞠目结舌！<br>  确实之前不应该焦急的广泛学习各种语言，c++、Python、MATLAB，现在发现其实仅仅需要学明白c++，其他语言的学习都是以天可以进行速通的，AI时代纠结于底层语法更是没有什么必要的，“AI能完成的 都不需要我们进行学习”，这意味着我们可以更高效的进行项目的学习和开发，速度与效率大大提升！</p><h2 id="8-18">8.18</h2><p>  看到<a href="https://waylau.com/">老卫（柳伟卫）的博客 - 关注编程、系统架构、性能优化</a><br>  从2009-2025年，<strong>持续不断的进行博客创作</strong>，从开始的<code>Github</code>教程，这一步步见证了<strong>从小白到大佬的蜕变之路</strong>，也更加坚定了我持续学习进行博客创作的动力！</p><h2 id="8-22">8.22</h2><p>  开会区up主太精辟了！<a href="https://www.bilibili.com/video/BV1Y6uFztEgS/?spm_id_from=333.1387.homepage.video_card.click&amp;vd_source=54c2981c1a7a8e0433b7d23096150b7a">暑假，越来越形同虚设了</a></p><div class="note note-info">            <p>“不要在迷茫的时候，盲目堆积工作量来麻痹自己”</p>          </div>]]></content>
     
     
     
@@ -298,31 +323,6 @@
   
   
   <entry>
-    <title>Optimization Algorithm in Mathematical Modeling</title>
-    <link href="/2025/07/19/Mathematical%20Modeling%20Tutorial/Optimization-Algorithm-in-Mathematical-Modeling/"/>
-    <url>/2025/07/19/Mathematical%20Modeling%20Tutorial/Optimization-Algorithm-in-Mathematical-Modeling/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-    
-    <categories>
-      
-      <category>Mathematical Modeling Tutorial</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>algorithm</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>The Four Pillars of OOP in C++</title>
     <link href="/2025/07/17/CPP/The-Four-Pillars-of-OOP-in-C++/"/>
     <url>/2025/07/17/CPP/The-Four-Pillars-of-OOP-in-C++/</url>
@@ -458,9 +458,9 @@
       
       <tag>queue</tag>
       
-      <tag>sort</tag>
-      
       <tag>hashtable</tag>
+      
+      <tag>sort</tag>
       
     </tags>
     
