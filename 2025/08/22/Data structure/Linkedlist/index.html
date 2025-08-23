@@ -19,16 +19,16 @@
   <meta name="author" content="Li Qinxuan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Introduction   博主上学期结束了数据结构的学习，但是由于高数、线代、离散等课程积压，课程进度过快，数据结构学的粗枝大叶，很多地方蜻蜓点水般一笔带过，甚至是理论课学思想，实践课STL直接上，很多地方没有仔细钻研，考虑到下学期程序综合实践有“CCF-CSP认证”，以及数据结构 &amp;&amp; 算法的重要性，遂打算再次进行学习相关内容，但相对的会有详略取舍！ Physical Str">
+    <meta name="description" content="Reviewing the chapter about arrays and linked lists in Data Structures">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Array and Linkedlist">
 <meta property="og:url" content="http://example.com/2025/08/22/Data%20structure/Linkedlist/index.html">
 <meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
-<meta property="og:description" content="Introduction   博主上学期结束了数据结构的学习，但是由于高数、线代、离散等课程积压，课程进度过快，数据结构学的粗枝大叶，很多地方蜻蜓点水般一笔带过，甚至是理论课学思想，实践课STL直接上，很多地方没有仔细钻研，考虑到下学期程序综合实践有“CCF-CSP认证”，以及数据结构 &amp;&amp; 算法的重要性，遂打算再次进行学习相关内容，但相对的会有详略取舍！ Physical Str">
+<meta property="og:description" content="Reviewing the chapter about arrays and linked lists in Data Structures">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/Blog-image/refs/heads/main/cover/linkedlist.webp">
 <meta property="article:published_time" content="2025-08-22T08:16:33.000Z">
-<meta property="article:modified_time" content="2025-08-22T18:25:19.347Z">
+<meta property="article:modified_time" content="2025-08-23T06:09:51.476Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="datastructure">
 <meta property="article:tag" content="linkedlist">
@@ -304,7 +304,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          2k 字
         
       </span>
     
@@ -315,7 +315,7 @@
         
         
         
-          12 分钟
+          17 分钟
         
       </span>
     
@@ -538,6 +538,120 @@
       </div>
     </div>
 <figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//遍历链表，查找其中值为 target 的节点，输出该节点在链表中的索引</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span> <span class="hljs-params">(Node* head,<span class="hljs-type">int</span> target)</span></span>{<br>    <span class="hljs-type">int</span> index=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span>(head!=<span class="hljs-literal">nullptr</span>){<br>        <span class="hljs-keyword">if</span>(head-&gt;val==target){<br>            <span class="hljs-keyword">return</span> index;<br>        }<br>        head=head-&gt;next;<br>        index++;<br>    }<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h2 id="Array-VS-Linkedlist">Array  VS.  Linkedlist</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">数组</th>
+<th style="text-align:center">链表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">存储方式</td>
+<td style="text-align:center">连续内存空间</td>
+<td style="text-align:center">分散内存空间</td>
+</tr>
+<tr>
+<td style="text-align:center">容量扩展</td>
+<td style="text-align:center">长度不可变</td>
+<td style="text-align:center">可灵活扩展</td>
+</tr>
+<tr>
+<td style="text-align:center">内存效率</td>
+<td style="text-align:center">元素占用内存少、但可能浪费空间</td>
+<td style="text-align:center">元素占用内存多</td>
+</tr>
+<tr>
+<td style="text-align:center">访问元素</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:center">添加元素</td>
+<td style="text-align:center">O(n)</td>
+<td style="text-align:center">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:center">删除元素</td>
+<td style="text-align:center">O(n)</td>
+<td style="text-align:center">O(1)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="常见链表类型">常见链表类型</h2>
+<p><img src="https://github.com/Richard110206/Blog-image/blob/main/article/DataStructure/kindoflinkedlist.png?raw=true" srcset="/img/loading.gif" lazyload alt="常见链表种类"></p>
+<ul>
+<li>
+<p><strong>单向链表</strong>：即前面介绍的普通链表。单向链表的节点包含值和指向下一节点的引用两项数据。我们将首个节点称为头节点，将最后一个节点称为尾节点，尾节点指向空 None 。</p>
+</li>
+<li>
+<p><strong>环形链表</strong>：如果我们令<strong>单向链表的尾节点指向头节点</strong>（首尾相接），则得到一个环形链表。在环形链表中，任意节点都可以视作头节点。</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span>{<br>    <span class="hljs-type">int</span> val;<br>    Node* next;<br>    <span class="hljs-built_in">Node</span>(x):<span class="hljs-built_in">val</span>(x),<span class="hljs-built_in">next</span>(<span class="hljs-literal">nullptr</span>){}<br>};<br>Node* head=<span class="hljs-keyword">new</span> <span class="hljs-built_in">Node</span>(<span class="hljs-number">1</span>);<br><br>   ...<br>   ...<br>   ...<br><br>   Node* tail=<span class="hljs-keyword">new</span> <span class="hljs-built_in">Node</span>(<span class="hljs-number">5</span>);<br>   tail-&gt;next=head;<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><strong>双向链表</strong>：与单向链表相比，双向链表<strong>记录了两个方向的引用</strong>。双向链表的节点定义同时包含指向<strong>后继节点</strong>和<strong>前驱节点</strong>指针。相较于单向链表，双向链表更具<strong>灵活性</strong>，可以<strong>朝两个方向遍历链表</strong>，但相应地也需要占用更多的内存空间。</li>
+</ul>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span>{<br>    <span class="hljs-type">int</span> val;<br>    Node* next;<br>    Node* prev;<br>    <span class="hljs-built_in">Node</span>(x): <span class="hljs-built_in">val</span>(x),<span class="hljs-built_in">next</span>(<span class="hljs-literal">nullptr</span>),<span class="hljs-built_in">prev</span>(<span class="hljs-literal">nullptr</span>){}<br>};<br></code></pre></td></tr></tbody></table></figure>
+<h2 id="计算机存储设备">计算机存储设备</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">硬盘</th>
+<th style="text-align:center">内存</th>
+<th style="text-align:center">缓存</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">用途</td>
+<td style="text-align:center">长期存储数据，包括操作系统、程序、文件等</td>
+<td style="text-align:center">临时存储当前运行的程序和正在处理的数据</td>
+<td style="text-align:center">存储经常访问的数据和指令，减少 CPU 访问内存的次数</td>
+</tr>
+<tr>
+<td style="text-align:center">易失性</td>
+<td style="text-align:center">断电后数据不会丢失</td>
+<td style="text-align:center">断电后数据会丢失</td>
+<td style="text-align:center">断电后数据会丢失</td>
+</tr>
+<tr>
+<td style="text-align:center">容量</td>
+<td style="text-align:center">较大，TB 级别</td>
+<td style="text-align:center">较小，GB 级别</td>
+<td style="text-align:center">非常小，MB 级别</td>
+</tr>
+<tr>
+<td style="text-align:center">速度</td>
+<td style="text-align:center">较慢，几百到几千 MB/s</td>
+<td style="text-align:center">较快，几十 GB/s</td>
+<td style="text-align:center">非常快，几十到几百 GB/s</td>
+</tr>
+<tr>
+<td style="text-align:center">价格（人民币）</td>
+<td style="text-align:center">较便宜，几毛到几元 / GB</td>
+<td style="text-align:center">较贵，几十到几百元 / GB</td>
+<td style="text-align:center">非常贵，随 CPU 打包计价</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>硬盘</strong>用于<strong>长期存储大量数据</strong></li>
+<li><strong>内存</strong>用于<strong>临时存储程序运行中正在处理的数据</strong></li>
+<li><strong>缓存</strong>用于<strong>存储经常访问的数据和指令</strong></li>
+</ul>
+<h2 id="Conclusion">Conclusion</h2>
+<ol>
+<li><strong>数组要求相同类型的元素，而在链表中不强调相同类型！</strong></li>
+</ol>
+<ul>
+<li>链表由节点组成，节点之间通过指针连接，各个节点可以<strong>存储不同类型的数据</strong>，例如 int、double、string、object 等。</li>
+<li>相对地，数组元素则必须是相同类型的，这样才能<strong>通过计算偏移量来获取对应元素位置</strong>。例如，数组同时包含 int 和 long 两种类型，单个元素分别占用 4 字节和 8 字节 。</li>
+</ul>
+
                 
               </div>
             
