@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Leetcode Mistake Collection 1</title>
+    <link href="/2025/08/26/Leetcode-Collection/Leetcode-Mistake-Collection-1/"/>
+    <url>/2025/08/26/Leetcode-Collection/Leetcode-Mistake-Collection-1/</url>
+    
+    <content type="html"><![CDATA[<p><a href="https://leetcode.cn/problems/maximum-product-of-three-numbers/solutions/567309/san-ge-shu-de-zui-da-cheng-ji-by-leetcod-t9sb/">三个数的最大乘积</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Leetcode Collection</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Leetcode</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Lambda Expression in CPP</title>
     <link href="/2025/08/25/CPP/Lambda-Expression-in-CPP/"/>
     <url>/2025/08/25/CPP/Lambda-Expression-in-CPP/</url>
@@ -426,9 +451,9 @@
     
     <tags>
       
-      <tag>OOP</tag>
-      
       <tag>CPP</tag>
+      
+      <tag>OOP</tag>
       
     </tags>
     
@@ -541,11 +566,11 @@
     
     <tags>
       
-      <tag>queue</tag>
+      <tag>hashtable</tag>
       
       <tag>sort</tag>
       
-      <tag>hashtable</tag>
+      <tag>queue</tag>
       
     </tags>
     
@@ -572,9 +597,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>huffman treem</tag>
-      
       <tag>queue</tag>
+      
+      <tag>huffman treem</tag>
       
       <tag>Dijkstra</tag>
       
