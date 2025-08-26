@@ -19,20 +19,20 @@
   <meta name="author" content="Li Qinxuan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="问题 A: 机器人王国里的路径长度 题目描述 在一个机器人王国里，围绕首都分N层构建卫星城市。以首都为圆心，以路相连分出两个卫星城在第一个层，然后每个卫星城又有路相连分出两个卫星城在下一层，但每条路的长度不同。第N层的卫星城不再分出新的卫星城。现在人类只探知到所有直接相连的城市间的路程，你能计算某个卫星城到达首都的路程吗？ 输入 第一行为N，表示机器人王国里有N层卫星城，N最大为10。从第二行开始">
+    <meta name="description" content="问题 A: 机器人王国里的路径长度                      ▶ 问题 A: 机器人王国里的路径长度                                  题目描述在一个机器人王国里，围绕首都分N层构建卫星城市。以首都为圆心，以路相连分出两个卫星城在第一个层，然后每个卫星城又有路相连分出两个卫星城在下一层，但每条路的长度不同。第N层的卫星城不再分出新的卫星城。现在人类只">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CUMT-Datastructure-Practice 4">
 <meta property="og:url" content="http://example.com/2025/06/27/Data%20structure/CUMT-Datastructure-Practice-4/index.html">
 <meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
-<meta property="og:description" content="问题 A: 机器人王国里的路径长度 题目描述 在一个机器人王国里，围绕首都分N层构建卫星城市。以首都为圆心，以路相连分出两个卫星城在第一个层，然后每个卫星城又有路相连分出两个卫星城在下一层，但每条路的长度不同。第N层的卫星城不再分出新的卫星城。现在人类只探知到所有直接相连的城市间的路程，你能计算某个卫星城到达首都的路程吗？ 输入 第一行为N，表示机器人王国里有N层卫星城，N最大为10。从第二行开始">
+<meta property="og:description" content="问题 A: 机器人王国里的路径长度                      ▶ 问题 A: 机器人王国里的路径长度                                  题目描述在一个机器人王国里，围绕首都分N层构建卫星城市。以首都为圆心，以路相连分出两个卫星城在第一个层，然后每个卫星城又有路相连分出两个卫星城在下一层，但每条路的长度不同。第N层的卫星城不再分出新的卫星城。现在人类只">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/CUMT-Datastructure-Practice-4.png">
 <meta property="article:published_time" content="2025-06-27T04:57:31.000Z">
-<meta property="article:modified_time" content="2025-08-26T16:39:02.659Z">
+<meta property="article:modified_time" content="2025-08-26T17:19:46.761Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="queue">
-<meta property="article:tag" content="sort">
 <meta property="article:tag" content="hashtable">
+<meta property="article:tag" content="sort">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/CUMT-Datastructure-Practice-4.png">
   
@@ -305,7 +305,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k 字
+          2.2k 字
         
       </span>
     
@@ -316,7 +316,7 @@
         
         
         
-          18 分钟
+          19 分钟
         
       </span>
     
@@ -492,16 +492,17 @@
               <div class="markdown-body">
                 
                 <h2 id="问题-A-机器人王国里的路径长度">问题 A: 机器人王国里的路径长度</h2>
-<h4 id="题目描述">题目描述</h4>
-<p>在一个机器人王国里，围绕首都分N层构建卫星城市。以首都为圆心，以路相连分出两个卫星城在第一个层，然后每个卫星城又有路相连分出两个卫星城在下一层，但每条路的长度不同。第N层的卫星城不再分出新的卫星城。现在人类只探知到所有直接相连的城市间的路程，你能计算某个卫星城到达首都的路程吗？</p>
-<h4 id="输入">输入</h4>
-<p>第一行为N，表示机器人王国里有N层卫星城，N最大为10。从第二行开始，共2N+1-2行，每行分别是城市的代号到其分出的卫星城的代号和它们间的路程。 代号用若干个字母表示，直连路程最大为100。最后一行是某卫星城的代号。</p>
-<h4 id="输出">输出</h4>
-<p>根据最后一行的卫星城代号，求该卫星城到首都的路程。</p>
-<h4 id="样例输入">样例输入</h4>
-<figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-number">2</span><br><span class="hljs-selector-tag">A</span> F <span class="hljs-number">20</span><br><span class="hljs-selector-tag">B</span> D <span class="hljs-number">100</span><br><span class="hljs-selector-tag">G</span> <span class="hljs-selector-tag">A</span> <span class="hljs-number">5</span><br><span class="hljs-selector-tag">G</span> <span class="hljs-selector-tag">B</span> <span class="hljs-number">10</span><br><span class="hljs-selector-tag">A</span> C <span class="hljs-number">6</span><br><span class="hljs-selector-tag">B</span> E <span class="hljs-number">30</span><br>D<br></code></pre></td></tr></tbody></table></figure>
-<h4 id="样例输出">样例输出</h4>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">110<br></code></pre></td></tr></tbody></table></figure>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-a7232e88" role="button" aria-expanded="false" aria-controls="collapse-a7232e88">
+        <div class="fold-arrow">▶</div> 问题 A: 机器人王国里的路径长度
+      </div>
+      <div class="fold-collapse collapse" id="collapse-a7232e88">
+        <div class="fold-content">
+          <h4 id="题目描述">题目描述</h4><p>在一个机器人王国里，围绕首都分N层构建卫星城市。以首都为圆心，以路相连分出两个卫星城在第一个层，然后每个卫星城又有路相连分出两个卫星城在下一层，但每条路的长度不同。第N层的卫星城不再分出新的卫星城。现在人类只探知到所有直接相连的城市间的路程，你能计算某个卫星城到达首都的路程吗？</p><h4 id="输入">输入</h4><p>第一行为N，表示机器人王国里有N层卫星城，N最大为10。从第二行开始，共2N+1-2行，每行分别是城市的代号到其分出的卫星城的代号和它们间的路程。 代号用若干个字母表示，直连路程最大为100。最后一行是某卫星城的代号。</p><h4 id="输出">输出</h4><p>根据最后一行的卫星城代号，求该卫星城到首都的路程。</p><h4 id="样例输入">样例输入</h4><figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-number">2</span><br><span class="hljs-selector-tag">A</span> F <span class="hljs-number">20</span><br><span class="hljs-selector-tag">B</span> D <span class="hljs-number">100</span><br><span class="hljs-selector-tag">G</span> <span class="hljs-selector-tag">A</span> <span class="hljs-number">5</span><br><span class="hljs-selector-tag">G</span> <span class="hljs-selector-tag">B</span> <span class="hljs-number">10</span><br><span class="hljs-selector-tag">A</span> C <span class="hljs-number">6</span><br><span class="hljs-selector-tag">B</span> E <span class="hljs-number">30</span><br>D<br></code></pre></td></tr></tbody></table></figure><h4 id="样例输出">样例输出</h4><figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">110<br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
 <h4 id="问题分析">问题分析</h4>
 <p>本题需要根据当前<code>target</code>不断向上<strong>回溯寻找其父节点</strong>，将<code>distance</code>值返回加入到总路程<code>sum</code>中即可，这里使用哈希表存储每个城市的父城市和到父城市的距离。</p>
 <h4 id="完整代码">完整代码</h4>
@@ -545,7 +546,7 @@
 </li>
 </ul>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> result = age_map.<span class="hljs-built_in">insert</span>({<span class="hljs-string">"Charlie"</span>, <span class="hljs-number">28</span>}); <br><span class="hljs-comment">// result 是一个 pair&lt;iterator, bool&gt;</span><br><span class="hljs-comment">// result.first 是指向插入元素的迭代器</span><br><span class="hljs-comment">// result.second 是 bool 类型，表示插入是否成功（true 表示成功，false 表示键已存在）</span><br><span class="hljs-keyword">if</span> (result.second) {<br>    std::cout &lt;&lt; <span class="hljs-string">"Insertion successful!\n"</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
-<ol>
+<ol start="2">
 <li><strong>元素访问</strong></li>
 </ol>
 <table>
@@ -663,48 +664,49 @@
 </ul>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> it = age_map.<span class="hljs-built_in">begin</span>(); it != age_map.<span class="hljs-built_in">end</span>(); ++it) {<br>    cout &lt;&lt; it-&gt;first &lt;&lt; <span class="hljs-string">": "</span> &lt;&lt; it-&gt;second &lt;&lt; endl;<br>}<br></code></pre></td></tr></tbody></table></figure>
 <h2 id="问题-D-寻找第二小的数">问题 D: 寻找第二小的数</h2>
-<h4 id="题目描述-v2">题目描述</h4>
-<p>求n个整数中第二小的数。<br>
-相同的整数看成一个数。比如，有5个数分别是1,1,3,4,5，那么第二小的数就是3。</p>
-<h4 id="输入-v2">输入</h4>
-<p>输入包含多组测试数据。输入的第一行是一个整数C，表示有C组测试数据；<br>
-每组测试数据的第一行是一个整数n，表示本组测试数据有n个整数（2&lt;=n&lt;=10），接着一行是n个整数（每个数均小于100）。</p>
-<h4 id="输出-v2">输出</h4>
-<p>为每组测试数据输出第二小的整数，如果不存在第二小的整数则输出“NO”，每组输出占一行。</p>
-<h4 id="样例输入-v2">样例输入</h4>
-<figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">3</span><br><span class="hljs-number">2</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span><br><span class="hljs-number">5</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span><br><span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">1</span><br></code></pre></td></tr></tbody></table></figure>
-<h4 id="样例输出-v2">样例输出</h4>
-<figure class="highlight gams"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-number">2</span><br><span class="hljs-number">3</span><br><span class="hljs-keyword">NO</span><br></code></pre></td></tr></tbody></table></figure>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-800b9ee5" role="button" aria-expanded="false" aria-controls="collapse-800b9ee5">
+        <div class="fold-arrow">▶</div> 问题 D: 寻找第二小的数
+      </div>
+      <div class="fold-collapse collapse" id="collapse-800b9ee5">
+        <div class="fold-content">
+          <h4 id="题目描述">题目描述</h4><p>求n个整数中第二小的数。<br>相同的整数看成一个数。比如，有5个数分别是1,1,3,4,5，那么第二小的数就是3。</p><h4 id="输入">输入</h4><p>输入包含多组测试数据。输入的第一行是一个整数C，表示有C组测试数据；<br>每组测试数据的第一行是一个整数n，表示本组测试数据有n个整数（2&lt;=n&lt;=10），接着一行是n个整数（每个数均小于100）。</p><h4 id="输出">输出</h4><p>为每组测试数据输出第二小的整数，如果不存在第二小的整数则输出“NO”，每组输出占一行。</p><h4 id="样例输入">样例输入</h4><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">3</span><br><span class="hljs-number">2</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span><br><span class="hljs-number">5</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span><br><span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">1</span><br></code></pre></td></tr></tbody></table></figure><h4 id="样例输出">样例输出</h4><figure class="highlight gams"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-number">2</span><br><span class="hljs-number">3</span><br><span class="hljs-keyword">NO</span><br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
 <h4 id="问题分析-v2">问题分析</h4>
 <p>用逆序的优先队列即可完成！</p>
 <h4 id="完整代码-v2">完整代码</h4>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;queue&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">find</span><span class="hljs-params">()</span> </span>{<br>	priority_queue &lt;<span class="hljs-type">int</span>, vector&lt;<span class="hljs-type">int</span>&gt;, greater&lt;<span class="hljs-type">int</span>&gt;&gt; pq;<br>	<span class="hljs-type">int</span> m;<br>	cin &gt;&gt; m;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; m;i++) {<br>		<span class="hljs-type">int</span> a;<br>		cin &gt;&gt; a;<br>		pq.<span class="hljs-built_in">push</span>(a);<br>	}<br>	<span class="hljs-type">int</span> min = pq.<span class="hljs-built_in">top</span>();<br>	pq.<span class="hljs-built_in">pop</span>();<br>	<span class="hljs-keyword">while</span> (!pq.<span class="hljs-built_in">empty</span>() &amp;&amp; min == pq.<span class="hljs-built_in">top</span>()) {<br>		pq.<span class="hljs-built_in">pop</span>();<br>	}<br>	<span class="hljs-keyword">if</span> (pq.<span class="hljs-built_in">empty</span>()) {<br>		cout &lt;&lt; <span class="hljs-string">"NO"</span> &lt;&lt; endl;<br>	}<br>	<span class="hljs-keyword">else</span> cout &lt;&lt; pq.<span class="hljs-built_in">top</span>() &lt;&lt; endl;<br>}<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{<br>	<span class="hljs-type">int</span> n;<br>	cin &gt;&gt; n;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; n;i++) {<br>		<span class="hljs-built_in">find</span>();<br>	}<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
 <h2 id="问题-E-按十进制各位和排序">问题 E: 按十进制各位和排序</h2>
-<h4 id="题目描述-v3">题目描述</h4>
-<p>对于给定的正整数序列，按照每个数的十进制形式各个位上的数之和从大到小排序，各个位上的数和相同的按照本身大小排序，大的在前，小的在后。</p>
-<h4 id="输入-v3">输入</h4>
-<p>第一行 1 个整数 n,表示序列的大小。( 0 &lt; n ≤ 1000) 第二行 n 个正整数，表示序列的每个数，每个数不大于 100000000。</p>
-<h4 id="输出-v3">输出</h4>
-<p>输出按照题目要求排序后的序列。</p>
-<h4 id="样例输入-v3">样例输入</h4>
-<figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">6 </span><br><span class="hljs-symbol">17 </span><span class="hljs-number">26</span> <span class="hljs-number">9</span> <span class="hljs-number">13</span> <span class="hljs-number">88</span> <span class="hljs-number">22</span><br></code></pre></td></tr></tbody></table></figure>
-<h4 id="样例输出-v3">样例输出</h4>
-<figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">88 </span><span class="hljs-number">9</span> <span class="hljs-number">26</span> <span class="hljs-number">17</span> <span class="hljs-number">22</span> <span class="hljs-number">13</span><br></code></pre></td></tr></tbody></table></figure>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-cd4abc0a" role="button" aria-expanded="false" aria-controls="collapse-cd4abc0a">
+        <div class="fold-arrow">▶</div> 问题 E: 按十进制各位和排序
+      </div>
+      <div class="fold-collapse collapse" id="collapse-cd4abc0a">
+        <div class="fold-content">
+          <h4 id="题目描述">题目描述</h4><p>对于给定的正整数序列，按照每个数的十进制形式各个位上的数之和从大到小排序，各个位上的数和相同的按照本身大小排序，大的在前，小的在后。</p><h4 id="输入">输入</h4><p>第一行 1 个整数 n,表示序列的大小。( 0 &lt; n ≤ 1000) 第二行 n 个正整数，表示序列的每个数，每个数不大于 100000000。</p><h4 id="输出">输出</h4><p>输出按照题目要求排序后的序列。</p><h4 id="样例输入">样例输入</h4><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">6 </span><br><span class="hljs-symbol">17 </span><span class="hljs-number">26</span> <span class="hljs-number">9</span> <span class="hljs-number">13</span> <span class="hljs-number">88</span> <span class="hljs-number">22</span><br></code></pre></td></tr></tbody></table></figure><h4 id="样例输出">样例输出</h4><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">88 </span><span class="hljs-number">9</span> <span class="hljs-number">26</span> <span class="hljs-number">17</span> <span class="hljs-number">22</span> <span class="hljs-number">13</span><br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
 <h4 id="问题分析-v3">问题分析</h4>
 <p>要将其十进制排序后的结果与原本大小匹配，这里使用了冒泡排序完成。</p>
 <h4 id="完整代码-v3">完整代码</h4>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Sum</span><span class="hljs-params">(<span class="hljs-type">int</span> a)</span> </span>{<span class="hljs-comment">//十进制各个位数求和函数</span><br>	<span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">while</span> (a != <span class="hljs-number">0</span>) {<br>		sum += a % <span class="hljs-number">10</span>;<br>		a = a / <span class="hljs-number">10</span>;<br>	}<br>	<span class="hljs-keyword">return</span> sum;<br>}<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{<br>	<span class="hljs-type">int</span> n;<br>	cin &gt;&gt; n;<br>	vector &lt;<span class="hljs-type">int</span>&gt; <span class="hljs-built_in">order</span>(n);<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; n;i++) {<br>		cin &gt;&gt; order[i];<br>	}<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; n ; i++) {<span class="hljs-comment">//进行冒泡排序</span><br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span> ;j &lt; n-i<span class="hljs-number">-1</span>;j++) {<br>			<span class="hljs-keyword">if</span> (<span class="hljs-built_in">Sum</span>(order[j]) &lt; <span class="hljs-built_in">Sum</span>(order[j + <span class="hljs-number">1</span>]) ||<br>				(<span class="hljs-built_in">Sum</span>(order[j]) == <span class="hljs-built_in">Sum</span>(order[j + <span class="hljs-number">1</span>]) &amp;&amp; order[j] &lt; order[j + <span class="hljs-number">1</span>])) {<br>				<span class="hljs-type">int</span> temp=order[j];<br>				order[j]=order[j<span class="hljs-number">+1</span>];<br>				order[j<span class="hljs-number">+1</span>]=temp;<br>			}<br>		}<br>	}<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; n; i++) {<br>		cout&lt;&lt;order[i]&lt;&lt;<span class="hljs-string">" "</span>;<br>	}<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
 <h2 id="问题-F-奇偶数的排序">问题 F: 奇偶数的排序</h2>
-<h4 id="题目描述-v4">题目描述</h4>
-<p>给你10个正整数，其中5个奇数、5个偶数，先递减排奇数，然后再递增排偶数。请编程实现。</p>
-<h4 id="输入-v4">输入</h4>
-<p>一行10个正整数（int类型范围）。</p>
-<h4 id="输出-v4">输出</h4>
-<p>先递减排5个奇数，然后再递增排5个偶数，各个数之间有一个空格间隔。</p>
-<h4 id="样例输入-v4">样例输入</h4>
-<figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span> <span class="hljs-number">6</span> <span class="hljs-number">7</span> <span class="hljs-number">8</span> <span class="hljs-number">10</span> <span class="hljs-number">9</span><br></code></pre></td></tr></tbody></table></figure>
-<h4 id="样例输出-v4">样例输出</h4>
-<figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">9 </span><span class="hljs-number">7</span> <span class="hljs-number">5</span> <span class="hljs-number">3</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">4</span> <span class="hljs-number">6</span> <span class="hljs-number">8</span> <span class="hljs-number">10</span><br></code></pre></td></tr></tbody></table></figure>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-79f488e9" role="button" aria-expanded="false" aria-controls="collapse-79f488e9">
+        <div class="fold-arrow">▶</div> 问题 F: 奇偶数的排序
+      </div>
+      <div class="fold-collapse collapse" id="collapse-79f488e9">
+        <div class="fold-content">
+          <h4 id="题目描述">题目描述</h4><p>给你10个正整数，其中5个奇数、5个偶数，先递减排奇数，然后再递增排偶数。请编程实现。</p><h4 id="输入">输入</h4><p>一行10个正整数（int类型范围）。</p><h4 id="输出">输出</h4><p>先递减排5个奇数，然后再递增排5个偶数，各个数之间有一个空格间隔。</p><h4 id="样例输入">样例输入</h4><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span> <span class="hljs-number">6</span> <span class="hljs-number">7</span> <span class="hljs-number">8</span> <span class="hljs-number">10</span> <span class="hljs-number">9</span><br></code></pre></td></tr></tbody></table></figure><h4 id="样例输出">样例输出</h4><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">9 </span><span class="hljs-number">7</span> <span class="hljs-number">5</span> <span class="hljs-number">3</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">4</span> <span class="hljs-number">6</span> <span class="hljs-number">8</span> <span class="hljs-number">10</span><br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
 <h4 id="问题分析-v4">问题分析</h4>
 <p>分别使用优先队列和逆序优先队列对奇数偶数进行排序，再依次输出队首元素。</p>
 <h4 id="完整代码-v4">完整代码</h4>
@@ -745,9 +747,9 @@
       
         <a href="/tags/queue/" class="print-no-link">#queue</a>
       
-        <a href="/tags/sort/" class="print-no-link">#sort</a>
-      
         <a href="/tags/hashtable/" class="print-no-link">#hashtable</a>
+      
+        <a href="/tags/sort/" class="print-no-link">#sort</a>
       
     </div>
   

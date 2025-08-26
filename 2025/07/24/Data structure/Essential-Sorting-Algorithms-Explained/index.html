@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/Essential-Sorting-Algorithms-Explained.png">
 <meta property="article:published_time" content="2025-07-24T15:28:06.000Z">
-<meta property="article:modified_time" content="2025-08-26T04:00:15.788Z">
+<meta property="article:modified_time" content="2025-08-26T17:25:04.690Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="algorithm">
 <meta property="article:tag" content="sort">
@@ -490,18 +490,16 @@
             
               <div class="markdown-body">
                 
-                <h2 id="题目">题目</h2>
-<p>文章中排序算法均已经通过此题的OJ测试点！</p>
-<h4 id="题目描述">题目描述</h4>
-<p>给你N个自然数，编程输出排序后的这N个数。</p>
-<h4 id="输入">输入</h4>
-<p>第一行是整数的个数N（N&lt;=100）。第二行是用空格隔开的N个数。</p>
-<h4 id="输出">输出</h4>
-<p>排序输出N个数，每个数间用一个空格间隔。</p>
-<h4 id="样例输入">样例输入</h4>
-<figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">5</span><br><span class="hljs-symbol">9 </span><span class="hljs-number">6</span> <span class="hljs-number">8</span> <span class="hljs-number">7</span> <span class="hljs-number">5</span><br></code></pre></td></tr></tbody></table></figure>
-<h4 id="样例输出">样例输出</h4>
-<figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">5 </span><span class="hljs-number">6</span> <span class="hljs-number">7</span> <span class="hljs-number">8</span> <span class="hljs-number">9</span><br></code></pre></td></tr></tbody></table></figure>
+                <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-d2d6ea06" role="button" aria-expanded="false" aria-controls="collapse-d2d6ea06">
+        <div class="fold-arrow">▶</div> 排序算法测试样例题目
+      </div>
+      <div class="fold-collapse collapse" id="collapse-d2d6ea06">
+        <div class="fold-content">
+          <h2 id="题目">题目</h2><p>文章中排序算法均已经通过此题的OJ测试点！</p><h4 id="题目描述">题目描述</h4><p>给你N个自然数，编程输出排序后的这N个数。</p><h4 id="输入">输入</h4><p>第一行是整数的个数N（N&lt;=100）。第二行是用空格隔开的N个数。</p><h4 id="输出">输出</h4><p>排序输出N个数，每个数间用一个空格间隔。</p><h4 id="样例输入">样例输入</h4><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">5</span><br><span class="hljs-symbol">9 </span><span class="hljs-number">6</span> <span class="hljs-number">8</span> <span class="hljs-number">7</span> <span class="hljs-number">5</span><br></code></pre></td></tr></tbody></table></figure><h4 id="样例输出">样例输出</h4><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">5 </span><span class="hljs-number">6</span> <span class="hljs-number">7</span> <span class="hljs-number">8</span> <span class="hljs-number">9</span><br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
 <hr>
 <p><img src="https://github.com/Richard110206/Blog-image/blob/main/article/Sorting-Algorithm/Sorting.png?raw=true" srcset="/img/loading.gif" lazyload alt="排序算法图"></p>
 <h2 id="1-直接插入排序（Straight-Insertion-Sort）">1.直接插入排序（Straight Insertion Sort）</h2>
@@ -591,78 +589,78 @@
 <table>
 <thead>
 <tr>
-<th>排序方法</th>
-<th>平均情况</th>
-<th>最坏情况</th>
-<th>最好情况</th>
-<th>空间复杂度</th>
-<th>稳定性</th>
+<th style="text-align:center">排序方法</th>
+<th style="text-align:center">平均情况</th>
+<th style="text-align:center">最坏情况</th>
+<th style="text-align:center">最好情况</th>
+<th style="text-align:center">空间复杂度</th>
+<th style="text-align:center">稳定性</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>直接插入排序</td>
-<td>O(n^2)</td>
-<td>O(n^2)</td>
-<td>O(n)</td>
-<td>O(1)</td>
-<td>稳定</td>
+<td style="text-align:center">直接插入排序</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(n)$</td>
+<td style="text-align:center">$O(1)$</td>
+<td style="text-align:center">稳定</td>
 </tr>
 <tr>
-<td>折半插入排序</td>
-<td>O(n^2)</td>
-<td>O(n^2)</td>
-<td>O(n)</td>
-<td>O(1)</td>
-<td>稳定</td>
+<td style="text-align:center">折半插入排序</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(n)$</td>
+<td style="text-align:center">$O(1)$</td>
+<td style="text-align:center">稳定</td>
 </tr>
 <tr>
-<td>希尔排序</td>
-<td>O(n^1.58)</td>
-<td>\</td>
-<td>\</td>
-<td>O(1)</td>
-<td>不稳定</td>
+<td style="text-align:center">希尔排序</td>
+<td style="text-align:center">$O(n^{1.58})$</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">$O(1)$</td>
+<td style="text-align:center">不稳定</td>
 </tr>
 <tr>
-<td>冒泡排序</td>
-<td>O(n^2)</td>
-<td>O(n^2)</td>
-<td>O(n)</td>
-<td>O(1)</td>
-<td>稳定</td>
+<td style="text-align:center">冒泡排序</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(n)$</td>
+<td style="text-align:center">$O(1)$</td>
+<td style="text-align:center">稳定</td>
 </tr>
 <tr>
-<td>快速排序</td>
-<td>O(nlog2n)</td>
-<td>O(n^2)</td>
-<td>O(nlog2n)</td>
-<td>O(log2n)</td>
-<td>不稳定</td>
+<td style="text-align:center">快速排序</td>
+<td style="text-align:center">$O(n \log_2 n)$</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(n \log_2 n)$</td>
+<td style="text-align:center">$O(\log_2 n)$</td>
+<td style="text-align:center">不稳定</td>
 </tr>
 <tr>
-<td>简单选择排序</td>
-<td>O(n^2)</td>
-<td>O(n^2)</td>
-<td>O(n^2)</td>
-<td>O(1)</td>
-<td>不稳定</td>
+<td style="text-align:center">简单选择排序</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(1)$</td>
+<td style="text-align:center">不稳定</td>
 </tr>
 <tr>
-<td>堆排序</td>
-<td>O(nlog2n)</td>
-<td>O(nlog2n)</td>
-<td>O(nlog2n)</td>
-<td>O(1)</td>
-<td>不稳定</td>
+<td style="text-align:center">堆排序</td>
+<td style="text-align:center">$O(n \log_2 n)$</td>
+<td style="text-align:center">$O(n \log_2 n)$</td>
+<td style="text-align:center">$O(n \log_2 n)$</td>
+<td style="text-align:center">$O(1)$</td>
+<td style="text-align:center">不稳定</td>
 </tr>
 <tr>
-<td>归并排序</td>
-<td>O(nlog2n)</td>
-<td>O(nlog2n)</td>
-<td>O(nlog2n)</td>
-<td>O(n)</td>
-<td>稳定</td>
+<td style="text-align:center">归并排序</td>
+<td style="text-align:center">$O(n \log_2 n)$</td>
+<td style="text-align:center">$O(n \log_2 n)$</td>
+<td style="text-align:center">$O(n \log_2 n)$</td>
+<td style="text-align:center">$O(n)$</td>
+<td style="text-align:center">稳定</td>
 </tr>
 </tbody>
 </table>
@@ -733,7 +731,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2025年8月26日</div>
+          <div>2025年8月27日</div>
         </div>
       
       
