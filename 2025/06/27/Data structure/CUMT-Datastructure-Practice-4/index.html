@@ -28,11 +28,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/CUMT-Datastructure-Practice-4.png">
 <meta property="article:published_time" content="2025-06-27T04:57:31.000Z">
-<meta property="article:modified_time" content="2025-08-26T04:00:07.985Z">
+<meta property="article:modified_time" content="2025-08-26T16:34:42.092Z">
 <meta property="article:author" content="Li Qinxuan">
-<meta property="article:tag" content="queue">
 <meta property="article:tag" content="hashtable">
 <meta property="article:tag" content="sort">
+<meta property="article:tag" content="queue">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/CUMT-Datastructure-Practice-4.png">
   
@@ -305,7 +305,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          2.1k 字
         
       </span>
     
@@ -316,7 +316,7 @@
         
         
         
-          15 分钟
+          18 分钟
         
       </span>
     
@@ -503,20 +503,49 @@
 <h4 id="样例输出">样例输出</h4>
 <figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">110<br></code></pre></td></tr></tbody></table></figure>
 <h4 id="问题分析">问题分析</h4>
-<p>本题需要根据当前<code>target</code>不断向上回溯寻找其父节点，将<code>distance</code>值返回加入到总路程<code>sum</code>中即可，这里使用哈希表(unordered_map)存储每个城市的父城市和到父城市的距离。</p>
+<p>本题需要根据当前<code>target</code>不断向上<strong>回溯寻找其父节点</strong>，将<code>distance</code>值返回加入到总路程<code>sum</code>中即可，这里使用哈希表存储每个城市的父城市和到父城市的距离。</p>
 <h4 id="完整代码">完整代码</h4>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unordered_map&gt;</span><span class="hljs-comment">//哈希表容器</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span><span class="hljs-comment">//处理字符串</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cmath&gt;</span><span class="hljs-comment">//这里用于幂运算</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">city</span> {<br>	string parent;<span class="hljs-comment">//父城市名称</span><br>	<span class="hljs-type">int</span> distance;<span class="hljs-comment">//到父城市的距离</span><br>};<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{<br>	unordered_map&lt;string, city&gt; path;<span class="hljs-comment">//存储城市路径关系的哈希表</span><br>	<span class="hljs-type">int</span> N;<br>	cin &gt;&gt; N;<br>	<span class="hljs-type">int</span> number = <span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>, N + <span class="hljs-number">1</span>) - <span class="hljs-number">2</span>;<span class="hljs-comment">//计算读取的城市个数</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; number;i ++) {<br>		string start, end;<br>		<span class="hljs-type">int</span> distance;<br>		cin &gt;&gt; start &gt;&gt; end &gt;&gt; distance;<br>		path[end] = { start,distance };<span class="hljs-comment">//进行存储</span><br>	}<br>	string target;<br>	cin &gt;&gt; target;<br>	<span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">while</span> (path.<span class="hljs-built_in">find</span>(target)!=path.<span class="hljs-built_in">end</span>()){<br>	<span class="hljs-comment">//直至当前的目标城市无法查找到父城市是停止</span><br>		sum += path[target].distance;<br>		target = path[target].parent;<span class="hljs-comment">//将当前目标城市向上移动</span><br>	}<br>	cout &lt;&lt; sum &lt;&lt; endl;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
 <h4 id="注释">注释</h4>
-<p><code>&lt;unordered_map&gt;</code>是C++标准库中提供无序关联容器的头文件，它实现了基于哈希表的键值对存储结构，它具有以下特性：</p>
+<p><code>&lt;unordered_map&gt;</code>是C++标准库中提供<strong>无序关联容器</strong>的头文件，它实现了基于哈希表的<strong>键值对存储结构</strong>，它具有以下特性：</p>
 <ul>
-<li>元素无序存储，不会根据关键字值或映射值按任何特定顺序排序</li>
-<li>键必须唯一（不允许重复键）</li>
-<li>根据关键字来引用，而不是根据索引来引用</li>
-<li>使用链表处理哈希冲突（链地址法）</li>
+<li>元素<strong>无序存储</strong>，不会根据关键字值或映射值按<strong>任何特定顺序排序</strong></li>
+<li>键必须<strong>唯一</strong>（不允许重复键）</li>
+<li>根据关键字来引用，而<strong>不是根据索引来引用</strong></li>
+<li>使用<strong>链表处理哈希冲突</strong>（<strong>链地址法</strong>）</li>
 </ul>
 <p>构造哈希表：</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">unordered_map&lt;KeyType, ValueType&gt; map_name;<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">unordered_map</span>(<span class="hljs-type">int</span>,<span class="hljs-type">int</span>) position;<br>unordered_map&lt;string,string&gt; name;<br>unordered_map&lt;string,<span class="hljs-type">int</span>&gt; age;<br></code></pre></td></tr></tbody></table></figure>
 <ol>
+<li>元素添加：</li>
+</ol>
+<ul>
+<li>声明时<strong>使用初始化列表</strong>进行初始化：</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp">unordered_map&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt; position = {{<span class="hljs-number">1</span>,<span class="hljs-number">10</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">20</span>},{<span class="hljs-number">3</span>,<span class="hljs-number">30</span>}};<br>unordered_map&lt;string, string&gt; capital_city = {<br>    {<span class="hljs-string">"UK"</span>, <span class="hljs-string">"London"</span>},<br>    {<span class="hljs-string">"France"</span>, <span class="hljs-string">"Paris"</span>},<br>    {<span class="hljs-string">"Germany"</span>, <span class="hljs-string">"Berlin"</span>}<br>};<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>
+<p>使用<code>[]</code>运算符添加：</p>
+<ul>
+<li>如果键<strong>不存在</strong>，会<strong>插入一个新的键值对</strong></li>
+<li>如果键<strong>已存在</strong>，则会<strong>覆盖</strong>原有的值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp">unordered_map&lt;string, <span class="hljs-type">int</span>&gt; age_map;<br>age_map[<span class="hljs-string">"Alice"</span>] = <span class="hljs-number">25</span>; <span class="hljs-comment">// 插入 {"Alice", 25}</span><br>age_map[<span class="hljs-string">"Bob"</span>] = <span class="hljs-number">30</span>;   <span class="hljs-comment">// 插入 {"Bob", 30}</span><br>age_map[<span class="hljs-string">"Alice"</span>] = <span class="hljs-number">26</span>; <span class="hljs-comment">// 更新，现在 {"Alice", 26}</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>
+<p>使用<code>insert()</code>：插入一个键值对 <code>pair&lt;Key, Value&gt;</code>:</p>
+<ul>
+<li>返回值是一个 <code>pair&lt;iterator, bool&gt;</code></li>
+<li><code>name.first</code>是<strong>指向插入元素的迭代器</strong></li>
+<li><code>name.second</code>是 bool 类型，表示<strong>插入是否成功</strong>（true 表示成功，false 表示键已存在）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> result = age_map.<span class="hljs-built_in">insert</span>({<span class="hljs-string">"Charlie"</span>, <span class="hljs-number">28</span>}); <br><span class="hljs-comment">// result 是一个 pair&lt;iterator, bool&gt;</span><br><span class="hljs-comment">// result.first 是指向插入元素的迭代器</span><br><span class="hljs-comment">// result.second 是 bool 类型，表示插入是否成功（true 表示成功，false 表示键已存在）</span><br><span class="hljs-keyword">if</span> (result.second) {<br>    std::cout &lt;&lt; <span class="hljs-string">"Insertion successful!\n"</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<ol start="2">
 <li>元素访问：</li>
 </ol>
 <table>
@@ -528,20 +557,23 @@
 </thead>
 <tbody>
 <tr>
-<td><code>map[key]</code></td>
-<td>访问或插入元素（键不存在时自动插入并值初始化）</td>
+<td><code>[]</code>运算符</td>
+<td><strong>访问</strong>元素（键不存在时会插入默认值）</td>
 </tr>
 <tr>
 <td><code>map.at(key)</code></td>
-<td>安全访问元素（键不存在时抛出out_of_range异常）</td>
+<td>安全<strong>访问</strong>元素（不存在时<strong>抛出out_of_range异常</strong>）</td>
 </tr>
 <tr>
 <td><code>map.find(key)</code></td>
-<td>返回指向元素的迭代器（未找到时返回end()）</td>
+<td>返回指向元素的<strong>迭代器</strong>（不存在时<strong>返回end()</strong>）</td>
 </tr>
 </tbody>
 </table>
-<ol start="2">
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> alice_age = age_map[<span class="hljs-string">"Alice"</span>]; <span class="hljs-comment">// 存在，返回 26</span><br><span class="hljs-type">int</span> dave_age = age_map[<span class="hljs-string">"Dave"</span>];   <span class="hljs-comment">// 不存在！会自动插入 {"Dave", 0}，然后返回 0</span><br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> alice_age = age_map.<span class="hljs-built_in">at</span>(<span class="hljs-string">"Alice"</span>); <span class="hljs-comment">// 存在，返回 26</span><br><span class="hljs-type">int</span> dave_age = age_map.<span class="hljs-built_in">at</span>(<span class="hljs-string">"Dave"</span>);   <span class="hljs-comment">// 不存在！抛出异常</span><br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> it = age_map.<span class="hljs-built_in">find</span>(<span class="hljs-string">"Bob"</span>);<br><span class="hljs-keyword">if</span> (it != age_map.<span class="hljs-built_in">end</span>()) {<br>    <span class="hljs-comment">// it-&gt;first 是键 (”Bob“)</span><br>    <span class="hljs-comment">// it-&gt;second 是值 (30)</span><br>    cout &lt;&lt; <span class="hljs-string">"Found Bob, age: "</span> &lt;&lt; it-&gt;second &lt;&lt; endl;<br>} <span class="hljs-keyword">else</span> {<br>    cout &lt;&lt; <span class="hljs-string">"Bob not found.\n"</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<ol start="3">
 <li>容量查询：</li>
 </ol>
 <table>
@@ -562,7 +594,7 @@
 </tr>
 </tbody>
 </table>
-<ol start="3">
+<ol start="4">
 <li>修改操作：</li>
 </ol>
 <table>
@@ -579,18 +611,26 @@
 </tr>
 <tr>
 <td><code>map.emplace(key, value)</code></td>
-<td>直接构造元素（避免临时对象）</td>
+<td><strong>直接构造元素</strong>（避免临时对象）</td>
 </tr>
 <tr>
 <td><code>map.erase(key)</code></td>
-<td>删除指定键的元素</td>
+<td><strong>删除指定键的元素</strong></td>
 </tr>
 </tbody>
 </table>
-<p>insert()&amp;&amp;emplace()的区别：</p>
+<ul>
+<li>通过<strong>迭代器</strong>删除：</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> it = age_map.<span class="hljs-built_in">find</span>(<span class="hljs-string">"Bob"</span>);<br><span class="hljs-keyword">if</span> (it != age_map.<span class="hljs-built_in">end</span>()) {<br>    age_map.<span class="hljs-built_in">erase</span>(it); <span class="hljs-comment">// 删除迭代器指向的元素</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>通过<strong>键</strong>删除：</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">size_t</span> num_removed = age_map.<span class="hljs-built_in">erase</span>(<span class="hljs-string">"Charlie"</span>); <span class="hljs-comment">// 返回被删除的元素个数（0 或 1）</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>insert()</code> &amp;&amp; <code>emplace()</code>的区别：</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">map.<span class="hljs-built_in">insert</span>({<span class="hljs-string">"apple"</span>, <span class="hljs-number">2</span>});<br></code></pre></td></tr></tbody></table></figure>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">map.<span class="hljs-built_in">emplace</span>(<span class="hljs-string">"apple"</span>, <span class="hljs-number">3</span>);<br></code></pre></td></tr></tbody></table></figure>
-<ol start="4">
+<ol start="5">
 <li>查找与统计</li>
 </ol>
 <table>
@@ -603,14 +643,25 @@
 <tbody>
 <tr>
 <td><code>map.count(key)</code></td>
-<td>返回关键字出现的次数</td>
+<td>判断<strong>键是否存在</strong>（返回bool）</td>
 </tr>
 <tr>
 <td><code>map.contains(key)</code></td>
-<td>检查键是否存在（返回bool）</td>
+<td>返回<strong>关键字出现的次数</strong></td>
 </tr>
 </tbody>
 </table>
+<ol start="6">
+<li>遍历元素</li>
+</ol>
+<ul>
+<li>使用范围 for 循环</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> <span class="hljs-keyword">auto</span>&amp; pair : age_map) {<br>    cout &lt;&lt; pair.first &lt;&lt; <span class="hljs-string">": "</span> &lt;&lt; pair.second &lt;&lt; endl;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>使用迭代器</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> it = age_map.<span class="hljs-built_in">begin</span>(); it != age_map.<span class="hljs-built_in">end</span>(); ++it) {<br>    cout &lt;&lt; it-&gt;first &lt;&lt; <span class="hljs-string">": "</span> &lt;&lt; it-&gt;second &lt;&lt; endl;<br>}<br></code></pre></td></tr></tbody></table></figure>
 <h2 id="问题-D-寻找第二小的数">问题 D: 寻找第二小的数</h2>
 <h4 id="题目描述-v2">题目描述</h4>
 <p>求n个整数中第二小的数。<br>
@@ -692,11 +743,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/queue/" class="print-no-link">#queue</a>
-      
         <a href="/tags/hashtable/" class="print-no-link">#hashtable</a>
       
         <a href="/tags/sort/" class="print-no-link">#sort</a>
+      
+        <a href="/tags/queue/" class="print-no-link">#queue</a>
       
     </div>
   
@@ -727,7 +778,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2025年8月26日</div>
+          <div>2025年8月27日</div>
         </div>
       
       
