@@ -28,11 +28,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/CUMT-Datastructure-Practice-4.png">
 <meta property="article:published_time" content="2025-06-27T04:57:31.000Z">
-<meta property="article:modified_time" content="2025-08-26T16:34:42.092Z">
+<meta property="article:modified_time" content="2025-08-26T16:39:02.659Z">
 <meta property="article:author" content="Li Qinxuan">
-<meta property="article:tag" content="hashtable">
-<meta property="article:tag" content="sort">
 <meta property="article:tag" content="queue">
+<meta property="article:tag" content="sort">
+<meta property="article:tag" content="hashtable">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/CUMT-Datastructure-Practice-4.png">
   
@@ -518,7 +518,7 @@
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">unordered_map&lt;KeyType, ValueType&gt; map_name;<br></code></pre></td></tr></tbody></table></figure>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">unordered_map</span>(<span class="hljs-type">int</span>,<span class="hljs-type">int</span>) position;<br>unordered_map&lt;string,string&gt; name;<br>unordered_map&lt;string,<span class="hljs-type">int</span>&gt; age;<br></code></pre></td></tr></tbody></table></figure>
 <ol>
-<li>元素添加：</li>
+<li><strong>元素添加</strong></li>
 </ol>
 <ul>
 <li>声明时<strong>使用初始化列表</strong>进行初始化：</li>
@@ -545,8 +545,8 @@
 </li>
 </ul>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> result = age_map.<span class="hljs-built_in">insert</span>({<span class="hljs-string">"Charlie"</span>, <span class="hljs-number">28</span>}); <br><span class="hljs-comment">// result 是一个 pair&lt;iterator, bool&gt;</span><br><span class="hljs-comment">// result.first 是指向插入元素的迭代器</span><br><span class="hljs-comment">// result.second 是 bool 类型，表示插入是否成功（true 表示成功，false 表示键已存在）</span><br><span class="hljs-keyword">if</span> (result.second) {<br>    std::cout &lt;&lt; <span class="hljs-string">"Insertion successful!\n"</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
-<ol start="2">
-<li>元素访问：</li>
+<ol>
+<li><strong>元素访问</strong></li>
 </ol>
 <table>
 <thead>
@@ -574,7 +574,7 @@
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> alice_age = age_map.<span class="hljs-built_in">at</span>(<span class="hljs-string">"Alice"</span>); <span class="hljs-comment">// 存在，返回 26</span><br><span class="hljs-type">int</span> dave_age = age_map.<span class="hljs-built_in">at</span>(<span class="hljs-string">"Dave"</span>);   <span class="hljs-comment">// 不存在！抛出异常</span><br></code></pre></td></tr></tbody></table></figure>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> it = age_map.<span class="hljs-built_in">find</span>(<span class="hljs-string">"Bob"</span>);<br><span class="hljs-keyword">if</span> (it != age_map.<span class="hljs-built_in">end</span>()) {<br>    <span class="hljs-comment">// it-&gt;first 是键 (”Bob“)</span><br>    <span class="hljs-comment">// it-&gt;second 是值 (30)</span><br>    cout &lt;&lt; <span class="hljs-string">"Found Bob, age: "</span> &lt;&lt; it-&gt;second &lt;&lt; endl;<br>} <span class="hljs-keyword">else</span> {<br>    cout &lt;&lt; <span class="hljs-string">"Bob not found.\n"</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
 <ol start="3">
-<li>容量查询：</li>
+<li><strong>容量查询</strong></li>
 </ol>
 <table>
 <thead>
@@ -595,7 +595,7 @@
 </tbody>
 </table>
 <ol start="4">
-<li>修改操作：</li>
+<li><strong>修改操作</strong></li>
 </ol>
 <table>
 <thead>
@@ -631,7 +631,7 @@
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">map.<span class="hljs-built_in">insert</span>({<span class="hljs-string">"apple"</span>, <span class="hljs-number">2</span>});<br></code></pre></td></tr></tbody></table></figure>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">map.<span class="hljs-built_in">emplace</span>(<span class="hljs-string">"apple"</span>, <span class="hljs-number">3</span>);<br></code></pre></td></tr></tbody></table></figure>
 <ol start="5">
-<li>查找与统计</li>
+<li><strong>查找与统计</strong></li>
 </ol>
 <table>
 <thead>
@@ -652,7 +652,7 @@
 </tbody>
 </table>
 <ol start="6">
-<li>遍历元素</li>
+<li><strong>遍历元素</strong></li>
 </ol>
 <ul>
 <li>使用范围 for 循环</li>
@@ -743,11 +743,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/hashtable/" class="print-no-link">#hashtable</a>
+        <a href="/tags/queue/" class="print-no-link">#queue</a>
       
         <a href="/tags/sort/" class="print-no-link">#sort</a>
       
-        <a href="/tags/queue/" class="print-no-link">#queue</a>
+        <a href="/tags/hashtable/" class="print-no-link">#hashtable</a>
       
     </div>
   
