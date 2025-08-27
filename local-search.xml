@@ -130,9 +130,9 @@
       
       <tag>updating</tag>
       
-      <tag>stack</tag>
-      
       <tag>queue</tag>
+      
+      <tag>stack</tag>
       
       <tag>datastructure</tag>
       
@@ -611,9 +611,9 @@
       
       <tag>queue</tag>
       
-      <tag>hashtable</tag>
-      
       <tag>sort</tag>
+      
+      <tag>hashtable</tag>
       
     </tags>
     
@@ -671,9 +671,9 @@
     
     <tags>
       
-      <tag>stack</tag>
-      
       <tag>binary tree</tag>
+      
+      <tag>stack</tag>
       
       <tag>algorithm</tag>
       
@@ -700,9 +700,9 @@
     
     <tags>
       
-      <tag>binary tree</tag>
-      
       <tag>DFS</tag>
+      
+      <tag>binary tree</tag>
       
       <tag>search，graph，sort</tag>
       
