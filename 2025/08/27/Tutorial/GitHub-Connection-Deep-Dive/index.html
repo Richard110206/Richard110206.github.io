@@ -19,27 +19,26 @@
   <meta name="author" content="Li Qinxuan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article briefly introduces the various ways to enrich your personal blog built with Hexo and the adaptation differences when writing blogs on different platforms.">
+    <meta name="description" content="Triggered by an SSH connection failure to GitHub, this article explores and explains the methods for connecting to GitHub—including via HTTPS, SSH, and CLI.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo,Unleash Your Blogging Magic">
-<meta property="og:url" content="http://example.com/2025/07/12/Tutorial/Hexo-Hacks-Unleash-Your-Blogging-Magic/index.html">
+<meta property="og:title" content="GitHub Connection Deep Dive">
+<meta property="og:url" content="http://example.com/2025/08/27/Tutorial/GitHub-Connection-Deep-Dive/index.html">
 <meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
-<meta property="og:description" content="This article briefly introduces the various ways to enrich your personal blog built with Hexo and the adaptation differences when writing blogs on different platforms.">
+<meta property="og:description" content="Triggered by an SSH connection failure to GitHub, this article explores and explains the methods for connecting to GitHub—including via HTTPS, SSH, and CLI.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover//Hexo-Hacks-Unleash-Your-Blogging-Magic.png">
-<meta property="article:published_time" content="2025-07-12T14:15:10.000Z">
-<meta property="article:modified_time" content="2025-08-21T09:48:26.720Z">
+<meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/GithubConnection.png?raw=true">
+<meta property="article:published_time" content="2025-08-27T06:25:40.000Z">
+<meta property="article:modified_time" content="2025-08-27T08:03:06.281Z">
 <meta property="article:author" content="Li Qinxuan">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="Blogging">
+<meta property="article:tag" content="Github">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover//Hexo-Hacks-Unleash-Your-Blogging-Magic.png">
+<meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/GithubConnection.png?raw=true">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Hexo,Unleash Your Blogging Magic - Welcome To Li Qinxuan&#39;s Blog！</title>
+  <title>GitHub Connection Deep Dive - Welcome To Li Qinxuan&#39;s Blog！</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -281,7 +280,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hexo,Unleash Your Blogging Magic"></span>
+            <span id="subtitle" data-typed-text="GitHub Connection Deep Dive"></span>
           
         </div>
 
@@ -292,8 +291,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-12 22:15" pubdate>
-          2025年7月12日 晚上
+        <time datetime="2025-08-27 14:25" pubdate>
+          2025年8月27日 下午
         </time>
       </span>
     
@@ -304,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          989 字
+          104 字
         
       </span>
     
@@ -315,7 +314,7 @@
         
         
         
-          9 分钟
+          1 分钟
         
       </span>
     
@@ -390,7 +389,7 @@
       
         <a href="/2025/08/27/Tutorial/GitHub-Connection-Deep-Dive/" title="GitHub Connection Deep Dive"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">GitHub Connection Deep Dive</span>
         </a>
       
@@ -399,7 +398,7 @@
       
         <a href="/2025/07/12/Tutorial/Hexo-Hacks-Unleash-Your-Blogging-Magic/" title="Hexo,Unleash Your Blogging Magic"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">Hexo,Unleash Your Blogging Magic</span>
         </a>
       
@@ -467,86 +466,14 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Hexo,Unleash Your Blogging Magic</h1>
+            <h1 id="seo-header">GitHub Connection Deep Dive</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="一、玩转Hexo">一、玩转<code>Hexo</code></h2>
-<p>不同主题的Hexo主题博客，大致特点如下：</p>
-<table>
-<thead>
-<tr>
-<th>主题</th>
-<th>特点</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Fluid</strong></td>
-<td>加载速度快，有简单的动态效果，移动端适配佳</td>
-</tr>
-<tr>
-<td><strong>Butterfly</strong></td>
-<td>功能全面，社区活跃，高度可定制</td>
-</tr>
-<tr>
-<td><strong>Landscape</strong></td>
-<td>默认主题，轻量级，简洁易上手（有较多限制）</td>
-</tr>
-</tbody>
-</table>
-<p>博主尝试了这几种后对<code>fluid</code>追一见钟情，遂使用此主题。</p>
-<h3 id="（一）更换主题">（一）更换主题</h3>
-<p><strong>1. 安装 <code>Fluid</code> 主题</strong></p>
-<p>在 Hexo 博客根目录（<code>/HexoData</code>）运行：</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install --save hexo-theme-fluid<br></code></pre></td></tr></tbody></table></figure>
-<p><strong>2. 修改 <code>Hexo</code> 主配置</strong></p>
-<p>打开<code>_config.yml</code>（位于博客根目录），找到<code>theme</code>字段，修改为：</p>
-<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">theme:</span> <span class="hljs-string">fluid</span><br></code></pre></td></tr></tbody></table></figure>
-<p>如需要可以将 <code>language</code> 设置为中文：</p>
-<figure class="highlight yaml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">language:</span> <span class="hljs-string">zh-CN</span><br></code></pre></td></tr></tbody></table></figure>
-<p><strong>3. 创建 Fluid 的配置文件</strong></p>
-<p><code>Fluid</code>主题的配置需要额外文件：<br>
-在博客根目录下创建<code>_config.fluid.yml</code>文件：</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> node_modules/hexo-theme-fluid/_config.yml _config.fluid.yml<br></code></pre></td></tr></tbody></table></figure>
-<p>编辑<code>_config.fluid.yml</code>来自定义主题（如菜单、颜色、字体等）。</p>
-<p><strong>4. 迁移 Landscape 的内容（可选）</strong></p>
-<p>自定义样式/脚本：将 <code>Landscape</code> 的 <code>source/css</code> 或 <code>source/js</code> 文件复制到 <code>Fluid</code> 的 <code>source</code> 目录。<br>
-文章/页面：<code>_posts</code> 和<code> _pages</code> 内容无需迁移，<code>Hexo</code> 会自动读取。</p>
-<p><strong>5. 清理并重新生成</strong></p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s<br></code></pre></td></tr></tbody></table></figure>
-<p>访问 <a target="_blank" rel="noopener" href="http://localhost:4000">http://localhost:4000</a> 查看效果。</p>
-<h3 id="（二）添加评论系统">（二）添加评论系统</h3>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Neter_Leon/article/details/107064603?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=hexo%E7%9A%84fulid%E4%B8%8D%E5%90%8C%E7%8E%A9%E6%B3%95&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-107064603.142%5Ev102%5Epc_search_result_base2&amp;spm=1018.2226.3001.4187">Hexo快速构建个人小站-Fulid主题下添加Valine评论系统(三)</a><br>
-注意<code>comments</code>在(<code>\themes\你的主题名\_config.yml</code>)文件中，Hexo 主配置文件(<code>_config.yml</code>)通常用于全局配置（如博客标题、作者等），添加评论系统的配置不在这个文件中。将<code>appid</code>和<code>appkey</code>填入，同时记得根据选择的插件修改博客评论系统的<code>type</code>！</p>
-<h3 id="（三）添加背景音乐">（三）添加背景音乐</h3>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43471926/article/details/109798928?ops_request_misc=%257B%2522request%255Fid%2522%253A%25224db07d60e8ad014b04fcc3b6dc2a5cdf%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&amp;request_id=4db07d60e8ad014b04fcc3b6dc2a5cdf&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-109798928-null-null.142%5Ev102%5Epc_search_result_base2&amp;utm_term=hexo%20fluid%E5%8D%9A%E5%AE%A2%E8%87%AA%E5%8A%A8%E6%92%AD%E6%94%BE%E9%9F%B3%E4%B9%90&amp;spm=1018.2226.3001.4187">Hexo-Fluid主题添加音乐页面</a></p>
-<h3 id="（四）给每篇博客添加封面-背景">（四）给每篇博客添加封面/背景</h3>
-<p>在<code>source</code>文件夹下新建<code>medias</code>文件夹用于存放图片，在每篇博客文章<code>front-matter</code>的区域添加：<br>
-<strong>背景图片：</strong></p>
-<figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">banner<span class="hljs-emphasis">_img: 图片路径（/medias/图片文件名）</span><br></code></pre></td></tr></tbody></table></figure>
-<p><strong>封面图片预览：</strong></p>
-<figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown">index<span class="hljs-emphasis">_img: 图片路径（/medias/图片文件名）</span><br></code></pre></td></tr></tbody></table></figure>
-<p>其他丰富玩法参考官方文档：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://fluid-dev.github.io/hexo-fluid-docs/start/">开始使用 | Hexo Fluid 用户手册</a></li>
-<li><a target="_blank" rel="noopener" href="https://fluid-dev.github.io/hexo-fluid-docs/guide/">配置指南 | Hexo Fluid 用户手册</a></li>
-</ul>
-<h2 id="二、CSDN与Hexo撰写差异">二、CSDN与Hexo撰写差异</h2>
-<p><strong>1. 插入图片</strong><br>
-插入图片的语法如下：<code>![插入图片的注释](插入图片的连接或本地路径)</code><br>
-  CSDN 不支持本地图片链接：如果你在 CSDN 写博客时插入本地图片路径，其他用户无法访问你的本地文件。<br>
-  使用Hexo进行博客撰写时，图片可以放在<code>source/images/ 文件夹（可以自行创建）</code>使用相对路径，避免文件迁移后路径找不到而导致问题，建议一篇博客单独创建一个文件夹进行图片的存储便于管理。<br>
-  CSDN中的图片注释无法显示，必须通过在图片下添加<code>&lt;center&gt;添加图片注释&lt;/font&lt;/center&gt;</code>的方式进行注释。</p>
-<blockquote>
-<center>添加图片注释
-</center></blockquote>
-<p>  网上其他博主也有推荐使用<a target="_blank" rel="noopener" href="https://portal.qiniu.com/signin?redirect=%2Fhome">七牛云存储</a>的，将图片从本地上传到七牛云存储仓库。得到一个外链地址，将外链地址作为图片的URL地址写进文章。</p>
-<p><strong>2.数学公式</strong><br>
-CSDN中默认<code>latex</code>的格式是可以进行渲染的，而在<code>Hexo</code>中需要在全局配置文件中进行修改：</p>
-<figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-section"># 数学公式，开启之前需要更换 Markdown 渲染器，否则复杂公式会有兼容问题，具体请见：https://hexo.fluid-dev.com/docs/guide/##latex-数学公式</span><br><span class="hljs-section"># Mathematical formula. If enable, you need to change the Markdown renderer, see: https://hexo.fluid-dev.com/docs/en/guide/#math</span><br>math:<br>  # 开启后文章默认可用，自定义页面如需使用，需在 Front-matter 中指定 <span class="hljs-code">`math: true`</span><br>  # If you want to use math on the custom page, you need to set <span class="hljs-code">`math: true`</span> in Front-matter<br>  enable: true<br><br>  # 开启后，只有在文章 Front-matter 里指定 <span class="hljs-code">`math: true`</span> 才会在文章页启动公式转换，以便在页面不包含公式时提高加载速度<br>  # If true, only set <span class="hljs-code">`math: true`</span> in Front-matter will enable math, to load faster when the page does not contain math<br>  specific: false<br></code></pre></td></tr></tbody></table></figure>
-<p>封面来源：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=XiMVwkxu3hU">如何使用Hexo+Github Pages 搭建个人博客，手把手最新教程</a></p>
+                <p>今天在将hexo博客进行部署的时候突然发生以下报错：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh: connect to host github.com port 22: Connection timed out<br>fatal: Could not <span class="hljs-built_in">read</span> from remote repository.<br><br>Please make sure you have the correct access rights<br>and the repository exists.<br>FATAL Something<span class="hljs-string">'s wrong. Maybe you can find the solution here: https://hexo.io/docs/troubleshooting.html</span><br><span class="hljs-string">Error: Spawn failed</span><br><span class="hljs-string">    at ChildProcess.&lt;anonymous&gt; (E:\Hexo-backup\node_modules\hexo-deployer-git\node_modules\hexo-util\lib\spawn.js:51:21)</span><br><span class="hljs-string">    at ChildProcess.emit (node:events:518:28)</span><br><span class="hljs-string">    at cp.emit (E:\Hexo-backup\node_modules\cross-spawn\lib\enoent.js:34:29)</span><br><span class="hljs-string">    at ChildProcess._handle.onexit (node:internal/child_process:293:12)</span><br></code></pre></td></tr></tbody></table></figure>
+<p>在CSDN找到相应问题文档，才成功解决！<a target="_blank" rel="noopener" href="https://blog.csdn.net/nightwishh/article/details/99647545?fromshare=blogdetail&amp;sharetype=blogdetail&amp;sharerId=99647545&amp;sharerefer=PC&amp;sharesource=m0_53058983&amp;sharefrom=from_link">git报错ssh: connect to host github.com port 22: Connection timed out</a></p>
 
                 
               </div>
@@ -580,9 +507,7 @@ CSDN中默认<code>latex</code>的格式是可以进行渲染的，而在<code>H
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Hexo/" class="print-no-link">#Hexo</a>
-      
-        <a href="/tags/Blogging/" class="print-no-link">#Blogging</a>
+        <a href="/tags/Github/" class="print-no-link">#Github</a>
       
     </div>
   
@@ -594,8 +519,8 @@ CSDN中默认<code>latex</code>的格式是可以进行渲染的，而在<code>H
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hexo,Unleash Your Blogging Magic</div>
-      <div>http://example.com/2025/07/12/Tutorial/Hexo-Hacks-Unleash-Your-Blogging-Magic/</div>
+      <div>GitHub Connection Deep Dive</div>
+      <div>http://example.com/2025/08/27/Tutorial/GitHub-Connection-Deep-Dive/</div>
     </div>
     <div class="license-meta">
       
@@ -607,13 +532,13 @@ CSDN中默认<code>latex</code>的格式是可以进行渲染的，而在<code>H
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年7月12日</div>
+          <div>2025年8月27日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2025年8月21日</div>
+          <div>2025年8月27日</div>
         </div>
       
       
@@ -644,18 +569,12 @@ CSDN中默认<code>latex</code>的格式是可以进行渲染的，而在<code>H
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/07/13/Tutorial/Simple-Git-Project-Management-Guide/" title="Simple Git Project Management Guide">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Simple Git Project Management Guide</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/07/09/other/From-OpenCV-to-YOLOv5-Object-Detection-from-Theory-to-Practice/" title="From OpenCV to YOLOv5">
-                        <span class="hidden-mobile">From OpenCV to YOLOv5</span>
+                      <a href="/2025/08/26/Data%20structure/Hashtable/" title="Hashtable">
+                        <span class="hidden-mobile">Hashtable</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
