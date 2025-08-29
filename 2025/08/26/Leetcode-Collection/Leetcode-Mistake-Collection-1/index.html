@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/274c.png?v8">
 <meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/274c.png?v8">
 <meta property="article:published_time" content="2025-08-26T02:26:06.000Z">
-<meta property="article:modified_time" content="2025-08-29T09:07:51.860Z">
+<meta property="article:modified_time" content="2025-08-29T18:05:51.701Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="updating">
 <meta property="article:tag" content="Leetcode">
@@ -308,7 +308,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k words
+          1.6k words
         
       </span>
     
@@ -319,7 +319,7 @@
         
         
         
-          11 mins
+          14 mins
         
       </span>
     
@@ -546,7 +546,16 @@
 <li>若不为0，<strong>交换</strong>左右指针指向的元素，均向右移动</li>
 </ul>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">moveZeroes</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>{<br>        <span class="hljs-type">int</span> right=<span class="hljs-number">0</span>,left=<span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> n=nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">while</span>(right&lt;n){<br>            <span class="hljs-keyword">if</span>(nums[right]){<br>                <span class="hljs-built_in">swap</span>(nums[left],nums[right]);<br>                left++;<br>            }<br>            right++;<br>        }<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
-
+<h2 id="Leetcode-118-杨辉三角-119-杨辉三角ii">Leetcode 118.杨辉三角 + 119.杨辉三角ii</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/pascals-triangle">原题链接</a><br>
+<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/pascals-triangle-ii">原题链接</a></p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">generate</span>(<span class="hljs-type">int</span> numRows) {<br>        vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">vec</span>(numRows);<span class="hljs-comment">//初始化杨辉三角行数</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;numRows;i++){<br>            vec[i].<span class="hljs-built_in">resize</span>(i<span class="hljs-number">+1</span>);<span class="hljs-comment">//初始化杨辉三角每列元素个数 第i行有i+1个元素</span><br>            vec[i][<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;<span class="hljs-comment">//初始化杨辉三角每列第一个元素为1</span><br>            vec[i][i]=<span class="hljs-number">1</span>;<span class="hljs-comment">//初始化杨辉三角每列最后一个元素为1</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">1</span>;j&lt;i;j++){<br>                vec[i][j]=vec[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>]+vec[i<span class="hljs-number">-1</span>][j];<br>            }<br>        }<br>        <span class="hljs-keyword">return</span> vec;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="优化一：滚动数组">优化一：滚动数组</h3>
+<p>当我们只需要求杨辉三角的<code>rowIndex</code>行时，发现对第<code>i+1</code>行的计算仅用到了第<code>i</code>行的数据,因而可以通过<strong>滚动数组只保留当前行和上一行</strong>的元素，而不需要<strong>更早的元素</strong>。</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">getRow</span><span class="hljs-params">(<span class="hljs-type">int</span> rowIndex)</span> </span>{<br>        vector &lt;<span class="hljs-type">int</span>&gt; pre,cur;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;=rowIndex;i++){<br>            cur.<span class="hljs-built_in">resize</span>(i<span class="hljs-number">+1</span>);<br>            cur[<span class="hljs-number">0</span>]=cur[i]=<span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">1</span>;j&lt;i;j++){<br>                cur[j]=pre[j<span class="hljs-number">-1</span>]+pre[j];<br>            }<br>            pre=cur;<br>        }<br>        <span class="hljs-keyword">return</span> pre;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="优化二：单一数组逆序更新">优化二：单一数组逆序更新</h3>
+<p>滚动数组的优化，将<strong>当前行</strong>的元素<strong>逆序更新</strong>到<strong>上一行</strong>，从而<strong>不需要保存当前行</strong>，原本的<strong>两数相加</strong>在<strong>同一数组</strong>中每次仅需要加一次即可！。</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">getRow</span><span class="hljs-params">(<span class="hljs-type">int</span> rowIndex)</span> </span>{<br>        vector &lt;<span class="hljs-type">int</span>&gt; <span class="hljs-built_in">row</span>(rowIndex<span class="hljs-number">+1</span>);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;=rowIndex;i++){<br>            row[<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=i;j&gt;<span class="hljs-number">0</span>;j--){<br>                row[j]+=row[j<span class="hljs-number">-1</span>];<br>            }<br>        }<br>        <span class="hljs-keyword">return</span> row;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
                 
               </div>
             
@@ -612,7 +621,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>August 29, 2025</div>
+          <div>August 30, 2025</div>
         </div>
       
       
