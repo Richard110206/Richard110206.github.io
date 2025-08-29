@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/CUMT-Datastructure-Assignment-1.png">
 <meta property="article:published_time" content="2025-06-08T14:29:13.000Z">
-<meta property="article:modified_time" content="2025-08-27T03:33:40.987Z">
+<meta property="article:modified_time" content="2025-08-29T09:35:47.127Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Linear List，stack">
 <meta name="twitter:card" content="summary_large_image">
@@ -303,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k words
+          2.6k words
         
       </span>
     
@@ -630,6 +630,14 @@
 </tr>
 </tbody>
 </table>
+<p><strong>字符串翻转函数</strong>：<code>reverse(s.begin(),s.end())</code></p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{ <br>    string s=<span class="hljs-string">"hello world"</span>;<br>    <span class="hljs-built_in">reverse</span>(s.<span class="hljs-built_in">begin</span>(),s.<span class="hljs-built_in">end</span>());<br>    cout&lt;&lt;s&lt;&lt;endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-danger">
+            <p><code>reverse()</code><strong>返回值</strong>为<code>void</code>，而不是<code>string</code></p>
+          </div>
+<div class="note note-info">
+            <p>若是想<strong>保留原字符串</strong>：</p><ul><li>复制<strong>原字符串</strong></li></ul><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">string rev=s;<br><span class="hljs-built_in">reverse</span>(rev.<span class="hljs-built_in">begin</span>(),rev.<span class="hljs-built_in">end</span>());<br></code></pre></td></tr></tbody></table></figure><ul><li>调用<strong>字符翻转迭代器</strong></li></ul><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">string <span class="hljs-title">rev</span><span class="hljs-params">(s.rbegin(),s.rend())</span></span>;<br></code></pre></td></tr></tbody></table></figure>
+          </div>
 <p><code>noskipws</code>是定义在 <code>&lt;iomanip&gt;</code>头文件中的一个 I/O 操纵符（manipulator），全称是 <strong>“no skip whitespace”</strong>。</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> ch;<br>cin &gt;&gt; ch;       <span class="hljs-comment">// 自动跳过空白，读取第一个非空白字符</span><br>cin &gt;&gt; noskipws &gt;&gt; ch;  <span class="hljs-comment">// 不跳过空白，读取下一个字符（可能是空白）</span><br></code></pre></td></tr></tbody></table></figure>
 <p>如果需要恢复默认的跳过空白行为（作用相当于一个开关激活函数）：</p>
@@ -639,10 +647,10 @@
 <h2 id="H题：字符串反转">H题：字符串反转</h2>
 
     <div class="fold">
-      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-014cdc5d" role="button" aria-expanded="false" aria-controls="collapse-014cdc5d">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-e8ab38ca" role="button" aria-expanded="false" aria-controls="collapse-e8ab38ca">
         <div class="fold-arrow">▶</div> H题：字符串反转
       </div>
-      <div class="fold-collapse collapse" id="collapse-014cdc5d">
+      <div class="fold-collapse collapse" id="collapse-e8ab38ca">
         <div class="fold-content">
           <h3 id="题目描述">题目描述</h3><p>小C很喜欢倒着写单词，现在给你一行小C写的文本，你能把每个单词都反转并输出它们吗？</p><h3 id="输入">输入</h3><p>输入包含多组测试样例。第一行为一个整数T，代表测试样例的数量，后面跟着T个测试样例。每个测试样例占一行，包含多个单词。一行最多有1000个字符。</p><h3 id="输出">输出</h3><p>对于每一个测试样例，你应该输出转换后的文本。</p><h3 id="样例输入">样例输入</h3><figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-number">3</span><br>olleh !dlrow<br><span class="hljs-selector-tag">I</span> ekil <span class="hljs-selector-class">.bulcmca</span><br><span class="hljs-selector-tag">I</span> evol <span class="hljs-selector-class">.mca</span><br></code></pre></td></tr></tbody></table></figure><h3 id="样例输出">样例输出</h3><figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css">hello world!<br><span class="hljs-selector-tag">I</span> like acmclub.<br><span class="hljs-selector-tag">I</span> love acm.<br></code></pre></td></tr></tbody></table></figure>
         </div>
@@ -757,7 +765,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>August 27, 2025</div>
+          <div>August 29, 2025</div>
         </div>
       
       
