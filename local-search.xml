@@ -92,7 +92,7 @@
     
     <categories>
       
-      <category>Leetcode Collection</category>
+      <category>Leetcode Mistake Collection</category>
       
     </categories>
     
@@ -184,9 +184,9 @@
       
       <tag>updating</tag>
       
-      <tag>stack</tag>
-      
       <tag>queue</tag>
+      
+      <tag>stack</tag>
       
       <tag>datastructure</tag>
       
@@ -453,9 +453,9 @@
     
     <tags>
       
-      <tag>algorithm</tag>
-      
       <tag>sort</tag>
+      
+      <tag>algorithm</tag>
       
     </tags>
     
@@ -663,9 +663,9 @@
     
     <tags>
       
-      <tag>sort</tag>
-      
       <tag>hashtable</tag>
+      
+      <tag>sort</tag>
       
       <tag>queue</tag>
       
@@ -692,9 +692,9 @@
     
     <tags>
       
-      <tag>binary tree</tag>
-      
       <tag>queue</tag>
+      
+      <tag>binary tree</tag>
       
       <tag>huffman tree</tag>
       
@@ -725,11 +725,11 @@
     
     <tags>
       
-      <tag>stack</tag>
-      
       <tag>binary tree</tag>
       
       <tag>algorithm</tag>
+      
+      <tag>stack</tag>
       
     </tags>
     
