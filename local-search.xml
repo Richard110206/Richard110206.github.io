@@ -153,11 +153,11 @@
     
     <tags>
       
+      <tag>updating</tag>
+      
       <tag>CPP</tag>
       
       <tag>syntax</tag>
-      
-      <tag>updating</tag>
       
     </tags>
     
@@ -182,13 +182,13 @@
     
     <tags>
       
-      <tag>updating</tag>
-      
       <tag>stack</tag>
       
       <tag>queue</tag>
       
       <tag>datastructure</tag>
+      
+      <tag>updating</tag>
       
     </tags>
     
@@ -469,9 +469,9 @@
     
     <tags>
       
-      <tag>C++</tag>
-      
       <tag>OOP</tag>
+      
+      <tag>C++</tag>
       
     </tags>
     
@@ -498,9 +498,9 @@
     
     <tags>
       
-      <tag>C++</tag>
-      
       <tag>OOP</tag>
+      
+      <tag>C++</tag>
       
     </tags>
     
@@ -527,9 +527,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>updating</tag>
+      
+      <tag>CPP</tag>
       
       <tag>OOP</tag>
       
@@ -650,11 +650,11 @@
     
     <tags>
       
-      <tag>queue</tag>
+      <tag>sort</tag>
       
       <tag>hashtable</tag>
       
-      <tag>sort</tag>
+      <tag>queue</tag>
       
     </tags>
     
@@ -681,9 +681,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>huffman tree</tag>
-      
       <tag>queue</tag>
+      
+      <tag>huffman tree</tag>
       
       <tag>Dijkstra</tag>
       
