@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>JavaScript Tutorial</title>
+    <link href="/2025/09/01/Full-Stack/JavaScript/"/>
+    <url>/2025/09/01/Full-Stack/JavaScript/</url>
+    
+    <content type="html"><![CDATA[<p>相信各位读者已经掌握了2~3种编程语言，在此基础上再学习JavaScript并非难事，因此<strong>主要展示大致语法结构</strong>，及JavaScript相比其他语言的“特性”，skip 一些简单的执行流程原理！</p><h2 id="Usage">Usage</h2><p>与在HTML中引入CSS相同，JavaScript也可以在HTML中引入，有两种方式：</p><ol><li>行内式</li></ol><figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-comment">// 这是JavaScript代码</span></span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></tbody></table></figure><ol start="2"><li>外部式</li></ol><figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"js/script.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></tbody></table></figure><div class="note note-info">            <p>可以将脚本放置在或中（建议包含在<strong>后者</strong>中）</p>          </div><div class="note note-danger">            <p>外部脚本不能包含<code>&lt;script&gt;</code>标签</p>          </div><h2 id="Basic-Syntax">Basic Syntax</h2><ul><li>JavaScript并不强求每个语句以<code>;</code>结束，浏览器中负责执行JavaScript代码的引擎会自动在每个语句的结尾补上<code>;</code>，但防止某些情况下会改变程序的语义，导致运行结果与期望不一致，我们建议都在结尾使用<code>;</code>！</li></ul><h3 id="注释">注释</h3><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 这是单行注释</span><br></code></pre></td></tr></tbody></table></figure><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/*</span><br><span class="hljs-comment">这是</span><br><span class="hljs-comment">多行</span><br><span class="hljs-comment">注释</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></tbody></table></figure><h3 id="输出">输出</h3><h4 id="控制台">控制台</h4><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">"输出一条日志"</span>);<span class="hljs-comment">//最常用</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">info</span>(<span class="hljs-string">"输出一条信息"</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">"输出一条警告"</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">"输出一条错误"</span>);<br></code></pre></td></tr></tbody></table></figure><h4 id="窗口">窗口</h4><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title function_">alert</span>(<span class="hljs-string">"这是一条警告"</span>);<br></code></pre></td></tr></tbody></table></figure><h4 id="页面">页面</h4><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">document</span>.<span class="hljs-title function_">write</span>(<span class="hljs-string">"这是一条警告"</span>);<br></code></pre></td></tr></tbody></table></figure><h3 id="比较运算符">比较运算符</h3><ul><li>第一种是<code>==</code>比较，它会<strong>自动转换数据类型再比较</strong>，很多时候，会得到非常诡异的结果；</li><li>第二种是<code>===</code>比较，它不会自动转换数据类型，如果数据类型不一致，返回false，如果一致，再比较。</li></ul><p><strong>建议使用<code>===</code>比较</strong>，因为它的比较规则更严格，不会出现自动转换数据类型的情况。</p><div class="note note-danger">            <p>另一个例外是NaN这个特殊的Number与所有其他值都不相等，包括它自己：</p><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">NaN</span> === <span class="hljs-title class_">NaN</span>; <span class="hljs-comment">// false</span><br></code></pre></td></tr></tbody></table></figure><p>只有当<code>isNaN()</code>才相等，返回<code>true</code>：</p><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">isNaN</span>(<span class="hljs-title class_">NaN</span>); <span class="hljs-comment">// true</span><br></code></pre></td></tr></tbody></table></figure>          </div><h3 id="基本数据类型">基本数据类型</h3><ul><li>数值（Number）</li><li>字符串（String）</li><li>布尔值（Boolean）</li><li>null</li><li>undefined：在使用<code>var</code>声明变量但未对其加以初始化</li><li>对象（Object）</li></ul><p>与C++等语言不同，JavaScript的数值类型<strong>不区分整数和浮点数</strong>，统一用Number表示，以下都是合法的Number类型：</p><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-number">123</span>; <span class="hljs-comment">// 整数123</span><br><span class="hljs-number">0.456</span>; <span class="hljs-comment">// 浮点数0.456</span><br><span class="hljs-number">1.2345e3</span>; <span class="hljs-comment">// 科学计数法表示1.2345x1000，等同于1234.5</span><br>-<span class="hljs-number">99</span>; <span class="hljs-comment">// 负数</span><br><span class="hljs-title class_">NaN</span>; <span class="hljs-comment">// NaN表示Not a Number，当无法计算结果时用NaN表示</span><br><span class="hljs-title class_">Infinity</span>; <span class="hljs-comment">// Infinity表示无限大，当数值超过了JavaScript的Number所能表示的最大值时，就表示为Infinity</span><br></code></pre></td></tr></tbody></table></figure><h3 id="声明变量">声明变量</h3><h3 id="循环、控制语句与CPP相同，不再分析">循环、控制语句与CPP相同，不再分析</h3><h3 id="Function">Function</h3><figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">test1</span>(<span class="hljs-params">x</span>) {<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Input x value is <span class="hljs-subst">${x}</span>`</span>)<br>    x++;<br>    <span class="hljs-keyword">let</span> y = <span class="hljs-number">100</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Now the x value in this function is <span class="hljs-subst">${x}</span>`</span>)<br>}<br><br><span class="hljs-keyword">let</span> x = <span class="hljs-number">10</span><br><span class="hljs-title function_">test1</span>(x)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Now the x outside the function is <span class="hljs-subst">${x}</span>`</span>)<br></code></pre></td></tr></tbody></table></figure><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">Input x value is 10<br>Now the x value in this function is 11<br>Now the x outside the function is 10<br></code></pre></td></tr></tbody></table></figure><ul><li>基本类型的传递为<strong>值传递</strong></li><li>对象、数组、函数等类型的传递为<strong>引用传递</strong></li></ul><h3 id="OOP-in-JavaScript">OOP in JavaScript</h3>]]></content>
+    
+    
+    <categories>
+      
+      <category>Full-Stack</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JavaScript</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Double Pointer</title>
     <link href="/2025/08/29/Algorithm/Double-Pointer/"/>
     <url>/2025/08/29/Algorithm/Double-Pointer/</url>
@@ -184,9 +209,9 @@
       
       <tag>updating</tag>
       
-      <tag>queue</tag>
-      
       <tag>stack</tag>
+      
+      <tag>queue</tag>
       
       <tag>datastructure</tag>
       
@@ -440,9 +465,9 @@
     
     <tags>
       
-      <tag>sort</tag>
-      
       <tag>algorithm</tag>
+      
+      <tag>sort</tag>
       
     </tags>
     
@@ -469,9 +494,9 @@
     
     <tags>
       
-      <tag>OOP</tag>
-      
       <tag>C++</tag>
+      
+      <tag>OOP</tag>
       
     </tags>
     
@@ -498,9 +523,9 @@
     
     <tags>
       
-      <tag>OOP</tag>
-      
       <tag>C++</tag>
+      
+      <tag>OOP</tag>
       
     </tags>
     
@@ -544,7 +569,7 @@
     <link href="/2025/07/14/other/life-musings/"/>
     <url>/2025/07/14/other/life-musings/</url>
     
-    <content type="html"><![CDATA[<h1>Life-musings（精进日记）</h1><p>记录每天的<strong>学习内容</strong> &amp;&amp; 博客未来<strong>更新方向</strong>！<br>保持更新的节奏！</p><h2 id="2025">2025</h2>    <div class="fold">      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-019d8157" role="button" aria-expanded="false" aria-controls="collapse-019d8157">        <div class="fold-arrow">▶</div> Summer Vacation      </div>      <div class="fold-collapse collapse" id="collapse-019d8157">        <div class="fold-content">          <h3 id="7-14">7.14</h3><p>梦开始的地方！<br><strong>cool！</strong></p><h3 id="7-16">7.16</h3><p>Turtle in Python 大win特win！</p><h3 id="7-17">7.17</h3><p>昨晚备课到两点…<br>逐渐适应老师的身份！<br>制作课件的过程中也顺便二次学习Python语法！</p><h3 id="7-18">7.18</h3><p>成功给 blog 添加 category 功能！</p><h3 id="7-22">7.22</h3><p>上知网阅读相关论文，<strong>着手准备26大创pre</strong>！<br>在roboflow上找到几个感觉适配的<strong>数据集</strong>！<br>但是还是感觉有些缺失，需要自己想办法解决…</p><h3 id="7-23">7.23</h3><p>参考数据结构教材，重新梳理了几种常见的<strong>排序算法的核心思路</strong>！<br>自己敲了敲各种排序算法的代码，interesting！</p><h3 id="7-24">7.24</h3><p>试图给博客添加vercel进行<strong>自动化部署</strong>，<br>似乎不是很成功 😢</p><h3 id="7-25">7.25</h3><p>UC Berkeley的CS61A！</p><h3 id="7-26">7.26</h3><p>The Missing Semester of Your CS Education！<br><code>shell</code>篇，受益匪浅！</p><h3 id="7-27">7.27</h3><p>先是赛车，再是足球！忙活一天！<br>回来总算是吧<code>shell</code>篇的博客写完了！<br>还顺带配置了博客 emoji 😄<br>以后终于不再是文文并茂了😢</p><h3 id="7-28">7.28</h3><p>继续[missing semster]，学完了<code>vim</code>篇！</p><h3 id="7-29">7.29</h3><p>完善<code>Git</code>篇！<br>捣鼓我的 mac！</p><h3 id="7-30">7.30</h3><p>终于在 macbook 上成功配置博客环境！<br>单人多设备假装自己是多人协作开发大项目😄</p><h3 id="7-31">7.31</h3><p>mac 中尝试在<code>vim</code>写、编译运行<code>c++</code>！<br><strong>skilled programmer</strong> 既视感😄</p><h3 id="8-1">8.1</h3><p>入门<strong>dynamic programming</strong>！<br>祝好运😉</p><h3 id="8-7">8.7</h3><p><strong>LaTex</strong>简单入门，优雅，太优雅了！😊<br>果然学习才是<strong>祛魅</strong>的最好方式！<br><strong>overleaf</strong>在线共享编辑，真是个好东西！😄</p><h3 id="8-8">8.8</h3><p>LaTex 太灾难了😢<br>还是更喜欢<strong>WYSWYG</strong>😊</p><h3 id="8-9">8.9</h3><p>LaTex 还得是在<strong>实战中学习</strong>！<br>但感觉花大量时间学习性价比不太高😢<br>AI辅助 LaTex就很舒服😀</p><h3 id="8-10">8.10</h3><p>终于整完了，呼~~<br>要投身算法学习哩！<br>不能再依靠 life-musings 栏目苟延残喘更新速度了😡</p><h3 id="8-11">8.11</h3><p>summer vacation assignment😡</p><h3 id="8-12">8.12</h3><p>full stack 冲冲冲！！！</p><h3 id="8-13">8.13</h3><p>有点绷不住了😠<br>搞了一上午才将<strong>图床</strong>弄好<br>然后下午进行<strong>图片的迁移</strong>和博客照片中路径的修改~<br>对整个博客内容<strong>缝缝补补</strong>（其实是女娲补天😀）<br>将原来<code>生活随想录</code>栏目进行了拆分：</p><ul><li>精进日记 ➡️➡️ 偏学业</li><li>生活杂谈 ➡️➡️ 偏生活</li></ul><p><img src="https://raw.githubusercontent.com/Richard110206/blog-image/main//article/life-musings/20250813.png" alt="2025年8月13日23点10分Github截图"></p><h3 id="8-14">8.14</h3><p>进行更新HTML&amp;&amp;CSS的部分</p><h3 id="8-16">8.16</h3><p>刷知乎看到一篇很好的帖子：<br><a href="https://www.zhihu.com/question/11379810074">大一计算机新生怎么合理利用github？ - 知乎</a><br>后续努力方向！</p><p>完善Github主页readme文件<br>尝试使用开源代码丰富界面</p><p>再三尝试<strong>Vercel部署</strong>失败😢<br>能不能让我赢一次😢</p><h3 id="8-17">8.17</h3><p>完善 HTML &amp;&amp; CSS 表单部分<br>yysy 感觉越写越多，CSS都要单开一栏目了😀<br>学习《Github从入门到实践》<br>丰富有关<code>Git</code>项目管理的笔记内容😄</p><h3 id="8-18">8.18</h3><p>新开章节CSS！</p><h3 id="8-19">8.19</h3><p>第一次尝试<strong>PR</strong>！<br>学习<code>flex</code>布局！</p><h3 id="8-20">8.20</h3><p>无所事事！<br>这看看那看看的<br>一会儿看看 github 一会儿又去 leetcode<br>还没刷上题又去看 data analyse😢</p><h3 id="8-21">8.21</h3><p>经提醒，发现CSDN博客上的图片转存失败，紧急进行修复！<br>顺便写了一篇关于PicGo插件配置Github图床的博客！<br>并计划回顾往期博客，完善格式，修复语病！<br>使用<strong>pandoc实行文档转换</strong>输出数学公式！<br><img src="https://github.com/Richard110206/Blog-image/blob/main/article/Sorting-Algorithm/mathematical.png?raw=true" alt="成功给博客配置数学公式结算画面"></p><h3 id="8-22">8.22</h3><p>新语法Get！给hexo增加<strong>折叠块</strong>的内容！<br>经常在YouTube上刷到动画风质感很好的封面：<br><img src="https://github.com/Richard110206/Blog-image/blob/main/article/life-musings/Ghibli.jpeg?raw=true" alt="Ghibli画风"><br>今天才知道原来是<strong>吉卜力工作室的宫崎骏画风</strong>！<br>（不知道为啥在国内不是很火🔥 难道是版权问题🫤）<br>其实一开始看着就有点像AI改的，但是据我浅薄的了解：<br>这种文字程度的又不太像AI生成的（或许是我没用过更好的大模型吧）<br>用豆包试了试,感觉还不错,但跟想象略有出入😢</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs textinfo">以这张图为基础，转化为吉卜力风格插画。采用吉卜力经典的高饱和度且自然和谐的色彩体系，像宫崎骏作品中常见的清新绿、湛蓝天空色等。画面笔触要细腻且有手绘质感，就如同吉卜力动画中一帧帧精心绘制的场景。保留所有的人物、建筑物等，营造出吉卜力式的奇幻氛围 ，光影柔和，突出主体，整体呈现出温暖治愈的感觉 。<br></code></pre></td></tr></tbody></table></figure><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs textinfo">将此图重绘为吉卜力风格。保留原图主体动作与大致构图，色调调整为吉卜力偏好的明快且温馨的色调，比如用柔和的暖黄色光模拟夕阳洒下的效果。背景细节按照吉卜力风格丰富化，若有建筑，添加木质纹理与精致的装饰；若有自然场景，细化植物的形态与层次。线条干净流畅，具有明显的手绘痕迹，使整幅图宛如出自吉卜力工作室 。<br></code></pre></td></tr></tbody></table></figure><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs textinfo">参照此图，创作吉卜力风格画面。保留原图核心元素，将画面氛围塑造为吉卜力式的宁静而充满生机。色彩以清新淡雅为主，偶尔用鲜艳色彩作为点缀突出重点。绘制手法上，以干净利落的线条勾勒轮廓，再用细腻的色彩填充，展现出吉卜力动画那种精致的画面效果。光影处理成既有明亮的主光源，又有柔和的环境光，让整个场景看起来自然且生动 。保留人物物体的一致性。<br></code></pre></td></tr></tbody></table></figure><p>下午开新坑！回顾数据结构！</p><p>华数杯“优秀奖”，😢呜呜呜…<br>第一次在博客中引入pdf文件！</p><h3 id="8-23">8.23</h3><p>继续复习栈和队列，未来会尝试将<strong>每种数据结构都实现一遍</strong>！</p><p>新博客栏目的<strong>宫崎骏画风封面</strong>感觉还不错！<br>就是显示文字依然乱码，十分费劲！<br>那大抵是要<strong>开ChatGPT会员</strong>罢！</p><p>密码的，吃完饭回来电脑竟然<strong>死机了</strong>😢<br>大概是开太多程序又长时间没有关机的缘故（多学学人家Mac 几周不关机也没事）<br>然后一通乱按又把键盘弄失灵了😢<br>弄俩小时才发现是误触 要<code>Fn</code>+<code>T</code><strong>切换到有线模式</strong>才行 太折磨了！</p><h3 id="8-24">8.24</h3><p>开刷leetcode！<br>有种高中写圆锥曲线和导数大题的感觉😀<br>又折磨又兴奋 又菜又爱学没跑了😢</p><h3 id="8-25">8.25</h3><p>c++修修补补<br>学习lambda表达式和auto用法</p><p>ChatGPT果然还是更胜一筹<br>“<strong>贵的东西的缺点只有贵</strong>”</p><h3 id="8-26">8.26</h3><p>Hashtable Review!</p><p><strong>Sora绘图</strong>效果令人惊喜，可惜每日三次😢</p><p><img src="https://github.com/Richard110206/Blog-image/blob/main/article/life-musings/ChatGPT-Warning.png?raw=true" alt="ChatGPT Warning!"><br>猜的很对了，这下看懂了😀</p><p><strong>Update the published blog post!</strong></p><ul><li>为了<strong>方便阅读</strong>，给<strong>OJ题目设置了折叠块</strong></li><li>为了<strong>格式重点突出</strong>，给问题解答、分析板块增加不同颜色的<strong>标签note插件</strong></li></ul><h3 id="8-27">8.27</h3><p>debug——<strong>ssh</strong>突然网络连接失败（CSDN✅）</p><p><strong>Sora绘图</strong>不知道为啥又<strong>无限制</strong>了😀<br>吸取之前被限制的教训，这次表达相当<strong>委婉</strong><br><strong>prompt</strong>详细一点，生图风格就相当<strong>awesome</strong>！</p><h3 id="8-28">8.28</h3><p>学习<strong>结构化绑定</strong></p><p>依然Leetcode刷题，查漏补缺！</p><h3 id="8-29">8.29</h3><p><strong>Leetcode</strong>！杨辉三角+优化<br>妙实在是妙！</p><p>将博客切换<code>en</code>英文版面</p><h3 id="8-31">8.31</h3><p>双指针依然不能稳定AC嘛~</p><p>  8月暑假悄悄从指间溜走了~ 回顾整个暑假，从刚放假看国外公开课，学习一些简单的Tools，比如Github、Git、 Vim、Shell等，充实作为计算机科班生的基础知识，也更加有底气了（傲气）；旅游归来复习几个基本的数据结构，比如栈、队列、链表等；然后，开刷leetcode，同时更新<code>Leetcode Mistake Collection</code>！时隔一年再次享受到到刷题的乐趣，无情的算法题会将你的思维+代码的bug暴露无遗，但绿意盎然的“通过”字样则会将你从苦海中拯救！真是痛并快乐着！</p><p>开学了后续大概会更新：</p><ul><li>部分学科的学习笔记（概率论和大物、计组等）</li><li>简单的cpp项目</li><li>每天一道leetcode</li><li>全栈</li><li>一些基本工具的巩固</li><li>入门Linux</li></ul><p>我们未来见！👋</p>        </div>      </div>    </div>    <div class="fold">      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-cc9067c2" role="button" aria-expanded="false" aria-controls="collapse-cc9067c2">        <div class="fold-arrow">▶</div> Semester 2.1      </div>      <div class="fold-collapse collapse" id="collapse-cc9067c2">        <div class="fold-content">                  </div>      </div>    </div>]]></content>
+    <content type="html"><![CDATA[<h1>Life-musings（精进日记）</h1><p>记录每天的<strong>学习内容</strong> &amp;&amp; 博客未来<strong>更新方向</strong>！<br>保持更新的节奏！</p><h2 id="2025">2025</h2>    <div class="fold">      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-019d8157" role="button" aria-expanded="false" aria-controls="collapse-019d8157">        <div class="fold-arrow">▶</div> Summer Vacation      </div>      <div class="fold-collapse collapse" id="collapse-019d8157">        <div class="fold-content">          <h3 id="7-14">7.14</h3><p>梦开始的地方！<br><strong>cool！</strong></p><h3 id="7-16">7.16</h3><p>Turtle in Python 大win特win！</p><h3 id="7-17">7.17</h3><p>昨晚备课到两点…<br>逐渐适应老师的身份！<br>制作课件的过程中也顺便二次学习Python语法！</p><h3 id="7-18">7.18</h3><p>成功给 blog 添加 category 功能！</p><h3 id="7-22">7.22</h3><p>上知网阅读相关论文，<strong>着手准备26大创pre</strong>！<br>在roboflow上找到几个感觉适配的<strong>数据集</strong>！<br>但是还是感觉有些缺失，需要自己想办法解决…</p><h3 id="7-23">7.23</h3><p>参考数据结构教材，重新梳理了几种常见的<strong>排序算法的核心思路</strong>！<br>自己敲了敲各种排序算法的代码，interesting！</p><h3 id="7-24">7.24</h3><p>试图给博客添加vercel进行<strong>自动化部署</strong>，<br>似乎不是很成功 😢</p><h3 id="7-25">7.25</h3><p>UC Berkeley的CS61A！</p><h3 id="7-26">7.26</h3><p>The Missing Semester of Your CS Education！<br><code>shell</code>篇，受益匪浅！</p><h3 id="7-27">7.27</h3><p>先是赛车，再是足球！忙活一天！<br>回来总算是吧<code>shell</code>篇的博客写完了！<br>还顺带配置了博客 emoji 😄<br>以后终于不再是文文并茂了😢</p><h3 id="7-28">7.28</h3><p>继续[missing semster]，学完了<code>vim</code>篇！</p><h3 id="7-29">7.29</h3><p>完善<code>Git</code>篇！<br>捣鼓我的 mac！</p><h3 id="7-30">7.30</h3><p>终于在 macbook 上成功配置博客环境！<br>单人多设备假装自己是多人协作开发大项目😄</p><h3 id="7-31">7.31</h3><p>mac 中尝试在<code>vim</code>写、编译运行<code>c++</code>！<br><strong>skilled programmer</strong> 既视感😄</p><h3 id="8-1">8.1</h3><p>入门<strong>dynamic programming</strong>！<br>祝好运😉</p><h3 id="8-7">8.7</h3><p><strong>LaTex</strong>简单入门，优雅，太优雅了！😊<br>果然学习才是<strong>祛魅</strong>的最好方式！<br><strong>overleaf</strong>在线共享编辑，真是个好东西！😄</p><h3 id="8-8">8.8</h3><p>LaTex 太灾难了😢<br>还是更喜欢<strong>WYSWYG</strong>😊</p><h3 id="8-9">8.9</h3><p>LaTex 还得是在<strong>实战中学习</strong>！<br>但感觉花大量时间学习性价比不太高😢<br>AI辅助 LaTex就很舒服😀</p><h3 id="8-10">8.10</h3><p>终于整完了，呼~~<br>要投身算法学习哩！<br>不能再依靠 life-musings 栏目苟延残喘更新速度了😡</p><h3 id="8-11">8.11</h3><p>summer vacation assignment😡</p><h3 id="8-12">8.12</h3><p>full stack 冲冲冲！！！</p><h3 id="8-13">8.13</h3><p>有点绷不住了😠<br>搞了一上午才将<strong>图床</strong>弄好<br>然后下午进行<strong>图片的迁移</strong>和博客照片中路径的修改~<br>对整个博客内容<strong>缝缝补补</strong>（其实是女娲补天😀）<br>将原来<code>生活随想录</code>栏目进行了拆分：</p><ul><li>精进日记 ➡️➡️ 偏学业</li><li>生活杂谈 ➡️➡️ 偏生活</li></ul><p><img src="https://raw.githubusercontent.com/Richard110206/blog-image/main//article/life-musings/20250813.png" alt="2025年8月13日23点10分Github截图"></p><h3 id="8-14">8.14</h3><p>进行更新HTML&amp;&amp;CSS的部分</p><h3 id="8-16">8.16</h3><p>刷知乎看到一篇很好的帖子：<br><a href="https://www.zhihu.com/question/11379810074">大一计算机新生怎么合理利用github？ - 知乎</a><br>后续努力方向！</p><p>完善Github主页readme文件<br>尝试使用开源代码丰富界面</p><p>再三尝试<strong>Vercel部署</strong>失败😢<br>能不能让我赢一次😢</p><h3 id="8-17">8.17</h3><p>完善 HTML &amp;&amp; CSS 表单部分<br>yysy 感觉越写越多，CSS都要单开一栏目了😀<br>学习《Github从入门到实践》<br>丰富有关<code>Git</code>项目管理的笔记内容😄</p><h3 id="8-18">8.18</h3><p>新开章节CSS！</p><h3 id="8-19">8.19</h3><p>第一次尝试<strong>PR</strong>！<br>学习<code>flex</code>布局！</p><h3 id="8-20">8.20</h3><p>无所事事！<br>这看看那看看的<br>一会儿看看 github 一会儿又去 leetcode<br>还没刷上题又去看 data analyse😢</p><h3 id="8-21">8.21</h3><p>经提醒，发现CSDN博客上的图片转存失败，紧急进行修复！<br>顺便写了一篇关于PicGo插件配置Github图床的博客！<br>并计划回顾往期博客，完善格式，修复语病！<br>使用<strong>pandoc实行文档转换</strong>输出数学公式！<br><img src="https://github.com/Richard110206/Blog-image/blob/main/article/Sorting-Algorithm/mathematical.png?raw=true" alt="成功给博客配置数学公式结算画面"></p><h3 id="8-22">8.22</h3><p>新语法Get！给hexo增加<strong>折叠块</strong>的内容！<br>经常在YouTube上刷到动画风质感很好的封面：<br><img src="https://github.com/Richard110206/Blog-image/blob/main/article/life-musings/Ghibli.jpeg?raw=true" alt="Ghibli画风"><br>今天才知道原来是<strong>吉卜力工作室的宫崎骏画风</strong>！<br>（不知道为啥在国内不是很火🔥 难道是版权问题🫤）<br>其实一开始看着就有点像AI改的，但是据我浅薄的了解：<br>这种文字程度的又不太像AI生成的（或许是我没用过更好的大模型吧）<br>用豆包试了试,感觉还不错,但跟想象略有出入😢</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs textinfo">以这张图为基础，转化为吉卜力风格插画。采用吉卜力经典的高饱和度且自然和谐的色彩体系，像宫崎骏作品中常见的清新绿、湛蓝天空色等。画面笔触要细腻且有手绘质感，就如同吉卜力动画中一帧帧精心绘制的场景。保留所有的人物、建筑物等，营造出吉卜力式的奇幻氛围 ，光影柔和，突出主体，整体呈现出温暖治愈的感觉 。<br></code></pre></td></tr></tbody></table></figure><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs textinfo">将此图重绘为吉卜力风格。保留原图主体动作与大致构图，色调调整为吉卜力偏好的明快且温馨的色调，比如用柔和的暖黄色光模拟夕阳洒下的效果。背景细节按照吉卜力风格丰富化，若有建筑，添加木质纹理与精致的装饰；若有自然场景，细化植物的形态与层次。线条干净流畅，具有明显的手绘痕迹，使整幅图宛如出自吉卜力工作室 。<br></code></pre></td></tr></tbody></table></figure><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs textinfo">参照此图，创作吉卜力风格画面。保留原图核心元素，将画面氛围塑造为吉卜力式的宁静而充满生机。色彩以清新淡雅为主，偶尔用鲜艳色彩作为点缀突出重点。绘制手法上，以干净利落的线条勾勒轮廓，再用细腻的色彩填充，展现出吉卜力动画那种精致的画面效果。光影处理成既有明亮的主光源，又有柔和的环境光，让整个场景看起来自然且生动 。保留人物物体的一致性。<br></code></pre></td></tr></tbody></table></figure><p>下午开新坑！回顾数据结构！</p><p>华数杯“优秀奖”，😢呜呜呜…<br>第一次在博客中引入pdf文件！</p><h3 id="8-23">8.23</h3><p>继续复习栈和队列，未来会尝试将<strong>每种数据结构都实现一遍</strong>！</p><p>新博客栏目的<strong>宫崎骏画风封面</strong>感觉还不错！<br>就是显示文字依然乱码，十分费劲！<br>那大抵是要<strong>开ChatGPT会员</strong>罢！</p><p>密码的，吃完饭回来电脑竟然<strong>死机了</strong>😢<br>大概是开太多程序又长时间没有关机的缘故（多学学人家Mac 几周不关机也没事）<br>然后一通乱按又把键盘弄失灵了😢<br>弄俩小时才发现是误触 要<code>Fn</code>+<code>T</code><strong>切换到有线模式</strong>才行 太折磨了！</p><h3 id="8-24">8.24</h3><p>开刷leetcode！<br>有种高中写圆锥曲线和导数大题的感觉😀<br>又折磨又兴奋 又菜又爱学没跑了😢</p><h3 id="8-25">8.25</h3><p>c++修修补补<br>学习lambda表达式和auto用法</p><p>ChatGPT果然还是更胜一筹<br>“<strong>贵的东西的缺点只有贵</strong>”</p><h3 id="8-26">8.26</h3><p>Hashtable Review!</p><p><strong>Sora绘图</strong>效果令人惊喜，可惜每日三次😢</p><p><img src="https://github.com/Richard110206/Blog-image/blob/main/article/life-musings/ChatGPT-Warning.png?raw=true" alt="ChatGPT Warning!"><br>猜的很对了，这下看懂了😀</p><p><strong>Update the published blog post!</strong></p><ul><li>为了<strong>方便阅读</strong>，给<strong>OJ题目设置了折叠块</strong></li><li>为了<strong>格式重点突出</strong>，给问题解答、分析板块增加不同颜色的<strong>标签note插件</strong></li></ul><h3 id="8-27">8.27</h3><p>debug——<strong>ssh</strong>突然网络连接失败（CSDN✅）</p><p><strong>Sora绘图</strong>不知道为啥又<strong>无限制</strong>了😀<br>吸取之前被限制的教训，这次表达相当<strong>委婉</strong><br><strong>prompt</strong>详细一点，生图风格就相当<strong>awesome</strong>！</p><h3 id="8-28">8.28</h3><p>学习<strong>结构化绑定</strong></p><p>依然Leetcode刷题，查漏补缺！</p><h3 id="8-29">8.29</h3><p><strong>Leetcode</strong>！杨辉三角+优化<br>妙实在是妙！</p><p>将博客切换<code>en</code>英文版面</p><h3 id="8-31">8.31</h3><p>双指针依然不能稳定AC嘛~</p><p>  8月暑假悄悄从指间溜走了~ 回顾整个暑假，从刚放假看国外公开课，学习一些简单的Tools，比如Github、Git、 Vim、Shell等，充实作为计算机科班生的基础知识，也更加有底气了（傲气）；旅游归来复习几个基本的数据结构，比如栈、队列、链表等；然后，开刷leetcode，同时更新<code>Leetcode Mistake Collection</code>！时隔一年再次享受到到刷题的乐趣，无情的算法题会将你的思维+代码的bug暴露无遗，但绿意盎然的“通过”字样则会将你从苦海中拯救！真是痛并快乐着！</p><p>开学了后续大概会更新：</p><ul><li>部分学科的学习笔记（概率论和大物、计组等）</li><li>简单的cpp项目</li><li>每天一道leetcode</li><li>全栈</li><li>一些基本工具的巩固</li><li>入门Linux</li></ul><p>我们未来见！👋</p>        </div>      </div>    </div><ul><li><h2 id="9-1">9.1</h2><ul><li></li><li></li></ul></li></ul>]]></content>
     
     
     
@@ -650,11 +675,11 @@
     
     <tags>
       
-      <tag>queue</tag>
-      
       <tag>hashtable</tag>
       
       <tag>sort</tag>
+      
+      <tag>queue</tag>
       
     </tags>
     
@@ -681,9 +706,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>huffman tree</tag>
-      
       <tag>queue</tag>
+      
+      <tag>huffman tree</tag>
       
       <tag>Dijkstra</tag>
       
@@ -712,9 +737,9 @@
     
     <tags>
       
-      <tag>binary tree</tag>
-      
       <tag>stack</tag>
+      
+      <tag>binary tree</tag>
       
       <tag>algorithm</tag>
       
@@ -741,9 +766,9 @@
     
     <tags>
       
-      <tag>DFS</tag>
-      
       <tag>binary tree</tag>
+      
+      <tag>DFS</tag>
       
       <tag>search，graph，sort</tag>
       
