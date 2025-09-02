@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/Shell%20Magic%20Notes%20from%20The%20Missing%20Semeste.jpeg">
 <meta property="article:published_time" content="2025-07-27T14:34:30.000Z">
-<meta property="article:modified_time" content="2025-09-02T03:54:26.992Z">
+<meta property="article:modified_time" content="2025-09-02T04:07:50.712Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary_large_image">
@@ -303,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k words
+          2.9k words
         
       </span>
     
@@ -314,7 +314,7 @@
         
         
         
-          23 mins
+          25 mins
         
       </span>
     
@@ -738,6 +738,28 @@
 </ul>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">wc</span> hello.txt<br> 13  13 109 hello.txt<br></code></pre></td></tr></tbody></table></figure>
 <figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ruby">richard<span class="hljs-variable">@richard</span>-<span class="hljs-title class_">VMware</span>-<span class="hljs-title class_">Virtual</span>-<span class="hljs-title class_">Platform</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>wc --word hello.txt<br><span class="hljs-number">13</span> hello.txt<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="关机与重启">关机与重启</h3>
+<p>1.<code>shutdown</code></p>
+<ul>
+<li><code>-r</code> 或 <code>--reboot</code>: 重新启动系统</li>
+<li><code>-h</code> 或 <code>--halt</code>: 关闭系统</li>
+<li><code>-c</code> 或 <code>--cancel</code>: 取消之前的计划关机或重启</li>
+<li><code>-t</code> 或 <code>--time &lt;时间&gt;</code>: 指定关机或重启的时间（格式：<code>HH:MM</code>）</li>
+<li><code>-k</code> 或 <code>--kill</code>: 不关机，只发送<code>SIGTERM</code>信号给所有进程</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ shutdown -r<br>Reboot scheduled <span class="hljs-keyword">for</span> Tue 2025-09-02 12:05:06 CST, use <span class="hljs-string">'shutdown -c'</span> to cancel.<br></code></pre></td></tr></tbody></table></figure>
+<p>2.<code>reboot</code></p>
+<ul>
+<li><code>-f</code> 或 <code>--force</code>: 强制重启，不发送<code>SIGTERM</code>信号</li>
+<li><code>-n</code> 或 <code>--no-fsync</code>: 不执行<code>fsync</code>系统调用，加快重启速度</li>
+<li><code>-w</code> 或 <code>--wait</code>: 等待所有进程结束后再重启</li>
+<li><code>-i</code> 或 <code>--init</code>: 关机之前，关闭所有网络接口</li>
+</ul>
+<ol start="3">
+<li><code>init</code></li>
+<li><code>poweroff</code></li>
+</ol>
+
                 
               </div>
             
