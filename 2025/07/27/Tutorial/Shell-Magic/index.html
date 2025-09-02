@@ -21,14 +21,14 @@
   
     <meta name="description" content="This document summarizes my key takeaways from the Shell module of MIT’s The Missing Semester course, focusing on:Interaction and Automation Power!">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Shell Magic: Notes from MIT">
-<meta property="og:url" content="http://example.com/2025/07/27/Tutorial/Shell-Magic-Notes-from-The-Missing-Semester/index.html">
+<meta property="og:title" content="Shell Magic">
+<meta property="og:url" content="http://example.com/2025/07/27/Tutorial/Shell-Magic/index.html">
 <meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
 <meta property="og:description" content="This document summarizes my key takeaways from the Shell module of MIT’s The Missing Semester course, focusing on:Interaction and Automation Power!">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/Shell%20Magic%20Notes%20from%20The%20Missing%20Semeste.jpeg">
 <meta property="article:published_time" content="2025-07-27T14:34:30.000Z">
-<meta property="article:modified_time" content="2025-08-21T13:37:14.626Z">
+<meta property="article:modified_time" content="2025-09-02T03:54:26.992Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary_large_image">
@@ -38,7 +38,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Shell Magic: Notes from MIT - Welcome To Li Qinxuan&#39;s Blog！</title>
+  <title>Shell Magic - Welcome To Li Qinxuan&#39;s Blog！</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -280,7 +280,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Shell Magic: Notes from MIT"></span>
+            <span id="subtitle" data-typed-text="Shell Magic"></span>
           
         </div>
 
@@ -303,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k words
+          2.7k words
         
       </span>
     
@@ -314,7 +314,7 @@
         
         
         
-          20 mins
+          23 mins
         
       </span>
     
@@ -432,10 +432,10 @@
     
       
       
-        <a href="/2025/07/27/Tutorial/Shell-Magic-Notes-from-The-Missing-Semester/" title="Shell Magic: Notes from MIT"
+        <a href="/2025/07/27/Tutorial/Shell-Magic/" title="Shell Magic"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">Shell Magic: Notes from MIT</span>
+          <span class="category-post">Shell Magic</span>
         </a>
       
     
@@ -466,7 +466,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Shell Magic: Notes from MIT</h1>
+            <h1 id="seo-header">Shell Magic</h1>
             
             
               <div class="markdown-body">
@@ -475,6 +475,15 @@
             <p>对计算机的学生而言，许多开发工具是未来老师或企业默认你已经“精通”的，然而未经学校系统培训的我们或许会对此感到迷茫，正如 MIT 课程 <strong><a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/">The Missing Semester of Your CS Education</a></strong> 所强调的： <strong>“掌握基础工具是程序员的核心竞争力”</strong>。这个课程会帮助你入门、了解一些计算机常用的开发工具，也算是程序员的自我修养吧！<strong>Let’s Go！</strong>😄</p>
           </div>
 <p>相关课程在b站也有双语翻译（大部分应该都能听懂，就是有个好像是西班牙的老师带点口音听起来有点不适应😢）<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uc411N7eK/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=54c2981c1a7a8e0433b7d23096150b7a">[自制双语字幕] 计算机教育缺失的一课(2020) - 第1讲 - 课程概览与 shell</a></p>
+<hr>
+<p>  不论是在电影里还是在我们初识计算机的过程中，都会看到一个黑乎乎的窗口，只要输入几行代码就可以完成酷炫的操作，但是你或许对这有一点疑惑，这到底是<code>terminal</code>、<code>bash</code>、<code>zsh</code>还是<code>powershell</code>，他们到底是如何区分的呢？</p>
+<p>1.<code>Terminal</code>：用户终端，用来启动<code>shell</code>，这也可以说算是一个“工具”，活跃在为用户服务的<strong>前端</strong><br>
+2.<code>Shell</code>：是一个<strong>命令行解释器</strong>，负责接收用户输入的命令并将其<strong>解释</strong>为计算机可以执行的操作，与<code>Terminal</code>相比，是活跃于用户服务<strong>后端的程序</strong>，以下都是<code>Shell</code>在不同操作系统中的实现：</p>
+<ul>
+<li><code>Bash</code>：是一种<strong>常用的Shell</strong>，在<code>Linux</code>和<code>macOS</code>中默认安装。</li>
+<li><code>Zsh</code>：是一种<strong>功能强大的Shell</strong>，在<code>macOS</code>中默认安装，也可以在<code>Linux</code>中安装。</li>
+<li><code>PowerShell</code>：是一种<strong>Windows</strong>系统下的<strong>命令行工具</strong>，用于<strong>管理Windows系统</strong>和<strong>执行PowerShell脚本</strong>。</li>
+</ul>
 <h2 id="Shell">Shell</h2>
 <p>  当熟悉的<strong>可视化界面</strong>无法实现你想要的功能时，<code>Shell</code>将成为你与计算机交互的强大工具。相比<strong>图形界面有限的按钮和滑块</strong>，命令行提供了更灵活、更强大的控制方式，允许你通过<strong>文本命令和脚本实现自动化操作</strong>。本文基于<code>VMware</code>虚拟机中的<code>Ubuntu 22.04</code>发行版演示基础<code>Shell</code>操作：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">date</span><br>Sat Jul 26 03:27:54 PM CST 2025<br></code></pre></td></tr></tbody></table></figure>
@@ -646,6 +655,8 @@
 <p><code>ctrl</code>+<code>l</code>清空窗口</p>
 <h3 id="输入流和输出流">输入流和输出流</h3>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> hello &gt; hello.txt<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> &gt; hello.txt<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">cat</span> hello.txt<br>Desktop<br>Documents<br>Downloads<br>fizzbuzz.py<br>hello2.txt<br>hello.txt<br>Music<br>Pictures<br>Public<br>snap<br>Templates<br>Videos<br>web<br></code></pre></td></tr></tbody></table></figure>
+<p>这样就可以将输出到屏幕的信息<strong>存储</strong>起来！</p>
 <div class="note note-warning">
             <ul><li><code>&gt;</code>覆盖输出到文件</li><li><code>&lt;</code>从文件读取输入</li></ul>
           </div>
@@ -714,7 +725,19 @@
 <p>我们通过<code>history +N | grep +指令</code>来查找所有与指令字符串相匹配的<code>N</code>条历史记录命令！</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">tree<br></code></pre></td></tr></tbody></table></figure>
 <p>能列出<strong>目录结构性</strong>的位置！</p>
-
+<hr>
+<p><code>wc</code>（word count）是一个用于<strong>统计文本文件中单词、行、字符等</strong>的<strong>命令行工具</strong>。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">wc</span> [选项参数]... [文件]...<br></code></pre></td></tr></tbody></table></figure>
+<p>可选参数：</p>
+<ul>
+<li><code>c</code> 或 <code>--bytes</code>: 显示<strong>字节数</strong></li>
+<li><code>m</code>或 <code>--chars</code>: 显示<strong>字符数</strong> 对于多字节字符（如中文），这与 -c 不同</li>
+<li><code>w</code> 或 <code>--words</code>: 显示<strong>单词数</strong>（以空格、制表符、换行符分隔的字符串）</li>
+<li><code>l</code> 或 <code>--lines</code>: 显示<strong>行数</strong></li>
+<li><strong>不指定</strong>任何选项: 默认会<strong>同时显示行数、单词数、字节数，以及文件名</strong></li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">wc</span> hello.txt<br> 13  13 109 hello.txt<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ruby">richard<span class="hljs-variable">@richard</span>-<span class="hljs-title class_">VMware</span>-<span class="hljs-title class_">Virtual</span>-<span class="hljs-title class_">Platform</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>wc --word hello.txt<br><span class="hljs-number">13</span> hello.txt<br></code></pre></td></tr></tbody></table></figure>
                 
               </div>
             
@@ -759,8 +782,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Shell Magic: Notes from MIT</div>
-      <div>http://example.com/2025/07/27/Tutorial/Shell-Magic-Notes-from-The-Missing-Semester/</div>
+      <div>Shell Magic</div>
+      <div>http://example.com/2025/07/27/Tutorial/Shell-Magic/</div>
     </div>
     <div class="license-meta">
       
@@ -778,7 +801,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>August 21, 2025</div>
+          <div>September 2, 2025</div>
         </div>
       
       
