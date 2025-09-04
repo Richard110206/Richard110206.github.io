@@ -4,6 +4,32 @@
   
   
   <entry>
+    <title>Digital Circuits and Logic Design</title>
+    <link href="/2025/09/04/Review/Digital-Circuits-and-Logic-Design/"/>
+    <url>/2025/09/04/Review/Digital-Circuits-and-Logic-Design/</url>
+    
+    <content type="html"><![CDATA[<h2 id="逻辑代数基础">逻辑代数基础</h2><p><a href="https://www.cnblogs.com/icmaxwell/p/17374702.html"></a></p><h3 id="三种基本逻辑运算：">三种基本逻辑运算：</h3><ol><li>与：串联<code>·</code></li></ol><figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">0</span>·<span class="hljs-number">0</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">0</span>·<span class="hljs-number">1</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">1</span>·<span class="hljs-number">0</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">1</span>·<span class="hljs-number">1</span>=<span class="hljs-number">1</span><br></code></pre></td></tr></tbody></table></figure><ol start="2"><li>或：并联<code>+</code></li></ol><figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">0</span>+<span class="hljs-number">0</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">0</span>+<span class="hljs-number">1</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">1</span>+<span class="hljs-number">0</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">1</span>=<span class="hljs-number">1</span>=<span class="hljs-number">1</span><br></code></pre></td></tr></tbody></table></figure><ol start="3"><li>非：取反<code>-</code></li></ol><figure class="highlight dns"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dns"><span class="hljs-keyword">A</span>·<span class="hljs-keyword">A</span>=<span class="hljs-keyword">A</span><br><span class="hljs-keyword">A</span>+<span class="hljs-keyword">A</span>=<span class="hljs-keyword">A</span><br></code></pre></td></tr></tbody></table></figure><h3 id="复合逻辑运算">复合逻辑运算</h3><ol><li>与非：$F=\overline{A·B·C}$</li><li>或非: $F=\overline{A+B+C}$</li><li>与或非：$F=\overline{AB+CD}$</li><li>异或：$ F=A\oplus B =\overline{A}B+A\overline{B}$ <strong>相异为 1，相同为 0</strong></li><li>同或：$ F=A\odot B=AB+\overline{A}\overline{B}$  <strong>相同为 1，相异为 0</strong></li></ol><p><img src="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true" alt="基本逻辑门电路图形符号1"><br><img src="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable2.png?raw=true" alt="基本逻辑门电路图形符号2"></p><h3 id="逻辑函数表示方法的相互转换">逻辑函数表示方法的相互转换</h3><ul><li>真值表▶️▶️q逻辑式</li></ul><ol><li>从真值表中<strong>找出使得F=1的那些变量取值</strong></li><li>把每一组变量取值写成对应的乘积项, <strong>0 --&gt; 1，1不变</strong></li><li>将<strong>乘积相加</strong>得到逻辑式</li></ol><h3 id="波形图">波形图</h3><ol><li><p>输入波形要<strong>穷举所用可能的输入</strong></p></li><li><p>输出波形与输入波形<strong>一一对应</strong></p></li><li><p>真值表法</p></li><li><p>表达式法</p></li><li><p>逻辑图法</p></li></ol><h3 id="反演规则">反演规则</h3><p>求反函数</p><ol><li><strong>长非号不变</strong></li><li>运算的<strong>优先顺序不变</strong>（<strong>要加括号</strong>）</li></ol><ul><li>摩根定律<br>$$\overline{A + B} = \overline{A} \cdot \overline{B}$$</li></ul><p>$$\overline{A \cdot B} = \overline{A} + \overline{B}$$</p><ul><li>吸收律<br>$$A + A \cdot B = A$$</li></ul><p>$$A \cdot (A + B) = A$$</p><p>$$A + \overline{A} \cdot B = A + B$$</p><p>$$A \cdot (\overline{A} + B) = A \cdot B$$</p><ul><li>包含律<br>$$A \cdot B + \overline{A} \cdot C + B \cdot C = A \cdot B + \overline{A} \cdot C$$</li></ul><p>$$(A + B) \cdot (\overline{A} + C) \cdot (B + C) = (A + B) \cdot (\overline{A} + C)$$</p><ul><li>尾部变换<br>$$A \cdot \overline{B} = A \cdot \overline{A \cdot B}$$</li></ul><p>$$A \cdot \overline{A \cdot B} = A \cdot (\overline{A} + \overline{B}) = A \cdot \overline{A} + A \cdot \overline{B} = A \cdot \overline{B}$$</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Probability Theory</title>
+    <link href="/2025/09/04/Review/Probability-Theory/"/>
+    <url>/2025/09/04/Review/Probability-Theory/</url>
+    
+    <content type="html"><![CDATA[<p>因为$A\overline{B} = A - B$，所以在概率计算中，有 $P(A\overline{B}) = P(A - B)$。结合概率的性质 $P(A - B) = P(A) - P(AB)$，因此有：</p><p>$$P(A\overline{B}) = P(A） - P（AB)$$</p><p>条件概率：$P(A \mid B) = \frac{P(AB)}{P(B)}$</p><p>通常反向利用：$P(A \mid B) {P(B)} = {P(AB)}$</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>College Physics 2</title>
     <link href="/2025/09/02/Review/College-Physics-2/"/>
     <url>/2025/09/02/Review/College-Physics-2/</url>
@@ -232,13 +258,13 @@
     
     <tags>
       
-      <tag>updating</tag>
-      
-      <tag>stack</tag>
-      
       <tag>queue</tag>
       
       <tag>datastructure</tag>
+      
+      <tag>stack</tag>
+      
+      <tag>updating</tag>
       
     </tags>
     
@@ -490,9 +516,9 @@
     
     <tags>
       
-      <tag>algorithm</tag>
-      
       <tag>sort</tag>
+      
+      <tag>algorithm</tag>
       
     </tags>
     
@@ -700,9 +726,9 @@
     
     <tags>
       
-      <tag>sort</tag>
-      
       <tag>hashtable</tag>
+      
+      <tag>sort</tag>
       
       <tag>queue</tag>
       
@@ -762,11 +788,11 @@
     
     <tags>
       
-      <tag>stack</tag>
-      
       <tag>binary tree</tag>
       
       <tag>algorithm</tag>
+      
+      <tag>stack</tag>
       
     </tags>
     
@@ -791,9 +817,9 @@
     
     <tags>
       
-      <tag>binary tree</tag>
-      
       <tag>DFS</tag>
+      
+      <tag>binary tree</tag>
       
       <tag>search，graph，sort</tag>
       
