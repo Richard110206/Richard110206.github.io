@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Leetcode-Mistake-Collection.png?raw=true">
 <meta property="article:published_time" content="2025-09-10T04:47:08.000Z">
-<meta property="article:modified_time" content="2025-09-10T06:11:16.006Z">
+<meta property="article:modified_time" content="2025-09-10T06:15:59.085Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="updating">
 <meta property="article:tag" content="Leetcode">
@@ -304,7 +304,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          265 words
+          269 words
         
       </span>
     
@@ -427,27 +427,30 @@
             
               <div class="markdown-body">
                 
-                <h3 id="Leetcode-160-相交链表">Leetcode 160. 相交链表</h3>
+                <h2 id="Leetcode-160-相交链表">Leetcode 160. 相交链表</h2>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/intersection-of-two-linked-lists?envType=problem-list-v2&amp;envId=hash-table">原题链接</a></p>
-<p>方法一：哈希表</p>
-<p>遍历ListNodeA，用哈希表存储链表节点，再遍历ListNodeB，如果ListNodeB的节点在哈希表中，则返回该节点。</p>
+<h3 id="方法一：哈希表">方法一：哈希表</h3>
+<p>遍历ListNodeA，用哈希表存<strong>储链表节点</strong>，再遍历ListNodeB，如果ListNodeB的节点在哈希表中，则返回该节点。</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ListNode *<span class="hljs-title">getIntersectionNode</span><span class="hljs-params">(ListNode *headA, ListNode *headB)</span> </span>{<br>        unordered_set &lt;ListNode *&gt; set;<br>        <span class="hljs-keyword">while</span>(headA!=<span class="hljs-literal">nullptr</span>){<br>            set.<span class="hljs-built_in">insert</span>(headA);<br>            headA=headA-&gt;next;<br>        }<br>        <span class="hljs-keyword">while</span>(headB!=<span class="hljs-literal">nullptr</span>){<br>            <span class="hljs-keyword">if</span>(set.<span class="hljs-built_in">find</span>(headB)!=set.<span class="hljs-built_in">end</span>()){<br>                <span class="hljs-keyword">return</span> headB;<br>            }<br>            headB=headB-&gt;next;<br>        }<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
-<p>方法二：双指针</p>
+<h3 id="方法二：双指针">方法二：双指针</h3>
 <p>定义两个指针分别指向头节点，同时遍历向后进行遍历，若遍历为nullptr，则将指针指向另一条链表的头节点，直至两指针相遇，或者两个指针都为nullptr。</p>
 <ul>
-<li>
-<p>若两链表相交<br>
-lengthA=a+m<br>
-lengthB=b+m<br>
-其中m为两链表相交的长度<br>
-对于A指针遍历长度为：a+m+b；<br>
-对于B指针遍历长度为：b+m+a;<br>
-此时恰好相遇于两链表交点</p>
+<li>若两链表相交
+<ul>
+<li>length.A=a+m</li>
+<li>length.B=b+m</li>
+</ul>
 </li>
-<li>
-<p>若两链表不相交<br>
-则两指针将AB均遍历结束，同时指向nullptr。</p>
-</li>
+</ul>
+<p>(其中m为两链表相交的长度)</p>
+<ul>
+<li>对于A指针遍历长度为：a+m+b；</li>
+<li>对于B指针遍历长度为：b+m+a;</li>
+</ul>
+<p>此时恰好相遇于两链表交点</p>
+<ul>
+<li>若两链表不相交<br>
+则两指针将AB均遍历结束，同时指向nullptr。</li>
 </ul>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ListNode *<span class="hljs-title">getIntersectionNode</span><span class="hljs-params">(ListNode *headA, ListNode *headB)</span> </span>{<br>        ListNode *pA=headA, *pB=headB;<br>        <span class="hljs-keyword">while</span>(pA!=pB){<br>            pA=pA==<span class="hljs-literal">nullptr</span>?headB:pA-&gt;next;<br>            pB=pB==<span class="hljs-literal">nullptr</span>?headA:pB-&gt;next;<br>        }<br>        <span class="hljs-keyword">return</span> pA;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
 
