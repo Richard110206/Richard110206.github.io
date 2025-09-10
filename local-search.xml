@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>Leetcode Mistake Collection 2</title>
+    <link href="/2025/09/10/Leetcode-Collection/Leetcode-Mistake-Collection-2/"/>
+    <url>/2025/09/10/Leetcode-Collection/Leetcode-Mistake-Collection-2/</url>
+    
+    <content type="html"><![CDATA[<h3 id="Leetcode-160-相交链表">Leetcode 160. 相交链表</h3><p><a href="https://leetcode.cn/problems/intersection-of-two-linked-lists?envType=problem-list-v2&amp;envId=hash-table">原题链接</a></p><p>方法一：哈希表</p><p>遍历ListNodeA，用哈希表存储链表节点，再遍历ListNodeB，如果ListNodeB的节点在哈希表中，则返回该节点。</p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ListNode *<span class="hljs-title">getIntersectionNode</span><span class="hljs-params">(ListNode *headA, ListNode *headB)</span> </span>{<br>        unordered_set &lt;ListNode *&gt; set;<br>        <span class="hljs-keyword">while</span>(headA!=<span class="hljs-literal">nullptr</span>){<br>            set.<span class="hljs-built_in">insert</span>(headA);<br>            headA=headA-&gt;next;<br>        }<br>        <span class="hljs-keyword">while</span>(headB!=<span class="hljs-literal">nullptr</span>){<br>            <span class="hljs-keyword">if</span>(set.<span class="hljs-built_in">find</span>(headB)!=set.<span class="hljs-built_in">end</span>()){<br>                <span class="hljs-keyword">return</span> headB;<br>            }<br>            headB=headB-&gt;next;<br>        }<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure><p>方法二：双指针</p><p>定义两个指针分别指向头节点，同时遍历向后进行遍历，若遍历为nullptr，则将指针指向另一条链表的头节点，直至两指针相遇，或者两个指针都为nullptr。</p><ul><li><p>若两链表相交<br>lengthA=a+m<br>lengthB=b+m<br>其中m为两链表相交的长度<br>对于A指针遍历长度为：a+m+b；<br>对于B指针遍历长度为：b+m+a;<br>此时恰好相遇于两链表交点</p></li><li><p>若两链表不相交<br>则两指针将AB均遍历结束，同时指向nullptr。</p></li></ul><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ListNode *<span class="hljs-title">getIntersectionNode</span><span class="hljs-params">(ListNode *headA, ListNode *headB)</span> </span>{<br>        ListNode *pA=headA, *pB=headB;<br>        <span class="hljs-keyword">while</span>(pA!=pB){<br>            pA=pA==<span class="hljs-literal">nullptr</span>?headB:pA-&gt;next;<br>            pB=pB==<span class="hljs-literal">nullptr</span>?headA:pB-&gt;next;<br>        }<br>        <span class="hljs-keyword">return</span> pA;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Digital Circuits and Logic Design</title>
     <link href="/2025/09/04/Review/Digital-Circuits-and-Logic-Design/"/>
     <url>/2025/09/04/Review/Digital-Circuits-and-Logic-Design/</url>
@@ -260,11 +273,11 @@
       
       <tag>updating</tag>
       
-      <tag>stack</tag>
-      
       <tag>queue</tag>
       
       <tag>datastructure</tag>
+      
+      <tag>stack</tag>
       
     </tags>
     
@@ -545,9 +558,9 @@
     
     <tags>
       
-      <tag>C++</tag>
-      
       <tag>OOP</tag>
+      
+      <tag>C++</tag>
       
     </tags>
     
@@ -574,9 +587,9 @@
     
     <tags>
       
-      <tag>C++</tag>
-      
       <tag>OOP</tag>
+      
+      <tag>C++</tag>
       
     </tags>
     
@@ -790,9 +803,9 @@
       
       <tag>algorithm</tag>
       
-      <tag>stack</tag>
-      
       <tag>binary tree</tag>
+      
+      <tag>stack</tag>
       
     </tags>
     
