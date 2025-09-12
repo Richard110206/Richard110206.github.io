@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/Simple-Git-Project-Management-Guide.png">
 <meta property="article:published_time" content="2025-07-13T03:16:13.000Z">
-<meta property="article:modified_time" content="2025-09-03T02:02:29.499Z">
+<meta property="article:modified_time" content="2025-09-12T07:50:16.196Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
@@ -303,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k words
+          2.5k words
         
       </span>
     
@@ -314,7 +314,7 @@
         
         
         
-          19 mins
+          21 mins
         
       </span>
     
@@ -560,6 +560,7 @@
 </tbody>
 </table>
 <p><img src="https://xflops.sjtu.edu.cn/hpc-start-guide/primer/attachments/20241106195404.png" srcset="/img/loading.gif" lazyload alt="关键操作图解"></p>
+<hr>
 <h3 id="快照">快照</h3>
 <p><code>VCS</code> 通过一系列快照跟踪文件夹及其内容的更改，其中每个快照都封装了顶级目录中文件/文件夹的完整状态，其还维护元数据，例如每个快照的创建者、与每个快照相关的消息等等。</p>
 <p><code>Git</code> 将某个顶级目录中文件和文件夹集合的历史记录建模为一系列快照。文件/文件夹的树模型：</p>
@@ -573,6 +574,8 @@
 <p><code> o</code>s代表单个提交（快照），理解为提交的文件（夹）</p>
  <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">o &lt;-- o &lt;-- o &lt;-- o &lt;---- o<br>           ^            /<br>            \          v<br>             --- o &lt;-- o<br></code></pre></td></tr></tbody></table></figure>
 <p>这里意味着并行开发项目的两个功能，并进行合并，创建了一个包含两个功能的快照，<code>Git</code>会自行合并处理两个快照，若出现冲突无法解决时，则需要人工进行调整！</p>
+<hr>
+<h3 id="分支">分支</h3>
 <ul>
 <li><code>git branch</code>可以将分支名列表显示，同时可以确认当前所在的分支</li>
 </ul>
@@ -586,7 +589,7 @@
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git branch feature-A<br>$ git checkout feature-A<br></code></pre></td></tr></tbody></table></figure>
 <p>实际上，连续执行以上两条命令也能收到相同的的效果。</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git branch<br>* feature-A<br>  main<br></code></pre></td></tr></tbody></table></figure>
-<p>这时再来查看我们的分支，就会发现我们正处在<code>feature-A</code>分支下，但我们在正常开发、执行<code>git add</code>命令并进行<code>commit</code>时，代码就会提交至<code>feature-A</code>分支，我们称为“培育分支”，这样我们就能在不相互影响的情况下同时进行多个功能的开发！</p>
+<p>这时再来查看我们的分支，就会发现我们正处在<code>feature-A</code>分支下，但我们在正常开发、执行<code>git add</code>命令并进行<code>commit</code>时，代码就会提交至<code>feature-A</code>分支，我们称为“<strong>培育分支</strong>”，这样我们就能在不相互影响的情况下同时进行多个功能的开发！</p>
 <ul>
 <li><code>git merge</code>可以<strong>将分支合并</strong>，如上文<code>feature-A</code>是典型的<strong>特性分支</strong>，能集中实现单一特性，且除此之外不进行任何作业，在日常开发中往往会创建数个特性分支，同时在保留一个可以随时发布软件的稳定分支。通常使用<code>main</code>作为<strong>主干分支</strong>（也就是特性分支的原点和合并的终点）。<br>
 首先切换到<code>main</code>分支：</li>
@@ -596,9 +599,26 @@
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git merge --no-ff feature-A<br></code></pre></td></tr></tbody></table></figure>
 <ul>
 <li><code>git log --graph</code><strong>以图表形式查看分支合并历史</strong></li>
-<li><code>git reset</code><strong>回溯历史版本</strong>，我们只要提供目标时间点的哈希值，就可以完全恢复至稿时间点的状态。</li>
+<li></li>
 </ul>
+<hr>
+<h3 id="回溯历史版本">回溯历史版本</h3>
+<p>当我们在开发时遇到：</p>
+<ul>
+<li>尝试新功能但效果不好，想回到之前状态</li>
+<li>发布后发现有严重问题难以修复，需要回滚到上一个版本</li>
+<li>找回被删除的文件或代码</li>
+<li>合并分支时冲突出错</li>
+</ul>
+<p>这时我们就可以考虑<strong>回溯版本</strong>！</p>
+<p>先获取想要<strong>回滚到的那个版本的 commit hash</strong>：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">log</span> --oneline<br></code></pre></td></tr></tbody></table></figure>
+<p><code>--oneline</code>参数可以将提交历史以简洁的一行进行显示，便于查找哈希值</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">Legion@LAPTOP-THUPDMQ0 MINGW64 /e/Hexo-backup (main)<br>$ git <span class="hljs-built_in">log</span> --oneline<br>5a9dcd9 (HEAD -&gt; main, origin/main) <span class="hljs-built_in">test</span><br>53397ae feat<br>54d31f5 feat<br>808d171 feat<br>79e81c0 feat<br>e485ebb feat<br>8836ac9 修改文件名<br>400f3e4 增加life-musings内容<br>08de0b5 添加.gitignore忽略DS_Store文件<br>13f5287 Initial commit of hexo <span class="hljs-built_in">source</span> files<br></code></pre></td></tr></tbody></table></figure>
+<p><code>git reset</code><strong>回溯历史版本</strong>，我们只要<strong>提供目标时间点的哈希值</strong>，就可以完全恢复至当时该时间点的状态。</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git reset --hard &lt;<span class="hljs-built_in">hash</span>&gt;<br></code></pre></td></tr></tbody></table></figure>
+<p>回溯完，强制<strong>推送至远程仓库</strong>：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git push -f origin main<br></code></pre></td></tr></tbody></table></figure>
 <div class="note note-warning">
             <p>如果我上线测试时突然发现了一个<code>bug</code>，而我不知道他是他是何时产生的应该怎么办呢？</p>
           </div>
@@ -670,7 +690,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>September 3, 2025</div>
+          <div>September 12, 2025</div>
         </div>
       
       
