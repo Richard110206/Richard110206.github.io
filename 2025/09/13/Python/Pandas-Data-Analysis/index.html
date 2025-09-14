@@ -27,7 +27,7 @@
 <meta property="og:description" content="▶ 什么是 pip ？              pip是 Python 的包管理工具，全称是 Python Install Packages，所有人都可以下载或上传自己开发的库到 PyPI 上，常见的指令有：1pip install pandas                  Series对象 Series对象是pandas中可存储多种类型的一维数组，由">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-09-13T05:01:56.000Z">
-<meta property="article:modified_time" content="2025-09-14T03:13:03.054Z">
+<meta property="article:modified_time" content="2025-09-14T03:46:37.292Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -300,7 +300,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k words
+          1.7k words
         
       </span>
     
@@ -311,7 +311,7 @@
         
         
         
-          14 mins
+          15 mins
         
       </span>
     
@@ -366,7 +366,7 @@
             <div class="fold">  <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-4cc89ac7" role="button" aria-expanded="false" aria-controls="collapse-4cc89ac7">    <div class="fold-arrow">▶</div> 什么是 pip ？  </div>  <div class="fold-collapse collapse" id="collapse-4cc89ac7">    <div class="fold-content">      <p><code>pip</code>是 Python 的包管理工具，全称是 Python Install Packages，所有人都可以下载或上传自己开发的库到 PyPI 上，常见的指令有：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install pandas<br></code></pre></td></tr></tbody></table></figure>    </div>  </div></div>
           </div>
 <h3 id="Series对象">Series对象</h3>
-<p>Series对象是pandas中可存储多种类型的一维数组，由数据与索引组成。</p>
+<p>Series对象是pandas中可<strong>存储多种类型的一维数组</strong>，由<strong>数据</strong>与<strong>索引</strong>组成。</p>
 <h4 id="默认索引为0">默认索引为0</h4>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>s1=pd.Series([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>])<br><span class="hljs-built_in">print</span>(s1)<br></code></pre></td></tr></tbody></table></figure>
 <figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">0 </span>   <span class="hljs-number">1</span><br><span class="hljs-symbol">1 </span>   <span class="hljs-number">2</span><br><span class="hljs-symbol">2 </span>   <span class="hljs-number">3</span><br><span class="hljs-symbol">3 </span>   <span class="hljs-number">4</span><br><span class="hljs-symbol">4 </span>   <span class="hljs-number">5</span><br></code></pre></td></tr></tbody></table></figure>
@@ -383,6 +383,7 @@
 <p>我们也可以<strong>同时获取数据与索引</strong></p>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>s1=pd.Series([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>],index=[<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>,<span class="hljs-string">'c'</span>,<span class="hljs-string">'d'</span>,<span class="hljs-string">'e'</span>])<br><span class="hljs-built_in">print</span>(s1.index)<br><span class="hljs-built_in">print</span>(s1.values)<br></code></pre></td></tr></tbody></table></figure>
 <figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">Index</span><span class="hljs-params">([<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'d'</span>, <span class="hljs-string">'e'</span>], dtype=<span class="hljs-string">'object'</span>)</span></span><br><span class="hljs-selector-attr">[1 2 3 4 5]</span><br></code></pre></td></tr></tbody></table></figure>
+<hr>
 <h3 id="DataFrame对象">DataFrame对象</h3>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">pandas.DataFrame(data,index,columns)<br><span class="hljs-comment"># 分别对应数据 行索引 列索引</span><br></code></pre></td></tr></tbody></table></figure>
 <h4 id="列表创建DataFrame对象">列表创建DataFrame对象</h4>
@@ -417,9 +418,6 @@
 <ul>
 <li><code>usecols=['孕妇代码','年龄']</code> 导入<strong>指定列名</strong>的数据</li>
 </ul>
-<h3 id="导入-csv-文件">导入 .csv 文件</h3>
-<h3 id="导入-txt文件">导入 .txt文件</h3>
-<h3 id="导入HTML网页">导入HTML网页</h3>
 <h2 id="数据清洗">数据清洗</h2>
 <h3 id="缺失值处理">缺失值处理</h3>
 <h4 id="查找缺失值">查找缺失值</h4>
@@ -448,6 +446,7 @@
         </div>
       </div>
     </div>
+<hr>
 <h4 id="删除缺失值">删除缺失值</h4>
 <p><code>dropna()</code>方法可以删除缺失值，默认情况下，删除所有行中<strong>有缺失值的行</strong>：</p>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>df=pd.read_excel(<span class="hljs-string">'附件.xlsx'</span>,<span class="hljs-string">'男胎检测数据'</span>)<br>df.dropna(inplace=<span class="hljs-literal">True</span>)<br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></tbody></table></figure>
@@ -462,6 +461,7 @@
         </div>
       </div>
     </div>
+<hr>
 <h4 id="填充缺失值">填充缺失值</h4>
 <h3 id="重复值处理">重复值处理</h3>
 <h4 id="判断重复值">判断重复值</h4>
@@ -478,6 +478,7 @@
         </div>
       </div>
     </div>
+<hr>
 <h4 id="删除重复值">删除重复值</h4>
 <p><code>drop_duplicates()</code>方法可以删除重复值，默认情况下，删除所有行中<strong>有重复值的行</strong>：</p>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>df=pd.read_excel(<span class="hljs-string">'附件.xlsx'</span>,<span class="hljs-string">'男胎检测数据'</span>)<br>df=df.drop_duplicates(<span class="hljs-string">'孕妇代码'</span>)<br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></tbody></table></figure>
@@ -496,7 +497,8 @@
     </div>
 <h3 id="异常值处理">异常值处理</h3>
 <h4 id="箱型线法">箱型线法</h4>
-
+<p>箱型线法是基于数据的<strong>四分位数</strong>构建 “箱体” 和 “须”，通过设定合理范围识别异常值，超过<strong>设定的上限或下限</strong>都可以被认定为异常值，具有<strong>不依赖数据分布</strong>、<strong>对极端值鲁棒</strong>的特点。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-comment"># 1. 计算四分位数</span><br>Q1 = np.percentile(data, <span class="hljs-number">25</span>)  <span class="hljs-comment"># 下四分位数</span><br>Q3 = np.percentile(data, <span class="hljs-number">75</span>)  <span class="hljs-comment"># 上四分位数</span><br>IQR = Q3 - Q1  <span class="hljs-comment"># 四分位距</span><br><span class="hljs-comment"># 2. 定义异常值边界</span><br>lower_bound = Q1 - <span class="hljs-number">1.5</span> * IQR<br>upper_bound = Q3 + <span class="hljs-number">1.5</span> * IQR<br><span class="hljs-comment"># 3. 筛选非异常值</span><br>clean_data = data[(data &gt;= lower_bound) &amp; (data &lt;= upper_bound)]<br></code></pre></td></tr></tbody></table></figure>
                 
               </div>
             
