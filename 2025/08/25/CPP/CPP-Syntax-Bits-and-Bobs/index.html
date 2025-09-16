@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/CPPmemo.png?raw=true">
 <meta property="article:published_time" content="2025-08-25T02:56:48.000Z">
-<meta property="article:modified_time" content="2025-09-16T14:40:32.491Z">
+<meta property="article:modified_time" content="2025-09-16T14:49:42.459Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="updating">
 <meta property="article:tag" content="CPP">
@@ -560,7 +560,8 @@
 </ul>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">gcd</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> </span>{<br>    <span class="hljs-keyword">if</span> (b == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span> a;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">gcd</span>(b, a % b);<br>}<br></code></pre></td></tr></tbody></table></figure>
 <h4 id="最小公倍数">最小公倍数</h4>
-<p>$$ LCM(a, b) = \frac{(a × b)}{GCD(a, b)}$$</p>
+<p>通常求得最大公约数后通过<strong>公式</strong>实现：<br>
+$$ LCM(a, b) = \frac{(a × b)}{GCD(a, b)}$$</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lcm</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> </span>{<br>    <span class="hljs-keyword">return</span> (a / <span class="hljs-built_in">gcd</span>(a, b)) * b;<br>}<br></code></pre></td></tr></tbody></table></figure>
 
                 
