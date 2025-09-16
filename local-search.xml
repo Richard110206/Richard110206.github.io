@@ -88,7 +88,7 @@
     <link href="/2025/09/04/Review/Digital-Circuits-and-Logic-Design/"/>
     <url>/2025/09/04/Review/Digital-Circuits-and-Logic-Design/</url>
     
-    <content type="html"><![CDATA[<h2 id="数制与编码">数制与编码</h2><h3 id="整数十进制转换：除X倒取余法">整数十进制转换：除X倒取余法</h3><p>十进制整数 N 可表示为 X 进制的幂次和形式：<br>$$N = a_{n} \times X^n + a_{n-1} \times X^{n-1} + … + a_{1} \times X^1 + a_{0} \times X^0$$通过 “除 X 取余”，可依次求出最低位，再 “倒取余” 得到最终结果。</p><h3 id="小数十进制转换：乘X顺取整法">小数十进制转换：乘X顺取整法</h3><p>十进制小数 M（0&lt;M&lt;1）可表示为 X 进制的负幂次和形式：<br>$$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} + …$$通过 “乘 X 取整”，可依次求出小数点后第一位，再 “顺取整” 得到 X 进制小数。</p><h3 id="原码">原码</h3><p>在最高位补0或1表示正负，0为正，1为负。</p><h3 id="反码">反码</h3><ul><li>对于正数，反码与原码相同</li><li>对于负数，反码为原码<strong>除符号位外按位取反</strong></li></ul><div class="note note-info">            <p>在反码表示法中，0的表示方法不是唯一的</p>          </div><p>反码表示法的优点是在进行加减运算时<strong>不需要判断两数的符号是否相同</strong>，只要先求出两数的反码然后相加即可（<strong>符号位也参与运算</strong>，当符号位产生进位时，需要<strong>循环进位</strong>，即把符号位的进位加到和的最低位上去），比原码运算要简单的多。</p><h3 id="补码">补码</h3><ul><li>对于正数，补码与原码相同</li><li>对于负数，补码为原码<strong>除符号位外按位取反</strong>，再在<strong>最低位加一</strong>（<strong>补码+1</strong>）</li></ul><div class="note note-info">            <p>补码的补码是原码</p>          </div><p>补码进行运算时，符号位参与运算，而且<strong>符号位的进位会丢弃</strong>（区别于反码）</p><h2 id="逻辑代数基础">逻辑代数基础</h2><p><a href="https://www.cnblogs.com/icmaxwell/p/17374702.html">相关电路符号图</a></p><h3 id="三种基本逻辑运算：">三种基本逻辑运算：</h3><ol><li>与：串联<code>·</code></li></ol><figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">0</span>·<span class="hljs-number">0</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">0</span>·<span class="hljs-number">1</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">1</span>·<span class="hljs-number">0</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">1</span>·<span class="hljs-number">1</span>=<span class="hljs-number">1</span><br></code></pre></td></tr></tbody></table></figure><ol start="2"><li>或：并联<code>+</code></li></ol><figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">0</span>+<span class="hljs-number">0</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">0</span>+<span class="hljs-number">1</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">1</span>+<span class="hljs-number">0</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">1</span>=<span class="hljs-number">1</span>=<span class="hljs-number">1</span><br></code></pre></td></tr></tbody></table></figure><ol start="3"><li>非：取反<code>-</code></li></ol><figure class="highlight dns"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dns"><span class="hljs-keyword">A</span>·<span class="hljs-keyword">A</span>=<span class="hljs-keyword">A</span><br><span class="hljs-keyword">A</span>+<span class="hljs-keyword">A</span>=<span class="hljs-keyword">A</span><br></code></pre></td></tr></tbody></table></figure><h3 id="复合逻辑运算">复合逻辑运算</h3><ol><li>与非：$F=\overline{A·B·C}$</li><li>或非: $F=\overline{A+B+C}$</li><li>与或非：$F=\overline{AB+CD}$</li><li>异或：$ F=A\oplus B =\overline{A}B+A\overline{B}$ <strong>相异为 1，相同为 0</strong></li><li>同或：$ F=A\odot B=AB+\overline{A}\overline{B}$  <strong>相同为 1，相异为 0</strong></li></ol><p><img src="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true" alt="基本逻辑门电路图形符号1"><br><img src="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable2.png?raw=true" alt="基本逻辑门电路图形符号2"></p><h3 id="逻辑函数表示方法的相互转换">逻辑函数表示方法的相互转换</h3><ol><li>真值表法</li><li>表达式法</li><li>逻辑图法</li><li>波形图</li></ol><ul><li>真值表▶️▶️逻辑式</li></ul><ol><li>从真值表中<strong>找出使得F=1的那些变量取值</strong></li><li>把每一组变量取值写成对应的乘积项, <strong>0 --&gt; 1，1不变</strong></li><li>将<strong>乘积相加</strong>得到逻辑式</li></ol><h3 id="波形图">波形图</h3><ol><li>输入波形要<strong>穷举所用可能的输入</strong></li><li>输出波形与输入波形<strong>一一对应</strong></li></ol><h3 id="反演规则">反演规则</h3><p>求反函数</p><ol><li><strong>长非号不变</strong></li><li>运算的<strong>优先顺序不变</strong>（<strong>要加括号</strong>）</li></ol><ul><li>摩根定律<br>$$\overline{A + B} = \overline{A} \cdot \overline{B}$$</li></ul><p>$$\overline{A \cdot B} = \overline{A} + \overline{B}$$</p><ul><li>吸收律<br>$$A + A \cdot B = A$$</li></ul><p>$$A \cdot (A + B) = A$$</p><p>$$A + \overline{A} \cdot B = A + B$$</p><p>$$A \cdot (\overline{A} + B) = A \cdot B$$</p><ul><li>包含律<br>$$A \cdot B + \overline{A} \cdot C + B \cdot C = A \cdot B + \overline{A} \cdot C$$</li></ul><p>$$(A + B) \cdot (\overline{A} + C) \cdot (B + C) = (A + B) \cdot (\overline{A} + C)$$</p><ul><li>尾部变换<br>$$A \cdot \overline{B} = A \cdot \overline{A \cdot B}$$</li></ul><p>$$A \cdot \overline{A \cdot B} = A \cdot (\overline{A} + \overline{B}) = A \cdot \overline{A} + A \cdot \overline{B} = A \cdot \overline{B}$$</p><p>常用的化简方法</p><ol><li>并项法$$AB+A\overline{B}=A$$</li><li>吸收法$$A+AB=A$$</li><li>消去法$$A+\overline{A}B=A+B$$</li></ol><p>$m_0$下标编号规则：原变量取1，反变量取0</p><p>n变量的最小项有n个相邻项：<br>相邻项：只有一个变量不同，一对相邻项可以消去一个变量</p><h3 id="卡诺图">卡诺图</h3><p>卡诺图表示按照格雷码（任意两个相邻的编码，仅有 1 位二进制数不同）进行标识，使得相邻变量的组合中只有一个变量不同。<br>卡诺图排列顺序：00-&gt;01-&gt;11-&gt;10</p><h4 id="卡诺图的绘制：">卡诺图的绘制：</h4><ul><li>最小项在方格中填1</li><li>最大项在方格中填0</li></ul><h4 id="卡诺图的化简">卡诺图的化简</h4><p>卡诺圈内小方格数N必须是$2^n$，相邻两个小方格中只有一个变量不同，可以合并为一项，消去一个互非的变量。</p><ol><li>卡诺圈<strong>越大越好</strong></li><li>卡诺圈<strong>越少越好</strong></li><li>每一个卡诺圈都<strong>要有新的成分</strong></li><li><strong>先圈大圈，后圈小圈</strong></li></ol><h2 id="基本逻辑门电路">基本逻辑门电路</h2><div class="note note-info">            <p>刚开始学习<strong>基本逻辑门电路</strong>的时候会有点疑惑：为什么这里的电路与高中的电路如此不同，<strong>不是闭合的电路</strong>，<strong>没有了电源正负极符号</strong>，取而代之的是一个个冰冷的出入线头？</p>          </div><p>事实上，这与我们学习的目标有关！</p><ul><li>高中物理电路更关注的是<strong>能量的流动和转换</strong>。通过<strong>欧姆定律</strong>研究电压、电流、电阻之间的关系。因此需要画出完整的回路，包括电源、负载和导线。</li><li>而数字逻辑门电路在高中的基础上更进一步，关注的是<strong>信息的处理和传递</strong>。为了简洁只画核心的 “<strong>信号输入 / 输出部分</strong>”，不关心电流具体多少，只关心 “输入 / 输出电压<strong>对应逻辑 0 还是 1</strong>”（高电平还是低电平）</li></ul><div class="note note-danger">            <p>高电平和低电平都是一种状态，一种状态<strong>对应一个范围值</strong>，而不是一个固定值</p>          </div><h3 id="三极管">三极管</h3><p>（NPN，PNP）</p><ul><li>集电极</li><li>发射极</li><li>基极<br>相当于一个开关，当<strong>给基极接入电源</strong>（支路）$&gt;0.7V$，晶体管接通（相当于闭合的开关），电路处于<strong>导通</strong>状态，先是遵循$i_C=\beta{i_B}$的线性变化，增加到一定值不在增加，由<strong>放大状态进入饱和状态</strong>。<br>进入饱和状态的主路压降很低（硅管$\approx0.3V$）</li></ul>    <div class="fold">      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-3734f6ee" role="button" aria-expanded="false" aria-controls="collapse-3734f6ee">        <div class="fold-arrow">▶</div>为何要多此一举？制作一个控制开关的开关？      </div>      <div class="fold-collapse collapse" id="collapse-3734f6ee">        <div class="fold-content">          <p>相当于一个放大器，可以使用<strong>小电流控制大电流</strong></p>        </div>      </div>    </div><h3 id="MOS管">MOS管</h3><ul><li>栅极（G极）</li><li>源极（S极）</li><li>漏极（D极）<br>与三极管类似，相当于一个开关，给<strong>栅极加上电压</strong>，D极和S极会<strong>形成通路</strong>。</li></ul>    <div class="fold">      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-a8d25186" role="button" aria-expanded="false" aria-controls="collapse-a8d25186">        <div class="fold-arrow">▶</div>都是用通过第三方控制主电路的开关，三极管和MOS管有什么区别呢？      </div>      <div class="fold-collapse collapse" id="collapse-a8d25186">        <div class="fold-content">          <ul><li>显然，三极管通过电流控制，而MOS管通过电压控制。由于MOS管的<strong>绝缘层</strong>导致电阻极大（上亿欧姆），支路电流很小几乎为零，耗电很少；而三极管基极要<strong>持续提供电流</strong>，耗电相对较大。</li></ul>        </div>      </div>    </div>]]></content>
+    <content type="html"><![CDATA[<h2 id="数制与编码">数制与编码</h2><h3 id="整数十进制转换：除X倒取余法">整数十进制转换：除X倒取余法</h3><p>十进制整数 N 可表示为 X 进制的幂次和形式：<br>$$N = a_{n} \times X^n + a_{n-1} \times X^{n-1} + … + a_{1} \times X^1 + a_{0} \times X^0$$通过 “除 X 取余”，可依次求出最低位，再 “倒取余” 得到最终结果。</p><h3 id="小数十进制转换：乘X顺取整法">小数十进制转换：乘X顺取整法</h3><p>十进制小数 M（0&lt;M&lt;1）可表示为 X 进制的负幂次和形式：<br>$$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} + …$$通过 “乘 X 取整”，可依次求出小数点后第一位，再 “顺取整” 得到 X 进制小数。</p><h3 id="原码">原码</h3><p>在最高位补0或1表示正负，0为正，1为负。</p><h3 id="反码">反码</h3><ul><li>对于正数，反码与原码相同</li><li>对于负数，反码为原码<strong>除符号位外按位取反</strong></li></ul><div class="note note-info">            <p>在反码表示法中，0的表示方法不是唯一的</p>          </div><p>反码表示法的优点是在进行加减运算时<strong>不需要判断两数的符号是否相同</strong>，只要先求出两数的反码然后相加即可（<strong>符号位也参与运算</strong>，当符号位产生进位时，需要<strong>循环进位</strong>，即把符号位的进位加到和的最低位上去），比原码运算要简单的多。</p><h3 id="补码">补码</h3><ul><li>对于正数，补码与原码相同</li><li>对于负数，补码为原码<strong>除符号位外按位取反</strong>，再在<strong>最低位加一</strong>（<strong>补码+1</strong>）</li></ul><div class="note note-info">            <p>补码的补码是原码</p>          </div><p>补码进行运算时，符号位参与运算，而且<strong>符号位的进位会丢弃</strong>（区别于反码）</p><h2 id="逻辑代数基础">逻辑代数基础</h2><p><a href="https://www.cnblogs.com/icmaxwell/p/17374702.html">相关电路符号图</a></p><h3 id="三种基本逻辑运算：">三种基本逻辑运算：</h3><ol><li>与：串联<code>·</code></li></ol><figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">0</span>·<span class="hljs-number">0</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">0</span>·<span class="hljs-number">1</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">1</span>·<span class="hljs-number">0</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">1</span>·<span class="hljs-number">1</span>=<span class="hljs-number">1</span><br></code></pre></td></tr></tbody></table></figure><ol start="2"><li>或：并联<code>+</code></li></ol><figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">0</span>+<span class="hljs-number">0</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">0</span>+<span class="hljs-number">1</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">1</span>+<span class="hljs-number">0</span>=<span class="hljs-number">0</span><br><span class="hljs-attribute">1</span>=<span class="hljs-number">1</span>=<span class="hljs-number">1</span><br></code></pre></td></tr></tbody></table></figure><ol start="3"><li>非：取反<code>-</code></li></ol><figure class="highlight dns"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dns"><span class="hljs-keyword">A</span>·<span class="hljs-keyword">A</span>=<span class="hljs-keyword">A</span><br><span class="hljs-keyword">A</span>+<span class="hljs-keyword">A</span>=<span class="hljs-keyword">A</span><br></code></pre></td></tr></tbody></table></figure><h3 id="复合逻辑运算">复合逻辑运算</h3><ol><li>与非：$F=\overline{A·B·C}$</li><li>或非: $F=\overline{A+B+C}$</li><li>与或非：$F=\overline{AB+CD}$</li><li>异或：$ F=A\oplus B =\overline{A}B+A\overline{B}$ <strong>相异为 1，相同为 0</strong></li><li>同或：$ F=A\odot B=AB+\overline{A}\overline{B}$  <strong>相同为 1，相异为 0</strong></li></ol><p><img src="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true" alt="基本逻辑门电路图形符号1"><br><img src="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable2.png?raw=true" alt="基本逻辑门电路图形符号2"></p><h3 id="逻辑函数表示方法的相互转换">逻辑函数表示方法的相互转换</h3><ol><li>真值表法</li><li>表达式法</li><li>逻辑图法</li><li>波形图</li></ol><ul><li>真值表▶️▶️逻辑式</li></ul><ol><li>从真值表中<strong>找出使得F=1的那些变量取值</strong></li><li>把每一组变量取值写成对应的乘积项, <strong>0 --&gt; 1，1不变</strong></li><li>将<strong>乘积相加</strong>得到逻辑式</li></ol><h3 id="波形图">波形图</h3><ol><li>输入波形要<strong>穷举所用可能的输入</strong></li><li>输出波形与输入波形<strong>一一对应</strong></li></ol><h3 id="反演规则">反演规则</h3><p>求反函数</p><ol><li><strong>长非号不变</strong></li><li>运算的<strong>优先顺序不变</strong>（<strong>要加括号</strong>）</li></ol><ul><li>摩根定律<br>$$\overline{A + B} = \overline{A} \cdot \overline{B}$$</li></ul><p>$$\overline{A \cdot B} = \overline{A} + \overline{B}$$</p><ul><li>吸收律<br>$$A + A \cdot B = A$$</li></ul><p>$$A \cdot (A + B) = A$$</p><p>$$A + \overline{A} \cdot B = A + B$$</p><p>$$A \cdot (\overline{A} + B) = A \cdot B$$</p><ul><li>包含律<br>$$A \cdot B + \overline{A} \cdot C + B \cdot C = A \cdot B + \overline{A} \cdot C$$</li></ul><p>$$(A + B) \cdot (\overline{A} + C) \cdot (B + C) = (A + B) \cdot (\overline{A} + C)$$</p><ul><li>尾部变换<br>$$A \cdot \overline{B} = A \cdot \overline{A \cdot B}$$</li></ul><p>$$A \cdot \overline{A \cdot B} = A \cdot (\overline{A} + \overline{B}) = A \cdot \overline{A} + A \cdot \overline{B} = A \cdot \overline{B}$$</p><p>常用的化简方法</p><ol><li>并项法$$AB+A\overline{B}=A$$</li><li>吸收法$$A+AB=A$$</li><li>消去法$$A+\overline{A}B=A+B$$</li></ol><p>$m_0$下标编号规则：原变量取1，反变量取0</p><p>n变量的最小项有n个相邻项：<br>相邻项：只有一个变量不同，一对相邻项可以消去一个变量</p><h3 id="卡诺图">卡诺图</h3><p>卡诺图表示按照格雷码（任意两个相邻的编码，仅有 1 位二进制数不同）进行标识，使得相邻变量的组合中只有一个变量不同。<br>卡诺图排列顺序：00-&gt;01-&gt;11-&gt;10</p><h4 id="卡诺图的绘制：">卡诺图的绘制：</h4><ul><li>最小项在方格中填1</li><li>最大项在方格中填0</li></ul><h4 id="卡诺图的化简">卡诺图的化简</h4><p>卡诺圈内小方格数N必须是$2^n$，相邻两个小方格中只有一个变量不同，可以合并为一项，消去一个互非的变量。</p><ol><li>卡诺圈<strong>越大越好</strong></li><li>卡诺圈<strong>越少越好</strong></li><li>每一个卡诺圈都<strong>要有新的成分</strong></li><li><strong>先圈大圈，后圈小圈</strong></li></ol><h2 id="基本逻辑门电路">基本逻辑门电路</h2><div class="note note-info">            <p>刚开始学习<strong>基本逻辑门电路</strong>的时候会有点疑惑：为什么这里的电路与高中的电路如此不同，<strong>不是闭合的电路</strong>，<strong>没有了电源正负极符号</strong>，取而代之的是一个个冰冷的出入线头？</p>          </div><p>事实上，这与我们学习的目标有关！</p><ul><li>高中物理电路更关注的是<strong>能量的流动和转换</strong>。通过<strong>欧姆定律</strong>研究电压、电流、电阻之间的关系。因此需要画出完整的回路，包括电源、负载和导线。</li><li>而数字逻辑门电路在高中的基础上更进一步，关注的是<strong>信息的处理和传递</strong>。为了简洁只画核心的 “<strong>信号输入 / 输出部分</strong>”，不关心电流具体多少，只关心 “输入 / 输出电压<strong>对应逻辑 0 还是 1</strong>”（高电平还是低电平）</li></ul><div class="note note-danger">            <p>高电平和低电平都是一种状态，一种状态<strong>对应一个范围值</strong>，而不是一个固定值</p>          </div><h3 id="三极管">三极管</h3><ul><li>集电极</li><li>发射极</li><li>基极</li></ul><p>相当于一个开关，当<strong>给基极接入电源</strong>（支路）$&gt;0.7V$，晶体管接通（相当于闭合的开关），电路处于<strong>导通</strong>状态，先是遵循  $i_C=\beta{i_B}$ 的线性变化，增加到一定值不在增加，由<strong>放大状态进入饱和状态</strong>。<br>进入饱和状态的主路压降很低（硅管$\approx0.3V$）</p>    <div class="fold">      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-3734f6ee" role="button" aria-expanded="false" aria-controls="collapse-3734f6ee">        <div class="fold-arrow">▶</div>为何要多此一举？制作一个控制开关的开关？      </div>      <div class="fold-collapse collapse" id="collapse-3734f6ee">        <div class="fold-content">          <p>相当于一个放大器，可以使用<strong>小电流控制大电流</strong></p>        </div>      </div>    </div><h3 id="MOS管">MOS管</h3><ul><li>栅极（G极）</li><li>源极（S极）</li><li>漏极（D极）</li></ul><p>与三极管类似，相当于一个开关，给<strong>栅极加上电压</strong>，D极和S极会<strong>形成通路</strong>。</p>    <div class="fold">      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-a8d25186" role="button" aria-expanded="false" aria-controls="collapse-a8d25186">        <div class="fold-arrow">▶</div>都是用通过第三方控制主电路的开关，三极管和MOS管有什么区别呢？      </div>      <div class="fold-collapse collapse" id="collapse-a8d25186">        <div class="fold-content">          <ul><li>显然，三极管通过电流控制，而MOS管通过电压控制。由于MOS管的<strong>绝缘层</strong>导致电阻极大（上亿欧姆），支路电流很小几乎为零，耗电很少；而三极管基极要<strong>持续提供电流</strong>，耗电相对较大。</li></ul>        </div>      </div>    </div>]]></content>
     
     
     
@@ -309,11 +309,11 @@
     
     <tags>
       
+      <tag>updating</tag>
+      
       <tag>CPP</tag>
       
       <tag>syntax</tag>
-      
-      <tag>updating</tag>
       
     </tags>
     
@@ -338,13 +338,13 @@
     
     <tags>
       
-      <tag>updating</tag>
-      
-      <tag>stack</tag>
-      
       <tag>queue</tag>
       
       <tag>datastructure</tag>
+      
+      <tag>stack</tag>
+      
+      <tag>updating</tag>
       
     </tags>
     
@@ -596,9 +596,9 @@
     
     <tags>
       
-      <tag>sort</tag>
-      
       <tag>algorithm</tag>
+      
+      <tag>sort</tag>
       
     </tags>
     
@@ -625,9 +625,9 @@
     
     <tags>
       
-      <tag>C++</tag>
-      
       <tag>OOP</tag>
+      
+      <tag>C++</tag>
       
     </tags>
     
@@ -654,9 +654,9 @@
     
     <tags>
       
-      <tag>C++</tag>
-      
       <tag>OOP</tag>
+      
+      <tag>C++</tag>
       
     </tags>
     
@@ -683,9 +683,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>updating</tag>
+      
+      <tag>CPP</tag>
       
       <tag>OOP</tag>
       
@@ -806,11 +806,11 @@
     
     <tags>
       
+      <tag>hashtable</tag>
+      
       <tag>sort</tag>
       
       <tag>queue</tag>
-      
-      <tag>hashtable</tag>
       
     </tags>
     
@@ -835,11 +835,11 @@
     
     <tags>
       
+      <tag>queue</tag>
+      
       <tag>binary tree</tag>
       
       <tag>huffman tree</tag>
-      
-      <tag>queue</tag>
       
       <tag>Dijkstra</tag>
       
