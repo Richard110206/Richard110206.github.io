@@ -134,7 +134,7 @@
     <link href="/2025/09/04/Review/Probability-Theory/"/>
     <url>/2025/09/04/Review/Probability-Theory/</url>
     
-    <content type="html"><![CDATA[<h2 id="随机事件及其概率">随机事件及其概率</h2><p>因为$A\overline{B} = A - B$，所以在概率计算中，有 $P(A\overline{B}) = P(A - B)$。结合概率的性质 $P(A - B) = P(A) - P(AB)$，因此有：</p><p>$$P(A\overline{B}) = P(A） - P（AB)$$</p><p>条件概率：$P(A \mid B) = \frac{P(AB)}{P(B)}$</p><p>通常反向利用：$P(A \mid B) {P(B)} = {P(AB)}$</p><h2 id="随机变量及其分布">随机变量及其分布</h2><p>二项分布：</p><p>$$P(X = k) = C^{k}_{n} p^k (1-p)^{n-k}$$</p><p>泊松分布：</p><p>$$P(X = k) = \frac{\lambda^k}{k!} \mathrm{e}^{-\lambda}$$</p><p>当二项分布的n很大，p很小，且$\lambda=np$时，二项分布可近似为泊松分布。</p><p>随机变量的分布函数</p><p>用于研究某一变量落某个区间内的概率<br>$$F(x)=P{X\leq x}$$<br>满足：<br>分布函数有界性（正无穷、负无穷极限）<br>$$\lim_{x \to +\infty} F(x) = 1, \quad \lim_{x \to -\infty} F(x) = 0$$</p><ul><li>分布律（<strong>仅用于离散型随机变量</strong>）：取<strong>某一个具体值</strong>的概率</li><li>概率密度函数（<strong>仅用于连续型随机变量</strong>）：随机变量的<strong>概率密度分布</strong></li><li>分布函数（均适用）：随机变量<strong>小于等于某一值x的概率</strong></li></ul><p>$$F(x)=\int_{-\infty}^{x}f(t)dt$$</p><div class="note note-danger">            <ul><li>离散型随机变量有阶梯（注意边界等号）</li><li>连续型随机变量取某一指定值的概率为0（只能为范围）</li></ul>          </div><h3 id="指数分布">指数分布</h3><p>其概率密度函数：<br>$$<br>f(x) =<br>\begin{cases}<br>\lambda e^{-\lambda x}, &amp; x \geq 0 \<br>0, &amp; x &lt; 0<br>\end{cases}<br>$$<br>其分布函数：<br>$$<br>F(x) = P(X \leq x) =<br>\begin{cases}<br>0, &amp; x &lt; 0 \<br>1 - e^{-\lambda x}, &amp; x \geq 0<br>\end{cases}<br>$$<br>分布具有<strong>无记忆性</strong></p><h3 id="均匀分布">均匀分布</h3><p>其概率密度函数：<br>$$<br>f(x) =<br>\begin{cases}<br>\frac{1}{b-a}, &amp; a \leq x \leq b \<br>0, &amp; \text{其他}<br>\end{cases}<br>$$</p><p>其分布函数：<br>$$<br>F(x) = P(X \leq x) =<br>\begin{cases}<br>0, &amp; x &lt; a \<br>\frac{x-a}{b-a}, &amp; a \leq x \leq b \<br>1, &amp; x &gt; b<br>\end{cases}<br>$$<br><strong>落在子区间的概率与子区间的长度成正比</strong>，与区间位置无关</p><h3 id="正态分布">正态分布</h3>]]></content>
+    <content type="html"><![CDATA[<h2 id="随机事件及其概率">随机事件及其概率</h2><p>因为$A\overline{B} = A - B$，所以在概率计算中，有 $P(A\overline{B}) = P(A - B)$。结合概率的性质 $P(A - B) = P(A) - P(AB)$，因此有：</p><p>$$P(A\overline{B}) = P(A） - P（AB)$$</p><p>条件概率：$P(A \mid B) = \frac{P(AB)}{P(B)}$</p><p>通常反向利用：$P(A \mid B) {P(B)} = {P(AB)}$</p><h2 id="随机变量及其分布">随机变量及其分布</h2><h3 id="二项分布：">二项分布：</h3><p>$$P(X = k) = C^{k}_{n} p^k (1-p)^{n-k}$$</p><p>记为：$X \sim B(n, p)$</p><h3 id="泊松分布：">泊松分布：</h3><p>$$P(X = k) = \frac{\lambda^k}{k!} \mathrm{e}^{-\lambda}$$</p><p>记为：$X \sim\pi(\lambda)$</p><p>当二项分布的<strong>n很大</strong>，<strong>p很小</strong>，且$\lambda=np$时，<strong>二项分布可近似为泊松分布</strong>。</p><h3 id="随机变量的分布函数">随机变量的分布函数</h3><p>用于研究某一变量落某个区间内的概率<br>$$F(x)=P{(X\leq x)}$$</p><p>满足分布函数有界性（正无穷、负无穷极限）<br>$$\lim_{x \to +\infty} F(x) = 1, \quad \lim_{x \to -\infty} F(x) = 0$$</p><ul><li><strong>分布律</strong>（<strong>仅用于离散型随机变量</strong>）：取<strong>某一个具体值</strong>的概率</li><li><strong>概率密度函数</strong>（<strong>仅用于连续型随机变量</strong>）：随机变量的<strong>概率密度分布</strong></li><li><strong>分布函数</strong>（均适用）：随机变量<strong>小于等于某一值x的概率</strong></li></ul><p>$$F(x)=\int_{-\infty}^{x}f(t)dt$$</p><div class="note note-danger">            <ul><li><strong>离散型随机变量</strong>有阶梯（注意边界等号）</li><li><strong>连续型随机变量</strong>取某一指定值的概率为0（只能为范围）</li></ul>          </div><h3 id="指数分布">指数分布</h3><p>其概率密度函数：<br>$$<br>f(x) =<br>\begin{cases}<br>\lambda e^{-\lambda x}, &amp; x \geq 0 \<br>0, &amp; x &lt; 0<br>\end{cases}<br>$$<br>其分布函数：<br>$$<br>F(x) = P(X \leq x) =<br>\begin{cases}<br>0, &amp; x &lt; 0 \<br>1 - e^{-\lambda x}, &amp; x \geq 0<br>\end{cases}<br>$$<br>分布具有<strong>无记忆性</strong></p><h3 id="均匀分布">均匀分布</h3><p>其概率密度函数：<br>$$<br>f(x) =<br>\begin{cases}<br>\frac{1}{b-a}, &amp; a \leq x \leq b \<br>0, &amp; \text{其他}<br>\end{cases}<br>$$</p><p>其分布函数：<br>$$<br>F(x) = P(X \leq x) =<br>\begin{cases}<br>0, &amp; x &lt; a \<br>\frac{x-a}{b-a}, &amp; a \leq x \leq b \<br>1, &amp; x &gt; b<br>\end{cases}<br>$$<br><strong>落在子区间的概率与子区间的长度成正比</strong>，与区间位置无关</p><h3 id="正态分布">正态分布</h3>]]></content>
     
     
     <categories>
@@ -379,9 +379,9 @@
       
       <tag>updating</tag>
       
-      <tag>queue</tag>
-      
       <tag>stack</tag>
+      
+      <tag>queue</tag>
       
       <tag>datastructure</tag>
       
@@ -847,9 +847,9 @@
       
       <tag>sort</tag>
       
-      <tag>queue</tag>
-      
       <tag>hashtable</tag>
+      
+      <tag>queue</tag>
       
     </tags>
     
@@ -876,9 +876,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>huffman tree</tag>
-      
       <tag>queue</tag>
+      
+      <tag>huffman tree</tag>
       
       <tag>Dijkstra</tag>
       
@@ -936,9 +936,9 @@
     
     <tags>
       
-      <tag>binary tree</tag>
-      
       <tag>DFS</tag>
+      
+      <tag>binary tree</tag>
       
       <tag>search，graph，sort</tag>
       
