@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable2.png?raw=true">
 <meta property="article:published_time" content="2025-09-04T04:58:09.000Z">
-<meta property="article:modified_time" content="2025-09-19T12:43:57.285Z">
+<meta property="article:modified_time" content="2025-09-20T03:24:20.735Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true">
@@ -303,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k words
+          1.8k words
         
       </span>
     
@@ -494,59 +494,56 @@ $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} +
 <li>逻辑图法</li>
 <li>波形图</li>
 </ol>
-<ul>
-<li>真值表▶️▶️逻辑式</li>
-</ul>
-<ol>
-<li>从真值表中<strong>找出使得F=1的那些变量取值</strong></li>
-<li>把每一组变量取值写成对应的乘积项, <strong>0 --&gt; 1，1不变</strong></li>
-<li>将<strong>乘积相加</strong>得到逻辑式</li>
-</ol>
-<h3 id="波形图">波形图</h3>
+<h4 id="真值表▶️▶️逻辑式">真值表▶️▶️逻辑式</h4>
+<div class="note note-info">
+            <ol><li>从真值表中<strong>找出使得F=1的那些变量取值</strong></li><li>把每一组变量取值写成对应的乘积项, <strong>0 --&gt; 1，1不变</strong></li><li>将<strong>乘积相加</strong>得到逻辑式</li></ol>
+          </div>
+<h4 id="波形图">波形图</h4>
 <ol>
 <li>输入波形要<strong>穷举所用可能的输入</strong></li>
 <li>输出波形与输入波形<strong>一一对应</strong></li>
 </ol>
-<h3 id="反演规则">反演规则</h3>
-<p>求反函数</p>
-<ol>
-<li><strong>长非号不变</strong></li>
-<li>运算的<strong>优先顺序不变</strong>（<strong>要加括号</strong>）</li>
-</ol>
-<ul>
-<li>摩根定律<br>
-$$\overline{A + B} = \overline{A} \cdot \overline{B}$$</li>
-</ul>
+<h4 id="对偶规则（求对偶函数）">对偶规则（求对偶函数）</h4>
+<div class="note note-info">
+            <ul><li>将其中的所有 “<strong>与</strong>”运算（·） 和 “<strong>或</strong>”运算（+） <strong>互换</strong></li><li>将所有的常量 <strong>“0” 和 “1” 互换</strong></li><li><strong>变量保持不变</strong></li></ul>
+          </div>
+<h4 id="反演规则（求反函数）">反演规则（求反函数）</h4>
+<div class="note note-info">
+            <ul><li>将其中的所有 “<strong>与</strong>”运算（·） 和 “<strong>或</strong>”运算（+） <strong>互换</strong></li><li>将所有的常量 <strong>“0” 和 “1” 互换</strong></li><li><strong>变量取反</strong></li></ul>
+          </div>
+<div class="note note-danger">
+            <ul><li><strong>长非号不变</strong></li><li>运算的<strong>优先顺序不变</strong>（<strong>要加括号</strong>）</li></ul>
+          </div>
+<div class="note note-danger">
+            <p>注意对偶规则和反演规则的<strong>区别是变量是否取反</strong></p>
+          </div>
+<h3 id="定律">定律</h3>
+<h4 id="摩根定律">摩根定律</h4>
+<p>$$\overline{A + B} = \overline{A} \cdot \overline{B}$$</p>
 <p>$$\overline{A \cdot B} = \overline{A} + \overline{B}$$</p>
-<ul>
-<li>吸收律<br>
-$$A + A \cdot B = A$$</li>
-</ul>
+<h4 id="吸收律">吸收律</h4>
+<p>$$A + A \cdot B = A$$</p>
 <p>$$A \cdot (A + B) = A$$</p>
 <p>$$A + \overline{A} \cdot B = A + B$$</p>
 <p>$$A \cdot (\overline{A} + B) = A \cdot B$$</p>
-<ul>
-<li>包含律<br>
-$$A \cdot B + \overline{A} \cdot C + B \cdot C = A \cdot B + \overline{A} \cdot C$$</li>
-</ul>
+<h4 id="包含律">包含律</h4>
+<p>$$A \cdot B + \overline{A} \cdot C + B \cdot C = A \cdot B + \overline{A} \cdot C$$</p>
 <p>$$(A + B) \cdot (\overline{A} + C) \cdot (B + C) = (A + B) \cdot (\overline{A} + C)$$</p>
-<ul>
-<li>尾部变换<br>
-$$A \cdot \overline{B} = A \cdot \overline{A \cdot B}$$</li>
-</ul>
+<h4 id="尾部变换">尾部变换</h4>
+<p>$$A \cdot \overline{B} = A \cdot \overline{A \cdot B}$$</p>
 <p>$$A \cdot \overline{A \cdot B} = A \cdot (\overline{A} + \overline{B}) = A \cdot \overline{A} + A \cdot \overline{B} = A \cdot \overline{B}$$</p>
-<p>常用的化简方法</p>
-<ol>
-<li>并项法$$AB+A\overline{B}=A$$</li>
-<li>吸收法$$A+AB=A$$</li>
-<li>消去法$$A+\overline{A}B=A+B$$</li>
-</ol>
+<h3 id="常用的化简方法">常用的化简方法</h3>
+<h4 id="并项法">并项法</h4>
+<p>$$AB+A\overline{B}=A$$</p>
+<h4 id="吸收法">吸收法</h4>
+<p>$$A+AB=A$$</p>
+<h4 id="消去法">消去法</h4>
+<p>$$A+\overline{A}B=A+B$$</p>
 <p>$m_0$下标编号规则：原变量取1，反变量取0</p>
 <p>n变量的最小项有n个相邻项：<br>
 相邻项：只有一个变量不同，一对相邻项可以消去一个变量</p>
 <h3 id="卡诺图">卡诺图</h3>
-<p>卡诺图表示按照格雷码（任意两个相邻的编码，仅有 1 位二进制数不同）进行标识，使得相邻变量的组合中只有一个变量不同。<br>
-卡诺图排列顺序：00-&gt;01-&gt;11-&gt;10</p>
+<p>  卡诺图表示按照格雷码（任意两个相邻的编码，仅有 1 位二进制数不同）进行标识，使得相邻变量的组合中只有一个变量不同。卡诺图<strong>排列顺序</strong>：00-&gt;01-&gt;11-&gt;10</p>
 <h4 id="卡诺图的绘制：">卡诺图的绘制：</h4>
 <ul>
 <li>最小项在方格中填1</li>
@@ -578,8 +575,7 @@ $$A \cdot \overline{B} = A \cdot \overline{A \cdot B}$$</li>
 <li>发射极</li>
 <li>基极</li>
 </ul>
-<p>相当于一个开关，当<strong>给基极接入电源</strong>（支路）$&gt;0.7V$，晶体管接通（相当于闭合的开关），电路处于<strong>导通</strong>状态，先是遵循  $i_C=\beta{i_B}$ 的线性变化，增加到一定值不在增加，由<strong>放大状态进入饱和状态</strong>。<br>
-进入饱和状态的主路压降很低（硅管$\approx0.3V$）</p>
+<p>相当于一个开关，当<strong>给基极接入电源</strong>（支路）$&gt;0.7V$，晶体管接通（相当于闭合的开关），电路处于<strong>导通</strong>状态，先是遵循  $i_C=\beta{i_B}$ 的线性变化，增加到一定值不在增加，由<strong>放大状态进入饱和状态</strong>，进入饱和状态的<strong>主路压降</strong>很低（硅管$\approx0.3V$）。</p>
 
     <div class="fold">
       <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-3734f6ee" role="button" aria-expanded="false" aria-controls="collapse-3734f6ee">
@@ -669,7 +665,7 @@ $$A \cdot \overline{B} = A \cdot \overline{A \cdot B}$$</li>
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>September 19, 2025</div>
+          <div>September 20, 2025</div>
         </div>
       
       
