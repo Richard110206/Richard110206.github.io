@@ -419,9 +419,9 @@
       
       <tag>queue</tag>
       
-      <tag>stack</tag>
-      
       <tag>datastructure</tag>
+      
+      <tag>stack</tag>
       
     </tags>
     
@@ -760,11 +760,11 @@
     
     <tags>
       
-      <tag>OOP</tag>
-      
       <tag>CPP</tag>
       
       <tag>updating</tag>
+      
+      <tag>OOP</tag>
       
     </tags>
     
@@ -885,9 +885,9 @@
       
       <tag>sort</tag>
       
-      <tag>hashtable</tag>
-      
       <tag>queue</tag>
+      
+      <tag>hashtable</tag>
       
     </tags>
     
@@ -914,9 +914,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>queue</tag>
-      
       <tag>huffman tree</tag>
+      
+      <tag>queue</tag>
       
       <tag>Dijkstra</tag>
       
@@ -974,9 +974,9 @@
     
     <tags>
       
-      <tag>DFS</tag>
-      
       <tag>binary tree</tag>
+      
+      <tag>DFS</tag>
       
       <tag>search，graph，sort</tag>
       
