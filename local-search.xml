@@ -8,7 +8,7 @@
     <link href="/2025/09/27/Tutorial/From-Server-Purchase-to-Website-Launch/"/>
     <url>/2025/09/27/Tutorial/From-Server-Purchase-to-Website-Launch/</url>
     
-    <content type="html"><![CDATA[<p>这里用来记录我进行域名备案的全流程</p>]]></content>
+    <content type="html"><![CDATA[<p>这里用来记录我进行域名备案的全流程</p><ol><li><strong>域名实名认证</strong>，过程很快，但系统进行数据同步需要差不多两个工作日：在域名注册商进行实名认证，等待系统同步完成。</li><li><strong>发起 ICP 备案</strong>（主体 + 域名 + 服务器绑定）：在服务器提供商的备案系统操作</li><li>24h内进行 ICP 备案中的 “<strong>短信核验</strong>”</li><li>30天内进行<strong>公安备案</strong></li></ol><p>对于网站用途开办内容的陈述如下（避免被打回耽误时间）：</p><p>中间可能需要完成个人建站方案书：</p><p>相关问题与回答模版如下：</p><p>注意个人建站需要符合性质，不能出现企业、平台等字样，且要在首页底部展示ICP备案码，且可以直接跳转到工信部，否则后续注册的域名会被打回，甚至填写个人建站方案书。</p>]]></content>
     
     
     
@@ -281,7 +281,7 @@
     <link href="/2025/08/27/Tutorial/GitHub-Connection-Deep-Dive/"/>
     <url>/2025/08/27/Tutorial/GitHub-Connection-Deep-Dive/</url>
     
-    <content type="html"><![CDATA[<p>今天在将hexo博客进行部署的时候突然发生以下报错：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh: connect to host github.com port 22: Connection timed out<br>fatal: Could not <span class="hljs-built_in">read</span> from remote repository.<br><br>Please make sure you have the correct access rights<br>and the repository exists.<br>FATAL Something<span class="hljs-string">'s wrong. Maybe you can find the solution here: https://hexo.io/docs/troubleshooting.html</span><br><span class="hljs-string">Error: Spawn failed</span><br><span class="hljs-string">    at ChildProcess.&lt;anonymous&gt; (E:\Hexo-backup\node_modules\hexo-deployer-git\node_modules\hexo-util\lib\spawn.js:51:21)</span><br><span class="hljs-string">    at ChildProcess.emit (node:events:518:28)</span><br><span class="hljs-string">    at cp.emit (E:\Hexo-backup\node_modules\cross-spawn\lib\enoent.js:34:29)</span><br><span class="hljs-string">    at ChildProcess._handle.onexit (node:internal/child_process:293:12)</span><br></code></pre></td></tr></tbody></table></figure><p>在CSDN找到相应问题文档，才成功解决！<a href="https://blog.csdn.net/nightwishh/article/details/99647545?fromshare=blogdetail&amp;sharetype=blogdetail&amp;sharerId=99647545&amp;sharerefer=PC&amp;sharesource=m0_53058983&amp;sharefrom=from_link">git报错ssh: connect to host github.com port 22: Connection timed out</a></p><h2 id="HTTPS">HTTPS</h2><h2 id="SSH">SSH</h2>]]></content>
+    <content type="html"><![CDATA[<p>今天在将hexo博客进行部署的时候突然发生以下报错：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh: connect to host github.com port 22: Connection timed out<br>fatal: Could not <span class="hljs-built_in">read</span> from remote repository.<br><br>Please make sure you have the correct access rights<br>and the repository exists.<br>FATAL Something<span class="hljs-string">'s wrong. Maybe you can find the solution here: https://hexo.io/docs/troubleshooting.html</span><br><span class="hljs-string">Error: Spawn failed</span><br><span class="hljs-string">    at ChildProcess.&lt;anonymous&gt; (E:\Hexo-backup\node_modules\hexo-deployer-git\node_modules\hexo-util\lib\spawn.js:51:21)</span><br><span class="hljs-string">    at ChildProcess.emit (node:events:518:28)</span><br><span class="hljs-string">    at cp.emit (E:\Hexo-backup\node_modules\cross-spawn\lib\enoent.js:34:29)</span><br><span class="hljs-string">    at ChildProcess._handle.onexit (node:internal/child_process:293:12)</span><br></code></pre></td></tr></tbody></table></figure><p>在CSDN找到相应问题文档，才成功解决！<a href="https://blog.csdn.net/nightwishh/article/details/99647545?fromshare=blogdetail&amp;sharetype=blogdetail&amp;sharerId=99647545&amp;sharerefer=PC&amp;sharesource=m0_53058983&amp;sharefrom=from_link">git报错ssh: connect to host github.com port 22: Connection timed out</a></p><p>  一直想购置服务器玩玩，正巧项目队需要搭建电商软件平台，又看到百度云服务器1折优惠，遂火速入手，虽与想象计划中的高性能服务器天差地别，但是还是满足了一个小心愿，第一次连上服务器的激动溢于言表！</p><h3 id="Mac连接">Mac连接</h3><p>直接在终端输入以下命令：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh +ip地址<br></code></pre></td></tr></tbody></table></figure><h3 id="Windows连接">Windows连接</h3><p>安装MobaXterm进行连接</p><h2 id="HTTPS">HTTPS</h2><h2 id="SSH">SSH</h2>]]></content>
     
     
     <categories>
@@ -428,11 +428,11 @@
     
     <tags>
       
-      <tag>updating</tag>
+      <tag>queue</tag>
       
       <tag>stack</tag>
       
-      <tag>queue</tag>
+      <tag>updating</tag>
       
       <tag>datastructure</tag>
       
@@ -898,9 +898,9 @@
       
       <tag>sort</tag>
       
-      <tag>hashtable</tag>
-      
       <tag>queue</tag>
+      
+      <tag>hashtable</tag>
       
     </tags>
     
@@ -927,9 +927,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>queue</tag>
-      
       <tag>huffman tree</tag>
+      
+      <tag>queue</tag>
       
       <tag>Dijkstra</tag>
       
@@ -960,9 +960,9 @@
       
       <tag>algorithm</tag>
       
-      <tag>stack</tag>
-      
       <tag>binary tree</tag>
+      
+      <tag>stack</tag>
       
     </tags>
     
@@ -987,9 +987,9 @@
     
     <tags>
       
-      <tag>binary tree</tag>
-      
       <tag>DFS</tag>
+      
+      <tag>binary tree</tag>
       
       <tag>search，graph，sort</tag>
       
