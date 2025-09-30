@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Pandas.png?raw=true">
 <meta property="article:published_time" content="2025-09-13T05:01:56.000Z">
-<meta property="article:modified_time" content="2025-09-15T13:01:01.451Z">
+<meta property="article:modified_time" content="2025-09-30T07:14:41.939Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Pandas">
@@ -457,7 +457,7 @@
                 <div class="note note-info">
             <div class="fold">  <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-4cc89ac7" role="button" aria-expanded="false" aria-controls="collapse-4cc89ac7">    <div class="fold-arrow">▶</div> 什么是 pip ？  </div>  <div class="fold-collapse collapse" id="collapse-4cc89ac7">    <div class="fold-content">      <p><code>pip</code>是 Python 的包管理工具，全称是 Python Install Packages，所有人都可以下载或上传自己开发的库到 PyPI 上，常见的指令有：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install pandas<br></code></pre></td></tr></tbody></table></figure>    </div>  </div></div>
           </div>
-<h3 id="Series对象">Series对象</h3>
+<h3 id="一、Series对象">一、Series对象</h3>
 <p>Series对象是pandas中可<strong>存储多种类型的一维数组</strong>，由<strong>数据</strong>与<strong>索引</strong>组成。</p>
 <h4 id="默认索引为0">默认索引为0</h4>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>s1=pd.Series([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>])<br><span class="hljs-built_in">print</span>(s1)<br></code></pre></td></tr></tbody></table></figure>
@@ -476,7 +476,7 @@
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>s1=pd.Series([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>],index=[<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>,<span class="hljs-string">'c'</span>,<span class="hljs-string">'d'</span>,<span class="hljs-string">'e'</span>])<br><span class="hljs-built_in">print</span>(s1.index)<br><span class="hljs-built_in">print</span>(s1.values)<br></code></pre></td></tr></tbody></table></figure>
 <figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">Index</span><span class="hljs-params">([<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'d'</span>, <span class="hljs-string">'e'</span>], dtype=<span class="hljs-string">'object'</span>)</span></span><br><span class="hljs-selector-attr">[1 2 3 4 5]</span><br></code></pre></td></tr></tbody></table></figure>
 <hr>
-<h3 id="DataFrame对象">DataFrame对象</h3>
+<h3 id="二、DataFrame对象">二、DataFrame对象</h3>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">pandas.DataFrame(data,index,columns)<br><span class="hljs-comment"># 分别对应数据 行索引 列索引</span><br></code></pre></td></tr></tbody></table></figure>
 <h4 id="列表创建DataFrame对象">列表创建DataFrame对象</h4>
 <p>当对象更注重<strong>列方向</strong>数据关联时：</p>
@@ -485,7 +485,7 @@
 <p>当对象更注重<strong>行方向</strong>数据关联时：</p>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>df=pd.DataFrame({<br><span class="hljs-string">'语文'</span>:[<span class="hljs-number">110</span>,<span class="hljs-number">115</span>,<span class="hljs-number">120</span>],<br><span class="hljs-string">'数学'</span>:[<span class="hljs-number">135</span>,<span class="hljs-number">140</span>,<span class="hljs-number">145</span>],<br><span class="hljs-string">'英语'</span>:[<span class="hljs-number">125</span>,<span class="hljs-number">130</span>,<span class="hljs-number">135</span>],<br><span class="hljs-string">'班级'</span>:<span class="hljs-string">'24-3班'</span><br>})<br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></tbody></table></figure>
 <figure class="highlight tap"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs tap">    语文   数学   英语     班级<br>0 <span class="hljs-number"> 110 </span><span class="hljs-number"> 135 </span><span class="hljs-number"> 125 </span> 24-3班<br>1 <span class="hljs-number"> 115 </span><span class="hljs-number"> 140 </span><span class="hljs-number"> 130 </span> 24-3班<br>2 <span class="hljs-number"> 120 </span><span class="hljs-number"> 145 </span><span class="hljs-number"> 135 </span> 24-3班<br></code></pre></td></tr></tbody></table></figure>
-<h2 id="导入外部数据">导入外部数据</h2>
+<h2 id="三、导入外部数据">三、导入外部数据</h2>
 <h3 id="导入-xls-和-xlsx-文件">导入 .xls 和 .xlsx 文件</h3>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pandas.read_excel(file_path,sheet_name)<br></code></pre></td></tr></tbody></table></figure>
 <p>默认情况下，sheet_name参数为0，表示读取第一个工作表。</p>
@@ -510,8 +510,8 @@
 <ul>
 <li><code>usecols=['孕妇代码','年龄']</code> 导入<strong>指定列名</strong>的数据</li>
 </ul>
-<h2 id="数据清洗">数据清洗</h2>
-<h3 id="缺失值处理">缺失值处理</h3>
+<h2 id="四、数据清洗">四、数据清洗</h2>
+<h3 id="（一）缺失值处理">（一）缺失值处理</h3>
 <h4 id="查找缺失值">查找缺失值</h4>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>df=pd.read_excel(<span class="hljs-string">'附件.xlsx'</span>,<span class="hljs-string">'男胎检测数据'</span>)<br><span class="hljs-built_in">print</span>(df.info())<br></code></pre></td></tr></tbody></table></figure>
 
@@ -555,7 +555,7 @@
     </div>
 <hr>
 <h4 id="填充缺失值">填充缺失值</h4>
-<h3 id="重复值处理">重复值处理</h3>
+<h3 id="（二）重复值处理">（二）重复值处理</h3>
 <h4 id="判断重复值">判断重复值</h4>
 <p><code>duplicated()</code>方法可以判断数据是否重复，若没有传入参数，则默认会按照所有列的组合来判断重复值，即如果两行的所有列的值完全相同，则判定为重复行，返回 True</p>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br>df=pd.read_excel(<span class="hljs-string">'附件.xlsx'</span>,<span class="hljs-string">'男胎检测数据'</span>)<br>df=df.duplicated(<span class="hljs-string">'年龄'</span>)<br><span class="hljs-comment"># 注意要将处理值赋给原始数据df</span><br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></tbody></table></figure>
@@ -587,7 +587,7 @@
         </div>
       </div>
     </div>
-<h3 id="异常值处理">异常值处理</h3>
+<h3 id="（三）异常值处理">（三）异常值处理</h3>
 <h4 id="箱型线法">箱型线法</h4>
 <p>箱型线法是基于数据的<strong>四分位数</strong>构建 “箱体” 和 “须”，通过设定合理范围识别异常值，超过<strong>设定的上限或下限</strong>都可以被认定为异常值，具有<strong>不依赖数据分布</strong>、<strong>对极端值鲁棒</strong>的特点。</p>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-comment"># 读取数据</span><br>df = pd.read_excel(<span class="hljs-string">'附件.xlsx'</span>, <span class="hljs-string">'男胎检测数据'</span>)<br><span class="hljs-comment"># 1. 计算Q1、Q3、IQR和上下限（同步骤1）</span><br>Q1 = df[<span class="hljs-string">'体重'</span>].quantile(<span class="hljs-number">0.25</span>) <span class="hljs-comment"># 下四分位数</span><br>Q3 = df[<span class="hljs-string">'体重'</span>].quantile(<span class="hljs-number">0.75</span>) <span class="hljs-comment"># 上四分位数</span><br>IQR = Q3 - Q1 <span class="hljs-comment"># 四分位距</span><br>lower_bound = Q1 - <span class="hljs-number">1.5</span> * IQR <span class="hljs-comment"># 下异常值下限</span><br>upper_bound = Q3 + <span class="hljs-number">1.5</span> * IQR <span class="hljs-comment"># 上异常值上限</span><br><span class="hljs-comment"># 2. 筛选异常值（低于下限 或 高于上限）</span><br>outliers_lower = df[df[<span class="hljs-string">'体重'</span>] &lt; lower_bound]  <span class="hljs-comment"># 下异常值</span><br>outliers_upper = df[df[<span class="hljs-string">'体重'</span>] &gt; upper_bound]  <span class="hljs-comment"># 上异常值</span><br>all_outliers = pd.concat([outliers_lower, outliers_upper])  <span class="hljs-comment"># 所有异常值</span><br></code></pre></td></tr></tbody></table></figure>
@@ -662,7 +662,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>September 15, 2025</div>
+          <div>September 30, 2025</div>
         </div>
       
       
