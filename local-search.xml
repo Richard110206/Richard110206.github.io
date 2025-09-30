@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>Machine Learning Memo</title>
+    <link href="/2025/09/30/Python/Machine-Learning-Memo/"/>
+    <url>/2025/09/30/Python/Machine-Learning-Memo/</url>
+    
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>  近年来，人工智能（AI）始终是全球科技领域的焦点话题，相关概念与技术在媒体报道中高频出现，甚至一度伴随密集的市场炒作。随着ChatGPT、deepseek的横空出世，更是再一次的掀起全球对于 AI 的技术浪潮，与此同时，算法模型的持续迭代优化，叠加 NVIDIA 等企业在 GPU 显卡等算力硬件上的技术突破与供给支撑，大幅提升了 AI 的运算效率与落地能力。并与不同学科领域实现跨界交叉与融合创新，推动产业形态与社会生活方式的深刻变革。<br>  笔者数学功底虽不差，但是仅仅公式的推导还是枯燥的，因而笔者更愿意通过代码（主要为Python）来实现一些简单的机器学习模型（必要时会添加数学公式辅助理解）。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Python</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>From Server Purchase to Website Launch</title>
     <link href="/2025/09/27/Tutorial/From-Server-Purchase-to-Website-Launch/"/>
     <url>/2025/09/27/Tutorial/From-Server-Purchase-to-Website-Launch/</url>
@@ -163,9 +182,9 @@
     
     <tags>
       
-      <tag>updating</tag>
-      
       <tag>Leetcode</tag>
+      
+      <tag>updating</tag>
       
     </tags>
     
@@ -357,9 +376,9 @@
     
     <tags>
       
-      <tag>updating</tag>
-      
       <tag>Leetcode</tag>
+      
+      <tag>updating</tag>
       
     </tags>
     
@@ -411,11 +430,11 @@
     
     <tags>
       
+      <tag>updating</tag>
+      
       <tag>CPP</tag>
       
       <tag>syntax</tag>
-      
-      <tag>updating</tag>
       
     </tags>
     
@@ -440,11 +459,11 @@
     
     <tags>
       
-      <tag>updating</tag>
+      <tag>stack</tag>
       
       <tag>queue</tag>
       
-      <tag>stack</tag>
+      <tag>updating</tag>
       
       <tag>datastructure</tag>
       
@@ -785,9 +804,9 @@
     
     <tags>
       
-      <tag>CPP</tag>
-      
       <tag>updating</tag>
+      
+      <tag>CPP</tag>
       
       <tag>OOP</tag>
       
@@ -972,9 +991,9 @@
       
       <tag>algorithm</tag>
       
-      <tag>binary tree</tag>
-      
       <tag>stack</tag>
+      
+      <tag>binary tree</tag>
       
     </tags>
     
@@ -999,9 +1018,9 @@
     
     <tags>
       
-      <tag>DFS</tag>
-      
       <tag>binary tree</tag>
+      
+      <tag>DFS</tag>
       
       <tag>search，graph，sort</tag>
       
