@@ -991,9 +991,9 @@
       
       <tag>algorithm</tag>
       
-      <tag>binary tree</tag>
-      
       <tag>stack</tag>
+      
+      <tag>binary tree</tag>
       
     </tags>
     
@@ -1018,9 +1018,9 @@
     
     <tags>
       
-      <tag>DFS</tag>
-      
       <tag>binary tree</tag>
+      
+      <tag>DFS</tag>
       
       <tag>search，graph，sort</tag>
       
