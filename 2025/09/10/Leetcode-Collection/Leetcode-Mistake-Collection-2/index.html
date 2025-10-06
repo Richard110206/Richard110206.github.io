@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Leetcode-Mistake-Collection.png?raw=true">
 <meta property="article:published_time" content="2025-09-10T04:47:08.000Z">
-<meta property="article:modified_time" content="2025-10-06T15:49:20.190Z">
+<meta property="article:modified_time" content="2025-10-06T16:09:58.806Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="updating">
 <meta property="article:tag" content="Leetcode">
@@ -304,7 +304,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k words
+          1.7k words
         
       </span>
     
@@ -315,7 +315,7 @@
         
         
         
-          13 mins
+          15 mins
         
       </span>
     
@@ -498,6 +498,8 @@ $$f(i)=max(f(i-1)+nums[i],nums[i])$$</p>
       </div>
     </div>
 <h4 id="方法一：暴力-2-0">方法一：暴力 2.0</h4>
+<p>考虑到正向暴力解法中，每个天数都需要<strong>遍历其后面的所有数字</strong>，时间复杂度过高；而题给温度在$[30,100]$范围内，我们不妨维护一个数组<code>posttem</code>初始化为<code>INT_MAX</code>，对数组从后向前遍历，在遍历过程中更新<strong>每个温度出现的最早索引</strong>。</p>
+<p>反向遍历温度列表。对于每个元素<code>temperatures[i]</code>，在数组<code>posttem</code>中找到从<code>temperatures[i] + 1</code>到<code>100</code>中每个温度第一次出现的下标，将其中的最小下标记为<code>warmer</code>，则<code>warmer</code>为下一次温度比当天高的下标。如果<code>warmer</code>不为无穷大，则<code>warmer - i</code>即为下一次温度比当天高的等待天数，最后更新令<code>posttem[temperatures[i]] = i</code>。</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dailyTemperatures</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; temperatures)</span> </span>{<br>        <span class="hljs-type">int</span> n=temperatures.<span class="hljs-built_in">size</span>();<br>        vector &lt;<span class="hljs-type">int</span>&gt; <span class="hljs-built_in">posttem</span>(<span class="hljs-number">101</span>,INT_MAX);<br>        vector &lt;<span class="hljs-type">int</span>&gt; <span class="hljs-built_in">ans</span>(n);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=n<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">0</span>;i--){<br>            <span class="hljs-type">int</span> warmer=INT_MAX;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=temperatures[i]<span class="hljs-number">+1</span>;j&lt;=<span class="hljs-number">100</span>;j++){<br>                warmer=<span class="hljs-built_in">min</span>(warmer,posttem[j]);<br>            }<br>            <span class="hljs-keyword">if</span>(warmer!=INT_MAX){<br>                ans[i]=warmer-i;<br>            }<br>            posttem[temperatures[i]]=i;<br>        }<br>        <span class="hljs-keyword">return</span> ans;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
 <h4 id="方法二：单调栈">方法二：单调栈</h4>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dailyTemperatures</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; temperatures)</span> </span>{<br>        <span class="hljs-type">int</span> n=temperatures.<span class="hljs-built_in">size</span>();<br>        stack &lt;<span class="hljs-type">int</span>&gt; st;<br>        vector &lt;<span class="hljs-type">int</span>&gt; <span class="hljs-built_in">ans</span>(n);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){<br>            <span class="hljs-keyword">while</span>(!st.<span class="hljs-built_in">empty</span>()&amp;&amp;temperatures[i]&gt;temperatures[st.<span class="hljs-built_in">top</span>()]){<br>                <span class="hljs-type">int</span> pre=st.<span class="hljs-built_in">top</span>();<br>                ans[pre]=i-pre;<br>                st.<span class="hljs-built_in">pop</span>();<br>            }<br>            st.<span class="hljs-built_in">push</span>(i);<br>        }<br>        <span class="hljs-keyword">return</span> ans;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
@@ -567,7 +569,7 @@ $$f(i)=max(f(i-1)+nums[i],nums[i])$$</p>
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>October 6, 2025</div>
+          <div>October 7, 2025</div>
         </div>
       
       
