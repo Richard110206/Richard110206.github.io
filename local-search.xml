@@ -477,9 +477,9 @@
       
       <tag>updating</tag>
       
-      <tag>queue</tag>
-      
       <tag>stack</tag>
+      
+      <tag>queue</tag>
       
       <tag>datastructure</tag>
       
@@ -945,9 +945,9 @@
       
       <tag>sort</tag>
       
-      <tag>queue</tag>
-      
       <tag>hashtable</tag>
+      
+      <tag>queue</tag>
       
     </tags>
     
@@ -974,9 +974,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>huffman tree</tag>
-      
       <tag>queue</tag>
+      
+      <tag>huffman tree</tag>
       
       <tag>Dijkstra</tag>
       
