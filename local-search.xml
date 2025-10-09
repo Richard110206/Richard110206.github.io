@@ -822,9 +822,9 @@
       
       <tag>updating</tag>
       
-      <tag>OOP</tag>
-      
       <tag>CPP</tag>
+      
+      <tag>OOP</tag>
       
     </tags>
     
@@ -945,9 +945,9 @@
       
       <tag>sort</tag>
       
-      <tag>hashtable</tag>
-      
       <tag>queue</tag>
+      
+      <tag>hashtable</tag>
       
     </tags>
     
@@ -974,9 +974,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>queue</tag>
-      
       <tag>huffman tree</tag>
+      
+      <tag>queue</tag>
       
       <tag>Dijkstra</tag>
       
