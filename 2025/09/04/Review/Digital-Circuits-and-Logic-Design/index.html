@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable2.png?raw=true">
 <meta property="article:published_time" content="2025-09-04T04:58:09.000Z">
-<meta property="article:modified_time" content="2025-10-10T04:15:37.812Z">
+<meta property="article:modified_time" content="2025-10-10T12:17:45.155Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true">
@@ -436,15 +436,15 @@
               <div class="markdown-body">
                 
                 <h2 id="一、数制与编码">一、数制与编码</h2>
-<h3 id="整数十进制转换：除X倒取余法">整数十进制转换：除X倒取余法</h3>
+<h4 id="整数十进制转换：除X倒取余法">整数十进制转换：除X倒取余法</h4>
 <p>十进制整数 N 可表示为 X 进制的幂次和形式：<br>
 $$N = a_{n} \times X^n + a_{n-1} \times X^{n-1} + … + a_{1} \times X^1 + a_{0} \times X^0$$通过 “除 X 取余”，可依次求出最低位，再 “倒取余” 得到最终结果。</p>
-<h3 id="小数十进制转换：乘X顺取整法">小数十进制转换：乘X顺取整法</h3>
+<h4 id="小数十进制转换：乘X顺取整法">小数十进制转换：乘X顺取整法</h4>
 <p>十进制小数 M（0&lt;M&lt;1）可表示为 X 进制的负幂次和形式：<br>
 $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} + …$$通过 “乘 X 取整”，可依次求出小数点后第一位，再 “顺取整” 得到 X 进制小数。</p>
-<h3 id="原码">原码</h3>
+<h4 id="原码">原码</h4>
 <p>在最高位补0或1表示正负，0为正，1为负。</p>
-<h3 id="反码">反码</h3>
+<h4 id="反码">反码</h4>
 <ul>
 <li>对于正数，反码与原码相同</li>
 <li>对于负数，反码为原码<strong>除符号位外按位取反</strong></li>
@@ -453,7 +453,7 @@ $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} +
             <p>在反码表示法中，0的表示方法不是唯一的</p>
           </div>
 <p>反码表示法的优点是在进行加减运算时<strong>不需要判断两数的符号是否相同</strong>，只要先求出两数的反码然后相加即可（<strong>符号位也参与运算</strong>，当符号位产生进位时，需要<strong>循环进位</strong>，即把符号位的进位加到和的最低位上去），比原码运算要简单的多。</p>
-<h3 id="补码">补码</h3>
+<h4 id="补码">补码</h4>
 <ul>
 <li>对于正数，补码与原码相同</li>
 <li>对于负数，补码为原码<strong>除符号位外按位取反</strong>，再在<strong>最低位加一</strong>（<strong>补码+1</strong>）</li>
@@ -503,6 +503,17 @@ $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} +
 <li>输入波形要<strong>穷举所用可能的输入</strong></li>
 <li>输出波形与输入波形<strong>一一对应</strong></li>
 </ol>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-4f3d470a" role="button" aria-expanded="false" aria-controls="collapse-4f3d470a">
+        <div class="fold-arrow">▶</div>根据波形图求解表达式
+      </div>
+      <div class="fold-collapse collapse" id="collapse-4f3d470a">
+        <div class="fold-content">
+          <p>根据<strong>输出波形为真值</strong>的输入组合，写出逻辑式（类似于 Y=AB+A’B)</p>
+        </div>
+      </div>
+    </div>
 <h4 id="对偶规则（求对偶函数）">对偶规则（求对偶函数）</h4>
 <div class="note note-info">
             <ul><li>将其中的所有 “<strong>与</strong>”运算（·） 和 “<strong>或</strong>”运算（+） <strong>互换</strong></li><li>将所有的常量 <strong>“0” 和 “1” 互换</strong></li><li><strong>变量保持不变</strong></li></ul>
