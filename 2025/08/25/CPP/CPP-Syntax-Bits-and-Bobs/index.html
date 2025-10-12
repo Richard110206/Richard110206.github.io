@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/CPPmemo.png?raw=true">
 <meta property="article:published_time" content="2025-08-25T02:56:48.000Z">
-<meta property="article:modified_time" content="2025-10-01T05:34:04.987Z">
+<meta property="article:modified_time" content="2025-10-12T03:58:35.496Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="CPP">
 <meta property="article:tag" content="syntax">
@@ -305,7 +305,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k words
+          1.4k words
         
       </span>
     
@@ -316,7 +316,7 @@
         
         
         
-          11 mins
+          12 mins
         
       </span>
     
@@ -563,8 +563,24 @@
 <p>通常求得最大公约数后通过<strong>公式</strong>实现：<br>
 $$ LCM(a, b) = \frac{(a × b)}{GCD(a, b)}$$</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lcm</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> </span>{<br>    <span class="hljs-keyword">return</span> (a / <span class="hljs-built_in">gcd</span>(a, b)) * b;<br>}<br></code></pre></td></tr></tbody></table></figure>
-<h2 id="V">(V)</h2>
+<h2 id="map容器">map容器</h2>
+<ul>
+<li><code>map</code>容器：内部<strong>有序</strong>（默认为升序）存储键值对</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">map&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt; ans;<br></code></pre></td></tr></tbody></table></figure>
+<p>手动转换为降序</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">map&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>,greater&lt;<span class="hljs-type">int</span>&gt;&gt; ans;<br></code></pre></td></tr></tbody></table></figure>
 
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-0758943f" role="button" aria-expanded="false" aria-controls="collapse-0758943f">
+        <div class="fold-arrow">▶</div>Leetcode 506.相对名次
+      </div>
+      <div class="fold-collapse collapse" id="collapse-0758943f">
+        <div class="fold-content">
+          <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/relative-ranks?envType=problem-list-v2&amp;envId=heap-priority-queue">原题链接</a></p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;string&gt; <span class="hljs-title">findRelativeRanks</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; score)</span> </span>{<br>        <span class="hljs-type">int</span> n=score.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-function">vector&lt;string&gt; <span class="hljs-title">ans</span><span class="hljs-params">(n)</span></span>;<br>        map&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>,greater&lt;<span class="hljs-type">int</span>&gt;&gt; order;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){<br>            order[score[i]]=i;<br>        }<br>        <span class="hljs-keyword">auto</span> it=order.<span class="hljs-built_in">begin</span>();<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){<br>            <span class="hljs-keyword">if</span>(i==<span class="hljs-number">0</span>){<br>                ans[(*it).second]=<span class="hljs-string">"Gold Medal"</span>;<br>            }<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(i==<span class="hljs-number">1</span>){<br>                ans[(*it).second]=<span class="hljs-string">"Silver Medal"</span>;<br>            }<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(i==<span class="hljs-number">2</span>){<br>                ans[(*it).second]=<span class="hljs-string">"Bronze Medal"</span>;<br>            }<br>            <span class="hljs-keyword">else</span>  ans[(*it).second]=<span class="hljs-built_in">to_string</span>(i<span class="hljs-number">+1</span>);<br>            it++;<br>        }<br>        <span class="hljs-keyword">return</span> ans;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
                 
               </div>
             
@@ -632,7 +648,7 @@ $$ LCM(a, b) = \frac{(a × b)}{GCD(a, b)}$$</p>
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>October 1, 2025</div>
+          <div>October 12, 2025</div>
         </div>
       
       
