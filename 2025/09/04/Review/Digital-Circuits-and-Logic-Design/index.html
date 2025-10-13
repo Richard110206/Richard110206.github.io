@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable2.png?raw=true">
 <meta property="article:published_time" content="2025-09-04T04:58:09.000Z">
-<meta property="article:modified_time" content="2025-10-13T09:37:15.483Z">
+<meta property="article:modified_time" content="2025-10-13T11:23:43.449Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true">
@@ -303,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k words
+          2.6k words
         
       </span>
     
@@ -314,7 +314,7 @@
         
         
         
-          21 mins
+          22 mins
         
       </span>
     
@@ -706,133 +706,285 @@ $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} +
 <p>流程也可以是反过来：绘制逻辑电路图示先画输出变量的原变量和反变量共同输出的结构</p>
 <h3 id="编码器">编码器</h3>
 <h4 id="抢答器">抢答器</h4>
-<table border="1" style="border-collapse: collapse; margin: 0 auto;">
-  <tbody><tr>
-    <td colspan="8" style="text-align: center; padding: 8px;">输入</td>
-    <td colspan="3" style="text-align: center; padding: 8px;">输出</td>
-  </tr>
-  <tr>
-    <td style="text-align: center; padding: 8px;">$I_0$</td>
-    <td style="text-align: center; padding: 8px;">$I_1$</td>
-    <td style="text-align: center; padding: 8px;">$I_2$</td>
-    <td style="text-align: center; padding: 8px;">$I_3$</td>
-    <td style="text-align: center; padding: 8px;">$I_4$</td>
-    <td style="text-align: center; padding: 8px;">$I_5$</td>
-    <td style="text-align: center; padding: 8px;">$I_6$</td>
-    <td style="text-align: center; padding: 8px;">$I_7$</td>
-    <td style="text-align: center; padding: 8px;">$Y_2$</td>
-    <td style="text-align: center; padding: 8px;">$Y_1$</td>
-    <td style="text-align: center; padding: 8px;">$Y_0$</td>
-  </tr>
-  <tr>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-  </tr>
-  <tr>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-  </tr>
-  <tr>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-  </tr>
-  <tr>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-  </tr>
-  <tr>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-  </tr>
-  <tr>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-  </tr>
-  <tr>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-  </tr>
-  <tr>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">0</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-    <td style="text-align: center; padding: 8px;">1</td>
-  </tr>
-</tbody></table>
-<p><strong>普通编码器</strong><br>
-<strong>优先编码器</strong><br>
-译码器 多输入多输出 有效（高低电平均可）</p>
-<p>使能端 是芯片的一个输入引脚，或者电路的一个输入端口。只有该引脚被激活，芯片或电路才能工作。通常情况下，使能端为高电平有效，若符号上面有一横，则表示低电平有效。</p>
+<p><strong>普通编码器</strong>：任何时刻只有一个输入信号</p>
+<div style="width: 100%; overflow: auto;">
+    <table style="width: 100%;">
+        <tbody><tr>
+            <td style="text-align: center;" colspan="8">输入</td>
+            <td style="text-align: center;" colspan="3">输出</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">$I_0$</td>
+            <td style="text-align: center;">$I_1$</td>
+            <td style="text-align: center;">$I_2$</td>
+            <td style="text-align: center;">$I_3$</td>
+            <td style="text-align: center;">$I_4$</td>
+            <td style="text-align: center;">$I_5$</td>
+            <td style="text-align: center;">$I_6$</td>
+            <td style="text-align: center;">$I_7$</td>
+            <td style="text-align: center;">$Y_2$</td>
+            <td style="text-align: center;">$Y_1$</td>
+            <td style="text-align: center;">$Y_0$</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">0</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">1</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">0</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">0</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">1</td>
+            <td style="text-align: center;">1</td>
+        </tr>
+    </tbody></table>
+</div>
+<p><strong>优先编码器</strong>：允许同时输入两个以上的信号，但只对其中优先权更高的进行编码</p>
+<div class="note note-danger">
+            <p>注意优先编码器均<strong>使用反变量</strong>作为输入和输出，并且输入<strong>0为有效输入</strong>，<strong>1为无效输入</strong></p>
+          </div>
+<div style="width: 100%; overflow: auto;">
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th style="text-align: center;" colspan="8">输 入</th>
+                <th style="text-align: center;" colspan="3">输 出</th>
+            </tr>
+            <tr>
+                <th style="text-align: center;">$I_0'$</th>
+                <th style="text-align: center;">$I_1'$</th>
+                <th style="text-align: center;">$I_2'$</th>
+                <th style="text-align: center;">$I_3'$</th>
+                <th style="text-align: center;">$I_4'$</th>
+                <th style="text-align: center;">$I_5'$</th>
+                <th style="text-align: center;">$I_6'$</th>
+                <th style="text-align: center;">$I_7'$</th>
+                <th style="text-align: center;">$Y_2'$</th>
+                <th style="text-align: center;">$Y_1'$</th>
+                <th style="text-align: center;">$Y_0'$</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center; color: red;">0</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center; color: red;">0</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">0</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center; color: red;">0</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">0</td>
+                <td style="text-align: center;">1</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center; color: red;">0</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">0</td>
+                <td style="text-align: center;">0</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center; color: red;">0</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">0</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center; color: red;">0</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">0</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">0</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">×</td>
+                <td style="text-align: center; color: red;">0</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">0</td>
+                <td style="text-align: center;">0</td>
+                <td style="text-align: center;">1</td>
+            </tr>
+            <tr>
+                <td style="text-align: center; color: red;">0</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">0</td>
+                <td style="text-align: center;">0</td>
+                <td style="text-align: center;">0</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="note note-danger">
+            <p>输入数越高<strong>优先级越大</strong></p>
+          </div>
+<div class="note note-info">
+            <p>实例：74HC148，电路原件中圆圈表示低电平有效</p>
+          </div>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-61f80797" role="button" aria-expanded="false" aria-controls="collapse-61f80797">
+        <div class="fold-arrow">▶</div>如何寻找芯片的 1 引脚？
+      </div>
+      <div class="fold-collapse collapse" id="collapse-61f80797">
+        <div class="fold-content">
+          <p>将芯片<strong>缺口放在左边</strong>，左下角第一个为1号引脚，<strong>逆时针方向旋转</strong>计数引脚依次增大</p>
+        </div>
+      </div>
+    </div>
+<p>一位数值比较器</p>
+<p>译码器 多输入多输出 有效（高低电平均可）<br>
+使能端 是芯片的一个输入引脚，或者电路的一个输入端口。只有该引脚被激活，芯片或电路才能工作。通常情况下，使能端为高电平有效，若符号上面有一横，则表示低电平有效。</p>
 <p>两片3/8译码器组合为4/16译码器<br>
 一个芯片工作，通过使能端禁止另一个芯片工作，一个连接高电平有效，一个低电平有效</p>
 <p>数据选择器/多路开关<br>
@@ -840,10 +992,7 @@ $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} +
 数据选择（输入）端 相当于遥控器 A表示<br>
 数据输出端</p>
 <p>74LS85芯片<br>
-比较器<br>
-如何寻找芯片的 1 引脚？<br>
-将芯片缺口放在左边，左下角第一个为1号引脚，逆时针旋转计数引脚依次增大<br>
-一位数值比较器</p>
+比较器</p>
 
                 
               </div>
