@@ -19,15 +19,15 @@
   <meta name="author" content="Li Qinxuan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="本文将会记录我本地部署大模型并进行 API 接口开发的全流程！ 项目Repo Reference Learn Ollama in 15 Minutes - Run LLM Models Locally for FREE  从官方网站下载安装 Ollama，mac用户可以使用命令行进行安装：  1brew install ollama 安装完成后可以在本地拉取所需的大语言模型：（这里使用的是mist">
+    <meta name="description" content="本文将会记录我本地部署大模型并进行 API 接口开发的全流程！ 项目Repo Reference Learn Ollama in 15 Minutes - Run LLM Models Locally for FREE  从官方网站下载安装 Ollama，mac用户可以使用命令行进行安装：  1brew install ollama  安装完成后可以在本地拉取所需的大语言模型：（其余模型可以在官网">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ollama API For Python">
 <meta property="og:url" content="http://example.com/2025/10/18/Python/Ollama-API-For-Python/index.html">
 <meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
-<meta property="og:description" content="本文将会记录我本地部署大模型并进行 API 接口开发的全流程！ 项目Repo Reference Learn Ollama in 15 Minutes - Run LLM Models Locally for FREE  从官方网站下载安装 Ollama，mac用户可以使用命令行进行安装：  1brew install ollama 安装完成后可以在本地拉取所需的大语言模型：（这里使用的是mist">
+<meta property="og:description" content="本文将会记录我本地部署大模型并进行 API 接口开发的全流程！ 项目Repo Reference Learn Ollama in 15 Minutes - Run LLM Models Locally for FREE  从官方网站下载安装 Ollama，mac用户可以使用命令行进行安装：  1brew install ollama  安装完成后可以在本地拉取所需的大语言模型：（其余模型可以在官网">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-10-18T01:01:10.000Z">
-<meta property="article:modified_time" content="2025-10-18T03:21:34.424Z">
+<meta property="article:modified_time" content="2025-10-18T05:13:53.065Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -300,7 +300,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          553 words
+          896 words
         
       </span>
     
@@ -311,7 +311,7 @@
         
         
         
-          5 mins
+          8 mins
         
       </span>
     
@@ -476,84 +476,28 @@
 <li>从官方网站下载安装 <a target="_blank" rel="noopener" href="https://ollama.com/">Ollama</a>，mac用户可以使用命令行进行安装：</li>
 </ol>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">brew install ollama<br></code></pre></td></tr></tbody></table></figure>
-<p>安装完成后可以在本地拉取所需的大语言模型：（这里使用的是<code>mistral</code>，其余模型可以在官网上找到）</p>
+<ol start="2">
+<li>安装完成后可以在本地拉取所需的大语言模型：（其余模型可以在官网上找到）</li>
+</ol>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ollama run mistral<br></code></pre></td></tr></tbody></table></figure>
 <p>看到<code>&lt;&lt;</code>的标志说明部署成功，可以与本地大模型进行对话了！</p>
-<p>我们也可以根据自己的需求对大模型进行自定义：<br>
-编写<code>Modelfile</code>文件，自定义大模型的参数：</p>
+<p>我们也可以根据自己的需求对大模型进行自定义，编写<code>Modelfile</code>文件，定义大模型的参数：</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs Modelfile">FROM mistral<br><br>PARAMETER temperature 1<br><br>SYSTEM """<br>You are a student from Nanjing No.13 senior high school,and is fully prepared for Gaokao.<br>"""<br></code></pre></td></tr></tbody></table></figure>
-<ul>
-<li><code>FROM &lt;模型名&gt;</code>：指定基础模型（<strong>预训练模型</strong>或<strong>微调后的模型</strong>）（<code>.gguf</code>格式）
-<ul>
-<li><code>FROM llama2-7b</code>（基于 Llama 2 的 70 亿参数模型）</li>
-<li><code>FROM ./my_finetuned_model.gguf</code>（本地微调后的模型文件）</li>
-</ul>
-</li>
-</ul>
 <div class="note note-info">
-            <p><code>.gguf</code>是一种开源的大语言模型的文件格式</p>
+            <ul><li><p><code>FROM &lt;模型名&gt;</code>：指定基础模型（<strong>预训练模型</strong>或<strong>微调后的模型</strong>）（<code>.gguf</code>格式）</p><ul><li><code>FROM llama2-7b</code>（基于 Llama 2 的 70 亿参数模型）</li><li><code>FROM ./my_finetuned_model.gguf</code>（本地微调后的模型文件）</li></ul></li></ul><div class="note note-info">            <p><code>.gguf</code>是一种开源的大语言模型的文件格式</p>          </div><ul><li><code>PARAMETER &lt;参数名&gt; &lt;参数值&gt;</code>：指定模型参数</li></ul><table><thead><tr><th style="text-align:center">参数名</th><th style="text-align:center">作用</th><th style="text-align:center">常见取值范围 / 示例</th></tr></thead><tbody><tr><td style="text-align:center"><code>temperature</code></td><td style="text-align:center">控制输出随机性（值越高越随机，越低越确定）</td><td style="text-align:center">0~2（例如：0.3（严谨）、1.5（发散））</td></tr><tr><td style="text-align:center"><code>top_k</code></td><td style="text-align:center">生成时仅从概率最高的k个词中选择（限制候选词范围）</td><td style="text-align:center">1~100（例如：50、10（更集中））</td></tr><tr><td style="text-align:center"><code>top_p</code>（核采样）</td><td style="text-align:center">从累计概率超过p的词中随机选择（动态调整候选词数量）</td><td style="text-align:center">0~1（例如：0.9（常用）、0.5（更严格））</td></tr><tr><td style="text-align:center"><code>max_tokens</code></td><td style="text-align:center">限制生成的最大 token 数（避免输出过长）</td><td style="text-align:center">整数（例如：512、1024）</td></tr><tr><td style="text-align:center"><code>stop</code></td><td style="text-align:center">定义终止符（遇到该字符时停止生成）</td><td style="text-align:center">字符串（例如：stop: “###”、stop: “\n”）</td></tr><tr><td style="text-align:center"><code>repeat_penalty</code></td><td style="text-align:center">惩罚重复内容（值越高，越避免重复）</td><td style="text-align:center">1~2（例如：1.2（轻微惩罚）、1.8（严格））</td></tr><tr><td style="text-align:center"><code>presence_penalty</code></td><td style="text-align:center">惩罚已出现过的主题（鼓励新内容）</td><td style="text-align:center">-2~2（例如：0.5、-0.5（允许重复））</td></tr><tr><td style="text-align:center"><code>frequency_penalty</code></td><td style="text-align:center">惩罚高频出现的词（减少冗余词汇）</td><td style="text-align:center">-2~2（例如：0.3）</td></tr></tbody></table><ul><li><code>SYSTEM "&lt;提示词&gt;"</code>：定义模型的角色、行为规则或背景信息（引导模型生成符合设定的回复）。</li></ul>
           </div>
-<ul>
-<li><code>PARAMETER &lt;参数名&gt; &lt;参数值&gt;</code>：指定模型参数</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">参数名</th>
-<th style="text-align:center">作用</th>
-<th style="text-align:center">常见取值范围 / 示例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>temperature</code></td>
-<td style="text-align:center">控制输出随机性（值越高越随机，越低越确定）</td>
-<td style="text-align:center">0~2（例如：0.3（严谨）、1.5（发散））</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>top_k</code></td>
-<td style="text-align:center">生成时仅从概率最高的k个词中选择（限制候选词范围）</td>
-<td style="text-align:center">1~100（例如：50、10（更集中））</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>top_p</code>（核采样）</td>
-<td style="text-align:center">从累计概率超过p的词中随机选择（动态调整候选词数量）</td>
-<td style="text-align:center">0~1（例如：0.9（常用）、0.5（更严格））</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>max_tokens</code></td>
-<td style="text-align:center">限制生成的最大 token 数（避免输出过长）</td>
-<td style="text-align:center">整数（例如：512、1024）</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>stop</code></td>
-<td style="text-align:center">定义终止符（遇到该字符时停止生成）</td>
-<td style="text-align:center">字符串（例如：stop: “###”、stop: “\n”）</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>repeat_penalty</code></td>
-<td style="text-align:center">惩罚重复内容（值越高，越避免重复）</td>
-<td style="text-align:center">1~2（例如：1.2（轻微惩罚）、1.8（严格））</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>presence_penalty</code></td>
-<td style="text-align:center">惩罚已出现过的主题（鼓励新内容）</td>
-<td style="text-align:center">-2~2（例如：0.5、-0.5（允许重复））</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>frequency_penalty</code></td>
-<td style="text-align:center">惩罚高频出现的词（减少冗余词汇）</td>
-<td style="text-align:center">-2~2（例如：0.3）</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><code>SYSTEM "&lt;提示词&gt;"</code>：定义模型的角色、行为规则或背景信息（引导模型生成符合设定的回复）。</li>
-</ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ollama create mario -f ./Modelfile<br></code></pre></td></tr></tbody></table></figure>
+<p>根据自己需求修改好<code>Modelfile</code>文件后，就可以创建自定义模型了：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ollama create student -f ./Modelfile<br></code></pre></td></tr></tbody></table></figure>
+<p><code>ollama create &lt;模型名&gt; -f &lt;配置文件名&gt;</code>：根据模型名运行</p>
+<h4 id="Reference-v2">Reference</h4>
 <p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=cy6EAp4iNN4">How To Build an API with Python (LLM Integration, FastAPI, Ollama &amp; More)</a></p>
+<p>完成项目依赖文档<code>requirements.txt</code>，并完成必要库的安装：</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs requirements.txt">fastapi<br>uvicorn # 用于运行fastapi应用<br>ollama # 使用本地LLM<br>python-dotenv # 用于加载环境变量<br>requests # 用于测试API<br></code></pre></td></tr></tbody></table></figure>
-
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install -r requirements.txt<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <h3 id="About-requirements">About  requirements</h3><p><code>requirements.txt</code> 是一个包含 Python 包依赖关系的文件，避免因依赖版本不兼容而出现 <strong>“It works on my machine”</strong> 的问题。</p><h4 id="什么时候使用？">什么时候使用？</h4><ul><li><strong>项目协作</strong>：其他开发者拿到项目后，通过该文件可快速安装所需依赖，无需手动逐个查找库名和版本。</li><li><strong>部署项目</strong>：在服务器、容器（如 Docker）或云平台上部署时，通过该文件一键安装依赖，保证环境一致性。</li></ul><h4 id="如何编写、运行？">如何编写、运行？</h4><p>包含库名和版本号<code>基础格式：库名==版本号</code>：</p><figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs txt">requests==2.31.0<br>numpy==1.26.0<br>pandas&gt;=2.0.0  # 也支持&gt;=、&lt;=等模糊版本约束（但推荐精确版本）<br>flask==2.3.3<br></code></pre></td></tr></tbody></table></figure><p>在终端中进入 <code>requirements.txt</code> 所在目录，运行：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install -r requirements.txt<br></code></pre></td></tr></tbody></table></figure><div class="note note-danger">            <p>非 Python 生态的依赖无法直接通过它管理</p>          </div>
+          </div>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># main.py</span><br><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI, Depends, HTTPException, Header<br><span class="hljs-keyword">import</span> ollama<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">from</span> dotenv <span class="hljs-keyword">import</span> load_dotenv  <span class="hljs-comment"># 修正导入语法</span><br><br>load_dotenv()<br><br>API_KEY_CREDITS = {os.getenv(<span class="hljs-string">"API_KEY"</span>): <span class="hljs-number">10</span>}<br><br>app = FastAPI()<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">verify_api_key</span>(<span class="hljs-params">x_api_key: <span class="hljs-built_in">str</span> = Header(<span class="hljs-params"><span class="hljs-literal">None</span></span>)</span>):  <span class="hljs-comment"># 修正括号和参数语法</span><br>    credits = API_KEY_CREDITS.get(x_api_key, <span class="hljs-number">0</span>)  <span class="hljs-comment"># 修正括号位置</span><br>    <span class="hljs-keyword">if</span> credits &lt;= <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">raise</span> HTTPException(status_code=<span class="hljs-number">401</span>, detail=<span class="hljs-string">"Invalid API Key, or no credits"</span>)<br>    <span class="hljs-keyword">return</span> x_api_key<br><br><span class="hljs-meta">@app.post(<span class="hljs-params"><span class="hljs-string">"/generate"</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">generate</span>(<span class="hljs-params">prompt: <span class="hljs-built_in">str</span>, x_api_key: <span class="hljs-built_in">str</span> = Depends(<span class="hljs-params">verify_api_key</span>)</span>):<br>    API_KEY_CREDITS[x_api_key] -= <span class="hljs-number">1</span><br>    response = ollama.chat(<br>        model=<span class="hljs-string">"mistral"</span>,<br>        messages=[{<span class="hljs-string">"role"</span>: <span class="hljs-string">"user"</span>, <span class="hljs-string">"content"</span>: prompt}]<br>    )<br>    <span class="hljs-keyword">return</span> {<span class="hljs-string">"response"</span>: response[<span class="hljs-string">"message"</span>][<span class="hljs-string">"content"</span>]}<br></code></pre></td></tr></tbody></table></figure>
                 
               </div>
             
