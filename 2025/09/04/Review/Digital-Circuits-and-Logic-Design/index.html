@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable2.png?raw=true">
 <meta property="article:published_time" content="2025-09-04T04:58:09.000Z">
-<meta property="article:modified_time" content="2025-10-19T08:58:57.288Z">
+<meta property="article:modified_time" content="2025-10-22T15:31:54.762Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true">
@@ -303,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k words
+          2.8k words
         
       </span>
     
@@ -314,7 +314,7 @@
         
         
         
-          23 mins
+          24 mins
         
       </span>
     
@@ -1136,8 +1136,89 @@ $$Y_0=I_1+I_3+I_5+I_7$$
     </div>
 <h3 id="显示译码器">显示译码器</h3>
 <h4 id="七段字符显示器">七段字符显示器</h4>
-<p>四位二进制数（0000-1001）<br>
-多输入多输出 有效（高低电平均可）</p>
+<p>四位二进制数（0000-1001）</p>
+<h3 id="数据选择器">数据选择器</h3>
+<p>多输入多输出 有效（高低电平均可）</p>
+<div style="width: 100%; overflow: auto;">
+    <table style="width: 100%;">
+    <tbody><tr>
+      <th style="text-align: center;">A</th>
+      <th style="text-align: center;">D₁</th>
+      <th style="text-align: center;">D₀</th>
+      <th style="text-align: center;">Y</th>
+    </tr>
+  
+  </tbody><tbody>
+    <tr>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">1</td>
+      <td style="text-align: center;">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">1</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">1</td>
+      <td style="text-align: center;">1</td>
+      <td style="text-align: center;">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">1</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">1</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">1</td>
+      <td style="text-align: center;">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">1</td>
+      <td style="text-align: center;">1</td>
+      <td style="text-align: center;">0</td>
+      <td style="text-align: center;">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">1</td>
+      <td style="text-align: center;">1</td>
+      <td style="text-align: center;">1</td>
+      <td style="text-align: center;">1</td>
+        </tr>
+    </tbody></table>
+</div>
+<p>二选一：<br>
+$$ Y=D_0 A’+D_1A$$<br>
+四选一：<br>
+$$ Y = S\left( D_0 (\overline{A_1} \overline{A_0}) + D_1 (\overline{A_1} A_0) + D_2 (A_1 \overline{A_0}) + D_3 (A_1 A_0) \right)$$<br>
+$ S $: 控制输入端（若低电平有效可直接接地）</p>
+<h4 id="三人表决器">三人表决器</h4>
+<ul>
+<li>
+<p>一般问题：多数同意为通过</p>
+</li>
+<li>
+<p>重要问题：全部同意为通过</p>
+</li>
+<li>
+<p>输入变量：P(1号)、 Q（2号）、R（3号）、T（问题类型）</p>
+</li>
+<li>
+<p>输出变量：Z（表决结果）</p>
+</li>
+</ul>
 <p>一位数值比较器</p>
 <p>两片3/8译码器组合为4/16译码器<br>
 一个芯片工作，通过使能端禁止另一个芯片工作，一个连接高电平有效，一个低电平有效</p>
@@ -1204,7 +1285,7 @@ $$Y_0=I_1+I_3+I_5+I_7$$
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>October 19, 2025</div>
+          <div>October 22, 2025</div>
         </div>
       
       
