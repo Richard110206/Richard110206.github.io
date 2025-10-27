@@ -19,15 +19,15 @@
   <meta name="author" content="Li Qinxuan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="DockerHub dockerfile-&gt;dockerimage(如何正确设置容器的说明，存储在注册表中）-&gt;dockercontainer 出现拉取requests时候超时的问题： 1&#x3D;&gt; CANCELED [4&#x2F;4] RUN pip3 install -r requirements.txt                 101.2s 在 Dockerfile 中配置全局镜">
+    <meta name="description" content="Anaconda 环境管理  conda env list或conda info --envs :查看所有已创建的环境（当前活动的环境会用一个星号 (*) 标出）  123456(base) richard@RicharddeMacBook-Air ~ % conda env list# conda environments:#base                  *  &#x2F;Users&#x2F;ric">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker Tutorial">
 <meta property="og:url" content="http://example.com/2025/10/18/Tutorial/Docker-Tutorial/index.html">
 <meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
-<meta property="og:description" content="DockerHub dockerfile-&gt;dockerimage(如何正确设置容器的说明，存储在注册表中）-&gt;dockercontainer 出现拉取requests时候超时的问题： 1&#x3D;&gt; CANCELED [4&#x2F;4] RUN pip3 install -r requirements.txt                 101.2s 在 Dockerfile 中配置全局镜">
+<meta property="og:description" content="Anaconda 环境管理  conda env list或conda info --envs :查看所有已创建的环境（当前活动的环境会用一个星号 (*) 标出）  123456(base) richard@RicharddeMacBook-Air ~ % conda env list# conda environments:#base                  *  &#x2F;Users&#x2F;ric">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-10-18T01:01:25.000Z">
-<meta property="article:modified_time" content="2025-10-18T01:31:01.901Z">
+<meta property="article:modified_time" content="2025-10-27T02:42:47.937Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -300,7 +300,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          252 words
+          914 words
         
       </span>
     
@@ -311,7 +311,7 @@
         
         
         
-          3 mins
+          8 mins
         
       </span>
     
@@ -495,7 +495,68 @@
             
               <div class="markdown-body">
                 
-                <p><a target="_blank" rel="noopener" href="https://hub.docker.com/repositories/richard110206">DockerHub</a></p>
+                <h2 id="Anaconda">Anaconda</h2>
+<h3 id="环境管理">环境管理</h3>
+<ul>
+<li><code>conda env list</code>或<code>conda info --envs</code> :查看所有已创建的环境（当前活动的环境会用一个星号 (*) 标出）</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda <span class="hljs-built_in">env</span> list<br><span class="hljs-comment"># conda environments:</span><br><span class="hljs-comment">#</span><br>base                  *  /Users/richard/anaconda3<br>hexo-rag                 /Users/richard/anaconda3/envs/hexo-rag<br>yolov11-env              /Users/richard/anaconda3/envs/yolov11-<span class="hljs-built_in">env</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>conda create -n &lt;env_name&gt; python=&lt;python_version&gt; package1 package2 ...</code> :创建一个环境，指定Python版本和要安装的包</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda create -n my_env python=3.12 pandas numpy<br><span class="hljs-comment"># 创建名为 my_env 的环境，指定python版本为3.12，并安装 pandas 和 numpy 包</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>conda activate &lt;env_name&gt;</code> :激活一个环境（在行首显示当前环境名称）</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda activate my_env<br>(my_env) richard@RicharddeMacBook-Air ~ % <br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>conda deactivate</code> :退出当前环境</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">(my_env) richard@RicharddeMacBook-Air ~ % conda deactivate<br>(base) richard@RicharddeMacBook-Air ~ % conda deactivate<br>richard@RicharddeMacBook-Air ~ % <br><span class="hljs-comment"># 可以退回到系统初始环境</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>conda create -n &lt;new_env&gt; --clone &lt;env_name&gt;</code> :克隆一个环境（创建一个新环境，包含与源环境相同的所有包和配置）</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda create -n new_env --<span class="hljs-built_in">clone</span> my_env<br>Source:      /Users/richard/anaconda3/envs/my-env<br>Destination: /Users/richard/anaconda3/envs/new_env<br>Packages: 31<br>Files: 1<br><span class="hljs-comment"># 创建一个名为 new_env 的环境，包含与 my_env 环境相同的所有包和配置</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>conda remove -n &lt;env_name&gt; --all</code> :删除一个环境（删除指定环境及其所有包）</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda remove -n new_env --all<br><br>Remove all packages <span class="hljs-keyword">in</span> environment /Users/richard/anaconda3/envs/new_env:<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="包管理">包管理</h3>
+<ul>
+<li><code> conda list -n &lt;env_name&gt;</code> :列出一个环境的所有包，若无参数则默认列出当前环境的所有包</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda list<br><span class="hljs-comment"># packages in environment at /Users/richard/anaconda3:</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># Name                    Version                   Build  Channel</span><br>_anaconda_depends         2024.02         py311_openblas_1  <br>abseil-cpp                20230802.0           h61975a4_2  <br>aiobotocore               2.7.0           py311hecd8cb5_0  <br>aiohttp                   3.9.3           py311h6c40b1e_0  <br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>conda install -n &lt;env_name&gt; package1 package2 </code> :在指定环境中安装包（可以安装指定版本的包，或限制版本范围）</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda install pandas=1.5.3  <span class="hljs-comment"># 安装1.5.3版本</span><br>conda install <span class="hljs-string">"numpy&gt;=1.21,&lt;1.24"</span>  <span class="hljs-comment"># 安装1.21到1.24之间的版本</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-danger">
+            <p>不要在conda环境中用pip安装包</p><ul><li>导致不同版本的软件包依赖冲突</li><li>conda 指令无法正常管理pip安装的软件包（安装/更新/卸载）</li></ul>
+          </div>
+<ul>
+<li><code>conda update -n &lt;env_name&gt; --all</code> :更新指定环境所有包到最新版本</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda update -n my_env --all<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="导出与导入环境">导出与导入环境</h3>
+<ul>
+<li><code>conda env export &gt; environment.yml</code>：  将当前环境的包信息导出为<code>environment.yml</code>文件，方便他人复现：</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda <span class="hljs-built_in">env</span> <span class="hljs-built_in">export</span> -n yolov11-env &gt; environment.yml<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <ul><li><code>-n yolov11-env</code>：用于指定要导出的环境名称（如果不写 -n，默认导出当前激活的环境）</li></ul>
+          </div>
+<ul>
+<li><code>conda env create -f environment.yml</code>：根据<code>environment.yml</code>文件快速创建相同环境</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda <span class="hljs-built_in">env</span> create -f environment.yml<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="配置镜像源">配置镜像源</h3>
+<ul>
+<li>配置清华、中科大等镜像源加速下载：</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/<br>conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/<br>conda config --<span class="hljs-built_in">set</span> show_channel_urls <span class="hljs-built_in">yes</span>  <span class="hljs-comment"># 显示包的来源渠道</span><br></code></pre></td></tr></tbody></table></figure>
+<h3 id="清理与维护">清理与维护</h3>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda clean -p  <span class="hljs-comment"># 清理未使用的包</span><br>conda clean -t  <span class="hljs-comment"># 清理tar包缓存</span><br>conda clean -a  <span class="hljs-comment"># 清理所有缓存（包括索引和未使用的包）</span><br></code></pre></td></tr></tbody></table></figure>
+<p><a target="_blank" rel="noopener" href="https://hub.docker.com/repositories/richard110206">DockerHub</a></p>
 <p>dockerfile-&gt;dockerimage(如何正确设置容器的说明，存储在注册表中）-&gt;dockercontainer</p>
 <p>出现拉取<code>requests</code>时候超时的问题：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">=&gt; CANCELED [4/4] RUN pip3 install -r requirements.txt                 101.2s<br></code></pre></td></tr></tbody></table></figure>
@@ -558,7 +619,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>October 18, 2025</div>
+          <div>October 27, 2025</div>
         </div>
       
       
