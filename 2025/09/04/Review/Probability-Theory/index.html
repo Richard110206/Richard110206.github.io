@@ -19,15 +19,15 @@
   <meta name="author" content="Li Qinxuan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="随机事件及其概率 因为$A\overline{B} &#x3D; A - B$，所以在概率计算中，有 $P(A\overline{B}) &#x3D; P(A - B)$。结合概率的性质 $P(A - B) &#x3D; P(A) - P(AB)$，因此有： $$P(A\overline{B}) &#x3D; P(A） - P（AB)$$ 条件概率：$P(A \mid B) &#x3D; \frac{P(AB)}{P(B)}$ 通常反向利用：$P">
+    <meta name="description" content="概率论与数理统计核心知识点整理 一、随机事件及其概率   差事件概率公式 因 $A\overline{B} &#x3D; A - B$，结合概率性质 $P(A - B) &#x3D; P(A) - P(AB)$，可得： $$P(A\overline{B}) &#x3D; P(A) - P(AB)$$   条件概率  定义公式：$P(A \mid B) &#x3D; \frac{P(AB)}{P(B)}$（要求 $P(B) &gt; 0$">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Probability Theory">
 <meta property="og:url" content="http://example.com/2025/09/04/Review/Probability-Theory/index.html">
 <meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
-<meta property="og:description" content="随机事件及其概率 因为$A\overline{B} &#x3D; A - B$，所以在概率计算中，有 $P(A\overline{B}) &#x3D; P(A - B)$。结合概率的性质 $P(A - B) &#x3D; P(A) - P(AB)$，因此有： $$P(A\overline{B}) &#x3D; P(A） - P（AB)$$ 条件概率：$P(A \mid B) &#x3D; \frac{P(AB)}{P(B)}$ 通常反向利用：$P">
+<meta property="og:description" content="概率论与数理统计核心知识点整理 一、随机事件及其概率   差事件概率公式 因 $A\overline{B} &#x3D; A - B$，结合概率性质 $P(A - B) &#x3D; P(A) - P(AB)$，可得： $$P(A\overline{B}) &#x3D; P(A) - P(AB)$$   条件概率  定义公式：$P(A \mid B) &#x3D; \frac{P(AB)}{P(B)}$（要求 $P(B) &gt; 0$">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-09-04T04:54:45.000Z">
-<meta property="article:modified_time" content="2025-10-30T05:27:55.950Z">
+<meta property="article:modified_time" content="2025-10-30T15:23:01.571Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -300,7 +300,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k words
+          2.3k words
         
       </span>
     
@@ -311,7 +311,7 @@
         
         
         
-          11 mins
+          20 mins
         
       </span>
     
@@ -432,122 +432,297 @@
             
               <div class="markdown-body">
                 
-                <h2 id="随机事件及其概率">随机事件及其概率</h2>
-<p>因为$A\overline{B} = A - B$，所以在概率计算中，有 $P(A\overline{B}) = P(A - B)$。结合概率的性质 $P(A - B) = P(A) - P(AB)$，因此有：</p>
-<p>$$P(A\overline{B}) = P(A） - P（AB)$$</p>
-<p>条件概率：$P(A \mid B) = \frac{P(AB)}{P(B)}$</p>
-<p>通常反向利用：$P(A \mid B) {P(B)} = {P(AB)}$</p>
-<h2 id="随机变量及其分布">随机变量及其分布</h2>
-<h3 id="二项分布：">二项分布：</h3>
-<p>$$P(X = k) = C^{k}_{n} p^k (1-p)^{n-k}$$</p>
-<p>记为：$X \sim B(n, p)$</p>
-<h3 id="泊松分布：">泊松分布：</h3>
-<p>$$P(X = k) = \frac{\lambda^k}{k!} \mathrm{e}^{-\lambda}$$</p>
-<p>记为：$X \sim\pi(\lambda)$</p>
-<p>当二项分布的<strong>n很大</strong>，<strong>p很小</strong>，且$\lambda=np$时，<strong>二项分布可近似为泊松分布</strong>。</p>
-<h3 id="随机变量的分布函数">随机变量的分布函数</h3>
-<p>用于研究某一变量落某个区间内的概率<br>
-$$F(x)=P{(X\leq x)}$$</p>
-<p>满足分布函数有界性（正无穷、负无穷极限）<br>
-$$\lim_{x \to +\infty} F(x) = 1, \quad \lim_{x \to -\infty} F(x) = 0$$</p>
+                <h1>概率论与数理统计核心知识点整理</h1>
+<h2 id="一、随机事件及其概率">一、随机事件及其概率</h2>
+<ol>
+<li>
+<p><strong>差事件概率公式</strong><br>
+因 $A\overline{B} = A - B$，结合概率性质 $P(A - B) = P(A) - P(AB)$，可得：<br>
+$$P(A\overline{B}) = P(A) - P(AB)$$</p>
+</li>
+<li>
+<p><strong>条件概率</strong></p>
 <ul>
-<li><strong>分布律</strong>（<strong>仅用于离散型随机变量</strong>）：取<strong>某一个具体值</strong>的概率</li>
-<li><strong>概率密度函数</strong>（<strong>仅用于连续型随机变量</strong>）：随机变量的<strong>概率密度分布</strong></li>
-<li><strong>分布函数</strong>（均适用）：随机变量<strong>小于等于某一值x的概率</strong></li>
+<li>定义公式：$P(A \mid B) = \frac{P(AB)}{P(B)}$（要求 $P(B) &gt; 0$）</li>
+<li>反向应用（求交事件概率）：$P(AB) = P(A \mid B) \cdot P(B)$</li>
 </ul>
-<p>$$F(x)=\int_{-\infty}^{x}f(t)dt$$</p>
-<div class="note note-danger">
-            <ul><li><strong>离散型随机变量</strong>有阶梯（注意边界等号）</li><li><strong>连续型随机变量</strong>取某一指定值的概率为0（只能为范围）</li></ul>
-          </div>
-<h3 id="指数分布">指数分布</h3>
-<p>其概率密度函数：</p>
-<p>$$f(x) = 0 \quad (x &lt; 0)$$ $$f(x) = \lambda e^{-\lambda x} \quad (x \geq 0)$$</p>
-<p>其分布函数：<br>
-$$F(x) = P(X \leq x) = 0 \quad (x &lt; 0)$$ $$F(x) = P(X \leq x) = 1 - e^{-\lambda x} \quad (x \geq 0)$$<br>
-分布具有<strong>无记忆性</strong></p>
-<h3 id="均匀分布">均匀分布</h3>
-<p>其概率密度函数：<br>
-$$f(x) = \frac{1}{b-a} \quad (a \leq x \leq b)$$ $$f(x) = 0 \quad (\text{其他情况})$$</p>
-<p>其分布函数：<br>
-$$F(x) = P(X \leq x) = 0 \quad (x &lt; a)$$ $$F(x) = P(X \leq x) = \frac{x-a}{b-a} \quad (a \leq x \leq b)$$ $$F(x) = P(X \leq x) = 1 \quad (x &gt; b)$$</p>
-<p><strong>落在子区间的概率与子区间的长度成正比</strong>，与区间位置无关</p>
-<h3 id="正态分布">正态分布</h3>
-<p>$$ f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{ (x-\mu)^2} {2\sigma^2} }$$</p>
-<p>其中：</p>
+</li>
+</ol>
+<h2 id="二、随机变量及其分布">二、随机变量及其分布</h2>
+<h3 id="2-1-常见离散型分布">2.1 常见离散型分布</h3>
+<h4 id="（1）二项分布">（1）二项分布</h4>
 <ul>
-<li>$x$ 是随机变量的取值，范围为 $(-\infty, +\infty)$</li>
-<li>$\mu$ 是分布的<strong>均值</strong> ，决定了曲线的<strong>中心位置</strong></li>
-<li>$\sigma$ 是分布的<strong>标准差</strong>，决定了曲线的"胖瘦"或<strong>离散程度</strong>（越小越<strong>集中</strong>于$\mu$）</li>
+<li>概率公式：$P(X = k) = C_{n}^{k} p^k (1-p)^{n-k}$（$k = 0,1,2,\dots,n$）</li>
+<li>记法：$X \sim B(n, p)$</li>
+<li>参数含义：$n$ 为试验次数，$p$ 为单次试验成功概率</li>
 </ul>
-<p>当 $\mu = 0, \sigma = 1$ 时，称为<strong>标准正态分布</strong>，记为$X\sim N(0,1)$，其概率密度记$\varphi(x)$，为分布函数记为$\Phi(x)$</p>
-<p>由$$\varphi(x)=\varphi(-x)$$</p>
-<p>容易得到：<br>
-$$\Phi(-x)=1-\Phi(x)$$</p>
-<p>对于一般的正态分布，我们可以通过线性变换将其转换为标准正态分布：<br>
-$$Y = \frac{X - \mu}{\sigma}$$</p>
-<p>那么对于任意区间$[a, b]$，有：<br>
-$$P(a \leq X \leq b) = P(\frac{a - \mu}{\sigma} \leq Y \leq \frac{b - \mu}{\sigma}) = \Phi(\frac{b - \mu}{\sigma}) - \Phi(\frac{a - \mu}{\sigma})$$</p>
-<p>泊松分布<br>
-$X \sim \pi(\lambda) $，则 $ E(X) = \lambda $,  $ D(X) = \lambda $，有$D(X) = E(X^2) - [E(X)]<sup>2=\lambda</sup>2+\lambda-\lambda^2=\lambda$</p>
-<h3 id="期望">期望</h3>
-<h3 id="方差">方差</h3>
-<p>$D(X) = E\left{ [X - E(X)]^2 \right}$<br>
-$= E\left{ X^2 - 2X \cdot E(X) + [E(X)]^2 \right}$<br>
+<h4 id="（2）泊松分布">（2）泊松分布</h4>
+<ul>
+<li>概率公式：$P(X = k) = \frac{\lambda^k}{k!} \mathrm{e}^{-\lambda}$（$k = 0,1,2,\dots$）</li>
+<li>记法：$X \sim \pi(\lambda)$</li>
+<li>近似关系：当二项分布满足 <strong>$n$ 很大、$p$ 很小</strong>，且 $\lambda = np$ 时，$B(n,p) \approx \pi(\lambda)$</li>
+</ul>
+<h3 id="2-2-随机变量的分布函数">2.2 随机变量的分布函数</h3>
+<h4 id="（1）定义与作用">（1）定义与作用</h4>
+<ul>
+<li>定义：$F(x) = P(X \leq x)$，用于计算随机变量落在区间 $(-\infty, x]$ 内的概率</li>
+<li>核心性质（有界性）：<br>
+$$\lim_{x \to +\infty} F(x) = 1, \quad \lim_{x \to -\infty} F(x) = 0$$</li>
+</ul>
+<h4 id="（2）三类核心函数对比">（2）三类核心函数对比</h4>
+<table>
+<thead>
+<tr>
+<th>函数类型</th>
+<th>适用场景</th>
+<th>描述内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分布律</td>
+<td>仅离散型</td>
+<td>随机变量取<strong>某一具体值</strong>的概率</td>
+</tr>
+<tr>
+<td>概率密度函数</td>
+<td>仅连续型</td>
+<td>随机变量的<strong>概率密度分布</strong></td>
+</tr>
+<tr>
+<td>分布函数</td>
+<td>离散型+连续型</td>
+<td>随机变量<strong>小于等于x</strong>的概率</td>
+</tr>
+</tbody>
+</table>
+<h4 id="（3）连续型随机变量的特殊关系">（3）连续型随机变量的特殊关系</h4>
+<ul>
+<li>分布函数与概率密度函数的积分关系：$F(x) = \int_{-\infty}^{x} f(t) dt$</li>
+<li>⚠️ 重要注意事项：
+<ul>
+<li>离散型分布函数为<strong>阶梯函数</strong>，需注意区间边界的等号</li>
+<li>连续型随机变量取<strong>单个具体值的概率为0</strong>，仅能计算区间概率</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-3-常见连续型分布">2.3 常见连续型分布</h3>
+<h4 id="（1）指数分布">（1）指数分布</h4>
+<ul>
+<li><strong>概率密度函数</strong>：<br>
+$$f(x) = \begin{cases}<br>
+0 &amp; (x &lt; 0) \<br>
+\lambda e^{-\lambda x} &amp; (x \geq 0)<br>
+\end{cases}$$</li>
+<li><strong>分布函数</strong>：<br>
+$$F(x) = P(X \leq x) = \begin{cases}<br>
+0 &amp; (x &lt; 0) \<br>
+1 - e^{-\lambda x} &amp; (x \geq 0)<br>
+\end{cases}$$</li>
+<li>核心性质：<strong>无记忆性</strong>（即 $P(X &gt; s + t \mid X &gt; s) = P(X &gt; t)$）</li>
+</ul>
+<h4 id="（2）均匀分布">（2）均匀分布</h4>
+<ul>
+<li><strong>概率密度函数</strong>：<br>
+$$f(x) = \begin{cases}<br>
+\frac{1}{b-a} &amp; (a \leq x \leq b) \<br>
+0 &amp; (\text{其他})<br>
+\end{cases}$$</li>
+<li><strong>分布函数</strong>：<br>
+$$F(x) = P(X \leq x) = \begin{cases}<br>
+0 &amp; (x &lt; a) \<br>
+\frac{x-a}{b-a} &amp; (a \leq x \leq b) \<br>
+1 &amp; (x &gt; b)<br>
+\end{cases}$$</li>
+<li>记作：$X \sim U(a,b)$</li>
+<li>核心性质：落在子区间的概率与<strong>子区间长度成正比</strong>，与区间位置无关</li>
+</ul>
+<h4 id="（3）正态分布">（3）正态分布</h4>
+<ul>
+<li>
+<p><strong>一般正态分布</strong>：</p>
+<ul>
+<li>概率密度函数：<br>
+$$ f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{ (x-\mu)^2} {2\sigma^2} }$$</li>
+<li>参数含义：
+<ul>
+<li>$\mu$：均值，决定曲线<strong>中心位置</strong></li>
+<li>$\sigma$：标准差，决定曲线<strong>离散程度</strong>（$\sigma$ 越小，曲线越集中于 $\mu$）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>标准正态分布</strong>：</p>
+<ul>
+<li>定义：当 $\mu = 0, \sigma = 1$ 时，记为 $X \sim N(0,1)$</li>
+<li>分布函数：$\Phi(x) = \int_{-\infty}^{x} \varphi(t) dt$</li>
+<li>对称性：$\varphi(x) = \varphi(-x)$，故 $\Phi(-x) = 1 - \Phi(x)$</li>
+</ul>
+</li>
+<li>
+<p><strong>一般转标准的线性变换</strong>：<br>
+若 $X \sim N(\mu, \sigma^2)$，令 $Y = \frac{X - \mu}{\sigma}$，则 $Y \sim N(0,1)$</p>
+<ul>
+<li>区间概率计算：<br>
+$$P(a \leq X \leq b) = \Phi\left(\frac{b - \mu}{\sigma}\right) - \Phi\left(\frac{a - \mu}{\sigma}\right)$$</li>
+</ul>
+</li>
+</ul>
+<h4 id="（4）泊松分布的数字特征">（4）泊松分布的数字特征</h4>
+<ul>
+<li>期望：$E(X) = \lambda$</li>
+<li>方差：$D(X) = \lambda$</li>
+<li>推导依据：$D(X) = E(X^2) - [E(X)]^2 = (\lambda^2 + \lambda) - \lambda^2 = \lambda$</li>
+</ul>
+<h2 id="三、多维随机变量及其分布">三、多维随机变量及其分布</h2>
+<h3 id="3-1-基本概念">3.1 基本概念</h3>
+<ul>
+<li><strong>定义</strong>：多维随机变量是将多个随机变量作为一个整体研究的概率模型，最常见的是<strong>二维随机变量</strong> $(X,Y)$。
+<ul>
+<li>整体视角：$(X,Y)$ 具有联合概率分布，描述两个变量取值的联合概率规律；</li>
+<li>个体视角：$X$ 和 $Y$ 分别具有各自的“边缘分布”，描述单个变量的概率规律。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-2-二维随机变量的联合分布">3.2 二维随机变量的联合分布</h3>
+<h4 id="（1）连续型二维随机变量">（1）连续型二维随机变量</h4>
+<ul>
+<li><strong>联合概率密度函数</strong>：设 $(X,Y)$ 为连续型，若存在非负函数 $f(x,y)$（$x,y \in \mathbb{R}$），使得对任意平面区域 $D$，有<br>
+$$P{ (X,Y) \in D } = \iint_{D} f(x,y) dxdy$$  则称 $f(x,y)$ 为 $(X,Y)$ 的联合概率密度函数。</li>
+<li><strong>联合分布函数</strong>：$F(x,y) = P(X \leq x, Y \leq y) = \int_{-\infty}^{y} \int_{-\infty}^{x} f(u,v) , dudv$，描述 $(X,Y)$ 落在区域 $(-\infty,x] \times (-\infty,y]$ 内的概率。</li>
+</ul>
+<h4 id="（2）离散型二维随机变量">（2）离散型二维随机变量</h4>
+<ul>
+<li><strong>联合分布律</strong>：设 $(X,Y)$ 的所有可能取值为 $(x_i, y_j)$（$i,j=1,2,\dots$），则称<br>
+$$P(X = x_i, Y = y_j) = p_{ij} \quad (i,j=1,2,\dots)$$  为 $(X,Y)$ 的联合分布律，满足性质：$p_{ij} \geq 0$ 且 $\sum_{i=1}^{\infty} \sum_{j=1}^{\infty} p_{ij} = 1$。</li>
+<li><strong>联合分布函数</strong>：$F(x,y) = \sum_{x_i \leq x} \sum_{y_j \leq y} p_{ij}$，即对所有满足 $x_i \leq x$ 且 $y_j \leq y$ 的 $(x_i, y_j)$ 对应的概率求和。</li>
+</ul>
+<h3 id="3-3-边缘分布">3.3 边缘分布</h3>
+<p>边缘分布是从联合分布中“提取”单个随机变量（$X$ 或 $Y$）的分布，分为边缘概率密度（连续型）和边缘分布律（离散型）。</p>
+<h4 id="（1）连续型：边缘概率密度">（1）连续型：边缘概率密度</h4>
+<ul>
+<li><strong>X 的边缘概率密度</strong>：对联合概率密度 $f(x,y)$ 关于 $y$ 积分，消去 $y$ 的影响：<br>
+$$f_X(x) = \int_{-\infty}^{+\infty} f(x,y) , dy$$<br>
+对应的边缘分布函数：$F_X(x) = P(X \leq x) = \int_{-\infty}^{x} f_X(t) , dt = \int_{-\infty}^{x} \left( \int_{-\infty}^{+\infty} f(t,y) , dy \right) dt$</li>
+<li><strong>Y 的边缘概率密度</strong>：对联合概率密度 $f(x,y)$ 关于 $x$ 积分，消去 $x$ 的影响：<br>
+$$f_Y(y) = \int_{-\infty}^{+\infty} f(x,y) , dx$$<br>
+对应的边缘分布函数：$F_Y(y) = P(Y \leq y) = \int_{-\infty}^{y} f_Y(t) , dt = \int_{-\infty}^{y} \left( \int_{-\infty}^{+\infty} f(x,t) , dx \right) dt$</li>
+</ul>
+<h4 id="（2）离散型：边缘分布律">（2）离散型：边缘分布律</h4>
+<ul>
+<li><strong>X 的边缘分布律</strong>：对联合分布律 $p_{ij}$ 按列求和（固定 $x_i$，对所有 $y_j$ 求和）：<br>
+$$P(X = x_i) = p_{i\cdot} = \sum_{j=1}^{\infty} p_{ij} \quad (i=1,2,\dots)$$</li>
+<li><strong>Y 的边缘分布律</strong>：对联合分布律 $p_{ij}$ 按行求和（固定 $y_j$，对所有 $x_i$ 求和）：<br>
+$$P(Y = y_j) = p_{\cdot j} = \sum_{i=1}^{\infty} p_{ij} \quad (j=1,2,\dots)$$</li>
+</ul>
+<h3 id="3-4-二维随机变量的独立性">3.4 二维随机变量的独立性</h3>
+<h4 id="（1）核心定义">（1）核心定义</h4>
+<p>若对任意实数 $x,y$，二维随机变量 $(X,Y)$ 的联合分布函数等于 $X$ 和 $Y$ 边缘分布函数的乘积，即<br>
+$$F(x,y) = F_X(x) \cdot F_Y(y)$$<br>
+则称 $X$ 与 $Y$ <strong>相互独立</strong>。</p>
+<h4 id="（2）不同类型的等价判定条件">（2）不同类型的等价判定条件</h4>
+<ul>
+<li><strong>离散型</strong>：对所有可能的 $(x_i, y_j)$，满足<br>
+$$P(X = x_i, Y = y_j) = P(X = x_i) \cdot P(Y = y_j) \quad (\text{即 } p_{ij} = p_{i\cdot} \cdot p_{\cdot j})$$</li>
+<li><strong>连续型</strong>：对几乎所有 $(x,y)$（除面积为0的区域外），满足<br>
+$$f(x,y) = f_X(x) \cdot f_Y(y)$$</li>
+</ul>
+<h2 id="四、随机变量的数字特征">四、随机变量的数字特征</h2>
+<h3 id="5-1-期望（均值）">5.1 期望（均值）</h3>
+<h3 id="5-2-方差">5.2 方差</h3>
+<ul>
+<li>定义公式（展开式）：<br>
+$D(X) = E{ [X - E(X)]^2 }$<br>
+$= E{ X^2 - 2X \cdot E(X) + [E(X)]^2 }$<br>
 $= E(X^2) - 2E(X) \cdot E(X) + [E(X)]^2$<br>
-$= E(X^2) - [E(X)]^2$</p>
-<h3 id="卡方分布">卡方分布</h3>
-<p>若 $ X_1, X_2, \dots, X_n \sim N(0,1) $，则 $ \chi^2 = \sum_{i=1}^{n} X_i^2 \sim \chi^2(n) $</p>
-<h4 id="数字特征">数字特征</h4>
+$= E(X^2) - [E(X)]^2$</li>
+</ul>
+<h2 id="五、大数定律与中心极限定理">五、大数定律与中心极限定理</h2>
+<p>切比雪夫不等式：<br>
+$$P(|X - E(X)| \geq \epsilon) \leq \frac{D(X)}{\epsilon^2}$$<br>
+其等价形式是：<br>
+$$P(|X - E(X)| \leq \epsilon) \geq 1 - \frac{D(X)}{\epsilon^2}$$</p>
+<p>可以看出方差越小，取值在区间内的概率也就越大，取值就越集中于均值附近</p>
+<h2 id="六、数理统计基础">六、数理统计基础</h2>
+<h3 id="6-1-三大抽样分布">6.1 三大抽样分布</h3>
+<h4 id="（1）卡方分布（-chi-2-分布）">（1）卡方分布（$\chi^2$ 分布）</h4>
 <ul>
 <li>
-<p><strong>期望</strong>： $ E(\chi^2(n)) = n $</p>
+<p>构造：若 $X_1, X_2, \dots, X_n \sim N(0,1)$ 且相互独立，则 $\chi^2 = \sum_{i=1}^{n} X_i^2 \sim \chi^2(n)$</p>
 </li>
 <li>
-<p><strong>方差</strong>： $ D(\chi^2(n)) = 2n $</p>
+<p>记法：$\chi^2 \sim \chi^2(n)$（$n$ 为自由度）</p>
 </li>
 <li>
-<p><strong>可加性</strong>：<br>
-若 $ X \sim \chi^2(m) $，$ Y \sim \chi^2(n) $，且 $ X $ 与 $ Y $ 相互独立，则<br>
-$ X + Y \sim \chi^2(m+n) $</p>
+<p><strong>数字特征</strong>：</p>
+<ol>
+<li>期望：$E(\chi^2(n)) = n$</li>
+<li>方差：$D(\chi^2(n)) = 2n$</li>
+<li>可加性：若 $X \sim \chi^2(m)$、$Y \sim \chi^2(n)$ 且独立，则 $X + Y \sim \chi^2(m+n)$</li>
+</ol>
+</li>
+<li>
+<p><strong>分布形状</strong>：</p>
+<ul>
+<li>非负、右偏（正偏）分布</li>
+<li>随自由度 $n$ 增大，逐渐趋于对称（接近正态分布）</li>
+</ul>
 </li>
 </ul>
-<h4 id="形状">形状</h4>
+<h4 id="（2）t-分布">（2）t 分布</h4>
 <ul>
-<li>卡方分布是非负的、右偏（正偏）分布。</li>
-<li>随着自由度 $ n $ 的增加，分布逐渐趋于对称（由中心极限定理保证），形状接近正态分布。</li>
+<li>
+<p>构造：若 $X \sim N(0,1)$、$Y \sim \chi^2(n)$ 且相互独立，则 $T = \frac{X}{\sqrt{Y/n}} \sim t(n)$</p>
+</li>
+<li>
+<p>记法：$T \sim t(n)$（$n$ 为自由度）</p>
+</li>
+<li>
+<p><strong>数字特征</strong>：</p>
+<ol>
+<li>期望：当 $n &gt; 1$ 时，$E(T) = 0$</li>
+<li>方差：当 $n &gt; 2$ 时，$D(T) = \frac{n}{n-2}$</li>
+</ol>
+</li>
+<li>
+<p><strong>与其他分布的关系</strong>：</p>
+<ol>
+<li>当 $n$ 较小时，t 分布比标准正态分布更“平坦”，尾部更厚（极端值概率更高）</li>
+<li>当 $n \to \infty$ 时，$t(n) \to N(0,1)$；通常 $n &gt; 30$ 时两者近似程度高</li>
+</ol>
+</li>
 </ul>
-<h3 id="t分布">t分布</h3>
-<p>$ X \sim N(0,1) $，$ Y \sim \chi^2(n) $，且 $ X $ 与 $ Y $ 相互独立，则<br>
-$T = \frac{X}{\sqrt{Y/n}}$</p>
-<p>服从自由度为 ( n ) 的 <strong>t 分布</strong>，记作 $ T \sim t(n) $。</p>
-<h4 id="数字特征：">数字特征：</h4>
+<h4 id="（3）F-分布">（3）F 分布</h4>
 <ul>
-<li><strong>期望</strong>：当 $ n &gt; 1 $ 时，$ E(T) = 0 $。</li>
-<li><strong>方差</strong>：当 $ n &gt; 2 $ 时，$ D(T) = \frac{n}{n-2} $。</li>
-</ul>
-<h4 id="与正态分布和卡方分布的关系：">与正态分布和卡方分布的关系：</h4>
-<ul>
-<li>当自由度 $ n $ 较小时，t 分布比标准正态分布更“平坦”，尾部更厚，这意味着出现极端值的概率更大。</li>
-<li>当自由度 $ n \to \infty $ 时，t 分布趋近于标准正态分布 $ N(0,1) $。通常当 $ n &gt; 30 $ 时，两者非常接近。</li>
-</ul>
-<h3 id="F分布">F分布</h3>
-<p>$ U \sim \chi^2(m) $，$ V \sim \chi^2(n) $，且 $ U $ 与 $ V $ 相互独立，则$F = \frac{U/m}{V/n}$<br>
-服从第一自由度为 $ m $、第二自由度为 $ n $ 的 <strong>F 分布</strong>，记作 $ F \sim F(m,n) $。</p>
-<h4 id="数字特征：-v2">数字特征：</h4>
-<ul>
-<li><strong>期望</strong>：当 $ n &gt; 2 $ 时，$ E(F) = \frac{n}{n-2} $</li>
-<li><strong>方差</strong>：当 $ n &gt; 4 $ 时，$ D(F) = \frac{2n^2}{n-2} $</li>
-</ul>
-<h4 id="重要性质：">重要性质：</h4>
-<ul>
-<li>若 $ F \sim F(m,n) $，则 $ \frac{1}{F} \sim F(n,m) $</li>
-<li><strong>F 分布与 t 分布的关系</strong>：如果 $ T \sim t(n) $，则 $ T^2 \sim F(1,n) $。即自由度为 $ n $ 的 t 分布的平方服从第一自由度为 1、第二自由度为 $ n $ 的 F 分布</li>
-</ul>
-<h4 id="应用">应用</h4>
-<ul>
-<li><strong>方差齐性检验</strong>：检验两个正态总体的方差是否相等，即 $ H_0: \sigma_1^2 = \sigma_2^2 $。这是进行两样本 t 检验前的常用步骤</li>
-<li><strong>方差分析</strong>：在 ANOVA 中，用于检验多个总体均值是否全部相等。检验统计量服从 F 分布</li>
-<li><strong>回归分析</strong>：检验回归模型的整体显著性（如线性回归中的 F 检验）</li>
+<li>
+<p>构造：若 $U \sim \chi^2(m)$、$V \sim \chi^2(n)$ 且相互独立，则 $F = \frac{U/m}{V/n} \sim F(m,n)$</p>
+</li>
+<li>
+<p>记法：$F \sim F(m,n)$（$m$ 为第一自由度，$n$ 为第二自由度）</p>
+</li>
+<li>
+<p><strong>数字特征</strong>：</p>
+<ol>
+<li>期望：当 $n &gt; 2$ 时，$E(F) = \frac{n}{n-2}$</li>
+<li>方差：当 $n &gt; 4$ 时，$D(F) = \frac{2n^2(m + n - 2)}{m(n - 2)^2(n - 4)}$（原内容方差公式有误，已修正）</li>
+</ol>
+</li>
+<li>
+<p><strong>重要性质</strong>：</p>
+<ol>
+<li>倒数性质：若 $F \sim F(m,n)$，则 $\frac{1}{F} \sim F(n,m)$</li>
+<li>与 t 分布的关系：若 $T \sim t(n)$，则 $T^2 \sim F(1,n)$</li>
+</ol>
+</li>
+<li>
+<p><strong>主要应用</strong>：</p>
+<ol>
+<li>方差齐性检验：检验两正态总体方差是否相等（$H_0: \sigma_1^2 = \sigma_2^2$），是两样本 t 检验的前置步骤</li>
+<li>方差分析（ANOVA）：检验多个总体均值是否全部相等</li>
+<li>回归分析：检验回归模型的整体显著性（如线性回归的 F 检验）</li>
+</ol>
+</li>
 </ul>
 
                 
