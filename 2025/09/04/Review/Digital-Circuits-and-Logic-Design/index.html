@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable2.png?raw=true">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/adder.png?raw=true">
 <meta property="article:published_time" content="2025-09-04T04:58:09.000Z">
-<meta property="article:modified_time" content="2025-10-27T15:30:59.145Z">
+<meta property="article:modified_time" content="2025-11-24T15:21:46.525Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true">
@@ -304,7 +304,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.4k words
+          4.9k words
         
       </span>
     
@@ -315,7 +315,7 @@
         
         
         
-          37 mins
+          42 mins
         
       </span>
     
@@ -706,9 +706,9 @@ $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} +
 <p>根据逻辑电路写出逻辑函数表达式用卡诺图进行化简绘制真值表得到逻辑功能</p>
 <p>流程也可以是反过来：绘制逻辑电路图示先画输出变量的原变量和反变量共同输出的结构</p>
 <h3 id="编码器">编码器</h3>
-<p>编码器是用二进制码来表示每个给定的信息符号。</p>
+<p>编码器是用二进制码来表示每个给定的信息符号。（用二进制表示文字符号的过程叫做编码）</p>
 <h4 id="抢答器">抢答器</h4>
-<p><strong>普通编码器</strong>：任何时刻只有一个输入信号</p>
+<p><strong>普通编码器</strong>：任何时刻只有一个输入信号（八线-三线编码器）</p>
 <div style="width: 100%; overflow: auto;">
     <table style="width: 100%;">
         <tbody><tr>
@@ -974,7 +974,7 @@ $$Y_0=I_1+I_3+I_5+I_7$$
             <p>输入数越高<strong>优先级越大</strong></p>
           </div>
 <div class="note note-info">
-            <p>实例：74HC148，电路原件中圆圈表示低电平有效</p>
+            <p>实例：74HC148，74LS148 电路原件中圆圈表示低电平有效</p>
           </div>
 
     <div class="fold">
@@ -1138,6 +1138,9 @@ $$Y_0=I_1+I_3+I_5+I_7$$
 <h3 id="显示译码器">显示译码器</h3>
 <h4 id="七段字符显示器">七段字符显示器</h4>
 <p>四位二进制数（0000-1001）</p>
+<div class="note note-info">
+            <p>用 72HC138译码器实现逻辑函数：$L=AB+BC+AC$</p><ol><li>使能端$S1=1$$S2=S3=0$</li><li>输入端$A,B,C$对应$A_2$、$A_1$、$A_0$</li><li>将函数转化为最小项的形式</li><li>两次取非，最小项下标对应输出端序号</li></ol>
+          </div>
 <h3 id="数据选择器">数据选择器</h3>
 <p>多输入多输出 有效（高低电平均可）</p>
 <div style="width: 100%; overflow: auto;">
@@ -1205,26 +1208,31 @@ $$ Y=D_0 A’+D_1A$$<br>
 四选一：<br>
 $$ Y = S\left( D_0 (\overline{A_1} \overline{A_0}) + D_1 (\overline{A_1} A_0) + D_2 (A_1 \overline{A_0}) + D_3 (A_1 A_0) \right)$$<br>
 $ S $: 控制输入端（若低电平有效可直接接地）</p>
+<div class="note note-info">
+            <p>74LS151（8选1数据选择器）实现4变量逻辑函数$L = \sum m(0,3,5,8,13,15)$（4变量：A、B、C、D）</p><ol><li>地址端匹配<ul><li>74LS151有3个地址端（$A_2$、$A_1$、$A_0$），从4个变量中选3个作为地址端（通常选高位A、B、C），对应关系：$A \rightarrow A_2$、$B \rightarrow A_1$、$C \rightarrow A_0$，剩余变量D作为数据输入控制变量。</li></ul></li><li>按地址变量展开逻辑函数<br>按A、B、C的8种组合（$m_0 \sim m_7$）拆分原函数，确定每个地址对应的数据端$D_0 \sim D_7$取值：<ul><li>$m_0$（$A’B’C’$）：对应原函数$m_0$（$A’B’C’D’$）→ $D_0 = \overline{D}$</li><li>$m_1$（$A’B’C$）：原函数无此最小项 → $D_1 = 0$</li><li>$m_2$（$A’BC’$）：原函数无此最小项 → $D_2 = 0$</li><li>$m_3$（$A’BC$）：对应原函数$m_3$（$A’BCD$）→ $D_3 = D$</li><li>$m_4$（$AB’C’$）：对应原函数$m_8$（$AB’C’D’$）→ $D_4 = \overline{D}$</li><li>$m_5$（$AB’C$）：对应原函数$m_5$（$AB’CD$）→ $D_5 = D$</li><li>$m_6$（$ABC’$）：对应原函数$m_{13}$（$ABC’D$）→ $D_6 = D$</li><li>$m_7$（$ABC$）：对应原函数$m_{15}$（$ABCD$）→ $D_7 = D$</li></ul></li><li>电路连接<ul><li>使能端$\overline{S}$$接低电平（有效）；</li><li>地址端：$A \rightarrow A_2$、$B \rightarrow A_1$、$C \rightarrow A_0$；</li><li>数据端：按上述结果接$D/\overline{D}/0$；</li><li>输出端$Y$即为逻辑函数$L$。</li></ul></li></ol>
+          </div>
+<h3 id="核心逻辑">核心逻辑</h3>
+<p>选3个变量作为地址端→按地址拆分4变量函数→确定各数据端取值→完成电路连接。</p>
 <h4 id="三人表决器">三人表决器</h4>
 <ul>
-<li>
-<p>一般问题：多数同意为通过</p>
+<li>分类：
+<ul>
+<li>一般问题：多数同意为通过</li>
+<li>重要问题：全部同意为通过</li>
+</ul>
 </li>
-<li>
-<p>重要问题：全部同意为通过</p>
+<li>变量：
+<ul>
+<li>输入变量：P(1号)、 Q（2号）、R（3号）、T（问题类型）</li>
+<li>输出变量：Z（表决结果）</li>
+</ul>
 </li>
-<li>
-<p>输入变量：P(1号)、 Q（2号）、R（3号）、T（问题类型）</p>
-</li>
-<li>
-<p>输出变量：Z（表决结果）</p>
-</li>
-<li>
-<p>数据选择器：多输入，单输出</p>
-</li>
-<li>
-<p>数据分配器：单输入，多输出<br>
-二者功能相反，互为可逆过程</p>
+<li>电路：
+<ul>
+<li>数据选择器：多输入，单输出</li>
+<li>数据分配器：单输入，多输出<br>
+二者功能相反，互为可逆过程</li>
+</ul>
 </li>
 </ul>
 <h3 id="加法器">加法器</h3>
@@ -1457,21 +1465,24 @@ $Q^{n+1} = J\overline{Qⁿ} + \overline{K}Qⁿ$（$CP=1$时有效，$CP=0$时$Q^
 </ul>
 <h2 id="六、时序逻辑电路">六、时序逻辑电路</h2>
 <ul>
-<li>
-<p>同步：</p>
-</li>
-<li>
-<p>异步：<br>
+<li>同步：</li>
+<li>异步：<br>
 TTL标准电源电压为5V<br>
-自启动能力：电路在通电后，即便初始状态处于无效状态（非设计预期的工作状态），也能在时钟或输入信号的作用下，自动进入有效工作状态循环的能力。</p>
-</li>
-<li>
-<p>160/162:偶数，十进制计数器</p>
-</li>
-<li>
-<p>161/163:奇数，二/十六进制计数器</p>
-</li>
+自启动能力：电路在通电后，即便初始状态处于无效状态（非设计预期的工作状态），也能在时钟或输入信号的作用下，自动进入有效工作状态循环的能力。</li>
 </ul>
+<h3 id="竞争与冒险">竞争与冒险</h3>
+<h4 id="检查竞争—冒险的方法">检查竞争—冒险的方法</h4>
+<p>只要输出端的逻辑函数在一定条件下能简化成<br>
+$$ Y = A + A’  或  Y = A \cdot A’ $$<br>
+则可出现竞争—冒险现象。</p>
+<ul>
+<li>160/162:偶数，十进制计数器</li>
+<li>161/163:奇数，二/十六进制计数器</li>
+</ul>
+<h4 id="消除竞争-冒险的方法">消除竞争-冒险的方法</h4>
+<p><strong>“正负相对，余全完”</strong>：对于逻辑函数 $ Y = AB + A’C $，在 $ B = C = 1 $ 时会出现 $ Y = A + A’ $ 的竞争-冒险。通过添加冗余项 $ BC $，将函数修正为：<br>
+$$ Y = AB + A’C + BC $$<br>
+当 $ B = C = 1 $ 时，$ BC = 1 $，因此 $ Y = 1 + 1 = 1 $（稳态值），消除了 $ A + A’ $ 形式的竞争-冒险。</p>
 <p>两片3/8译码器组合为4/16译码器<br>
 一个芯片工作，通过使能端禁止另一个芯片工作，一个连接高电平有效，一个低电平有效</p>
 <p>数据选择器/多路开关<br>
@@ -1537,7 +1548,7 @@ TTL标准电源电压为5V<br>
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>October 27, 2025</div>
+          <div>November 24, 2025</div>
         </div>
       
       
