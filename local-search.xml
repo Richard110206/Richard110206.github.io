@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Leetcode-Mistake-Collection-3</title>
+    <link href="/2025/11/26/Leetcode-Collection/Leetcode-Mistake-Collection-3/"/>
+    <url>/2025/11/26/Leetcode-Collection/Leetcode-Mistake-Collection-3/</url>
+    
+    <content type="html"><![CDATA[<p><a href="https://leetcode.cn/problems/binary-prefix-divisible-by-5?envType=daily-question&amp;envId=2025-11-26">11.24每日一题原题链接</a><br><a href="https://leetcode.cn/problems/smallest-integer-divisible-by-k?envType=daily-question&amp;envId=2025-11-26">11.25每日一题原题链接</a></p><p>以上两道每日一题都有一个相同的特点，成指数级增长，暴力解法必然超时或溢出，我们利用余数相同的数具有相同的整除性质来解决这道题目！</p><h3 id="同余定理">同余定理</h3><p>核心公式：$$(a \times b + c) \mod m = [(a \mod m) \times (b \mod m) + (c \mod m)] \mod m$$</p><h3 id="应用-1">应用 1</h3><h4 id="1-前缀数值的递推关系">1. 前缀数值的递推关系</h4><p>对于二进制数组 nums，第 i 个前缀的二进制值 $num_i$ 与第 i-1 个前缀的关系为：$num_i = num_{i-1} \times 2 + nums[i]$</p><h4 id="2-转化为余数的递推">2. 转化为余数的递推</h4><p>我们需要判断 $num_i \mod 5 == 0$，根据同余定理：<br>$num_i \mod 5 = (num_{i-1} \times 2 + nums[i]) \mod 5 $<br>$ = [(num_{i-1} \mod 5) \times (2 \mod 5) + (nums[i] \mod 5)] \mod 5$<br>简化得：$num_i \mod 5 = (num_{i-1} \mod 5 \times 2 + nums[i]) \mod 5$</p><h4 id="3-用余数代替前缀和">3. 用余数代替前缀和</h4><p>又因为 $ num_{i-1} \mod 5 = prefix_{i-1}$，因而有余数的递推式子  $prefix_i \mod 5 = (prefix_{i-1} \mod 5 \times 2 + nums[i]) \mod 5$</p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-title">prefixesDivBy5</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>{<br>        vector &lt;<span class="hljs-type">bool</span>&gt; ans;<br>        <span class="hljs-type">int</span> prefix = <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> length = nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; length; i++) {<br>            prefix = ((prefix*<span class="hljs-number">2</span>) + nums[i]) % <span class="hljs-number">5</span>;<br>            ans.<span class="hljs-built_in">push_back</span>(prefix == <span class="hljs-number">0</span>);<br>        }<br>        <span class="hljs-keyword">return</span> ans;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure><h3 id="应用-2">应用 2</h3><p>与上一问相同，找到每次计算数字的递推关系式，用同余定理进行余数代换，不同的是需要使用<strong>哈希表</strong>对每次的余数进行存储，若是遇到相同的余数，说明重新进入一个循环，则永远无法被整除。</p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">smallestRepunitDivByK</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span> </span>{<br>        <span class="hljs-type">int</span> left=<span class="hljs-number">1</span>%k;<br>        <span class="hljs-type">int</span> len=<span class="hljs-number">1</span>;<br>        unordered_set&lt;<span class="hljs-type">int</span>&gt; st;<br>        st.<span class="hljs-built_in">insert</span>(left);<br>        <span class="hljs-keyword">while</span>(left!=<span class="hljs-number">0</span>){<br>            left=(left*<span class="hljs-number">10</span><span class="hljs-number">+1</span>)%k;<br>            len++;<br>            <span class="hljs-keyword">if</span>(st.<span class="hljs-built_in">find</span>(left)!=st.<span class="hljs-built_in">end</span>()) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>            st.<span class="hljs-built_in">insert</span>(left);<br>        }<br>        <span class="hljs-keyword">return</span> len;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Leetcode Mistake Collection</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>updating</tag>
+      
+      <tag>Leetcode</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Project and Business Plan</title>
     <link href="/2025/11/20/other/Project-and-Business-Plan/"/>
     <url>/2025/11/20/other/Project-and-Business-Plan/</url>
