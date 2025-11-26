@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable2.png?raw=true">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/adder.png?raw=true">
 <meta property="article:published_time" content="2025-09-04T04:58:09.000Z">
-<meta property="article:modified_time" content="2025-11-24T15:21:46.525Z">
+<meta property="article:modified_time" content="2025-11-26T03:04:40.507Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true">
@@ -304,7 +304,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.9k words
+          3.6k words
         
       </span>
     
@@ -315,7 +315,7 @@
         
         
         
-          42 mins
+          30 mins
         
       </span>
     
@@ -1305,192 +1305,6 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
     </tr>
   </tbody>
 </table>
-<p>约束条件：$\overline{R_D}+\overline{S_D}=1$（此时两个输出端不再满足互补关系，是禁止出现的输入项）</p>
-<p>绘制卡诺图（自变量：$\overline{R_D}$、$\overline{S_D}$、$Qⁿ$；因变量：$Q^{n+1}$）（不定项可当做1处理）。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">$\overline{R_D}\overline{S_D}$$Qⁿ$</th>
-<th style="text-align:center">0（$Qⁿ=0$）</th>
-<th style="text-align:center">1（$Qⁿ=1$）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">00（$\overline{R_D}=0,\overline{S_D}=0$）</td>
-<td style="text-align:center">1（不定按1）</td>
-<td style="text-align:center">1（不定按1）</td>
-</tr>
-<tr>
-<td style="text-align:center">01（$\overline{R_D}=0,\overline{S_D}=1$）</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-</tr>
-<tr>
-<td style="text-align:center">11（$\overline{R_D}=1,\overline{S_D}=1$）</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-</tr>
-<tr>
-<td style="text-align:center">10（$\overline{R_D}=1,\overline{S_D}=0$）</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-</tr>
-</tbody>
-</table>
-<p>写出表达式：$Q^{n+1} = \overline{R_D}Q^{n}+S_{D}$</p>
-<p>同步触发器：在基本RS触发器基础上增加<strong>CP时钟控制端</strong>，实现“时钟同步触发”</p>
-<ul>
-<li>当$CP=0$时：时钟无效，无论$\overline{R_D}$、$\overline{S_D}$状态如何，触发器保持原有状态（$Q^{n+1}=Qⁿ$）。</li>
-<li>当$CP=1$时：时钟有效，触发器功能与基本RS触发器完全相同，即次态由$\overline{R_D}$、$\overline{S_D}$和$Qⁿ$共同决定，需满足约束条件$\overline{R_D} + \overline{S_D} = 1$。</li>
-</ul>
-<p>异步置位、同步复位的RS触发器：异步端（$\overline{R_D}$、$\overline{S_D}$）的优先级高于CP时钟，常用于电路上电初始化或紧急置位/复位场景。</p>
-<ul>
-<li><strong>异步置位（$\overline{S_D}$）</strong>：只要$\overline{S_D}$加低电平，无需等待CP时钟，触发器立刻置1（$Q=1$），不受CP和其他输入信号控制。</li>
-<li><strong>异步复位（$\overline{R_D}$）</strong>：只要$\overline{R_D}$加低电平，无需等待CP时钟，触发器立刻置0（$Q=0$），不受CP和其他输入信号控制。</li>
-</ul>
-<h3 id="II-钟控JK触发器">(II) 钟控JK触发器</h3>
-<p>钟控JK触发器是在同步RS触发器基础上改进而来，通过将输出端$Q$和$\overline{Q}$反馈到输入端，<strong>彻底解决了RS触发器的“不定态”问题</strong>，是应用更广泛的时钟控制触发器。</p>
-<ul>
-<li>输入信号：$J$（置位控制端）、$K$（复位控制端）、$CP$（时钟控制端，高电平有效）</li>
-<li>输出信号：$Qⁿ$（现态）、$Q^{n+1}$（次态）</li>
-<li>反馈机制：$J$端与$\overline{Q}$相连，$K$端与$Q$相连，确保输入组合始终合法。</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">$CP$</th>
-<th style="text-align:center">$J$</th>
-<th style="text-align:center">$K$</th>
-<th style="text-align:center">$Q^{n+1}$</th>
-<th style="text-align:center">功能说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">0</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">$Qⁿ$</td>
-<td style="text-align:center">保持（时钟无效，记忆原状态）</td>
-</tr>
-<tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">$Qⁿ$</td>
-<td style="text-align:center">保持（输入无置位/复位指令）</td>
-</tr>
-<tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">复位（置0，$K$端有效）</td>
-</tr>
-<tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">置位（置1，$J$端有效）</td>
-</tr>
-<tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">$\overline{Qⁿ}$</td>
-<td style="text-align:center">翻转（输出状态与原状态相反）</td>
-</tr>
-</tbody>
-</table>
-<p>根据特性表推导，钟控JK触发器（高电平有效）的次态表达式为：<br>
-$Q^{n+1} = J\overline{Qⁿ} + \overline{K}Qⁿ$（$CP=1$时有效，$CP=0$时$Q^{n+1}=Qⁿ$）<br>
-该表达式无约束条件，因反馈机制已排除不定态。</p>
-<h3 id="III-边沿触发器">(III) 边沿触发器</h3>
-<p>边沿触发器是对钟控触发器的进一步优化，<strong>仅在时钟信号（CP）的上升沿（↑）或下降沿（↓）瞬间触发</strong>，CP电平稳定期间（高/低电平）输入信号变化不影响输出，彻底解决了“空翻”问题。</p>
-<ul>
-<li>
-<p><strong>边沿JK触发器</strong>：</p>
-<ul>
-<li>输入输出：与钟控JK触发器一致（$J$、$K$、$CP$、$Qⁿ$、$Q^{n+1}$）。</li>
-<li>特性表：仅触发时机变为“CP边沿”，功能逻辑与钟控JK触发器相同（保持、置0、置1、翻转）。</li>
-<li>次态表达式：$Q^{n+1} = J\overline{Qⁿ} + \overline{K}Qⁿ$（仅CP↑或CP↓时有效）。</li>
-<li>符号标识：CP端旁标注“↑”（上升沿）或“↓”（下降沿），区分触发类型。</li>
-</ul>
-</li>
-<li>
-<p><strong>边沿D触发器</strong>：</p>
-<ul>
-<li>输入输出：$D$（数据输入端）、$CP$（边沿触发）、$Qⁿ$（现态）、$Q^{n+1}$（次态）。</li>
-<li>特性表：</li>
-</ul>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">$CP$</th>
-<th style="text-align:left">$D$</th>
-<th style="text-align:left">$Q^{n+1}$</th>
-<th style="text-align:left">功能说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">×（非边沿）</td>
-<td style="text-align:left">×</td>
-<td style="text-align:left">$Qⁿ$</td>
-<td style="text-align:left">保持（非触发时刻）</td>
-</tr>
-<tr>
-<td style="text-align:left">↑/↓（边沿）</td>
-<td style="text-align:left">0</td>
-<td style="text-align:left">0</td>
-<td style="text-align:left">置0（$D=0$时边沿触发）</td>
-</tr>
-<tr>
-<td style="text-align:left">↑/↓（边沿）</td>
-<td style="text-align:left">1</td>
-<td style="text-align:left">1</td>
-<td style="text-align:left">置1（$D=1$时边沿触发）</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>次态表达式：$Q^{n+1} = D$（仅CP边沿时有效），逻辑简单，常用于数据锁存、移位寄存器。</li>
-<li>无空翻：仅边沿触发，CP电平稳定期输入变化不影响输出，适合高频数字电路。</li>
-<li>抗干扰强：对CP电平波动和输入噪声不敏感，电路稳定性高。</li>
-<li>典型应用：计数器、定时器、数据存储器、数字通信中的信号同步电路。</li>
-</ul>
-<h2 id="六、时序逻辑电路">六、时序逻辑电路</h2>
-<ul>
-<li>同步：</li>
-<li>异步：<br>
-TTL标准电源电压为5V<br>
-自启动能力：电路在通电后，即便初始状态处于无效状态（非设计预期的工作状态），也能在时钟或输入信号的作用下，自动进入有效工作状态循环的能力。</li>
-</ul>
-<h3 id="竞争与冒险">竞争与冒险</h3>
-<h4 id="检查竞争—冒险的方法">检查竞争—冒险的方法</h4>
-<p>只要输出端的逻辑函数在一定条件下能简化成<br>
-$$ Y = A + A’  或  Y = A \cdot A’ $$<br>
-则可出现竞争—冒险现象。</p>
-<ul>
-<li>160/162:偶数，十进制计数器</li>
-<li>161/163:奇数，二/十六进制计数器</li>
-</ul>
-<h4 id="消除竞争-冒险的方法">消除竞争-冒险的方法</h4>
-<p><strong>“正负相对，余全完”</strong>：对于逻辑函数 $ Y = AB + A’C $，在 $ B = C = 1 $ 时会出现 $ Y = A + A’ $ 的竞争-冒险。通过添加冗余项 $ BC $，将函数修正为：<br>
-$$ Y = AB + A’C + BC $$<br>
-当 $ B = C = 1 $ 时，$ BC = 1 $，因此 $ Y = 1 + 1 = 1 $（稳态值），消除了 $ A + A’ $ 形式的竞争-冒险。</p>
-<p>两片3/8译码器组合为4/16译码器<br>
-一个芯片工作，通过使能端禁止另一个芯片工作，一个连接高电平有效，一个低电平有效</p>
-<p>数据选择器/多路开关<br>
-数据输入端 相当于电视频道 D表示<br>
-数据选择（输入）端 相当于遥控器 A表示<br>
-数据输出端</p>
-<p>74LS85芯片<br>
-比较器</p>
 
                 
               </div>
@@ -1548,7 +1362,7 @@ $$ Y = AB + A’C + BC $$<br>
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>November 24, 2025</div>
+          <div>November 26, 2025</div>
         </div>
       
       
