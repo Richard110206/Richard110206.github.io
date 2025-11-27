@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Leetcode-Mistake-Collection.png?raw=true">
 <meta property="article:published_time" content="2025-11-26T13:45:00.000Z">
-<meta property="article:modified_time" content="2025-11-27T03:53:31.674Z">
+<meta property="article:modified_time" content="2025-11-27T05:41:49.092Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="updating">
 <meta property="article:tag" content="Leetcode">
@@ -304,7 +304,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          600 words
+          944 words
         
       </span>
     
@@ -315,7 +315,7 @@
         
         
         
-          6 mins
+          8 mins
         
       </span>
     
@@ -441,7 +441,6 @@
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-prefix-divisible-by-5?envType=daily-question&amp;envId=2025-11-26">11.24每日一题原题链接</a><br>
 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/smallest-integer-divisible-by-k?envType=daily-question&amp;envId=2025-11-26">11.25每日一题原题链接</a></p>
 <p>以上两道每日一题都有一个相同的特点，成指数级增长，暴力解法必然超时或溢出，我们利用余数相同的数具有相同的整除性质来解决这道题目！</p>
-<h3 id="应用-1">应用 1</h3>
 <h4 id="1-前缀数值的递推关系">1. 前缀数值的递推关系</h4>
 <p>对于二进制数组 nums，第 i 个前缀的二进制值 $num_i$ 与第 i-1 个前缀的关系为：$num_i = num_{i-1} \times 2 + nums[i]$</p>
 <h4 id="2-转化为余数的递推">2. 转化为余数的递推</h4>
@@ -455,6 +454,20 @@ $ = [(num_{i-1} \mod 5) \times (2 \mod 5) + (nums[i] \mod 5)] \mod 5$<br>
 <h3 id="应用-2">应用 2</h3>
 <p>与上一问相同，找到每次计算数字的递推关系式，用同余定理进行余数代换，不同的是需要使用<strong>哈希表</strong>对每次的余数进行存储，若是遇到相同的余数，说明重新进入一个循环，则永远无法被整除。</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">smallestRepunitDivByK</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span> </span>{<br>        <span class="hljs-type">int</span> left=<span class="hljs-number">1</span>%k;<br>        <span class="hljs-type">int</span> len=<span class="hljs-number">1</span>;<br>        unordered_set&lt;<span class="hljs-type">int</span>&gt; st;<br>        st.<span class="hljs-built_in">insert</span>(left);<br>        <span class="hljs-keyword">while</span>(left!=<span class="hljs-number">0</span>){<br>            left=(left*<span class="hljs-number">10</span><span class="hljs-number">+1</span>)%k;<br>            len++;<br>            <span class="hljs-keyword">if</span>(st.<span class="hljs-built_in">find</span>(left)!=st.<span class="hljs-built_in">end</span>()) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>            st.<span class="hljs-built_in">insert</span>(left);<br>        }<br>        <span class="hljs-keyword">return</span> len;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="Leetcode-3381-长度可被-K-整除的子数组的最大元素和">Leetcode 3381.长度可被 K 整除的子数组的最大元素和</h3>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-subarray-sum-with-length-divisible-by-k?envType=daily-question&amp;envId=2025-11-27">原题链接</a></p>
+<p>看到子数组和整除自然想到使用<strong>前缀和</strong>与<strong>同余定理</strong>：</p>
+<ol>
+<li>
+<p><strong>同余定理的应用</strong><br>
+子数组长度 $j - i$ 是 k 的整数倍等价于 $(j - i) \mod k = 0$，根据同余定理可推导得 $j \mod k = i \mod k$。即：<strong>若这两个索引之间的子数组长度为 k 的整数倍，则两个前缀和的索引对 k 取余结果相同</strong>。</p>
+</li>
+<li>
+<p><strong>最大化子数组和的逻辑</strong><br>
+要使 $prefix[j] - prefix[i]$ 最大（且 $j \mod k = i \mod k$），需为每个余数 $r$（$r = j \mod k$）维护此前出现过的最小前缀和 $min[r]$。遍历到 $j$ 时，用 $prefix[j] - min[r]$ 更新最大和，再将 $prefix[j]$ 纳入 $min[r]$ 的最小值更新。</p>
+</li>
+</ol>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">long</span> <span class="hljs-type">long</span> <span class="hljs-title">maxSubarraySum</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> k)</span> </span>{<br>        <span class="hljs-type">int</span> n=nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>&gt; <span class="hljs-title">prefix_sum</span><span class="hljs-params">(n<span class="hljs-number">+1</span>)</span></span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {<br>            prefix_sum[i + <span class="hljs-number">1</span>] = prefix_sum[i] + nums[i];<br>        }<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>&gt; <span class="hljs-title">min_s</span><span class="hljs-params">(k, LLONG_MAX / <span class="hljs-number">2</span>)</span></span>; <br>        <span class="hljs-type">long</span> <span class="hljs-type">long</span> ans = LLONG_MIN;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j&lt;prefix_sum.<span class="hljs-built_in">size</span>();j++){<br>            <span class="hljs-type">int</span> i=j%k;<br>            ans=<span class="hljs-built_in">max</span>(ans,prefix_sum[j]-min_s[i]);<br>            min_s[i]=<span class="hljs-built_in">min</span>(min_s[i],prefix_sum[j]);<br>        }<br>        <span class="hljs-keyword">return</span> ans;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
 <h3 id="Leetcoe-50-Pow-x-n">Leetcoe 50.Pow(x, n)</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/powx-n">原题链接</a></p>
 <h4 id="快速幂">快速幂</h4>
@@ -462,9 +475,9 @@ $ = [(num_{i-1} \mod 5) \times (2 \mod 5) + (nums[i] \mod 5)] \mod 5$<br>
 <div class="note note-info">
             <p>当$n=13$时，二进制数为$1101$，$n=13=1+4+8$，有$x<sup>{13}=x</sup>{1+4+8}=x<sup>1*x</sup>4*x^8$，对应的就是二进制每一位的权重。</p>
           </div>
-<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">myPow</span><span class="hljs-params">(<span class="hljs-type">double</span> x, <span class="hljs-type">int</span> N)</span> </span>{<br>        <span class="hljs-type">double</span> ans=<span class="hljs-number">1</span>;<br>        <span class="hljs-type">long</span> <span class="hljs-type">long</span> n=N;<br>        <span class="hljs-keyword">if</span>(n&lt;<span class="hljs-number">0</span>){<br>            n=-n;<br>            x=<span class="hljs-number">1</span>/x;<br>        }<br>        <span class="hljs-keyword">while</span>(n){<br>            <span class="hljs-keyword">if</span>(n&amp;<span class="hljs-number">1</span>){<br>                ans*=x;<br>            }<br>            x*=x;<br>            n&gt;&gt;=<span class="hljs-number">1</span>;<br>        }<br>        <span class="hljs-keyword">return</span> ans;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">myPow</span><span class="hljs-params">(<span class="hljs-type">double</span> x, <span class="hljs-type">int</span> N)</span> </span>{<br>        <span class="hljs-type">double</span> ans=<span class="hljs-number">1</span>;  <br>        <span class="hljs-type">long</span> <span class="hljs-type">long</span> n=N;  <br>        <span class="hljs-keyword">if</span>(n&lt;<span class="hljs-number">0</span>){<br>            <span class="hljs-comment">// 当n&lt;0时，转换为x^(-n) = 1/(x^n)</span><br>            n=-n;      <br>            x=<span class="hljs-number">1</span>/x;  <br>        }<br>        <span class="hljs-keyword">while</span>(n){<br>            <span class="hljs-keyword">if</span>(n&amp;<span class="hljs-number">1</span>){<span class="hljs-comment">// 判断当前二进制位是否为1</span><br>                ans*=x;  <span class="hljs-comment">// 如果是1，将当前x的幂乘到结果中</span><br>            }<br>            x*=x;    <span class="hljs-comment">// x翻倍，准备下一轮(x^1 -&gt; x^2 -&gt; x^4 -&gt; x^8 ...)</span><br>            n&gt;&gt;=<span class="hljs-number">1</span>;   <span class="hljs-comment">// n右移一位，处理下一个二进制位（n = n / 2）</span><br>        }<br>        <span class="hljs-keyword">return</span> ans;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
 <div class="note note-danger">
-            <p>事实上，当$n&lt;0$时，由于有$x<sup>{-n}=\frac{1}{x</sup>n}$，只需简单转换上述方法仍然适用！</p>
+            <p>事实上，当$n&lt;0$时，由于有$ x^{-n} = \frac{1}{x^n} $，只需简单转换上述方法仍然适用！</p>
           </div>
                 
               </div>
