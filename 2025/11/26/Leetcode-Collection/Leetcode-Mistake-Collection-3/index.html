@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Leetcode-Mistake-Collection.png?raw=true">
 <meta property="article:published_time" content="2025-11-26T13:45:00.000Z">
-<meta property="article:modified_time" content="2025-11-27T05:41:49.092Z">
+<meta property="article:modified_time" content="2025-11-29T14:29:29.219Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="updating">
 <meta property="article:tag" content="Leetcode">
@@ -304,7 +304,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          944 words
+          950 words
         
       </span>
     
@@ -471,9 +471,9 @@ $ = [(num_{i-1} \mod 5) \times (2 \mod 5) + (nums[i] \mod 5)] \mod 5$<br>
 <h3 id="Leetcoe-50-Pow-x-n">Leetcoe 50.Pow(x, n)</h3>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/powx-n">原题链接</a></p>
 <h4 id="快速幂">快速幂</h4>
-<p>简单地说就是如果计算$x<sup>n$，`pow(x,n)`计算的时$x*x*…x$耗时较长，我们可以将$n$分解为二进制数，我们只需要计算$x</sup>1, x^2, x^4, x^8, \dots$，然后根据二进制数的每一位是否为1，来判断是否需要乘到结果中。</p>
+<p>简单地说就是如果计算$x^n$，<code>pow(x,n)</code>计算的时多个 $x$ 相乘耗时较长，我们可以将$n$分解为二进制数，我们只需要计算$x^1, x^2, x^4, x^8, \dots$，然后根据二进制数的每一位是否为1，来判断是否需要乘到结果中。</p>
 <div class="note note-info">
-            <p>当$n=13$时，二进制数为$1101$，$n=13=1+4+8$，有$x<sup>{13}=x</sup>{1+4+8}=x<sup>1*x</sup>4*x^8$，对应的就是二进制每一位的权重。</p>
+            <p>当$n=13$时，二进制数为$1101$，$n=13=1+4+8$，有$ x^{13} = x^{1+4+8} = x^{1} · x^{4} · x^{8} $，对应的就是二进制每一位的权重。</p>
           </div>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">myPow</span><span class="hljs-params">(<span class="hljs-type">double</span> x, <span class="hljs-type">int</span> N)</span> </span>{<br>        <span class="hljs-type">double</span> ans=<span class="hljs-number">1</span>;  <br>        <span class="hljs-type">long</span> <span class="hljs-type">long</span> n=N;  <br>        <span class="hljs-keyword">if</span>(n&lt;<span class="hljs-number">0</span>){<br>            <span class="hljs-comment">// 当n&lt;0时，转换为x^(-n) = 1/(x^n)</span><br>            n=-n;      <br>            x=<span class="hljs-number">1</span>/x;  <br>        }<br>        <span class="hljs-keyword">while</span>(n){<br>            <span class="hljs-keyword">if</span>(n&amp;<span class="hljs-number">1</span>){<span class="hljs-comment">// 判断当前二进制位是否为1</span><br>                ans*=x;  <span class="hljs-comment">// 如果是1，将当前x的幂乘到结果中</span><br>            }<br>            x*=x;    <span class="hljs-comment">// x翻倍，准备下一轮(x^1 -&gt; x^2 -&gt; x^4 -&gt; x^8 ...)</span><br>            n&gt;&gt;=<span class="hljs-number">1</span>;   <span class="hljs-comment">// n右移一位，处理下一个二进制位（n = n / 2）</span><br>        }<br>        <span class="hljs-keyword">return</span> ans;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
 <div class="note note-danger">
@@ -544,7 +544,7 @@ $ = [(num_{i-1} \mod 5) \times (2 \mod 5) + (nums[i] \mod 5)] \mod 5$<br>
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>November 27, 2025</div>
+          <div>November 29, 2025</div>
         </div>
       
       
