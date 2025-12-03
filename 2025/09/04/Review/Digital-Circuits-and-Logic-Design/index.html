@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable2.png?raw=true">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/adder.png?raw=true">
 <meta property="article:published_time" content="2025-09-04T04:58:09.000Z">
-<meta property="article:modified_time" content="2025-12-02T15:18:02.113Z">
+<meta property="article:modified_time" content="2025-12-03T10:28:41.255Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/circuitsymboltable1.png?raw=true">
@@ -304,7 +304,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.7k words
+          7.5k words
         
       </span>
     
@@ -315,7 +315,7 @@
         
         
         
-          56 mins
+          63 mins
         
       </span>
     
@@ -1685,7 +1685,7 @@ TTL标准电源电压为5V</li>
 <div class="note note-info">
             <p>逻辑段一定以关键字BEGIN开始，以关键字END结束。</p>
           </div>
-<h4 id="条件判断（if）">条件判断（if）</h4>
+<h4 id="1-条件判断">1.条件判断</h4>
 <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">IF &lt;条件&gt; THEN <br>语句1；<br>ELSE(或ELSIF)<br>语句2；<br>END IF；<br></code></pre></td></tr></tbody></table></figure>
 <h4 id="十分频器设计">十分频器设计</h4>
 <div class="note note-info">
@@ -1699,6 +1699,77 @@ TTL标准电源电压为5V</li>
 <div class="note note-danger">
             <p>注意这里的<code>fp</code>是一个D触发器，是时序逻辑电路，不需要每次都指定状态，而下面这段代码是组合逻辑电路（未定义为D触发器），所以在条件判断之后每次都需要指定电平状态！</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">SUBDESIGN BCDCNT1<br>(<br>    inclk    : INPUT;      -- 输入时钟<br>    out[3..0]: OUTPUT;     -- BCD计数输出<br>    cy       : OUTPUT      -- 进位标志<br>)<br><br>VARIABLE<br>    count[3..0] : DFF;     -- 4位BCD计数器<br><br>BEGIN<br>    -- 时钟连接<br>    count[].clk = inclk;<br>    <br>    -- BCD计数逻辑<br>    IF count[] == 9 THEN<br>        count[] = 0;       -- 计数到9时清零<br>        cy = VCC;          -- 产生进位信号<br>    ELSE<br>        count[] = count[] + 1;  -- 正常计数<br>        cy = GND;               -- 无进位<br>    END IF;<br>    <br>    -- 输出连接<br>    out[] = count[];<br>END;<br></code></pre></td></tr></tbody></table></figure>
           </div>
+<h4 id="八位比较器">八位比较器</h4>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">SUBDESIGN cmp8<br>(<br>    a[7..0], b[7..0] : INPUT;<br>    dy, xy, equ : OUTPUT;<br>)<br><br>BEGIN<br>    IF (a[7..0] &gt; b[7..0]) THEN<br>        dy = VCC;    -- a &gt; b<br>        xy = GND;<br>        equ = GND;<br>    ELSIF (a[7..0] == b[7..0]) THEN<br>        dy = GND;<br>        xy = GND;<br>        equ = VCC;    -- a = b<br>    ELSE<br>        dy = GND;<br>        xy = VCC;    -- a &lt; b<br>        equ = GND;<br>    END IF;<br>END;<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="2-情况判断">2.情况判断</h4>
+ <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">CASE   组[] IS<br>WHEN 值1 =&gt;  语句1;<br>WHEN 值2 =&gt;  语句2;<br>WHEN 值3  =&gt; 语句3;<br>WHEN  OTHERS =&gt;语句4;<br>END CASE<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="优先权编码器">优先权编码器</h4>
+ <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs AHDL"> SUBDESIGN priority<br>(<br>    low, middle, high : INPUT;<br>    out[1..0]         : OUTPUT;<br>)<br>BEGIN<br>    IF high THEN<br>        out[] = 3;    -- 二进制11<br>    ELSIF middle THEN<br>        out[] = 2;    -- 二进制10<br>    ELSIF low THEN<br>        out[] = 1;    -- 二进制01<br>    ELSE<br>        out[] = 0;    -- 二进制00<br>    END IF;<br>END;<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="三人表决器-v2">三人表决器</h4>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">SUBDESIGN VOTE3<br>(<br>    in[2..0] : INPUT;<br>    out : OUTPUT;<br>)<br>BEGIN<br>    CASE in[] IS<br>        WHEN B"000" =&gt; out = GND;  -- 0人赞成，不通过<br>        WHEN B"001" =&gt; out = GND;  -- 1人赞成，不通过  <br>        WHEN B"010" =&gt; out = GND;  -- 1人赞成，不通过<br>        WHEN B"100" =&gt; out = GND;  -- 1人赞成，不通过<br>        WHEN OTHERS =&gt; out = VCC;  -- 其他情况（2或3人赞成）通过<br>    END CASE;<br>END;<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="3-真值表语句">3.真值表语句</h4>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">SUBDESIGN BCDYMQ<br>(<br>    in[3..0] : INPUT;<br>    a, b, c, d, e, f, g : OUTPUT;<br>)<br>TABLE<br>    i[3..0] =&gt; a, b, c, d, e, f, g;<br>    <br>    H"0" =&gt; 1, 1, 1, 1, 1, 1, 0;    -- 字符0的字型码<br>    H"1" =&gt; 0, 1, 1, 0, 0, 0, 0;    -- 字符1的字型码<br>    H"2" =&gt; 1, 1, 0, 1, 1, 0, 1;    -- 字符2的字型码<br>    H"3" =&gt; 1, 1, 1, 1, 0, 0, 1;    -- 字符3的字型码<br>    H"4" =&gt; 0, 1, 1, 0, 0, 1, 1;    -- 字符4的字型码<br>    H"5" =&gt; 1, 0, 1, 1, 0, 1, 1;    -- 字符5的字型码<br>    H"6" =&gt; 1, 0, 1, 1, 1, 1, 1;    -- 字符6的字型码<br>    H"7" =&gt; 1, 1, 1, 0, 0, 0, 0;    -- 字符7的字型码<br>    H"8" =&gt; 1, 1, 1, 1, 1, 1, 1;    -- 字符8的字型码<br>    H"9" =&gt; 1, 1, 1, 1, 0, 1, 1;    -- 字符9的字型码<br>END TABLE;<br>END;<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p>并不是所有输入值的组合形式都有必要列出，可以在与输出结果无关的输入位上写X(无关)。</p>
+          </div>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">B"0000" =&gt; 1, 1, 1, 1, 1, 1, 0;    -- 显示 0<br>B"0001" =&gt; 0, 1, 1, 0, 0, 0, 0;    -- 显示 1<br>B"0010" =&gt; 1, 1, 0, 1, 1, 0, 1;    -- 显示 2<br>B"0011" =&gt; 1, 1, 1, 1, 0, 0, 1;    -- 显示 3<br>B"0100" =&gt; 0, 1, 1, 0, 0, 1, 1;    -- 显示 4<br>B"0101" =&gt; 1, 0, 1, 1, 0, 1, 1;    -- 显示 5<br>B"0110" =&gt; 1, 0, 1, 1, 1, 1, 1;    -- 显示 6<br>B"0111" =&gt; 1, 1, 1, 0, 0, 0, 0;    -- 显示 7<br>B"1000" =&gt; 1, 1, 1, 1, 1, 1, 1;    -- 显示 8<br>B"1001" =&gt; 1, 1, 1, 1, 0, 1, 1;    -- 显示 9<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="4-默认语句">4.默认语句</h4>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">DEFAULTS<br>结点或组=值；<br>END DEFAULT；<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <ol><li>在逻辑段中只能有一个Defaults语句，并且它必须是关键字BEGIN后的第一个语句</li><li>如果在一个Defaults语句中为一个变量多次赋值，那么只有最后一次赋值有效</li></ol>
+          </div>
+<h4 id="defaults设计三人表决器">defaults设计三人表决器</h4>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">SUBDESIGN   VOTE3<br> ( in[2..0] : INPUT；<br>out : OUTPUT；<br>)<br> BEGIN<br> DEFAULTS<br> out=Vcc；<br>END DEFAULTS；<br>13 AHDL语言及其应用<br>IF (in[]==0)OR(in[]==1)OR (in[]==2)OR (in[]==4) THEN<br> out=GND;<br> END IF;<br> END;<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="AHDL中触发器的类别">AHDL中触发器的类别</h4>
+<p>触发器分类与功能与数字电子电路中完全一样,不需要知道触发器的内部结构和实现,只需会正确调用就可以了。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">触发器类型</th>
+<th style="text-align:center">触发器名称</th>
+<th style="text-align:center">清除信号（低有效）</th>
+<th style="text-align:center">时钟信号端口</th>
+<th style="text-align:center">输入端口</th>
+<th style="text-align:center">输出端口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">D 触发器</td>
+<td style="text-align:center">DFF</td>
+<td style="text-align:center">CLRN</td>
+<td style="text-align:center">CLK</td>
+<td style="text-align:center">D</td>
+<td style="text-align:center">Q</td>
+</tr>
+<tr>
+<td style="text-align:center">T 触发器</td>
+<td style="text-align:center">TFF</td>
+<td style="text-align:center">CLRN</td>
+<td style="text-align:center">CLK</td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">Q</td>
+</tr>
+<tr>
+<td style="text-align:center">JK 触发器</td>
+<td style="text-align:center">JKFF</td>
+<td style="text-align:center">CLRN</td>
+<td style="text-align:center">CLK</td>
+<td style="text-align:center">J/K</td>
+<td style="text-align:center">Q</td>
+</tr>
+<tr>
+<td style="text-align:center">SR 触发器</td>
+<td style="text-align:center">SRFF</td>
+<td style="text-align:center">CLRN</td>
+<td style="text-align:center">CLK</td>
+<td style="text-align:center">S/R</td>
+<td style="text-align:center">Q</td>
+</tr>
+</tbody>
+</table>
+<p>在变量段进行声明：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">VARIABLE<br>寄存器名[n..0]: 触发器名； ---n为触发器的数量<br></code></pre></td></tr></tbody></table></figure>
                 
               </div>
             
@@ -1755,7 +1826,7 @@ TTL标准电源电压为5V</li>
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>December 2, 2025</div>
+          <div>December 3, 2025</div>
         </div>
       
       
