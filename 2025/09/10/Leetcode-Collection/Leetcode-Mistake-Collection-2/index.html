@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Leetcode-Mistake-Collection.png?raw=true">
 <meta property="article:published_time" content="2025-09-10T04:47:08.000Z">
-<meta property="article:modified_time" content="2025-10-10T10:25:47.787Z">
+<meta property="article:modified_time" content="2025-12-04T03:42:46.589Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="updating">
 <meta property="article:tag" content="Leetcode">
@@ -304,7 +304,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3k words
+          3.3k words
         
       </span>
     
@@ -315,7 +315,7 @@
         
         
         
-          26 mins
+          28 mins
         
       </span>
     
@@ -437,7 +437,7 @@
               <div class="markdown-body">
                 
                 <h2 id="Leetcode-160-相交链表">Leetcode 160. 相交链表</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/intersection-of-two-linked-lists?envType=problem-list-v2&amp;envId=hash-table">原题链接</a></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/intersection-of-two-linked-lists?envType=problem-list-v2&amp;envId=hash-table">Leetcode 160. 相交链表</a></p>
 <h3 id="方法一：哈希表">方法一：哈希表</h3>
 <p>遍历ListNodeA，用哈希表存<strong>储链表节点</strong>，再遍历ListNodeB，如果ListNodeB的节点在哈希表中，则返回该节点。</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ListNode *<span class="hljs-title">getIntersectionNode</span><span class="hljs-params">(ListNode *headA, ListNode *headB)</span> </span>{<br>        unordered_set &lt;ListNode *&gt; set;<br>        <span class="hljs-keyword">while</span>(headA!=<span class="hljs-literal">nullptr</span>){<br>            set.<span class="hljs-built_in">insert</span>(headA);<br>            headA=headA-&gt;next;<br>        }<br>        <span class="hljs-keyword">while</span>(headB!=<span class="hljs-literal">nullptr</span>){<br>            <span class="hljs-keyword">if</span>(set.<span class="hljs-built_in">find</span>(headB)!=set.<span class="hljs-built_in">end</span>()){<br>                <span class="hljs-keyword">return</span> headB;<br>            }<br>            headB=headB-&gt;next;<br>        }<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
@@ -456,7 +456,7 @@ $$length.A=a+m$$$$length.B=b+m$$</li>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ListNode *<span class="hljs-title">getIntersectionNode</span><span class="hljs-params">(ListNode *headA, ListNode *headB)</span> </span>{<br>        ListNode *pA=headA, *pB=headB;<br>        <span class="hljs-keyword">while</span>(pA!=pB){<br>            pA=pA==<span class="hljs-literal">nullptr</span>?headB:pA-&gt;next;<br>            pB=pB==<span class="hljs-literal">nullptr</span>?headA:pB-&gt;next;<br>        }<br>        <span class="hljs-keyword">return</span> pA;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
 <hr>
 <h2 id="Leetcode-21-合并两个有序链表">Leetcode 21. 合并两个有序链表</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-two-sorted-lists">原题链接</a></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/merge-two-sorted-lists">Leetcode 21. 合并两个有序链表</a></p>
 
     <div class="fold">
       <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-3b7ab7e6" role="button" aria-expanded="false" aria-controls="collapse-3b7ab7e6">
@@ -474,7 +474,7 @@ $$length.A=a+m$$$$length.B=b+m$$</li>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ListNode* <span class="hljs-title">mergeTwoLists</span><span class="hljs-params">(ListNode* list1, ListNode* list2)</span> </span>{<br>        ListNode *prehead=<span class="hljs-keyword">new</span> <span class="hljs-built_in">ListNode</span>(<span class="hljs-number">-1</span>);<br>        ListNode *pre=prehead;<br>        <span class="hljs-keyword">while</span>(list1!=<span class="hljs-literal">nullptr</span> &amp;&amp; list2!=<span class="hljs-literal">nullptr</span>){<br>            <span class="hljs-keyword">if</span>(list1-&gt;val&lt;=list2-&gt;val){<br>                pre-&gt;next=list1;<br>                list1=list1-&gt;next;<br>            }<br>            <span class="hljs-keyword">else</span> {<br>                pre-&gt;next=list2;<br>                list2=list2-&gt;next;<br>            }<br>            pre=pre-&gt;next;<br>        }<br>        pre-&gt;next=list1==<span class="hljs-literal">nullptr</span>?list2:list1;<br>        <span class="hljs-keyword">return</span> prehead-&gt;next;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
 <hr>
 <h2 id="Leetcode-53-最大子数组和">Leetcode 53. 最大子数组和</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-subarray">原题链接</a></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-subarray">Leetcode 53. 最大子数组和</a></p>
 
     <div class="fold">
       <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-8bbf6858" role="button" aria-expanded="false" aria-controls="collapse-8bbf6858">
@@ -494,7 +494,7 @@ $$f(i)=max(f(i-1)+nums[i],nums[i])$$</p>
 <p>然而还可以进行优化，我们无需显式的表示出<code>f(i)</code>，采用“滚动数组”的思想，只需要用一个变量<code>pre</code>来维护前<code>i-1</code>个<code>f(x)</code>的最大值即可。</p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maxSubArray</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>{<br>        <span class="hljs-type">int</span> maxAns=nums[<span class="hljs-number">0</span>],pre=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">const</span> <span class="hljs-keyword">auto</span>&amp; it:nums){<br>            pre=<span class="hljs-built_in">max</span>(pre+it,it);<br>            maxAns=<span class="hljs-built_in">max</span>(maxAns,pre);<br>        }<br>        <span class="hljs-keyword">return</span> maxAns;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
 <h2 id="Leetcode-739-每日温度">Leetcode 739.每日温度</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/daily-temperatures">原题链接</a></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/daily-temperatures">Leetcode 739. 每日温度</a></p>
 
     <div class="fold">
       <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-e550cd0f" role="button" aria-expanded="false" aria-controls="collapse-e550cd0f">
@@ -547,7 +547,7 @@ $$f(i)=max(f(i-1)+nums[i],nums[i])$$</p>
 <p>$(a_1 + a_2 + \cdots + a_n)^2 $<br>
 $= a_1^2 + a_2^2 + \cdots + a_n^2 + 2\left(a_1a_2 + a_1a_3 + \cdots + a_{n-1}a_n\right)$</p>
 <h2 id="Leetcode-209-长度最小的子数组">Leetcode 209. 长度最小的子数组</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-size-subarray-sum">原题链接</a></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-size-subarray-sum">Leetcode 209. 长度最小的子数组</a></p>
 <h3 id="方法一：前缀和-二分查找">方法一：前缀和+二分查找</h3>
 <p>  我们额外创建一个数组 <code>sums</code> 用于存储数组 <code>nums</code> 的前缀和，其中 <code>sums[i]</code> 表示从 <code>nums[0]</code> 到 <code>nums[i−1]</code> 的元素和。得到前缀和之后，对于每个开始下标 <code>i</code>，可通过二分查找得到大于或等于 <code>i</code> 的最小下标 <code>bound</code>，使得 <code>sums[bound]−sums[i−1]≥s</code>，并更新子数组的最小长度（此时子数组的长度是 <code>bound−(i−1)</code>）。</p>
 <div class="note note-danger">
@@ -577,12 +577,12 @@ $= a_1^2 + a_2^2 + \cdots + a_n^2 + 2\left(a_1a_2 + a_1a_3 + \cdots + a_{n-1}a_n
 <p>  前缀和指的是数组中从第一个元素到当前元素之间所有元素的累加和。具体来说，给定一个数组<code>nums</code>，它的前缀和数组<code>prefix</code>定义为：<code>prefix[i]=nums[0]+nums[1]+…+nums[i-1]</code>，通过前缀和我们可以轻松计算任意连续子区间的和，如<code>prefix[i]-prefix[j]</code>。</p>
 
     <div class="fold">
-      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-62d8ee85" role="button" aria-expanded="false" aria-controls="collapse-62d8ee85">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-7c77404d" role="button" aria-expanded="false" aria-controls="collapse-7c77404d">
         <div class="fold-arrow">▶</div>前缀和练习
       </div>
-      <div class="fold-collapse collapse" id="collapse-62d8ee85">
+      <div class="fold-collapse collapse" id="collapse-7c77404d">
         <div class="fold-content">
-          <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/taking-maximum-energy-from-the-mystic-dungeon?envType=daily-question&amp;envId=2025-10-10">原题链接</a></p><p>由于末尾的<code>n-k</code>为循环终点，必会被取到，因而采用逆序遍历的“前缀和”</p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maximumEnergy</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; energy, <span class="hljs-type">int</span> k)</span> </span>{<br>        <span class="hljs-type">int</span> n=energy.<span class="hljs-built_in">size</span>(),ans=INT_MIN;<br>        <span class="hljs-type">int</span> sum;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=n-k;i&lt;n;i++){<br>            sum=<span class="hljs-number">0</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=i;j&gt;=<span class="hljs-number">0</span>;j-=k){<br>                sum+=energy[j];<br>                ans=<span class="hljs-built_in">max</span>(ans,sum);<br>            }<br>        }<br>        <span class="hljs-keyword">return</span> ans;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
+          <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/taking-maximum-energy-from-the-mystic-dungeon?envType=daily-question&amp;envId=2025-10-10">Leetcode 3076. 数组中的最大字符串值</a></p><p>由于末尾的<code>n-k</code>为循环终点，必会被取到，因而采用逆序遍历的“前缀和”</p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maximumEnergy</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; energy, <span class="hljs-type">int</span> k)</span> </span>{<br>        <span class="hljs-type">int</span> n=energy.<span class="hljs-built_in">size</span>(),ans=INT_MIN;<br>        <span class="hljs-type">int</span> sum;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=n-k;i&lt;n;i++){<br>            sum=<span class="hljs-number">0</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=i;j&gt;=<span class="hljs-number">0</span>;j-=k){<br>                sum+=energy[j];<br>                ans=<span class="hljs-built_in">max</span>(ans,sum);<br>            }<br>        }<br>        <span class="hljs-keyword">return</span> ans;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
         </div>
       </div>
     </div>
@@ -594,6 +594,25 @@ $= a_1^2 + a_2^2 + \cdots + a_n^2 + 2\left(a_1a_2 + a_1a_3 + \cdots + a_{n-1}a_n
   </li>
 </ul>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">minSubArrayLen</span><span class="hljs-params">(<span class="hljs-type">int</span> target, vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>{<br>        <span class="hljs-type">int</span> n=nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-type">int</span> start=<span class="hljs-number">0</span>,end=<span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> sum=<span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> ans=INT_MAX;<br>        <span class="hljs-keyword">while</span>(end&lt;n){<br>            sum+=nums[end];<br>            <span class="hljs-keyword">while</span>(sum&gt;=target){<br>                ans=<span class="hljs-built_in">min</span>(ans,end-start<span class="hljs-number">+1</span>);<br>                sum-=nums[start];<br>                start++;<br>            }<br>            end++;<br>        }<br>        <span class="hljs-keyword">return</span> ans==INT_MAX?<span class="hljs-number">0</span>:ans;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-danger">
+            <p>补充：注意前缀和的使用场景(有些题目用前缀和+滑动窗口也要注意数组是否恒为正数y)</p>
+          </div>
+<h2 id="Leetcode-560-和为k的子数组">Leetcode.560 和为k的子数组</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subarray-sum-equals-k">Leetcode.560 和为k的子数组</a></p>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-0994800d" role="button" aria-expanded="false" aria-controls="collapse-0994800d">
+        <div class="fold-arrow">▶</div> Wrong Version
+      </div>
+      <div class="fold-collapse collapse" id="collapse-0994800d">
+        <div class="fold-content">
+          <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">subarraySum</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> k)</span> </span>{<br>        <span class="hljs-type">int</span> left=<span class="hljs-number">0</span>,right=<span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> n=nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-type">int</span> sum=nums[<span class="hljs-number">0</span>],count=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span>(right!=n){<br>            <span class="hljs-keyword">if</span>(sum&gt;k) {<br>                <span class="hljs-keyword">if</span>(right==left){<br>                    left++;<br>                    right++;<br>                    sum=nums[left];<br>                }<br>                sum-=nums[left];<br>                left++;}<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(sum&lt;k) {<br>                right++;<br>                sum+=nums[right];<br>            }<br>            <span class="hljs-keyword">else</span> {<br>                count++;<br>                sum-=nums[left];<br>                left++;}<br>        }<br>        <span class="hljs-keyword">return</span> count;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
+<h3 id="方法一：哈希表-前缀和">方法一：哈希表+前缀和</h3>
+<p>初始化哈希表记录前缀和0出现1次（对应从数组开头开始的子数组）。遍历每个数时累加得到当前前缀和，检查 当前<code>前缀和 - k</code> 是否在哈希表中，如果在则累加其出现次数到结果中，最后将当前前缀和加入哈希表并更新出现次数。(需要查找用<code>unordered_map</code>时间复杂度为 $O(1)$，不需要有序的<code>map</code>，效率更高)</p>
+<figure class="highlight axapta"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">int</span> subarraySum(vector&lt;<span class="hljs-built_in">int</span>&gt;&amp; nums, <span class="hljs-built_in">int</span> k) {<br>        <span class="hljs-built_in">int</span> <span class="hljs-keyword">count</span>=<span class="hljs-number">0</span>;<br>        <span class="hljs-built_in">int</span> <span class="hljs-keyword">sum</span>=<span class="hljs-number">0</span>;<br>        unordered_map&lt;<span class="hljs-built_in">int</span>,<span class="hljs-built_in">int</span>&gt; mp;<br>        mp[<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> num:nums){<br>            <span class="hljs-keyword">sum</span>+=num;<br>            <span class="hljs-keyword">if</span>(mp.find(<span class="hljs-keyword">sum</span>-k)!=mp.end()){<br>                <span class="hljs-keyword">count</span>+=mp[<span class="hljs-keyword">sum</span>-k];<br>            }<br>            mp[<span class="hljs-keyword">sum</span>]++;<br>        }<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">count</span>;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
                 
               </div>
             
@@ -659,7 +678,7 @@ $= a_1^2 + a_2^2 + \cdots + a_n^2 + 2\left(a_1a_2 + a_1a_3 + \cdots + a_{n-1}a_n
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>October 10, 2025</div>
+          <div>December 4, 2025</div>
         </div>
       
       
