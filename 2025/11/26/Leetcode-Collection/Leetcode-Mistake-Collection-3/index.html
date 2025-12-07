@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Leetcode-Mistake-Collection.png?raw=true">
 <meta property="article:published_time" content="2025-11-26T13:45:00.000Z">
-<meta property="article:modified_time" content="2025-12-04T03:33:08.052Z">
+<meta property="article:modified_time" content="2025-12-07T04:17:14.354Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="updating">
 <meta property="article:tag" content="Leetcode">
@@ -304,7 +304,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          989 words
+          984 words
         
       </span>
     
@@ -442,14 +442,13 @@
 <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/smallest-integer-divisible-by-k?envType=daily-question&amp;envId=2025-11-26">11.25每日一题原题链接：Leetcode 1015. 可被 K 整除的最小整数</a></p>
 <p>以上两道每日一题都有一个相同的特点，成指数级增长，暴力解法必然超时或溢出，我们利用余数相同的数具有相同的整除性质来解决这道题目！</p>
 <h4 id="1-前缀数值的递推关系">1. 前缀数值的递推关系</h4>
-<p>对于二进制数组 nums，第 i 个前缀的二进制值 $num_i$ 与第 i-1 个前缀的关系为：$num_i = num_{i-1} \times 2 + nums[i]$</p>
+<p>对于二进制数组 <code>nums</code>，第 <code>i</code> 个前缀的二进制值 <code>num[i]</code> 与第 <code>i-1</code> 个前缀的关系为：<code>num[i]</code> = <code>num[i-1]</code>*2 + <code>nums[i]</code></p>
 <h4 id="2-转化为余数的递推">2. 转化为余数的递推</h4>
-<p>我们需要判断 $num_i \mod 5 == 0$，根据同余定理：<br>
-$num_i \mod 5 = (num_{i-1} \times 2 + nums[i]) \mod 5 $<br>
-$ = [(num_{i-1} \mod 5) \times (2 \mod 5) + (nums[i] \mod 5)] \mod 5$<br>
-简化得：$num_i \mod 5 = (num_{i-1} \mod 5 \times 2 + nums[i]) \mod 5$</p>
+<p>我们需要判断 <code>num[i]</code> 是否能被 $5$ 整除，根据同余定理：<br>
+<code>num[i] = num[i-1]*2 + nums[i] = [num[i-1] mod 5) * (2 mod 5) + (nums[i] mod 5)] mod 5</code><br>
+简化得：<code>num[i] = (num[i-1]*2 + nums[i]) mod 5</code></p>
 <h4 id="3-用余数代替前缀和">3. 用余数代替前缀和</h4>
-<p>又因为 $ num_{i-1} \mod 5 = prefix_{i-1}$，因而有余数的递推式子  $prefix_i \mod 5 = (prefix_{i-1} \mod 5 \times 2 + nums[i]) \mod 5$</p>
+<p>又因为 <code>num[i-1] mod 5 = prefix[i-1] mod 5</code>，因而有余数的递推式子  <code>num[i] = (num[i-1]*2 + nums[i]) mod 5</code></p>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-title">prefixesDivBy5</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>{<br>        vector &lt;<span class="hljs-type">bool</span>&gt; ans;<br>        <span class="hljs-type">int</span> prefix = <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> length = nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; length; i++) {<br>            prefix = ((prefix*<span class="hljs-number">2</span>) + nums[i]) % <span class="hljs-number">5</span>;<br>            ans.<span class="hljs-built_in">push_back</span>(prefix == <span class="hljs-number">0</span>);<br>        }<br>        <span class="hljs-keyword">return</span> ans;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
 <h3 id="应用-2">应用 2</h3>
 <p>与上一问相同，找到每次计算数字的递推关系式，用同余定理进行余数代换，不同的是需要使用<strong>哈希表</strong>对每次的余数进行存储，若是遇到相同的余数，说明重新进入一个循环，则永远无法被整除。</p>
@@ -460,11 +459,11 @@ $ = [(num_{i-1} \mod 5) \times (2 \mod 5) + (nums[i] \mod 5)] \mod 5$<br>
 <ol>
 <li>
 <p><strong>同余定理的应用</strong><br>
-子数组长度 $j - i$ 是 k 的整数倍等价于 $(j - i) \mod k = 0$，根据同余定理可推导得 $j \mod k = i \mod k$。即：<strong>若这两个索引之间的子数组长度为 k 的整数倍，则两个前缀和的索引对 k 取余结果相同</strong>。</p>
+子数组长度 <code>j - i</code> 是 k 的整数倍等价于 <code>(j - i) mod k = 0</code>，根据同余定理可推导得 <code>j mod k = i mod k</code>。即：<strong>若这两个索引之间的子数组长度为 k 的整数倍，则两个前缀和的索引对 k 取余结果相同</strong>。</p>
 </li>
 <li>
 <p><strong>最大化子数组和的逻辑</strong><br>
-要使 $prefix[j] - prefix[i]$ 最大（且 $j \mod k = i \mod k$），需为每个余数 $r$（$r = j \mod k$）维护此前出现过的最小前缀和 $min[r]$。遍历到 $j$ 时，用 $prefix[j] - min[r]$ 更新最大和，再将 $prefix[j]$ 纳入 $min[r]$ 的最小值更新。</p>
+要使 <code>prefix[j] - prefix[i]</code> 最大（且 <code>j mod k = i mod k</code>），需为每个余数 <code>r</code>（<code>r = j mod k</code>）维护此前出现过的最小前缀和 <code>min[r]</code>。遍历到 <code>j</code> 时，用 <code>prefix[j] - min[r]</code> 更新最大和，再将 <code>prefix[j]</code> 纳入 <code>min[r]</code> 的最小值更新。</p>
 </li>
 </ol>
 <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">long</span> <span class="hljs-type">long</span> <span class="hljs-title">maxSubarraySum</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> k)</span> </span>{<br>        <span class="hljs-type">int</span> n=nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>&gt; <span class="hljs-title">prefix_sum</span><span class="hljs-params">(n<span class="hljs-number">+1</span>)</span></span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {<br>            prefix_sum[i + <span class="hljs-number">1</span>] = prefix_sum[i] + nums[i];<br>        }<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>&gt; <span class="hljs-title">min_s</span><span class="hljs-params">(k, LLONG_MAX / <span class="hljs-number">2</span>)</span></span>; <br>        <span class="hljs-type">long</span> <span class="hljs-type">long</span> ans = LLONG_MIN;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j&lt;prefix_sum.<span class="hljs-built_in">size</span>();j++){<br>            <span class="hljs-type">int</span> i=j%k;<br>            ans=<span class="hljs-built_in">max</span>(ans,prefix_sum[j]-min_s[i]);<br>            min_s[i]=<span class="hljs-built_in">min</span>(min_s[i],prefix_sum[j]);<br>        }<br>        <span class="hljs-keyword">return</span> ans;<br>    }<br>};<br></code></pre></td></tr></tbody></table></figure>
@@ -544,7 +543,7 @@ $ = [(num_{i-1} \mod 5) \times (2 \mod 5) + (nums[i] \mod 5)] \mod 5$<br>
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>December 4, 2025</div>
+          <div>December 7, 2025</div>
         </div>
       
       
