@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Digital%20Circuits%20and%20Logic%20Design.png?raw=true">
 <meta property="article:published_time" content="2025-09-04T04:58:09.000Z">
-<meta property="article:modified_time" content="2025-12-07T04:00:15.492Z">
+<meta property="article:modified_time" content="2025-12-08T11:52:08.916Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Digital%20Circuits%20and%20Logic%20Design.png?raw=true">
@@ -302,7 +302,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.6k words
+          7.9k words
         
       </span>
     
@@ -313,7 +313,7 @@
         
         
         
-          64 mins
+          67 mins
         
       </span>
     
@@ -474,6 +474,12 @@ $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} +
 <ul>
 <li>奇校验码：“1”的个数为奇数</li>
 <li>偶校验码：“1”的个数为偶数</li>
+</ul>
+<h4 id="BCD-码">BCD 码</h4>
+<p>二进制编码十进制的总称，涵盖所有用二进制表示十进制（0-9）的编码方案。</p>
+<ul>
+<li><strong>8421</strong>：按 “8、4、2、1” 的位权分配编码，直接对应十进制数的二进制转换（0000-1001）</li>
+<li><strong>余三码</strong>：基于 8421 码衍生，每个编码比对应 8421 码多 3（二进制 0011），编码范围是 0011-1100</li>
 </ul>
 <h2 id="二、逻辑代数基础">二、逻辑代数基础</h2>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/icmaxwell/p/17374702.html">相关电路符号图</a></p>
@@ -1152,13 +1158,17 @@ $$Y_0=I_1+I_3+I_5+I_7$$
         </div>
       </div>
     </div>
-<h3 id="显示译码器">显示译码器</h3>
+<h3 id="译码器">译码器</h3>
 <h4 id="七段字符显示器">七段字符显示器</h4>
 <p>四位二进制数（0000-1001）</p>
 <div class="note note-info">
             <p>用 72HC138译码器实现逻辑函数：$L=AB+BC+AC$</p><ol><li>使能端$S1=1$$S2=S3=0$</li><li>输入端$A,B,C$对应$A_2$、$A_1$、$A_0$</li><li>将函数转化为最小项的形式</li><li>两次取非，最小项下标对应输出端序号</li></ol>
           </div>
-<h3 id="数据选择器">数据选择器</h3>
+<div class="note note-info">
+            <p>用3-8线译码器74HC138可以构成6-64线译码器，需要（9）片74HC138。</p><ul><li>高位需要 1 片 74HC138：专门处理高 3 位地址，输出 8 个信号控制 8 片低位芯片的使能端；</li><li>低位需要 8 片 74HC138：每片对应高 3 位的 1 种组合，每片提供 8 个输出，8×8=64 个总输出；</li></ul>
+          </div>
+<h4 id="数据分配器">数据分配器</h4>
+<h4 id="数据选择器">数据选择器</h4>
 <p>多输入多输出 有效（高低电平均可）</p>
 <div style="width: 100%; overflow: auto;">
     <table style="width: 100%;">
@@ -1229,6 +1239,9 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
             <p>74LS151（8选1数据选择器）实现4变量逻辑函数$L = \sum m(0,3,5,8,13,15)$（4变量：A、B、C、D）</p><ol><li>地址端匹配<ul><li>74LS151有3个地址端（$A_2$、$A_1$、$A_0$），从4个变量中选3个作为地址端（通常选高位A、B、C），对应关系：$A \rightarrow A_2$、$B \rightarrow A_1$、$C \rightarrow A_0$，剩余变量D作为数据输入控制变量。</li></ul></li><li>按地址变量展开逻辑函数<br>按A、B、C的8种组合（$m_0 \sim m_7$）拆分原函数，确定每个地址对应的数据端$D_0 \sim D_7$取值：<ul><li>$m_0$（$A’B’C’$）：对应原函数$m_0$（$A’B’C’D’$）→ $D_0 = \overline{D}$</li><li>$m_1$（$A’B’C$）：原函数无此最小项 → $D_1 = 0$</li><li>$m_2$（$A’BC’$）：原函数无此最小项 → $D_2 = 0$</li><li>$m_3$（$A’BC$）：对应原函数$m_3$（$A’BCD$）→ $D_3 = D$</li><li>$m_4$（$AB’C’$）：对应原函数$m_8$（$AB’C’D’$）→ $D_4 = \overline{D}$</li><li>$m_5$（$AB’C$）：对应原函数$m_5$（$AB’CD$）→ $D_5 = D$</li><li>$m_6$（$ABC’$）：对应原函数$m_{13}$（$ABC’D$）→ $D_6 = D$</li><li>$m_7$（$ABC$）：对应原函数$m_{15}$（$ABCD$）→ $D_7 = D$</li></ul></li><li>电路连接<ul><li>使能端$\overline{S}$$接低电平（有效）；</li><li>地址端：$A \rightarrow A_2$、$B \rightarrow A_1$、$C \rightarrow A_0$；</li><li>数据端：按上述结果接$D/\overline{D}/0$；</li><li>输出端$Y$即为逻辑函数$L$。</li></ul></li></ol>
           </div>
 <p>选3个变量作为地址端→按地址拆分4变量函数→确定各数据端取值→完成电路连接。</p>
+<div class="note note-info">
+            <ul><li>译码器是数据分配器的 “直接实现方案”，无需额外器件。</li><li>译码器是数据选择器的 “部分组成器件”，需搭配组合门电路才能完成功能。</li></ul>
+          </div>
 <h4 id="三人表决器">三人表决器</h4>
 <ul>
 <li>分类：
@@ -1251,6 +1264,20 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 </li>
 </ul>
 <p>二者功能相反，互为可逆过程</p>
+<h3 id="数值比较器">数值比较器</h3>
+<ul>
+<li>一位比较器
+<ul>
+<li>输入变量：$A$,$B$</li>
+<li>输出变量：$Y_{A&gt;B}$、$Y_{A=B}$、$Y_{A&lt;B}$</li>
+</ul>
+</li>
+<li>多位比较器：从高位比起，相等时向后进行比较</li>
+</ul>
+<p><img src="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/compare.png?raw=true" srcset="/img/loading.gif" lazyload alt="用两片74HC85组成一个八位数值比较器"></p>
+<div class="note note-info">
+            <p>用数值比较器74LS85设计一个余3码有效监测电路，当输入为余3码时，输出为1，否则为0：用两个74LS85，分别控制上下限范围0011~1100。</p>
+          </div>
 <h3 id="加法器">加法器</h3>
 <ul>
 <li>半加器：两个一位二进制数相加，不考虑进位</li>
@@ -1272,9 +1299,11 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 <p>通过逻辑电路事先知道每一位的进位输出信号，而无需从最低位开始向高位逐位传递进位信号。</p>
 <ul>
 <li>优点：每一位的进位输入基本上同时知道，运算速度快。</li>
-<li>缺点：计算结构较为复杂，随着数位增加，电路复杂程度急剧上升。<br>
-一位数值比较器</li>
+<li>缺点：计算结构较为复杂，随着数位增加，电路复杂程度急剧上升。</li>
 </ul>
+<div class="note note-danger">
+            <p>虽然是加法器，但是可以通过 “补码运算” 实现减法的功能</p>
+          </div>
 <h2 id="五、集成触发器">五、集成触发器</h2>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_63028174/article/details/128995698?ops_request_misc=%257B%2522request%255Fid%2522%253A%252241ccdfc61df19f77f26d4cdb84276985%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=41ccdfc61df19f77f26d4cdb84276985&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-4-128995698-null-null.142%5Ev102%5Epc_search_result_base2&amp;utm_term=RS%E8%A7%A6%E5%8F%91%E5%99%A8&amp;spm=1018.2226.3001.4187">时序逻辑电路总结【一】触发器</a><br>
 触发器：具有记忆功能（引入了<strong>反馈机制</strong>）的基本逻辑单元，输出状态<strong>不止与现时的的输入</strong>有关，还<strong>与原来的输入</strong>有关。</p>
@@ -1833,7 +1862,7 @@ TTL标准电源电压为5V</li>
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>December 7, 2025</div>
+          <div>December 8, 2025</div>
         </div>
       
       
