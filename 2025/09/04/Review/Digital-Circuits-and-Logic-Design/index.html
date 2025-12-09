@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Digital%20Circuits%20and%20Logic%20Design.png?raw=true">
 <meta property="article:published_time" content="2025-09-04T04:58:09.000Z">
-<meta property="article:modified_time" content="2025-12-09T10:02:30.778Z">
+<meta property="article:modified_time" content="2025-12-09T13:56:40.190Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Digital%20Circuits%20and%20Logic%20Design.png?raw=true">
@@ -302,7 +302,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.5k words
+          10k words
         
       </span>
     
@@ -313,7 +313,7 @@
         
         
         
-          80 mins
+          85 mins
         
       </span>
     
@@ -524,12 +524,12 @@ $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} +
 </ol>
 
     <div class="fold">
-      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-4f3d470a" role="button" aria-expanded="false" aria-controls="collapse-4f3d470a">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-105f308c" role="button" aria-expanded="false" aria-controls="collapse-105f308c">
         <div class="fold-arrow">▶</div>根据波形图求解表达式
       </div>
-      <div class="fold-collapse collapse" id="collapse-4f3d470a">
+      <div class="fold-collapse collapse" id="collapse-105f308c">
         <div class="fold-content">
-          <p>根据<strong>输出波形为真值</strong>的输入组合，写出逻辑式（类似于 Y=AB+A’B)</p>
+          <p>根据<strong>输出波形为真值</strong>的输入组合，写出逻辑式</p>
         </div>
       </div>
     </div>
@@ -570,8 +570,9 @@ $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} +
 <h4 id="消去法">消去法</h4>
 <p>$$A+\overline{A}B=A+B$$</p>
 <p>$m_0$下标编号规则：原变量取1，反变量取0</p>
-<p>n变量的最小项有n个相邻项：<br>
-相邻项：只有一个变量不同，一对相邻项可以消去一个变量</p>
+<div class="note note-info">
+            <ul><li>n变量的最小项有n个相邻项</li><li>相邻项：只有一个变量不同，<strong>一对相邻项可以消去一个变量</strong></li></ul>
+          </div>
 <h3 id="卡诺图">卡诺图</h3>
 <p>  卡诺图表示按照格雷码（任意两个相邻的编码，仅有 1 位二进制数不同）进行标识，使得相邻变量的组合中只有一个变量不同。卡诺图<strong>排列顺序</strong>：00-&gt;01-&gt;11-&gt;10</p>
 <table>
@@ -703,31 +704,7 @@ $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} +
 上拉电阻：接在输出端和正电源 (Vcc) 之间的电阻，将不确定的信号 “拉” 到高电平，提供一个稳定的高电平输出。二极管与门。<br>
 下拉电阻：接在输出端和地 (GND) 之间的电阻，将不确定的信号 “拉” 到低电平，提供一个稳定的低电平输出。二极管或门。</p>
 <h2 id="四、组合逻辑电路">四、组合逻辑电路</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">组合逻辑电路</th>
-<th style="text-align:center">时序逻辑电路</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">输出只与当前的输入有关，与电路过去的工作状态无关</td>
-<td style="text-align:center">输出与电路过去的工作状态有关</td>
-</tr>
-<tr>
-<td style="text-align:center">不包含存储单元</td>
-<td style="text-align:center">包含存储单元</td>
-</tr>
-</tbody>
-</table>
 <p>根据逻辑电路写出逻辑函数表达式用卡诺图进行化简绘制真值表得到逻辑功能</p>
-<p>流程也可以是反过来：绘制逻辑电路图示先画输出变量的原变量和反变量共同输出的结构</p>
-<h3 id="全加器">全加器</h3>
-<p>全加器是一种用于<strong>二进制加法</strong>的逻辑电路，它可以计算两个二进制位加上一个进位位的和。全加器由三个输入和两个输出组成：两个输入位（A和B）和一个进位位（Cin），以及一个输出位（Sum）和一个进位输出位（Cout）。</p>
-<div class="note note-info">
-            <p>全加器和半加器的区别是加数中包含来自低位的进位输出</p>
-          </div>
 <h3 id="编码器">编码器</h3>
 <p>编码器是用二进制码来表示每个给定的信息符号。（用二进制表示文字符号的过程叫做编码）</p>
 <h4 id="抢答器">抢答器</h4>
@@ -1147,6 +1124,12 @@ $$Y_0=I_1+I_3+I_5+I_7$$
         </tr>
     </tbody></table>
 </div>
+<h3 id="译码器">译码器</h3>
+<h4 id="七段字符显示器">七段字符显示器</h4>
+<p>四位二进制数（0000-1001）</p>
+<div class="note note-info">
+            <p>用 72HC138译码器实现逻辑函数：$L=AB+BC+AC$</p><ol><li>使能端$S1=1$，$S2=S3=0$</li><li>输入端$A,B,C$对应$A_2$、$A_1$、$A_0$</li><li>将函数转化为最小项的形式</li><li>两次取非，最小项下标对应输出端序号</li></ol>
+          </div>
 
     <div class="fold">
       <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-44d96340" role="button" aria-expanded="false" aria-controls="collapse-44d96340">
@@ -1158,12 +1141,6 @@ $$Y_0=I_1+I_3+I_5+I_7$$
         </div>
       </div>
     </div>
-<h3 id="译码器">译码器</h3>
-<h4 id="七段字符显示器">七段字符显示器</h4>
-<p>四位二进制数（0000-1001）</p>
-<div class="note note-info">
-            <p>用 72HC138译码器实现逻辑函数：$L=AB+BC+AC$</p><ol><li>使能端$S1=1$$S2=S3=0$</li><li>输入端$A,B,C$对应$A_2$、$A_1$、$A_0$</li><li>将函数转化为最小项的形式</li><li>两次取非，最小项下标对应输出端序号</li></ol>
-          </div>
 <div class="note note-info">
             <p>用3-8线译码器74HC138可以构成6-64线译码器，需要（9）片74HC138。</p><ul><li>高位需要 1 片 74HC138：专门处理高 3 位地址，输出 8 个信号控制 8 片低位芯片的使能端；</li><li>低位需要 8 片 74HC138：每片对应高 3 位的 1 种组合，每片提供 8 个输出，8×8=64 个总输出；</li></ul>
           </div>
@@ -1240,7 +1217,7 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
           </div>
 <p>选3个变量作为地址端→按地址拆分4变量函数→确定各数据端取值→完成电路连接。</p>
 <div class="note note-info">
-            <ul><li>译码器是数据分配器的 “直接实现方案”，无需额外器件。</li><li>译码器是数据选择器的 “部分组成器件”，需搭配组合门电路才能完成功能。</li></ul>
+            <ul><li>译码器是<strong>数据分配器</strong>的 “直接实现方案”，无需额外器件。</li><li>译码器是<strong>数据选择器</strong>的 “部分组成器件”，需搭配组合门电路才能完成功能。</li></ul>
           </div>
 <h4 id="三人表决器">三人表决器</h4>
 <ul>
@@ -1275,13 +1252,21 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 <li>多位比较器：从高位比起，相等时向后进行比较</li>
 </ul>
 <p><img src="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/compare.png?raw=true" srcset="/img/loading.gif" lazyload alt="用两片74HC85组成一个八位数值比较器"></p>
-<div class="note note-info">
-            <p>用数值比较器74LS85设计一个余3码有效监测电路，当输入为余3码时，输出为1，否则为0：用两个74LS85，分别控制上下限范围0011~1100。</p>
-          </div>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-55264697" role="button" aria-expanded="false" aria-controls="collapse-55264697">
+        <div class="fold-arrow">▶</div>设计一个余3码有效监测电路
+      </div>
+      <div class="fold-collapse collapse" id="collapse-55264697">
+        <div class="fold-content">
+          <p>用数值比较器 74LS85 设计一个<strong>余3码有效监测电路</strong>（当输入为余3码时，输出为1，否则为0）：用两个74LS85，分别控制上下限范围<code>0011~1100</code></p>
+        </div>
+      </div>
+    </div>
 <h3 id="加法器">加法器</h3>
 <ul>
 <li>半加器：两个一位二进制数相加，不考虑进位</li>
-<li>全加器：两个一位二进制数相加，考虑进位
+<li>全加器：两个一位二进制数相加，<strong>考虑进位</strong>
 <ul>
 <li>输入变量：A（加数）,B（加数）,CI（从低位的进位输入）</li>
 <li>输出变量：S（和）, CO（向高位的进位输出）</li>
@@ -1289,7 +1274,7 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 </li>
 </ul>
 <h4 id="多位串行加法器">多位串行加法器</h4>
-<p>依次将进位加法器的进位输出端CO接到高位全加器的进位输出端CI就可以构成多位串行加法器。<br>
+<p>依次将进位加法器的进位输出端CO接到高位全加器的进位输出端CI就可以构成多位<strong>串行</strong>加法器。<br>
 <img src="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/adder.png?raw=true" srcset="/img/loading.gif" lazyload alt="多位串行加法器示意图"></p>
 <ul>
 <li>缺点：低位运算结束产生进位后，高位才能开始全加运算，运算速度较慢。</li>
@@ -1302,11 +1287,15 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 <li>缺点：计算结构较为复杂，随着数位增加，电路复杂程度急剧上升。</li>
 </ul>
 <div class="note note-danger">
-            <p>虽然是加法器，但是可以通过 “补码运算” 实现减法的功能</p>
+            <p>虽然是加法器，但是可以通过 “<strong>补码</strong>运算” <strong>实现减法</strong>的功能</p>
           </div>
+<ul>
+<li>160/162:偶数，十进制计数器</li>
+<li>161/163:奇数，二/十六进制计数器</li>
+</ul>
 <h2 id="五、集成触发器">五、集成触发器</h2>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_63028174/article/details/128995698?ops_request_misc=%257B%2522request%255Fid%2522%253A%252241ccdfc61df19f77f26d4cdb84276985%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=41ccdfc61df19f77f26d4cdb84276985&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-4-128995698-null-null.142%5Ev102%5Epc_search_result_base2&amp;utm_term=RS%E8%A7%A6%E5%8F%91%E5%99%A8&amp;spm=1018.2226.3001.4187">时序逻辑电路总结【一】触发器</a><br>
-触发器：具有记忆功能（引入了<strong>反馈机制</strong>）的基本逻辑单元，输出状态<strong>不止与现时的的输入</strong>有关，还<strong>与原来的输入</strong>有关。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_63028174/article/details/128995698?ops_request_misc=%257B%2522request%255Fid%2522%253A%252241ccdfc61df19f77f26d4cdb84276985%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=41ccdfc61df19f77f26d4cdb84276985&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-4-128995698-null-null.142%5Ev102%5Epc_search_result_base2&amp;utm_term=RS%E8%A7%A6%E5%8F%91%E5%99%A8&amp;spm=1018.2226.3001.4187">时序逻辑电路总结【一】触发器</a></p>
+<p>触发器：具有记忆功能（引入了<strong>反馈机制</strong>）的基本逻辑单元，输出状态<strong>不止与现时的的输入</strong>有关，还<strong>与原来的输入</strong>有关。</p>
 <ul>
 <li>有外触发器：状态改变</li>
 <li>触发信号撤除：维持状态不变</li>
@@ -1463,7 +1452,7 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
           </div>  
 <p>根据特性表推导，钟控JK触发器（高电平有效）的次态表达式为：  $Q^{n+1} = J\overline{Qⁿ} + \overline{K}Qⁿ$（$CP=1$时有效，$CP=0$时$Q^{n+1}=Qⁿ$），该表达式无约束条件，因反馈机制已排除不定态。</p>
 <h4 id="T-触发器">T 触发器</h4>
-<p>次态表达式：$Q<sup>{n+1}=Q</sup>n \oplus T$</p>
+<p>次态表达式：$Q^{n+1} = Q^n \oplus T$</p>
 <div class="note note-info">
             <ul><li>$T=0$ 时保持当前状态</li><li>$T=1$ 时状态翻转</li></ul>
           </div>
@@ -1584,7 +1573,7 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 </table>
 <h2 id="六、时序逻辑电路">六、时序逻辑电路</h2>
 <ul>
-<li>同步：所有触发器共用一个CP，更新状态时所有触发器同时翻转</li>
+<li>同步：所有触发器<strong>共用一个CP</strong>，更新状态时<strong>所有触发器同时翻转</strong></li>
 <li>异步：所有触发器没有共用一个 CP，有CP1,CP2</li>
 </ul>
 <h4 id="分析时序逻辑电路">分析时序逻辑电路</h4>
@@ -1621,13 +1610,9 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 <p>案例介绍：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Hz421879K/?spm_id_from=333.337.search-card.all.click&amp;vd_source=54c2981c1a7a8e0433b7d23096150b7a">利用JK触发器和门电路设计计数器</a></p>
 <h3 id="竞争与险象">竞争与险象</h3>
 <h4 id="检查竞争—冒险">检查竞争—冒险</h4>
-<p>只要输出端的逻辑函数在一定条件下能简化成$ Y = A + A’  或  Y = A \cdot A’ $，则可出现竞争—冒险现象。</p>
-<ul>
-<li>160/162:偶数，十进制计数器</li>
-<li>161/163:奇数，二/十六进制计数器</li>
-</ul>
+<p>只要输出端的逻辑函数在一定条件下能简化成$ Y = A + A’$  或  $Y = A \cdot A’ $，则可出现竞争—冒险现象。</p>
 <h4 id="消除竞争-冒险">消除竞争-冒险</h4>
-<p><strong>“正负相对，余全完”</strong>：对于逻辑函数 $ Y = AB + A’C $，在 $ B = C = 1 $ 时会出现 $ Y = A + A’ $ 的竞争-冒险。通过添加冗余项 $ BC $，将函数修正为：$ Y = AB + A’C + BC $，当 $ B = C = 1 $ 时，$ BC = 1 $，因此 $ Y = 1 + 1 = 1 $（稳态值），消除了 $ A + A’ $ 形式的竞争-冒险。</p>
+<p><strong>“正负相对，余全完”</strong>：对于上式逻辑函数，通过添加冗余项 $ BC $，将函数修正为：$ Y = AB + A’C + BC $，当 $ B = C = 1 $ 时，$ BC = 1 $，因此 $ Y = 1 + 1 = 1 $（稳态值），消除了 $ A + A’ $ 形式的竞争-冒险。</p>
 <h2 id="七、脉冲波形的产生与整形">七、脉冲波形的产生与整形</h2>
 <h3 id="五五五定时器">五五五定时器</h3>
 <p>555定时器因内部包含三个阻值均为5kΩ的电阻（该电阻网络一端接电源$V_{CC}$、另一端接地，三个电阻串联构成分压电路）而得名。<br>
@@ -1888,10 +1873,7 @@ $t_W = RC \ln\frac{V_{CC} - 0}{V_{CC} - \frac{2}{3}V_{CC}} = 1.1RC$</p>
             <p>例如: 表达式$(a,b,c)\text{ &amp; }1$, 1被转化为B"001"，表达式变成$(a,b,c)\text{ &amp; }(0,0,1)$，最后表达式被当作<br>$(a\text{ &amp; }0，b\text{ &amp; }0，c\text{ &amp; }1)=(0,0,c)$。</p>
           </div>
 <div class="note note-danger">
-            <p>在AHDL设计中，要注意在表达式中用Vcc作操作数与用1作操作数的意义是不同的。</p>
-          </div>
-<div class="note note-info">
-            <ul><li>例如:对于等式：$(a,b,c) \text{ &amp; } 1 = (0,0,c)$，而 ${(a,b,c)\text{ &amp; }Vcc=(a,b,c)}$，可见在左边的那个等式中，数值1被带符号扩展至另一个节点组的长度，而在右边的那个等式中,节点Vcc是被复制为另一节点组的长度,然后各表达式再进行组运算。</li></ul>
+            <p>在AHDL设计中，要注意在表达式中用 <strong>Vcc</strong> 作操作数与用 <strong>1</strong> 作操作数的意义是不同的。</p><div class="note note-warning">            <p>对于等式：$(a,b,c) \text{ &amp; } 1 = (0,0,c)$，而 ${(a,b,c)\text{ &amp; }Vcc=(a,b,c)}$，可见在左边的那个等式中，数值1被带符号扩展至另一个节点组的长度，而在右边的那个等式中,节点Vcc是被复制为另一节点组的长度,然后各表达式再进行组运算。</p>          </div>
           </div>
 <h4 id="结点（node）">结点（node）</h4>
 <p>变量段的结点说明语句予以定义，它可被用来记载一个中间表达式的值。</p>
@@ -1984,6 +1966,31 @@ $t_W = RC \ln\frac{V_{CC} - 0}{V_{CC} - \frac{2}{3}V_{CC}} = 1.1RC$</p>
 </table>
 <p>在变量段进行声明：</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">VARIABLE<br>寄存器名[n..0]: 触发器名； ---n为触发器的数量<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <ul><li>FPGA 查找表技术</li><li>CPLD 乘积项技术</li></ul>
+          </div>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-a077caac" role="button" aria-expanded="false" aria-controls="collapse-a077caac">
+        <div class="fold-arrow">▶</div>试用 AHDL 设计一个优先编码器
+      </div>
+      <div class="fold-collapse collapse" id="collapse-a077caac">
+        <div class="fold-content">
+          <p>设计要求：<br>（1）输入端用 H、M、L 表示，高电平有效；<br>（2）输出端要求个数最少；<br>（3）输入端优先级 H 最高，L 最低。</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs AHDl">SUBDESIGN code_priority<br>(<br>  H, M, L : INPUT;<br>  Y1, Y2 : OUTPUT;<br>)<br>BEGIN<br>  TABLE<br>    H, M, L =&gt; Y1, Y2;<br>    1, X, X =&gt; 1, 1;<br>    0, 1, X =&gt; 1, 0;<br>    0, 0, 1 =&gt; 0, 1;<br>    0, 0, 0 =&gt; 0, 0;<br>  END TABLE;<br>END;<br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-9daf4973" role="button" aria-expanded="false" aria-controls="collapse-9daf4973">
+        <div class="fold-arrow">▶</div>用模块化设计思想设计一个 60 进制的计数器
+      </div>
+      <div class="fold-collapse collapse" id="collapse-9daf4973">
+        <div class="fold-content">
+          <p>设计要求：<br>（1）INK 为 1KHZ 信号输入端；<br>（2）60 进制计数器只能对秒信号进行计数；<br>（3）计数器的输出给显示译码器，显示器为 2 位，不需要设计显示译码器。</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">-- 60进制计数器设计（模块化设计）<br>-- 首先设计1KHz分频为1Hz的分频器模块<br>SUBDESIGN freq_divider<br>(<br>    CLK        : INPUT;   -- 1KHz输入时钟<br>    RESET      : INPUT;   -- 复位信号<br>    SEC_PULSE  : OUTPUT;  -- 1Hz秒脉冲输出<br>)<br>VARIABLE<br>    counter[9..0] : DFF;  -- 10位计数器（计数值0-999）<br>BEGIN<br>    DEFAULTS<br>        -- 所有DFF默认时钟为CLK，清零为RESET<br>        counter[].clk = CLK;<br>        counter[].clrn = !RESET;<br>    END DEFAULTS;<br><br>    -- 计数器逻辑<br>    IF counter[] == 999 THEN<br>        -- 计数到999时，下一个CLK回到0<br>        counter[] = 0;<br>        SEC_PULSE = VCC;  -- 输出秒脉冲<br>    ELSE<br>        -- 正常计数<br>        counter[] = counter[] + 1;<br>        SEC_PULSE = GND;  -- 无脉冲输出<br>    END IF;<br>END;<br><br>-- 个位计数器模块（0-9）<br>SUBDESIGN ones_counter<br>(<br>    CLK        : INPUT;   -- 秒脉冲输入<br>    RESET      : INPUT;   -- 复位信号<br>    ONES_OUT   : OUTPUT;  -- 个位输出（BCD码）<br>    CARRY_OUT  : OUTPUT;  -- 进位输出<br>)<br>VARIABLE<br>    count[3..0] : DFF;  -- 4位BCD计数器<br>BEGIN<br>    DEFAULTS<br>        count[].clk = CLK;<br>        count[].clrn = !RESET;<br>        CARRY_OUT = GND;<br>    END DEFAULTS;<br><br>    IF count[] == 9 THEN<br>        -- 个位到9时归零并产生进位<br>        count[] = 0;<br>        CARRY_OUT = VCC;<br>    ELSE<br>        -- 正常计数<br>        count[] = count[] + 1;<br>        CARRY_OUT = GND;<br>    END IF;<br><br>    ONES_OUT = count[];  -- 输出个位BCD码<br>END;<br><br>-- 十位计数器模块（0-5）<br>SUBDESIGN tens_counter<br>(<br>    CLK        : INPUT;   -- 进位脉冲输入<br>    RESET      : INPUT;   -- 复位信号<br>    TENS_OUT   : OUTPUT;  -- 十位输出（BCD码）<br>    RESET_ALL  : OUTPUT;  -- 60进制复位信号<br>)<br>VARIABLE<br>    count[2..0] : DFF;  -- 3位计数器（0-5只需要3位）<br>BEGIN<br>    DEFAULTS<br>        count[].clk = CLK;<br>        count[].clrn = !RESET;<br>        RESET_ALL = GND;<br>    END DEFAULTS;<br><br>    IF count[] == 5 THEN<br>        -- 十位到5时归零（60进制）<br>        count[] = 0;<br>        RESET_ALL = VCC;  -- 产生总复位信号<br>    ELSE<br>        -- 正常计数<br>        count[] = count[] + 1;<br>        RESET_ALL = GND;<br>    END IF;<br><br>    TENS_OUT = count[];  -- 输出十位BCD码<br>END;<br><br>-- 主模块：60进制计数器<br>SUBDESIGN counter_60<br>(<br>    INK        : INPUT;   -- 1KHz时钟输入<br>    RESET      : INPUT;   -- 复位信号<br>    TENS       : OUTPUT;  -- 十位输出（BCD码）<br>    ONES       : OUTPUT;  -- 个位输出（BCD码）<br>)<br>VARIABLE<br>    -- 内部信号<br>    sec_clk      : NODE;   -- 1Hz秒脉冲<br>    ones_carry   : NODE;   -- 个位进位信号<br>    reset_internal : NODE;  -- 内部复位信号<br>BEGIN<br>    -- 实例化分频器：1KHz -&gt; 1Hz<br>    freq_div1: freq_divider<br>    PORT MAP (<br>        CLK =&gt; INK,<br>        RESET =&gt; RESET,<br>        SEC_PULSE =&gt; sec_clk<br>    );<br><br>    -- 实例化个位计数器<br>    ones_cnt: ones_counter<br>    PORT MAP (<br>        CLK =&gt; sec_clk,<br>        RESET =&gt; reset_internal,<br>        ONES_OUT =&gt; ONES,<br>        CARRY_OUT =&gt; ones_carry<br>    );<br><br>    -- 实例化十位计数器<br>    tens_cnt: tens_counter<br>    PORT MAP (<br>        CLK =&gt; ones_carry,<br>        RESET =&gt; reset_internal,<br>        TENS_OUT =&gt; TENS,<br>        RESET_ALL =&gt; reset_internal<br>    );<br>END;<br><br>-- 可选：顶层测试模块<br>SUBDESIGN top_counter<br>(<br>    INK        : INPUT;   -- 1KHz时钟输入<br>    RESET      : INPUT;   -- 复位信号<br>    SEG1[6..0] : OUTPUT;  -- 十位数码管显示（假设为共阳极）<br>    SEG2[6..0] : OUTPUT;  -- 个位数码管显示<br>)<br>VARIABLE<br>    tens_bcd[3..0] : NODE;  -- 十位BCD码<br>    ones_bcd[3..0] : NODE;  -- 个位BCD码<br>BEGIN<br>    -- 实例化60进制计数器<br>    cnt60: counter_60<br>    PORT MAP (<br>        INK =&gt; INK,<br>        RESET =&gt; RESET,<br>        TENS =&gt; tens_bcd,<br>        ONES =&gt; ones_bcd<br>    );<br><br>    -- BCD转7段译码器（共阳极，低电平有效）<br>    -- g,f,e,d,c,b,a 的顺序<br>    TABLE tens_bcd[3..0] =&gt; SEG1[6..0]<br>        0 =&gt; B"1000000";  -- 0<br>        1 =&gt; B"1111001";  -- 1<br>        2 =&gt; B"0100100";  -- 2<br>        3 =&gt; B"0110000";  -- 3<br>        4 =&gt; B"0011001";  -- 4<br>        5 =&gt; B"0010010";  -- 5<br>        6 =&gt; B"0000010";  -- 6<br>        7 =&gt; B"1111000";  -- 7<br>        8 =&gt; B"0000000";  -- 8<br>        9 =&gt; B"0010000";  -- 9<br>    END TABLE;<br><br>    TABLE ones_bcd[3..0] =&gt; SEG2[6..0]<br>        0 =&gt; B"1000000";  -- 0<br>        1 =&gt; B"1111001";  -- 1<br>        2 =&gt; B"0100100";  -- 2<br>        3 =&gt; B"0110000";  -- 3<br>        4 =&gt; B"0011001";  -- 4<br>        5 =&gt; B"0010010";  -- 5<br>        6 =&gt; B"0000010";  -- 6<br>        7 =&gt; B"1111000";  -- 7<br>        8 =&gt; B"0000000";  -- 8<br>        9 =&gt; B"0010000";  -- 9<br>    END TABLE;<br>END;<br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
                 
               </div>
             
