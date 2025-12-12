@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Digital%20Circuits%20and%20Logic%20Design.png?raw=true">
 <meta property="article:published_time" content="2025-09-04T04:58:09.000Z">
-<meta property="article:modified_time" content="2025-12-12T05:17:12.342Z">
+<meta property="article:modified_time" content="2025-12-12T05:54:13.084Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Digital%20Circuits%20and%20Logic%20Design.png?raw=true">
@@ -313,7 +313,7 @@
         
         
         
-          91 mins
+          92 mins
         
       </span>
     
@@ -474,11 +474,15 @@ $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} +
 <ul>
 <li>奇校验码：“1”的个数为奇数</li>
 <li>偶校验码：“1”的个数为偶数</li>
+<li></li>
 </ul>
+<p>奇偶校验码：在信息最后加一个校验码。如果信息有奇数个1，则奇校验码为0，偶校验码为1</p>
 <h4 id="BCD-码">BCD 码</h4>
 <p>二进制编码十进制的总称，涵盖所有用二进制表示十进制（0-9）的编码方案。</p>
 <ul>
 <li><strong>8421</strong>：按 “8、4、2、1” 的位权分配编码，直接对应十进制数的二进制转换（0000-1001）</li>
+<li><strong>2421</strong>：按 “2、4、2、1” 的位权分配编码（0000-0100、1011-1111）</li>
+<li><strong>5421</strong>：按“5、4、2、1” 的位权分配编码（0000-0100、1000-1100）</li>
 <li><strong>余三码</strong>：基于 8421 码衍生，每个编码比对应 8421 码多 3（二进制 0011），编码范围是 0011-1100</li>
 </ul>
 <h2 id="二、逻辑代数基础">二、逻辑代数基础</h2>
@@ -1017,6 +1021,11 @@ $$Y_0=I_1+I_3+I_5+I_7$$
         </div>
       </div>
     </div>
+<h3 id="译码器">译码器</h3>
+<p>输入$n$，输出$2^n$</p>
+<h4 id="二-十进制译码器">二-十进制译码器</h4>
+<p>输入4位，输出10位（0000-1001），其余输出为无效（1010-1111）</p>
+<h4 id="三-八译码器">三-八译码器</h4>
 <div style="width: 100%; overflow: auto;">
     <table style="width: 100%;">
         <tbody><tr>
@@ -1142,9 +1151,6 @@ $$Y_0=I_1+I_3+I_5+I_7$$
         </tr>
     </tbody></table>
 </div>
-<h3 id="译码器">译码器</h3>
-<h4 id="七段字符显示器">七段字符显示器</h4>
-<p>四位二进制数（0000-1001）</p>
 <div class="note note-info">
             <p>用 72HC138译码器实现逻辑函数：$L=AB+BC+AC$</p><ol><li>使能端$S1=1$，$S2=S3=0$</li><li>输入端$A,B,C$对应$A_2$、$A_1$、$A_0$</li><li>将函数转化为最小项的形式</li><li>两次取非，最小项下标对应输出端序号</li></ol>
           </div>
@@ -1162,6 +1168,69 @@ $$Y_0=I_1+I_3+I_5+I_7$$
 <div class="note note-info">
             <p>用3-8线译码器74HC138可以构成6-64线译码器，需要（9）片74HC138。</p><ul><li>高位需要 1 片 74HC138：专门处理高 3 位地址，输出 8 个信号控制 8 片低位芯片的使能端；</li><li>低位需要 8 片 74HC138：每片对应高 3 位的 1 种组合，每片提供 8 个输出，8×8=64 个总输出；</li></ul>
           </div>
+<h4 id="七段字符显示器">七段字符显示器</h4>
+<p>输出到7位数码管上，四位二进制数（0000-1001）</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">输入（$Q_3Q_2Q_1Q_0$）</th>
+<th style="text-align:center">输出（a b c d e f g）</th>
+<th style="text-align:center">显示数码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0 0 0 0</td>
+<td style="text-align:center">1 1 1 1 1 1 0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">0 0 0 1</td>
+<td style="text-align:center">0 1 1 0 0 0 0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">0 0 1 0</td>
+<td style="text-align:center">1 1 0 1 1 0 1</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">0 0 1 1</td>
+<td style="text-align:center">1 1 1 1 0 0 1</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">0 1 0 0</td>
+<td style="text-align:center">0 1 1 0 0 1 1</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">0 1 0 1</td>
+<td style="text-align:center">1 0 1 1 0 1 1</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:center">0 1 1 0</td>
+<td style="text-align:center">1 0 1 1 1 1 1</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td style="text-align:center">0 1 1 1</td>
+<td style="text-align:center">1 1 1 0 0 0 0</td>
+<td style="text-align:center">7</td>
+</tr>
+<tr>
+<td style="text-align:center">1 0 0 0</td>
+<td style="text-align:center">1 1 1 1 1 1 1</td>
+<td style="text-align:center">8</td>
+</tr>
+<tr>
+<td style="text-align:center">1 0 0 1</td>
+<td style="text-align:center">1 1 1 1 0 1 1</td>
+<td style="text-align:center">9</td>
+</tr>
+</tbody>
+</table>
 <h4 id="数据分配器">数据分配器</h4>
 <h4 id="数据选择器">数据选择器</h4>
 <p>多输入多输出 有效（高低电平均可）</p>
@@ -1335,6 +1404,11 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 </tbody>
 </table>
 <p>通过级联获得大容量$N$进制计数器</p>
+<h3 id="竞争与险象">竞争与险象</h3>
+<h4 id="检查竞争—冒险">检查竞争—冒险</h4>
+<p>竞争的定义是信号经不同路径到达同一点的时间差，只要输出端的逻辑函数在一定条件下能简化成$ Y = A + A’$  或  $Y = A \cdot A’ $，则可出现竞争—冒险现象。（卡诺图中，若两个相邻最小项分属不同包围圈）</p>
+<h4 id="消除竞争-冒险">消除竞争-冒险</h4>
+<p><strong>“正负相对，余全完”</strong>：对于上式逻辑函数，通过添加冗余项 $ BC $，将函数修正为：$ Y = AB + A’C + BC $，当 $ B = C = 1 $ 时，$ BC = 1 $，因此 $ Y = 1 + 1 = 1 $（稳态值），消除了 $ A + A’ $ 形式的竞争-冒险。</p>
 <h2 id="五、集成触发器">五、集成触发器</h2>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_63028174/article/details/128995698?ops_request_misc=%257B%2522request%255Fid%2522%253A%252241ccdfc61df19f77f26d4cdb84276985%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=41ccdfc61df19f77f26d4cdb84276985&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-4-128995698-null-null.142%5Ev102%5Epc_search_result_base2&amp;utm_term=RS%E8%A7%A6%E5%8F%91%E5%99%A8&amp;spm=1018.2226.3001.4187">时序逻辑电路总结【一】触发器</a></p>
 <p>触发器：具有记忆功能（引入了<strong>反馈机制</strong>）的基本逻辑单元，输出状态<strong>不止与现时的的输入</strong>有关，还<strong>与原来的输入</strong>有关。</p>
@@ -1662,11 +1736,6 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 <li>画电路图</li>
 </ol>
 <p>案例介绍：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Hz421879K/?spm_id_from=333.337.search-card.all.click&amp;vd_source=54c2981c1a7a8e0433b7d23096150b7a">利用JK触发器和门电路设计计数器</a></p>
-<h3 id="竞争与险象">竞争与险象</h3>
-<h4 id="检查竞争—冒险">检查竞争—冒险</h4>
-<p>竞争的定义是信号经不同路径到达同一点的时间差，只要输出端的逻辑函数在一定条件下能简化成$ Y = A + A’$  或  $Y = A \cdot A’ $，则可出现竞争—冒险现象。（卡诺图中，若两个相邻最小项分属不同包围圈）</p>
-<h4 id="消除竞争-冒险">消除竞争-冒险</h4>
-<p><strong>“正负相对，余全完”</strong>：对于上式逻辑函数，通过添加冗余项 $ BC $，将函数修正为：$ Y = AB + A’C + BC $，当 $ B = C = 1 $ 时，$ BC = 1 $，因此 $ Y = 1 + 1 = 1 $（稳态值），消除了 $ A + A’ $ 形式的竞争-冒险。</p>
 <h3 id="寄存器">寄存器</h3>
 <ul>
 <li>单拍：接受指令即可完成贮存</li>
@@ -1706,7 +1775,7 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 <p><strong>串行进位</strong>：以低位片的<strong>进位输出</strong>信号作为高位片的<strong>时钟输入</strong>信号，两片始终处于计数状态</p>
 </li>
 <li>
-<p><strong>并行进位</strong>：以低位片的<strong>进位输出</strong>信号作为高位片的<strong>使能端</strong>信号，两片的clk同时接计数输入信号。</p>
+<p><strong>并行进位</strong>：以低位片的<strong>进位输出</strong>信号作为高位片的<strong>使能端</strong>信号，两片的clk同时接计数输入信号</p>
 </li>
 </ul>
 <h4 id="计数容量M大于芯片容量N的计数器">计数容量M大于芯片容量N的计数器</h4>
@@ -1716,8 +1785,8 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 </ul>
 <h2 id="七、脉冲波形的产生与整形">七、脉冲波形的产生与整形</h2>
 <h3 id="五五五定时器">五五五定时器</h3>
-<p>555定时器因内部包含三个阻值均为5kΩ的电阻（该电阻网络一端接电源$V_{CC}$、另一端接地，三个电阻串联构成分压电路）而得名。<br>
-该电阻网络对$V_{CC}$进行分压后，可提供两个基准电压：上方两个电阻的连接点（对应阈值端$TH$的比较参考点）电压为$\frac{2}{3}V_{CC}$，下方两个电阻的连接点（对应触发端$TR$的比较参考点）电压为$\frac{1}{3}V_{CC}$。</p>
+<p>555定时器因内部包含三个阻值均为5kΩ的电阻（该电阻网络一端接电源$V_{CC}$、另一端接地，三个电阻串联构成分压电路）而得名。</p>
+<p>该电阻网络对$V_{CC}$进行分压后，可提供两个基准电压：上方两个电阻的连接点（对应阈值端$TH$的比较参考点）电压为$\frac{2}{3}V_{CC}$，下方两个电阻的连接点（对应触发端$TR$的比较参考点）电压为$\frac{1}{3}V_{CC}$。</p>
 <p>555定时器内部包含两个电压比较器：</p>
 <ul>
 <li>阈值端$TH$接入<strong>第一个比较器的反相输入端</strong>，当$TH$的输入电压与$\frac{2}{3}V_{CC}$比较；</li>
