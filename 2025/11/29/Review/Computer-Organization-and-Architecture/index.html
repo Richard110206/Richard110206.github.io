@@ -27,7 +27,7 @@
 <meta property="og:description" content="浮点运算方法和浮点运算器  零操作数检查 比较阶码大小并完成对阶（小阶向大阶看齐）：对齐小数点，以便进行尾数的加减运算  尾数左移为什么会导致最高有效位的缺失，造成的误差较大 尾数右移最低有效位缺失，造成的误差较小，每右移一位，阶码加一，右移位数等于阶差  尾数求和：与定点数加减法方法相同 规格化处理：尾数右移实现规格化 舍入处理：规格化后最低有效位丢失，会造成一定误差，要进行舍入处理  就近舍入">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-11-29T13:49:43.000Z">
-<meta property="article:modified_time" content="2025-11-29T14:02:16.574Z">
+<meta property="article:modified_time" content="2025-12-12T05:09:37.515Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Computer Science">
 <meta name="twitter:card" content="summary_large_image">
@@ -301,7 +301,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k words
+          2.9k words
         
       </span>
     
@@ -312,7 +312,7 @@
         
         
         
-          22 mins
+          25 mins
         
       </span>
     
@@ -709,6 +709,25 @@
 <h4 id="位扩展">位扩展</h4>
 <p>存储介质：具有两种明显区别且稳定的物理状态（分别表示0和1） 通常使用半导体材料或者磁化材料</p>
 <p>还是ssh快 给vercel配置域名 现在域名注册商处添加CNAME解析</p>
+<p>总线</p>
+<p>分类：</p>
+<ol>
+<li>内部总线：cpu内部</li>
+<li>系统总线：cpu同其他计算机系统的其他高速功能不限相互连接的总线</li>
+<li>io总线</li>
+</ol>
+<p>在任何时刻只可以有一个部件向总线上发送消息，但却可以有一个或多个部件接收消息</p>
+<p>总线结构</p>
+<p>组成：连接设备的信号线</p>
+<p>数据总线的宽度决定连接到总线上的设备可能获得的最大性能</p>
+<p>地址总线</p>
+<p>控制总线</p>
+<p>多个部件之间采用总线连接的方式，可大大降低部件间互联的复杂性，大幅度减少连接的数量</p>
+<p>将多个部件之间的连接的多个控制接口变成了每个部件与总线间的一个连接接口，连接接口的器材量减少</p>
+<p>如果有设备之间没有或者很少有多个部件同时进行信息交换，总线效率高（只需要提升总线，征用的问题容易被解决）</p>
+<p>单总线结构</p>
+<p>双总线结构：在cpu和主存专门设置了一组高速存储总线，使cpu通过专用总线与内存交换消息，减轻系统总线的负担</p>
+<p>三总线结构：在双总线的基础上增加了io总线形成的</p>
 
                 
               </div>
@@ -773,7 +792,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>November 29, 2025</div>
+          <div>December 12, 2025</div>
         </div>
       
       
