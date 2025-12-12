@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Digital%20Circuits%20and%20Logic%20Design.png?raw=true">
 <meta property="article:published_time" content="2025-09-04T04:58:09.000Z">
-<meta property="article:modified_time" content="2025-12-12T05:54:13.084Z">
+<meta property="article:modified_time" content="2025-12-12T06:12:35.772Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Digital%20Circuits%20and%20Logic%20Design.png?raw=true">
@@ -313,7 +313,7 @@
         
         
         
-          92 mins
+          91 mins
         
       </span>
     
@@ -578,7 +578,7 @@ $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} +
             <ul><li>n变量的最小项有n个相邻项</li><li>相邻项：只有一个变量不同，<strong>一对相邻项可以消去一个变量</strong></li></ul>
           </div>
 <h3 id="卡诺图">卡诺图</h3>
-<p>  卡诺图表示按照格雷码（任意两个相邻的编码，仅有 1 位二进制数不同）进行标识，使得相邻变量的组合中只有一个变量不同。卡诺图<strong>排列顺序</strong>：00-&gt;01-&gt;11-&gt;10</p>
+<p>  卡诺图表示按照<strong>格雷码</strong>（任意两个相邻的编码，仅有 1 位二进制数不同）进行标识，使得相邻变量的组合中只有一个变量不同。卡诺图<strong>排列顺序</strong>：00-&gt;01-&gt;11-&gt;10</p>
 <table>
 <thead>
 <tr>
@@ -708,25 +708,27 @@ $$M = b_{-1} \times X^{-1} + b_{-2} \times X^{-2} + … + b_{-k} \times X^{-k} +
       </div>
     </div>
 <h3 id="CMOS集成">CMOS集成</h3>
-<h4 id="传输门">传输门</h4>
-<h4 id="三态门">三态门</h4>
+<ul>
+<li>传输门</li>
+<li>三态门
 <ul>
 <li>$\overline{EN}=1$时，$Y=Z$，输出为高阻态</li>
 <li>$\overline{EN}=0$时，$Y=\overline{A}$</li>
 </ul>
-<h4 id="漏极开路门（OD门）">漏极开路门（OD门）</h4>
+</li>
+<li>漏极开路门（OD门）
 <ul>
 <li>可以<strong>实现线与</strong>的功能</li>
 <li>工作时必须<strong>外接电源和电阻</strong></li>
 </ul>
+</li>
+</ul>
 <h3 id="TTL">TTL</h3>
-<h4 id="OC门">OC门</h4>
-<h4 id="三态门-v2">三态门</h4>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40483920/article/details/107966986">数字电子技术基础（四）：门电路（二极管）</a><br>
-上拉电阻：接在输出端和正电源 (Vcc) 之间的电阻，将不确定的信号 “拉” 到高电平，提供一个稳定的高电平输出。二极管与门。<br>
-下拉电阻：接在输出端和地 (GND) 之间的电阻，将不确定的信号 “拉” 到低电平，提供一个稳定的低电平输出。二极管或门。</p>
+<ul>
+<li>OC门</li>
+<li>三态门</li>
+</ul>
 <h2 id="四、组合逻辑电路">四、组合逻辑电路</h2>
-<p>根据逻辑电路写出逻辑函数表达式用卡诺图进行化简绘制真值表得到逻辑功能</p>
 <h3 id="编码器">编码器</h3>
 <p>编码器是用二进制码来表示每个给定的信息符号。（用二进制表示文字符号的过程叫做编码）</p>
 <h4 id="抢答器">抢答器</h4>
@@ -995,17 +997,14 @@ $$Y_0=I_1+I_3+I_5+I_7$$
 <div class="note note-danger">
             <p>输入数越高<strong>优先级越大</strong></p>
           </div>
-<div class="note note-info">
-            <p>实例：74HC148，74LS148 电路原件中圆圈表示低电平有效</p>
-          </div>
 
     <div class="fold">
-      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-61f80797" role="button" aria-expanded="false" aria-controls="collapse-61f80797">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-4d9d869d" role="button" aria-expanded="false" aria-controls="collapse-4d9d869d">
         <div class="fold-arrow">▶</div>如何寻找芯片的 1 引脚？
       </div>
-      <div class="fold-collapse collapse" id="collapse-61f80797">
+      <div class="fold-collapse collapse" id="collapse-4d9d869d">
         <div class="fold-content">
-          <p>将芯片<strong>缺口放在左边</strong>，左下角第一个为1号引脚，<strong>逆时针方向旋转</strong>计数引脚依次增大</p>
+          <p>将芯片<strong>缺口放在左边</strong>，左下角第一个为 1 号引脚，<strong>逆时针方向旋转</strong>计数引脚依次增大</p>
         </div>
       </div>
     </div>
@@ -1023,9 +1022,9 @@ $$Y_0=I_1+I_3+I_5+I_7$$
     </div>
 <h3 id="译码器">译码器</h3>
 <p>输入$n$，输出$2^n$</p>
-<h4 id="二-十进制译码器">二-十进制译码器</h4>
+<h4 id="二-十译码器">二 - 十译码器</h4>
 <p>输入4位，输出10位（0000-1001），其余输出为无效（1010-1111）</p>
-<h4 id="三-八译码器">三-八译码器</h4>
+<h4 id="三-八译码器">三 - 八译码器</h4>
 <div style="width: 100%; overflow: auto;">
     <table style="width: 100%;">
         <tbody><tr>
@@ -1154,17 +1153,6 @@ $$Y_0=I_1+I_3+I_5+I_7$$
 <div class="note note-info">
             <p>用 72HC138译码器实现逻辑函数：$L=AB+BC+AC$</p><ol><li>使能端$S1=1$，$S2=S3=0$</li><li>输入端$A,B,C$对应$A_2$、$A_1$、$A_0$</li><li>将函数转化为最小项的形式</li><li>两次取非，最小项下标对应输出端序号</li></ol>
           </div>
-
-    <div class="fold">
-      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-44d96340" role="button" aria-expanded="false" aria-controls="collapse-44d96340">
-        <div class="fold-arrow">▶</div>案例
-      </div>
-      <div class="fold-collapse collapse" id="collapse-44d96340">
-        <div class="fold-content">
-          <p>用两个3线-8线译码器组成4线-16线译码器</p>
-        </div>
-      </div>
-    </div>
 <div class="note note-info">
             <p>用3-8线译码器74HC138可以构成6-64线译码器，需要（9）片74HC138。</p><ul><li>高位需要 1 片 74HC138：专门处理高 3 位地址，输出 8 个信号控制 8 片低位芯片的使能端；</li><li>低位需要 8 片 74HC138：每片对应高 3 位的 1 种组合，每片提供 8 个输出，8×8=64 个总输出；</li></ul>
           </div>
@@ -1339,17 +1327,9 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 <li>多位比较器：从高位比起，相等时向后进行比较</li>
 </ul>
 <p><img src="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/compare.png?raw=true" srcset="/img/loading.gif" lazyload alt="用两片74HC85组成一个八位数值比较器"></p>
-
-    <div class="fold">
-      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-55264697" role="button" aria-expanded="false" aria-controls="collapse-55264697">
-        <div class="fold-arrow">▶</div>设计一个余3码有效监测电路
-      </div>
-      <div class="fold-collapse collapse" id="collapse-55264697">
-        <div class="fold-content">
-          <p>用数值比较器 74LS85 设计一个<strong>余3码有效监测电路</strong>（当输入为余3码时，输出为1，否则为0）：用两个74LS85，分别控制上下限范围<code>0011~1100</code></p>
-        </div>
-      </div>
-    </div>
+<div class="note note-info">
+            <p>用数值比较器 74LS85 设计一个<strong>余3码有效监测电路</strong>（当输入为余3码时，输出为1，否则为0）：用两个74LS85，分别控制上下限范围<code>0011~1100</code></p>
+          </div>
 <h3 id="加法器">加法器</h3>
 <ul>
 <li>半加器：两个一位二进制数相加，不考虑进位</li>
@@ -1367,8 +1347,8 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 <p>依次将进位加法器的进位输出端CO接到高位全加器的进位输出端CI就可以构成多位<strong>串行</strong>加法器。<br>
 <img src="https://github.com/Richard110206/Blog-image/blob/main/article/Review/DigitalCircuits/adder.png?raw=true" srcset="/img/loading.gif" lazyload alt="多位串行加法器示意图"></p>
 <ul>
-<li>缺点：低位运算结束产生进位后，高位才能开始全加运算，运算速度较慢。</li>
 <li>优点：计算结构较为简单</li>
+<li>缺点：低位运算结束产生进位后，高位才能开始全加运算，运算速度较慢。</li>
 </ul>
 <h4 id="超前进位加法器">超前进位加法器</h4>
 <p>通过逻辑电路事先知道每一位的进位输出信号，而无需从最低位开始向高位逐位传递进位信号。</p>
@@ -1379,12 +1359,12 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 <div class="note note-danger">
             <p>虽然是加法器，但是可以通过 “<strong>补码</strong>运算” <strong>实现减法</strong>的功能</p>
           </div>
-<h4 id="计数器">计数器</h4>
+<h3 id="计数器">计数器</h3>
 <ul>
 <li>74LS160/74LS162:偶数，十进制计数器</li>
-<li>74LS161/74LS163:奇数，二/十六进制计数器<br>
-置数方式相同；前者异步清零，后者同步清零</li>
+<li>74LS161/74LS163:奇数，二/十六进制计数器</li>
 </ul>
+<p>置数方式相同；前者异步清零，后者同步清零</p>
 <table>
 <thead>
 <tr>
@@ -1395,7 +1375,7 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 <tbody>
 <tr>
 <td style="text-align:center">同步清零</td>
-<td style="text-align:center">计数到$S_{n}$时，清零</td>
+<td style="text-align:center">计数到$S_{n-1}$时，清零</td>
 </tr>
 <tr>
 <td style="text-align:center">异步清零</td>
@@ -1403,7 +1383,32 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 </tr>
 </tbody>
 </table>
-<p>通过级联获得大容量$N$进制计数器</p>
+<h4 id="复位法">复位法</h4>
+<p>从$S_0$一直到$S_{M-1}$，遇到$S_{M-1}$后，下一步归零。适合有复位（清零）输入端的计数器。</p>
+<h4 id="置数法">置数法</h4>
+<ol>
+<li>把节点送到置数（置位）端（$LD$）：
+<ul>
+<li>要取前$M$个状态，把$S_{M-1}$送进去；</li>
+<li>要取后$M$个状态，把$S_{N-M}$送进去。</li>
+</ul>
+</li>
+<li>取$S_i$开始的$M$个状态，把$S_{i+M-1}$送进去，预置数据输入端输入$S_i$。</li>
+</ol>
+<h4 id="多片计数器级联">多片计数器级联</h4>
+<ul>
+<li>
+<p><strong>串行进位</strong>：以低位片的<strong>进位输出</strong>信号作为高位片的<strong>时钟输入</strong>信号，两片始终处于计数状态</p>
+</li>
+<li>
+<p><strong>并行进位</strong>：以低位片的<strong>进位输出</strong>信号作为高位片的<strong>使能端</strong>信号，两片的clk同时接计数输入信号</p>
+</li>
+</ul>
+<h4 id="计数容量M大于芯片容量N的计数器">计数容量M大于芯片容量N的计数器</h4>
+<ul>
+<li>$M=M1·M2$：串行进位，并行进位，</li>
+<li>$M$是素数：整体清零，整体置数。</li>
+</ul>
 <h3 id="竞争与险象">竞争与险象</h3>
 <h4 id="检查竞争—冒险">检查竞争—冒险</h4>
 <p>竞争的定义是信号经不同路径到达同一点的时间差，只要输出端的逻辑函数在一定条件下能简化成$ Y = A + A’$  或  $Y = A \cdot A’ $，则可出现竞争—冒险现象。（卡诺图中，若两个相邻最小项分属不同包围圈）</p>
@@ -1755,33 +1760,6 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 </ul>
 </li>
 <li><strong>扭环形计数器</strong>：在单向移位寄存器的基础上将$D_0=\overline{Q_3}$，实现循环计数：🔄 0000 → 1000 → 1100 → 1110 → 1111 → 0111 → 0011 → 0001 → 0000 🔄</li>
-</ul>
-<h3 id="计数器-v2">计数器</h3>
-<h4 id="复位法">复位法</h4>
-<p>从$S_0$一直到$S_{M-1}$，遇到$S_{M-1}$后，下一步归零。适合有复位（清零）输入端的计数器。</p>
-<h4 id="置数法">置数法</h4>
-<ol>
-<li>把节点送到置数（置位）端（$LD$）：
-<ul>
-<li>要取前$M$个状态，把$S_{M-1}$送进去；</li>
-<li>要取后$M$个状态，把$S_{N-M}$送进去。</li>
-</ul>
-</li>
-<li>取$S_i$开始的$M$个状态，把$S_{i+M-1}$送进去，预置数据输入端输入$S_i$。</li>
-</ol>
-<h4 id="多片计数器级联">多片计数器级联</h4>
-<ul>
-<li>
-<p><strong>串行进位</strong>：以低位片的<strong>进位输出</strong>信号作为高位片的<strong>时钟输入</strong>信号，两片始终处于计数状态</p>
-</li>
-<li>
-<p><strong>并行进位</strong>：以低位片的<strong>进位输出</strong>信号作为高位片的<strong>使能端</strong>信号，两片的clk同时接计数输入信号</p>
-</li>
-</ul>
-<h4 id="计数容量M大于芯片容量N的计数器">计数容量M大于芯片容量N的计数器</h4>
-<ul>
-<li>$M=M1·M2$：串行进位，并行进位，</li>
-<li>$M$是素数：整体清零，整体置数。</li>
 </ul>
 <h2 id="七、脉冲波形的产生与整形">七、脉冲波形的产生与整形</h2>
 <h3 id="五五五定时器">五五五定时器</h3>
