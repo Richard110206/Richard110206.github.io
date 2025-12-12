@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Digital%20Circuits%20and%20Logic%20Design.png?raw=true">
 <meta property="article:published_time" content="2025-09-04T04:58:09.000Z">
-<meta property="article:modified_time" content="2025-12-12T06:21:19.740Z">
+<meta property="article:modified_time" content="2025-12-12T06:36:15.512Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Digital%20Circuits%20and%20Logic%20Design.png?raw=true">
@@ -1523,13 +1523,13 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 </tbody>
 </table>
 <div class="note note-info">
-            <ul><li><strong>同0保持，同1翻转</strong></li><li><strong>相异跟随$J$</strong></li></ul>
+            <ul><li><strong>00保持，11翻转</strong></li><li><strong>相异跟随$J$</strong></li></ul>
           </div>  
 <p>根据特性表推导，钟控JK触发器（高电平有效）的次态表达式为：  $Q^{n+1} = J\overline{Qⁿ} + \overline{K}Qⁿ$（$CP=1$时有效，$CP=0$时$Q^{n+1}=Qⁿ$），该表达式无约束条件，因反馈机制已排除不定态。</p>
 <h4 id="T’-触发器">T’ 触发器</h4>
-<p>只有翻转功能的触发器，每来一次脉冲改变一次状态，又称为翻转触发器和计数触发器。</p>
+<p><strong>只有翻转功能</strong>的触发器，每来一次脉冲改变一次状态，又称为<strong>翻转</strong>触发器和<strong>计数</strong>触发器。</p>
 <h4 id="T-触发器">T 触发器</h4>
-<p>同时具有保持和翻转功能的触发器。</p>
+<p>同时具有<strong>保持</strong>和<strong>翻转</strong>功能的触发器。</p>
 <p>次态表达式：$Q^{n+1} = Q^n \oplus T$</p>
 <div class="note note-info">
             <ul><li>$T=0$ 时保持当前状态</li><li>$T=1$ 时状态翻转</li></ul>
@@ -1605,9 +1605,6 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
             <p>出现<code>「</code>表示主从方式触发（其余与RS触发器完全相同）</p>
           </div>
 <h4 id="主从JK触发器">主从JK触发器</h4>
-<div class="note note-info">
-            <ul><li><strong>00保持，11翻转</strong></li><li><strong>相异跟随$J$</strong></li></ul>
-          </div> 
 <div class="note note-info">
             <ul><li><strong>没有圈圈代表下降沿触发</strong>（其实是主触发器上升沿触发，但输出的是从触发器是脉冲（下降沿）触发）</li></ul>
           </div>
