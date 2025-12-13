@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Digital%20Circuits%20and%20Logic%20Design.png?raw=true">
 <meta property="article:published_time" content="2025-09-04T04:58:09.000Z">
-<meta property="article:modified_time" content="2025-12-12T10:24:27.517Z">
+<meta property="article:modified_time" content="2025-12-13T14:19:34.952Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Digital%20Circuits%20and%20Logic%20Design.png?raw=true">
@@ -313,7 +313,7 @@
         
         
         
-          92 mins
+          93 mins
         
       </span>
     
@@ -1665,15 +1665,16 @@ $ S $: 控制输入端（若低电平有效可直接接地）</p>
 <li>写方程
 <ul>
 <li>时钟方程（异步）</li>
-<li>驱动方程</li>
-<li>输出方程</li>
+<li>驱动方程（JK触发器对应的值）</li>
+<li>状态方程（代入特性方程）</li>
+<li>输出方程（输出值）</li>
 </ul>
 </li>
 <li>列状态
 <ul>
 <li>状态表：现态、次态（看题目是否有初态，无则从000开始）</li>
-<li>状态转换图：有效状态和有效循环（被利用的状态）</li>
-<li>时序图：可以直接根据状态转换图进行绘制</li>
+<li>状态转换图：有效状态和有效循环（被利用的状态）（注意还有无效状态）</li>
+<li>时序图：可以直接根据状态转换图进行绘制（注意时钟触发方式）</li>
 </ul>
 </li>
 <li>说功能
@@ -2031,6 +2032,10 @@ $t_W = RC \ln\frac{V_{CC} - 0}{V_{CC} - \frac{2}{3}V_{CC}} = 1.1RC$</p>
 <h4 id="1-条件判断">1.条件判断</h4>
 <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">IF &lt;条件&gt; THEN <br>语句1；<br>ELSE(或ELSIF)<br>语句2；<br>END IF；<br></code></pre></td></tr></tbody></table></figure>
 <ul>
+<li><strong>优先权编码器</strong></li>
+</ul>
+ <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs AHDL"> SUBDESIGN priority<br>(<br>    low, middle, high : INPUT;<br>    out[1..0]         : OUTPUT;<br>)<br>BEGIN<br>    IF high THEN<br>        out[] = 3;    -- 二进制11<br>    ELSIF middle THEN<br>        out[] = 2;    -- 二进制10<br>    ELSIF low THEN<br>        out[] = 1;    -- 二进制01<br>    ELSE<br>        out[] = 0;    -- 二进制00<br>    END IF;<br>END;<br></code></pre></td></tr></tbody></table></figure>
+<ul>
 <li><strong>十分频器设计</strong></li>
 </ul>
 <div class="note note-info">
@@ -2050,10 +2055,6 @@ $t_W = RC \ln\frac{V_{CC} - 0}{V_{CC} - \frac{2}{3}V_{CC}} = 1.1RC$</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">SUBDESIGN cmp8<br>(<br>    a[7..0], b[7..0] : INPUT;<br>    dy, xy, equ : OUTPUT;<br>)<br><br>BEGIN<br>    IF (a[7..0] &gt; b[7..0]) THEN<br>        dy = VCC;    -- a &gt; b<br>        xy = GND;<br>        equ = GND;<br>    ELSIF (a[7..0] == b[7..0]) THEN<br>        dy = GND;<br>        xy = GND;<br>        equ = VCC;    -- a = b<br>    ELSE<br>        dy = GND;<br>        xy = VCC;    -- a &lt; b<br>        equ = GND;<br>    END IF;<br>END;<br></code></pre></td></tr></tbody></table></figure>
 <h4 id="2-情况判断">2.情况判断</h4>
  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs AHDL">CASE   组[] IS<br>WHEN 值1 =&gt;  语句1;<br>WHEN 值2 =&gt;  语句2;<br>WHEN 值3  =&gt; 语句3;<br>WHEN  OTHERS =&gt;语句4;<br>END CASE<br></code></pre></td></tr></tbody></table></figure>
-<ul>
-<li><strong>优先权编码器</strong></li>
-</ul>
- <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs AHDL"> SUBDESIGN priority<br>(<br>    low, middle, high : INPUT;<br>    out[1..0]         : OUTPUT;<br>)<br>BEGIN<br>    IF high THEN<br>        out[] = 3;    -- 二进制11<br>    ELSIF middle THEN<br>        out[] = 2;    -- 二进制10<br>    ELSIF low THEN<br>        out[] = 1;    -- 二进制01<br>    ELSE<br>        out[] = 0;    -- 二进制00<br>    END IF;<br>END;<br></code></pre></td></tr></tbody></table></figure>
 <ul>
 <li><strong>三人表决器</strong></li>
 </ul>
@@ -2215,7 +2216,7 @@ $t_W = RC \ln\frac{V_{CC} - 0}{V_{CC} - \frac{2}{3}V_{CC}} = 1.1RC$</p>
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>December 12, 2025</div>
+          <div>December 13, 2025</div>
         </div>
       
       
