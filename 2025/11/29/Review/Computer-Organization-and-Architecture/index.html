@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Computer%20Organization.jpg?raw=true">
 <meta property="article:published_time" content="2025-11-29T13:49:43.000Z">
-<meta property="article:modified_time" content="2026-01-03T13:30:26.039Z">
+<meta property="article:modified_time" content="2026-01-03T13:36:52.459Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Computer Science">
 <meta name="twitter:card" content="summary_large_image">
@@ -514,8 +514,11 @@
 <li>
 <p>随机存储器RAM</p>
 <ul>
-<li>优点：对RAM任意单元的<strong>读写时间相同</strong>，与物理地址无关（类似数组）</li>
-<li>缺点：一旦断电，RAM失去存储信息
+<li>
+<p>优点：对RAM任意单元的<strong>读写时间相同</strong>，与物理地址无关（类似数组）</p>
+</li>
+<li>
+<p>缺点：一旦断电，RAM失去存储信息</p>
 <ul>
 <li>静态SRAM：双稳态触发器，制造cache</li>
 <li>动态DRAM：mos管和电容，主存</li>
@@ -585,34 +588,49 @@
             <ul><li>1 s（秒）= 10³ ms（毫秒）= 1000 ms</li><li>1 ms（毫秒）= 10³ μs（微秒）= 1000 μs</li><li>1 μs（微秒）= 10³ ns（纳秒）= 1000 ns</li></ul>
           </div>
 <ul>
-<li>访问时间：
+<li>
+<p>访问时间：</p>
 <ul>
 <li>读出时间$T_A$</li>
 <li>写入时间$T_W$</li>
 </ul>
 </li>
-<li>存储周期：进行一次<strong>读写操作</strong>所需要的全部时间，就是存储器进行连续读写操作所允许的最短时间间隔</li>
-<li>存储带宽：表示存储器被连续访问时可以提供的数据传送速率，字节/秒</li>
+<li>
+<p>存储周期：进行一次<strong>读写操作</strong>所需要的全部时间，就是存储器进行连续读写操作所允许的最短时间间隔</p>
+</li>
+<li>
+<p>存储带宽：表示存储器被连续访问时可以提供的数据传送速率，字节/秒</p>
+</li>
 </ul>
 <div class="note note-info">
             <ul><li>存取时间：存储器从读出或者写入一次信息所需要的平均时间</li><li>存取周期：<strong>连续两次访问存储器</strong>之间所必需的最短时间间隔</li></ul>
           </div>
 <h4 id="存储介质">存储介质</h4>
 <ul>
-<li>磁存储器：存取速度慢，但成本低</li>
-<li>光存储器：用激光束照射盘面，靠盘面的不同反射率来读出数据，便于携带</li>
-<li>半导体存储器</li>
+<li>
+<p>磁存储器：存取速度慢，但成本低</p>
+</li>
+<li>
+<p>光存储器：用激光束照射盘面，靠盘面的不同反射率来读出数据，便于携带</p>
+</li>
+<li>
+<p>半导体存储器</p>
+</li>
 </ul>
 <h4 id="RAM工作原理">RAM工作原理</h4>
 <p>存放一个二进制的物理器件叫做存储元，地址码相同的多个存储元构成一个存储单元，若干存储单元的集合构成存储体</p>
 <ul>
-<li>DRAM：用于主存，由mos管和电容组成，当电容存储的电荷数超过阈值（电量），电容所在的存储元表示1
+<li>
+<p>DRAM：用于主存，由mos管和电容组成，当电容存储的电荷数超过阈值（电量），电容所在的存储元表示1</p>
 <ul>
 <li>写入：给高电压，mos管导通，充电</li>
-<li>读出：mos管导通，若电容有电，电流流出，通过外接信号放大器检测电容的电压信息，放电后需要再次充电进行恢复（破坏性读出）；漏电需要刷新 ，重新将电荷充满</li>
+<li>读出：mos管导通，若电容有电，电流流出，通过外接信号放大器检测电容的电压信息，放电后需要再次充电进行恢复（破坏性读出）；漏电需<br>
+要刷新 ，重新将电荷充满</li>
 </ul>
 </li>
-<li>SRAM双稳态触发器（6个mos管）：存取速度按快，用于cache</li>
+<li>
+<p>SRAM双稳态触发器（6个mos管）：存取速度按快，用于cache</p>
+</li>
 </ul>
 <table>
 <thead>
@@ -724,16 +742,25 @@
 <p>动态存储器的刷新<strong>按行进行</strong>，为了减少刷新周期，可以减少存储矩阵的行数，增加列数</p>
 <h3 id="只读存储器ROM">只读存储器ROM</h3>
 <ul>
-<li>掩模式只读存储器MROM：在芯片生产过程中直接写入，写入后任何人都无法改变
+<li>
+<p>掩模式只读存储器MROM：在芯片生产过程中直接写入，写入后任何人都无法改变</p>
 <ul>
 <li>优点：<strong>可靠性高</strong></li>
 <li>缺点：<strong>灵活性差</strong></li>
 </ul>
 </li>
-<li>一次可编程只读存储器<strong>PROM</strong>：允许用户一次性编程写入程序</li>
-<li>可擦除可编程只读存储器<strong>EPROM</strong>：用户可以写入还能进行多次修改，不能取代RAM，因为编程次数有限，而且写入时间过长</li>
-<li><strong>flash</strong>存储器：闪存，支持快速擦出和重写，写入前必须先擦除</li>
-<li>固态硬盘<strong>SSD</strong>：基于闪存，价格较高</li>
+<li>
+<p>一次可编程只读存储器<strong>PROM</strong>：允许用户一次性编程写入程序</p>
+</li>
+<li>
+<p>可擦除可编程只读存储器<strong>EPROM</strong>：用户可以写入还能进行多次修改，不能取代RAM，因为编程次数有限，而且写入时间过长</p>
+</li>
+<li>
+<p><strong>flash</strong>存储器：闪存，支持快速擦出和重写，写入前必须先擦除</p>
+</li>
+<li>
+<p>固态硬盘<strong>SSD</strong>：基于闪存，价格较高</p>
+</li>
 </ul>
 <h3 id="主存容量扩展">主存容量扩展</h3>
 <ul>
@@ -747,7 +774,8 @@
 <p>通过译码器控制扩展后的芯片选通</p>
 <h4 id="字扩展">字扩展</h4>
 <ul>
-<li>线选法：用除片内寻址外的高位地址线连接存储芯片的片选端
+<li>
+<p>线选法：用除片内寻址外的高位地址线连接存储芯片的片选端</p>
 <ul>
 <li>优点：不需要地址译码器，线路简单</li>
 <li>缺点：地址空间不连续，不能充分利用系统的存储器的空间</li>
@@ -850,7 +878,8 @@
 <li>确定<strong>扇区</strong></li>
 </ol>
 <ul>
-<li>磁盘阵列（RAID）:用独立磁盘构成具有冗余能力的阵列（0～5分别代表不同的架构与功能）
+<li>
+<p>磁盘阵列（RAID）:用独立磁盘构成具有冗余能力的阵列（0～5分别代表不同的架构与功能）</p>
 <ul>
 <li>RAID0：无数据校验，不提供冗余策略，没有容错能力</li>
 <li>RAID1：无差别写入两份磁盘，分为工作磁盘和镜像磁盘，利用率只有50%，两块当一块使用</li>
@@ -860,8 +889,11 @@
 <h4 id="固态硬盘-SSD">固态硬盘(SSD)</h4>
 <p>与U盘无本质差别，只是容量更大，存取性能更好</p>
 <ul>
-<li>优点：启动快、抗摔性好</li>
-<li>缺点：一个块的写入次数不能过多，一般不超过10w次，否则会因为默算而无法再次写入;引入磨损均衡：避免数据重复在某个空间写入，以保证各个存储区域磨损程度基本一致
+<li>
+<p>优点：启动快、抗摔性好</p>
+</li>
+<li>
+<p>缺点：一个块的写入次数不能过多，一般不超过10w次，否则会因为默算而无法再次写入;引入磨损均衡：避免数据重复在某个空间写入，以保证各个存储区域磨损程度基本一致</p>
 <ul>
 <li>动态：写入数据时，<strong>自动选择</strong>较新的内存块</li>
 <li>静态：SSD检测并自动进行数据分配，平常的读写操作在较新的闪存块中进行</li>
@@ -889,18 +921,22 @@
 <h4 id="cache行和主存的映射方式">cache行和主存的映射方式</h4>
 <p>先将主存高位地址的标记与cache进行比较，若相等且有效值为1则命中直接取出信息；若不相等则CPU从主存中读出信息送到cache任意空闲行中，有效位置1，并设置标记</p>
 <ul>
-<li>全相联映射：主存可以复制到cache任意行中只要有空闲的cache块<code>主存标记+块内地址</code>
+<li>
+<p>全相联映射：主存可以复制到cache任意行中只要有空闲的cache块<code>主存标记+块内地址</code></p>
 <ul>
 <li>优点：冲突概率低，空间利用率高，命中率高</li>
 <li>缺点：标记比较速度较慢，实现成本较高，要按内容寻址的相联存储器</li>
 </ul>
 </li>
-<li>直接映射：映射到特定行<code>主存标记+cache行号+块内地址</code>
+<li>
+<p>直接映射：映射到特定行<code>主存标记+cache行号+块内地址</code></p>
 <ul>
 <li>$cache行号=主存块号 \mod cache行数$</li>
 </ul>
 </li>
-<li>组相联映射：将cache分成多个组，组内有多行，主存可以放在特定组的任意行（组间采用直接映射，组内采用全相联映射）<code>主存标记+组地址+块内地址</code></li>
+<li>
+<p>组相联映射：将cache分成多个组，组内有多行，主存可以放在特定组的任意行（组间采用直接映射，组内采用全相联映射）<code>主存标记+组地址+块内地址</code></p>
+</li>
 </ul>
 <h4 id="替换策略">替换策略</h4>
 <ul>
@@ -926,14 +962,21 @@
 <h4 id="不一致性">不一致性</h4>
 <p>写给cache时，会导致主存和cache不一致的问题</p>
 <ul>
-<li>全写法：写操作时，若写命中，则同时写cache和主存：需要额外引入写缓冲，CPU在将数据写入cache时也写入写缓冲，然后由写缓冲将需要写入的数据写回主存
+<li>
+<p>全写法：写操作时，若写命中，则同时写cache和主存：需要额外引入写缓冲，CPU在将数据写入cache时也写入写缓冲，然后由写缓冲将需要写入的数据写回主存</p>
 <ul>
 <li>缺点：增加访存次数</li>
 </ul>
 </li>
-<li>写回法：写命中时，信息写入cache而不写入主存，直到cache被替换出去时，才将数据写回主存，需要给cache增加<code>脏位</code>（<code>修改位</code>）</li>
-<li>写分配法：写回主存后，把写入过的主存调入cache中</li>
-<li>非写分配法：写回主存后，不调入cache</li>
+<li>
+<p>写回法：写命中时，信息写入cache而不写入主存，直到cache被替换出去时，才将数据写回主存，需要给cache增加<code>脏位</code>（<code>修改位</code>）</p>
+</li>
+<li>
+<p>写分配法：写回主存后，把写入过的主存调入cache中</p>
+</li>
+<li>
+<p>非写分配法：写回主存后，不调入cache</p>
+</li>
 </ul>
 <table>
 <thead>
@@ -961,13 +1004,15 @@
 </table>
 <h4 id="cache分离">cache分离</h4>
 <ul>
-<li>统一cache：刚出现时<strong>指令和数据都放在里面</strong>
+<li>
+<p>统一cache：刚出现时<strong>指令和数据都放在里面</strong></p>
 <ul>
 <li>优点：设计和实现相对简单</li>
 <li>缺点：存取数据又要读指令时会发生冲突</li>
 </ul>
 </li>
-<li>独立cache：<strong>分开为指令cache和数据cache</strong>
+<li>
+<p>独立cache：<strong>分开为指令cache和数据cache</strong></p>
 <ul>
 <li>指令cache（顺序执行）比数据cache（跳转访问）有更好的空间局部性</li>
 </ul>
@@ -988,25 +1033,32 @@
 </ul>
 <h4 id="指令按地址码分类">指令按地址码分类</h4>
 <ul>
-<li>零地址指令：<code>OP</code>
+<li>
+<p>零地址指令：<code>OP</code></p>
 <ul>
 <li>不需要操作数：空操作、停机、关中断指令</li>
 <li>两个操作数在堆栈计算机中（隐含寻址）</li>
 </ul>
 </li>
-<li>一地址指令：<code>OP+A1</code>
+<li>
+<p>一地址指令：<code>OP+A1</code></p>
 <ul>
 <li>进行<code>OP</code>操作后放回原地址：加1、减1、求反、求补、移位</li>
 <li>将结果存入默认地址如累加器中</li>
 </ul>
 </li>
-<li>二地址指令<code>OP+A1+A2</code>
+<li>
+<p>二地址指令<code>OP+A1+A2</code></p>
 <ul>
 <li><code>A1</code>是目的操作数<code>A2</code>是源操作数，将运算结果存入<code>A1</code></li>
 </ul>
 </li>
-<li>三地址指令：<code>OP+A1+A2+A3(结果)</code></li>
-<li>四地址指令：<code>OP+A1+A2+A3(结果)+A4(下址)</code></li>
+<li>
+<p>三地址指令：<code>OP+A1+A2+A3(结果)</code></p>
+</li>
+<li>
+<p>四地址指令：<code>OP+A1+A2+A3(结果)+A4(下址)</code></p>
+</li>
 </ul>
 <h4 id="指令长度">指令长度</h4>
 <p>操作码随着地址码的减少而增加</p>
