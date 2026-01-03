@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Computer%20Organization.jpg?raw=true">
 <meta property="article:published_time" content="2025-11-29T13:49:43.000Z">
-<meta property="article:modified_time" content="2026-01-03T13:36:52.459Z">
+<meta property="article:modified_time" content="2026-01-03T14:27:20.196Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Computer Science">
 <meta name="twitter:card" content="summary_large_image">
@@ -870,6 +870,9 @@
 </ul>
 <p>$存取时间=寻道时间（磁头到目的磁道）（取平均时间最外到最内到一半）+旋转延迟时间（磁头定位到读写扇区时间）（平均取旋转半周）+传输时间（传输数据所花费的时间）$</p>
 <p>CPU➡️磁盘控制器➡️磁盘驱动器➡️磁盘</p>
+<p>$总容量 = 有效记录面数 \times 每面磁道数 \times 每道容量$<br>
+$数据传输率 = 每道容量 \times 转速$<br>
+平均等待时间是磁盘转半圈的时间:$平均等待时间=\frac{1}{2 \times n}$</p>
 <p>磁盘寻址：</p>
 <ol>
 <li>确定访问哪个磁盘组（由多个磁盘构成）</li>
