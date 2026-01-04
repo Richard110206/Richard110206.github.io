@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Computer%20Organization.jpg?raw=true">
 <meta property="article:published_time" content="2025-11-29T13:49:43.000Z">
-<meta property="article:modified_time" content="2026-01-04T04:07:38.100Z">
+<meta property="article:modified_time" content="2026-01-04T15:02:03.020Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Computer Science">
 <meta name="twitter:card" content="summary_large_image">
@@ -314,7 +314,7 @@
         
         
         
-          107 mins
+          109 mins
         
       </span>
     
@@ -445,6 +445,14 @@
               <div class="markdown-body">
                 
                 <h2 id="运算方法">运算方法</h2>
+<h4 id="双符号位">双符号位</h4>
+<p>双符号位表示带符号数时，符号位的组合含义为：</p>
+<ul>
+<li>00：正，无溢出；</li>
+<li>01：正溢出（上溢）；</li>
+<li>10：负溢出（下溢）；</li>
+<li>11：负，无溢出</li>
+</ul>
 <h4 id="IEEE754">IEEE754</h4>
 <p>浮点数表示标准：</p>
 <ul>
@@ -458,7 +466,7 @@
 <h4 id="浮点运算方法和浮点运算器">浮点运算方法和浮点运算器</h4>
 <ol>
 <li>零操作数检查</li>
-<li>比较阶码大小并完成对阶（小阶向大阶看齐）：对齐小数点，以便进行尾数的加减运算</li>
+<li>比较阶码大小并完成对阶（<strong>小阶向大阶看齐</strong>）：对齐小数点，以便进行尾数的加减运算</li>
 </ol>
 <ul>
 <li>
@@ -468,7 +476,7 @@
 <p>尾数右移最低有效位缺失，造成的误差较小，每右移一位，阶码加一，右移位数等于阶差</p>
 </li>
 </ul>
-<ol>
+<ol start="3">
 <li>尾数求和：与定点数加减法方法相同</li>
 <li>规格化处理：尾数右移实现规格化</li>
 <li>舍入处理：规格化后最低有效位丢失，会造成一定误差，要进行舍入处理
@@ -852,14 +860,15 @@
 <h3 id="主存">主存</h3>
 <h4 id="磁盘">磁盘</h4>
 <p>由磁盘驱动器、磁盘控制器、磁头、盘片线组成 （从外往里数为0，1，2号磁道），磁道被分为很多<strong>扇区</strong></p>
-<p>由多个盘片构成，每个盘片分成上下两个盘面，每个盘面有多个圆环构成，圆盘上均匀分布磁介质（用来存储0和1）尽管磁道长度不同，但是<strong>每个磁道存储的数据量相同</strong>，因此<strong>从外到内磁道的位密度逐渐变小</strong>，顺时针分扇区，扇区间有扇区间隙，多个<strong>磁道号相同的磁道</strong>，共同构成一个<strong>柱面</strong>，柱面号即为磁道号，多个盘片绑在一个电机上，旋转时，盘面会同时旋转。</p>
+<p>由多个盘片构成，每个盘片分成上下两个盘面，每个盘面有多个圆环构成，圆盘上均匀分布磁介质（用来存储0和1）尽管磁道长度不同，但是<strong>每个磁道存储的数据量相同</strong>，因此<strong>从外到内磁道的位密度逐渐变大</strong>，顺时针分扇区，扇区间有扇区间隙，多个<strong>磁道号相同的磁道</strong>，共同构成一个<strong>柱面</strong>，柱面号即为磁道号，多个盘片绑在一个电机上，旋转时，盘面会同时旋转。</p>
 <ul>
-<li>
-<p>道密度：沿<strong>磁道半径方向单位长度上的磁道数</strong></p>
-</li>
-<li>
-<p>位密度：磁道<strong>单位长度上能记录的二进制代码位数</strong></p>
-</li>
+<li>道密度：沿<strong>磁道半径方向单位长度上的磁道数</strong></li>
+<li>位密度：磁道<strong>单位长度上能记录的二进制代码位数</strong></li>
+</ul>
+<div class="note note-info">
+            <p>如果某文件长度超过一个磁道的容量，应将它记录在同一个<strong>柱面</strong>上:因为不需要重新找道，数据读/写速度快</p>
+          </div>
+<ul>
 <li>
 <p>磁道的容量：</p>
 <ul>
@@ -870,10 +879,12 @@
 </ul>
 <p>存取时间=寻道时间（磁头到目的磁道）（取平均时间最外到最内到一半）+旋转延迟时间（磁头定位到读写扇区时间）（平均取旋转半周）+传输时间（传输数据所花费的时间）</p>
 <p>CPU➡️磁盘控制器➡️磁盘驱动器➡️磁盘</p>
-<p>$总容量 = 有效记录面数 \times 每面磁道数 \times 每道容量$<br>
-$数据传输率 = 每道容量 \times 转速$<br>
-平均等待时间是磁盘转半圈的时间:$平均等待时间=\frac{1}{2 \times n}$</p>
-<p>磁盘寻址：</p>
+<ul>
+<li>$总容量 = 有效记录面数 \times 每面磁道数 \times 每道容量$</li>
+<li>$数据传输率 = 每道容量 \times 转速$</li>
+<li>$平均等待时间=\frac{1}{2 \times n}$</li>
+</ul>
+<p>磁盘寻址：<code>记录面号(位) + 磁道号(位) + 扇区号(位)</code></p>
 <ol>
 <li>确定访问哪个磁盘组（由多个磁盘构成）</li>
 <li>确定应该访问哪个<strong>柱面</strong></li>
@@ -938,7 +949,7 @@ $数据传输率 = 每道容量 \times 转速$<br>
 </ul>
 </li>
 <li>
-<p>组相联映射：将cache分成多个组，组内有多行，主存可以放在特定组的任意行（组间采用直接映射，组内采用全相联映射）<code>主存标记+组地址+块内地址</code></p>
+<p>组相联映射：将cache分成多个组，组内有多行，主存可以放在特定组的任意行（组间采用直接映射，组内采用全相联映射）<code>主存标记+组地址（cache行号/路数）+块内地址</code></p>
 </li>
 </ul>
 <h4 id="替换策略">替换策略</h4>
@@ -1897,22 +1908,16 @@ $数据传输率 = 每道容量 \times 转速$<br>
 <h4 id="底层模块门原语">底层模块门原语</h4>
 <p>这是Verilog语言提供的已经设计好的门，可以直接调用，其中实例名可以忽略，且只能采用顺序法，输出在前，输入在后：<code>and(out,in1,in2)</code>。</p>
 <h2 id="真题拟合">真题拟合</h2>
+<p>CPU的组成：由算术逻辑运算单元、操作控制器组成。</p>
 <ul>
-<li>
-<p>指令寄存器（IR）：保存当前正在执行的一条指令 Instruction Register</p>
-</li>
-<li>
-<p>程序计数器（PC）：用于存放下一条指令所在的单元地址Program Counter</p>
-</li>
-<li>
-<p>数据地址寄存器（AR）：保存当前CPU所访问的数据存储器单元的地址 Address Register</p>
-</li>
-<li>
-<p>数据缓冲寄存器（DR）：用来暂时存放ALU的运算结果 Data Register</p>
-</li>
-<li>
-<p>通用寄存器：当算术逻辑元（ALU）执行算术或逻辑运算时，为ALU提供一个工作区</p>
-</li>
+<li>ALU：算术逻辑运算单元。执行算术运算、逻辑运算并测试</li>
+<li>操作控制器：协调和指挥整个系统的操作，取指令并执行。</li>
+<li>A和B—运算器前端的数据暂存器，也称运算寄存器。用来暂存参加运算的操作数</li>
+<li>R0～R3----CPU的通用寄存器组。存放操作数。</li>
+<li>IR-指令寄存器器：保存当前正在执行的指令的指令码 Instruction Register</li>
+<li>PC-程序计数器：其保持的总是将要执行的下一条指令的地址。由于大多数指令都是按顺序来执行的，所以修改的过程通常只是简单的对PC加1。</li>
+<li>AR—地址寄存器：用来保存当前CPU所访问的内存单元的地址（指令地址或操作数地址） Address Register</li>
+<li>DR—数据（缓冲）寄存器：用来暂存写入内存单元的数据及从内存单元读出的数据 Data Register</li>
 </ul>
 <p>指令周期流程图：</p>
 <figure class="highlight clean"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs clean">PC-&gt;AR<br>M-&gt;DR<br>DR-&gt;IR<br></code></pre></td></tr></tbody></table></figure>
@@ -1945,6 +1950,14 @@ $数据传输率 = 每道容量 \times 转速$<br>
 <li>顺序存储器：$t_1=mT$</li>
 <li>交叉存储器：$t_2=T+(m-1)\tau$</li>
 </ul>
+<h3 id="祖传大题">祖传大题</h3>
+<ol>
+<li>浮点数运算</li>
+<li>cache 映射，字、位扩展</li>
+<li>cache 命中率</li>
+<li>磁盘容量、时间计算</li>
+<li>程序执行流程框图</li>
+</ol>
 
                 
               </div>
