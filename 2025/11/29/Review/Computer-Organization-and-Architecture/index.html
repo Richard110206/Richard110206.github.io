@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Computer%20Organization.jpg?raw=true">
 <meta property="article:published_time" content="2025-11-29T13:49:43.000Z">
-<meta property="article:modified_time" content="2026-01-04T15:02:03.020Z">
+<meta property="article:modified_time" content="2026-01-05T02:38:23.709Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Computer Science">
 <meta name="twitter:card" content="summary_large_image">
@@ -505,7 +505,7 @@
 </ul>
 <p>流水线加速比为二者的比值$C_k=\frac{T_L}{T_k}$，取limit极限，加速比为k</p>
 <h3 id="存储系统">存储系统</h3>
-<h4 id="存储器三剑客：">存储器三剑客：</h4>
+<h4 id="存储器三剑客">存储器三剑客</h4>
 <ul>
 <li>
 <p>主存（内存）：用来存放计算机<strong>运行期间所需要的程序和数据</strong>，CPU可以直接随机的进行读/写访问，存取速度快。</p>
@@ -548,7 +548,7 @@
 </ul>
 </li>
 <li>
-<p>直接存取存储器dam：光盘（随机+顺序存取相结合）</p>
+<p>直接存取存储器DAM：光盘（随机+顺序存取相结合）</p>
 <ul>
 <li>特点：先通过随机访问，确定一个较小的存储区域，在在这小区域内顺序查找</li>
 </ul>
@@ -1032,7 +1032,6 @@
 </ul>
 </li>
 </ul>
-<h4 id="cache分离-v2">cache分离</h4>
 <p>将cache集成在CPU中称为第一级cache：减少对片外总线的访问，加快存取速度；但由于容量较小，CPU和主存之间设置的cache为第二级cache。</p>
 <ul>
 <li>L1和L2全写法</li>
@@ -1134,7 +1133,7 @@
 <li>
 <p>隐含寻址：不直接给出操作数的地址，而是在指令中隐含着操作数地址（隐含在寄存器中）。</p>
 <ul>
-<li>指令更短</li>
+<li>优点：指令更短</li>
 <li>缺点：需要添加额外额硬件来实现</li>
 </ul>
 </li>
@@ -1279,16 +1278,30 @@
 <h3 id="x86">x86</h3>
 <h4 id="寄存器">寄存器</h4>
 <ul>
-<li>EAX（32）=E（16）+AX（16）</li>
-</ul>
-<p>AX=AH（8）+AL（8）</p>
+<li>
+<p>EAX（32）=E（16）+AX（16）</p>
 <ul>
-<li>EAX是扩展累加寄存器（accumulator），通常用于存储操作结果。</li>
-<li>EBX是扩展基地址寄存器（base），可以在内存寻址时存放基地址。（基址寄存器）</li>
-<li>ECX是扩展计数寄存器（count），是某些指令的计数器。</li>
-<li>EDX是扩展数据寄存器（data），与EAX经常配合使用。</li>
-<li>ESI/EDI是扩展源/目标指针寄存器（source index/destination），其中，ESI通常用于存储当前正在处理的源数据（source data）的索引或地址。例如数组访问中使用，以指向数据的来源位置。（变址寄存器）</li>
-<li>EBP是扩展基址指针寄存器（base pointer），一般用于指示 ESP是扩展堆栈指针寄存器（stack pointer），一般用于指示栈顶。</li>
+<li>AX=AH（8）+AL（8）</li>
+</ul>
+</li>
+<li>
+<p>EAX是扩展累加寄存器（accumulator），通常用于存储操作结果。</p>
+</li>
+<li>
+<p>EBX是扩展基地址寄存器（base），可以在内存寻址时存放基地址。（基址寄存器）</p>
+</li>
+<li>
+<p>ECX是扩展计数寄存器（count），是某些指令的计数器。</p>
+</li>
+<li>
+<p>EDX是扩展数据寄存器（data），与EAX经常配合使用。</p>
+</li>
+<li>
+<p>ESI/EDI是扩展源/目标指针寄存器（source index/destination），其中，ESI通常用于存储当前正在处理的源数据（source data）的索引或地址。例如数组访问中使用，以指向数据的来源位置。（变址寄存器）</p>
+</li>
+<li>
+<p>EBP是扩展基址指针寄存器（base pointer），一般用于指示 ESP是扩展堆栈指针寄存器（stack pointer），一般用于指示栈顶。</p>
+</li>
 </ul>
 <h4 id="指令格式">指令格式</h4>
 <p>汇编指令：<code>助记符+目的操作数+源操作数</code></p>
@@ -1701,7 +1714,8 @@
 </ul>
 <h4 id="I-O端口及其编址">I/O端口及其编址</h4>
 <ul>
-<li>统一编址：外部设备地址与内存地址统一编址，通过不同的地址区域来进行划分。不需要设置专门的I/O指令。采用<code>Load/Store</code>访存指令就可以访问外部设备
+<li>
+<p>统一编址：外部设备地址与内存地址统一编址，通过不同的地址区域来进行划分。不需要设置专门的I/O指令。采用<code>Load/Store</code>访存指令就可以访问外部设备</p>
 <ul>
 <li>优点：更加灵活方便，共享访存指令的寻址方式和保护机制</li>
 <li>缺点：占用了主存空间的地址，减少了主存可用容量；译码过程更加复杂，降低寻址速度</li>
@@ -1710,7 +1724,8 @@
 </ul>
 <figure class="highlight mips"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs MIPS"><span class="hljs-keyword">lw </span>$<span class="hljs-built_in">t0</span> <span class="hljs-number">0x00000004</span> <span class="hljs-comment"># 从ROM读取一个字</span><br><span class="hljs-keyword">sb </span>$<span class="hljs-built_in">t0</span> <span class="hljs-number">0xff000004</span> <span class="hljs-comment"># 写一个字节到内存</span><br><span class="hljs-keyword">sb </span>$<span class="hljs-built_in">t0</span> <span class="hljs-number">0xffff0004</span> <span class="hljs-comment"># 写一个字节到I/O设备</span><br></code></pre></td></tr></tbody></table></figure>
 <ul>
-<li>独立编址：I/O映射方式，对主存空间和I/O端口地址分别进行编址，地址范围可以重叠，需要专门的I/O指令来表明访问的是I/O地址空间
+<li>
+<p>独立编址：I/O映射方式，对主存空间和I/O端口地址分别进行编址，地址范围可以重叠，需要专门的I/O指令来表明访问的是I/O地址空间</p>
 <ul>
 <li>优点：I/O端口只需要少量地址线，译码更加简单，寻址速度更快；指令更加清晰，便于理解和检查</li>
 <li>缺点：专门的I/O指令只包含简单的传输操作，降低了程序设计的灵活性，而且CPu需要分别提供专门的读写命令，总线控制逻辑更加复杂；需要专门的硬件保护措施</li>
@@ -1731,13 +1746,15 @@
 <h3 id="I-O控制方式">I/O控制方式</h3>
 <h4 id="程序查询方式">程序查询方式</h4>
 <ul>
-<li>独占查询：设备启动后，CPU 全程循环查询外设状态，直到设备就绪。
+<li>
+<p>独占查询：设备启动后，CPU 全程循环查询外设状态，直到设备就绪。</p>
 <ul>
 <li>CPU 100% 时间用于 I/O 轮询，和外设完全串行工作；</li>
 <li>实现简单，但<strong>CPU 资源浪费严重</strong></li>
 </ul>
 </li>
-<li>定时查询：CPU 启动设备后，通过<strong>定时中断</strong>周期性查询状态，期间可运行其他程序。
+<li>
+<p>定时查询：CPU 启动设备后，通过<strong>定时中断</strong>周期性查询状态，期间可运行其他程序。</p>
 <ul>
 <li>CPU 可以并行运行其他任务，<strong>资源利用率比独占查询高</strong></li>
 </ul>
@@ -1912,8 +1929,8 @@
 <ul>
 <li>ALU：算术逻辑运算单元。执行算术运算、逻辑运算并测试</li>
 <li>操作控制器：协调和指挥整个系统的操作，取指令并执行。</li>
-<li>A和B—运算器前端的数据暂存器，也称运算寄存器。用来暂存参加运算的操作数</li>
-<li>R0～R3----CPU的通用寄存器组。存放操作数。</li>
+<li>A和B：运算器前端的数据暂存器，也称运算寄存器。用来暂存参加运算的操作数</li>
+<li>R0～R3：CPU的通用寄存器组。存放操作数。</li>
 <li>IR-指令寄存器器：保存当前正在执行的指令的指令码 Instruction Register</li>
 <li>PC-程序计数器：其保持的总是将要执行的下一条指令的地址。由于大多数指令都是按顺序来执行的，所以修改的过程通常只是简单的对PC加1。</li>
 <li>AR—地址寄存器：用来保存当前CPU所访问的内存单元的地址（指令地址或操作数地址） Address Register</li>
@@ -2022,7 +2039,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>January 4, 2026</div>
+          <div>January 5, 2026</div>
         </div>
       
       
