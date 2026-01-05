@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Computer%20Organization.jpg?raw=true">
 <meta property="article:published_time" content="2025-11-29T13:49:43.000Z">
-<meta property="article:modified_time" content="2026-01-05T02:40:14.691Z">
+<meta property="article:modified_time" content="2026-01-05T06:49:39.418Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Computer Science">
 <meta name="twitter:card" content="summary_large_image">
@@ -314,7 +314,7 @@
         
         
         
-          109 mins
+          108 mins
         
       </span>
     
@@ -465,20 +465,16 @@
           </div>
 <h4 id="浮点运算方法和浮点运算器">浮点运算方法和浮点运算器</h4>
 <ol>
-<li>零操作数检查</li>
-<li>比较阶码大小并完成对阶（<strong>小阶向大阶看齐</strong>）：对齐小数点，以便进行尾数的加减运算</li>
+<li>阶码（双符号位补码）+ 尾数（双符号位补码）的形式（补码）</li>
 </ol>
 <ul>
-<li>
-<p>尾数左移会导致最高有效位的缺失，造成的误差较大</p>
-</li>
-<li>
-<p>尾数右移最低有效位缺失，造成的误差较小，每右移一位，阶码加一，右移位数等于阶差</p>
-</li>
+<li>正数：00.1xxxxx</li>
+<li>负数：11.0xxxxx</li>
 </ul>
-<ol start="3">
+<ol start="2">
+<li>比较阶码大小并完成对阶（<strong>小阶向大阶看齐</strong>）：对齐小数点，以便进行尾数的加减运算</li>
 <li>尾数求和：与定点数加减法方法相同</li>
-<li>规格化处理：尾数右移实现规格化</li>
+<li>规格化处理</li>
 <li>舍入处理：规格化后最低有效位丢失，会造成一定误差，要进行舍入处理
 <ul>
 <li>就近舍入</li>
@@ -496,15 +492,7 @@
 </ul>
 </li>
 </ol>
-<h4 id="浮点运算流水线">浮点运算流水线</h4>
-<p>使各子任务能在流水线的各个阶段并发执行（实现计算机时间并行性），子任务内部具有优先关系的叫做线性流水线。</p>
-<p>对于一个具有k级过程段的流水线处理n个任务需要的：</p>
-<ul>
-<li>采用流水线：$T_k=k+(n-1)$</li>
-<li>不采用流水线：$T_L=n·k$</li>
-</ul>
-<p>流水线加速比为二者的比值$C_k=\frac{T_L}{T_k}$，取limit极限，加速比为k</p>
-<h3 id="存储系统">存储系统</h3>
+<h2 id="存储系统">存储系统</h2>
 <h4 id="存储器三剑客">存储器三剑客</h4>
 <ul>
 <li>
@@ -556,16 +544,6 @@
 <li>
 <p>相联存储器：按照内容寻址，将所存的内容的某一部分作为检索项（关键字）去检索</p>
 </li>
-</ul>
-<h4 id="按断电后信息的可保存性分类">按断电后信息的可保存性分类</h4>
-<ul>
-<li><strong>易失性</strong>存储器</li>
-<li><strong>非易失性</strong>存储器</li>
-</ul>
-<h4 id="按读出方式分类">按读出方式分类</h4>
-<ul>
-<li>破坏性读出：读出后若不加恢复则存储器存储的信息会丢失（DRAM）</li>
-<li>非破坏性读出：不会丢失信息（SRAM，ROM）</li>
 </ul>
 <h3 id="寻址">寻址</h3>
 <ul>
@@ -1932,10 +1910,10 @@
 <ul>
 <li>ALU：算术逻辑运算单元。执行算术运算、逻辑运算并测试</li>
 <li>操作控制器：协调和指挥整个系统的操作，取指令并执行。</li>
-<li>A和B：运算器前端的数据暂存器，也称运算寄存器。用来暂存参加运算的操作数</li>
-<li>R0～R3：CPU的通用寄存器组。存放操作数。</li>
+<li>A和B：运算器前端的数据暂存器，也称运算寄存器，用来暂存参加运算的操作数</li>
+<li>R0～R3：CPU的通用寄存器组，存放操作数。</li>
 <li>IR-指令寄存器器：保存当前正在执行的指令的指令码 Instruction Register</li>
-<li>PC-程序计数器：其保持的总是将要执行的下一条指令的地址。由于大多数指令都是按顺序来执行的，所以修改的过程通常只是简单的对PC加1。</li>
+<li>PC-程序计数器：其保持的总是将要执行的下一条指令的地址，由于大多数指令都是按顺序来执行的，所以修改的过程通常只是简单的对PC加1。</li>
 <li>AR—地址寄存器：用来保存当前CPU所访问的内存单元的地址（指令地址或操作数地址） Address Register</li>
 <li>DR—数据（缓冲）寄存器：用来暂存写入内存单元的数据及从内存单元读出的数据 Data Register</li>
 </ul>
@@ -1958,7 +1936,9 @@
 <li>尾数过短（精度不足）</li>
 </ul>
 <p>流水线的每个时钟周期是统一的固定值，时钟周期必须能覆盖耗时最长的那个过程段</p>
-<p>多重中断的中断服务程序：</p>
+<ul>
+<li>多重中断的中断服务程序：</li>
+</ul>
 <ol>
 <li>保护断点；</li>
 <li>保护现场；</li>
@@ -1974,10 +1954,42 @@
 <ol>
 <li>浮点数运算</li>
 <li>cache 映射，字、位扩展</li>
+<li>指令格式</li>
 <li>cache 命中率</li>
 <li>磁盘容量、时间计算</li>
 <li>程序执行流程框图</li>
 </ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">特性</th>
+<th style="text-align:center">程序查询方式</th>
+<th style="text-align:center">程序中断方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">CPU 工作方式</td>
+<td style="text-align:center">CPU 主动循环查询设备状态，直到设备准备好</td>
+<td style="text-align:center">设备准备好后主动向 CPU 发送中断请求，CPU 在执行完当前指令后响应</td>
+</tr>
+<tr>
+<td style="text-align:center">CPU 利用率</td>
+<td style="text-align:center">低（查询期间 CPU 无法做其他工作）</td>
+<td style="text-align:center">高（CPU 可在设备准备期间执行其他任务）</td>
+</tr>
+<tr>
+<td style="text-align:center">响应延迟</td>
+<td style="text-align:center">大（可能需要等待一个完整的查询周期）</td>
+<td style="text-align:center">小（设备准备好后立即触发中断，无额外等待）</td>
+</tr>
+<tr>
+<td style="text-align:center">实时性</td>
+<td style="text-align:center">差（无法及时响应设备的紧急请求）</td>
+<td style="text-align:center">好（可优先响应高优先级中断）</td>
+</tr>
+</tbody>
+</table>
 
                 
               </div>
