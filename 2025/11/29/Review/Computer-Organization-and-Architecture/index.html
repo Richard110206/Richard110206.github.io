@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Computer%20Organization.jpg?raw=true">
 <meta property="article:published_time" content="2025-11-29T13:49:43.000Z">
-<meta property="article:modified_time" content="2026-01-05T02:38:23.709Z">
+<meta property="article:modified_time" content="2026-01-05T02:40:14.691Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Computer Science">
 <meta name="twitter:card" content="summary_large_image">
@@ -1776,13 +1776,15 @@
 </ul>
 <h4 id="DMA和CPU冲突">DMA和CPU冲突</h4>
 <ul>
-<li>停止访存：当 I/O 设备有 DMA 请求时，DMA 接口让 CPU 暂停访存、交出总线控制权，直到 DMA 传完数据再归还。
+<li>
+<p>停止访存：当 I/O 设备有 DMA 请求时，DMA 接口让 CPU 暂停访存、交出总线控制权，直到 DMA 传完数据再归还。</p>
 <ul>
 <li>优点：控制简单，适合高速 I/O 设备成组传数据</li>
 <li>缺点：DMA 工作时 CPU 基本闲置。</li>
 </ul>
 </li>
-<li>周期挪用：因 I/O 访存优先级更高，I/O 会 “挪用” 1 个存取周期传 1 个数据后立刻释放总线（单字传送）。
+<li>
+<p>周期挪用：因 I/O 访存优先级更高，I/O 会 “挪用” 1 个存取周期传 1 个数据后立刻释放总线（单字传送）。</p>
 <ul>
 <li>CPU 不访存则无冲突；</li>
 <li>CPU 正在访存则等其周期结束再让总线；</li>
@@ -1795,7 +1797,8 @@
 </li>
 </ul>
 </li>
-<li>DMA和CPU交替访存：把 CPU 工作周期分成两个时间片，分别给 CPU 和 DMA 轮流访存（适用于 CPU 周期长于主存存取周期的情况，轮流时间固定）。
+<li>
+<p>DMA和CPU交替访存：把 CPU 工作周期分成两个时间片，分别给 CPU 和 DMA 轮流访存（适用于 CPU 周期长于主存存取周期的情况，轮流时间固定）。</p>
 <ul>
 <li>优点：无需申请 / 归还总线，通过分时控制总线使用权</li>
 <li>缺点：硬件逻辑复杂</li>
