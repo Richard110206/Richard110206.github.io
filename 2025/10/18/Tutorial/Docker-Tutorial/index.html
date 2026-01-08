@@ -1,0 +1,1021 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Anaconda 环境管理  conda env list或conda info --envs :查看所有已创建的环境（当前活动的环境会用一个星号 (*) 标出）  123456(base) richard@RicharddeMacBook-Air ~ % conda env list# conda environments:#base                  *  &#x2F;Users&#x2F;ric">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker Tutorial">
+<meta property="og:url" content="http://example.com/2025/10/18/Tutorial/Docker-Tutorial/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="Anaconda 环境管理  conda env list或conda info --envs :查看所有已创建的环境（当前活动的环境会用一个星号 (*) 标出）  123456(base) richard@RicharddeMacBook-Air ~ % conda env list# conda environments:#base                  *  &#x2F;Users&#x2F;ric">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-18T01:01:25.000Z">
+<meta property="article:modified_time" content="2025-11-12T06:49:05.162Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta property="article:tag" content="updating">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Docker Tutorial - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LQX&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/other/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>Else</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/other/life-musings/" target="_self">
+                    
+                    <span>精进日记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/08/13/other/Casual-Chronicles/" target="_self">
+                    
+                    <span>生活杂谈</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/banner_img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Docker Tutorial"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-18 09:01" pubdate>
+          October 18, 2025 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          914 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Tutorial"
+        id="heading-368fe771261fcb18f7988833c9294a20" role="tab" data-toggle="collapse" href="#collapse-368fe771261fcb18f7988833c9294a20"
+        aria-expanded="true"
+      >
+        Tutorial
+        <span class="list-group-count">(10)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-368fe771261fcb18f7988833c9294a20"
+           role="tabpanel" aria-labelledby="heading-368fe771261fcb18f7988833c9294a20">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2025/09/21/Tutorial/CMake-Tutorial/" title="CMake Tutorial"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CMake Tutorial</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/18/Tutorial/Docker-Tutorial/" title="Docker Tutorial"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Docker Tutorial</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/08/27/Tutorial/GitHub-Connection-Deep-Dive/" title="GitHub Connection Deep Dive"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">GitHub Connection Deep Dive</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/07/12/Tutorial/Hexo-Hacks-Unleash-Your-Blogging-Magic/" title="Hexo,Unleash Your Blogging Magic"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Hexo,Unleash Your Blogging Magic</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/09/27/Tutorial/ICP-Filing/" title="ICP Filing"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ICP Filing</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/08/21/Tutorial/Offload-Your-Hexo-Images/" title="Offload Your Hexo Images"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Offload Your Hexo Images</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/07/28/Tutorial/Powerful-Editor-Vim/" title="Powerful Editor:Vim"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Powerful Editor:Vim</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/05/29/Tutorial/Markdown%EF%BC%8CPractical%20Guide%20to%20Writing%20Blogs%EF%BC%81/" title="Practical Guide to Writing Blogs！"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Practical Guide to Writing Blogs！</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/07/27/Tutorial/Shell-Magic/" title="Shell Magic"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Shell Magic</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/07/13/Tutorial/Simple-Git-Project-Management-Guide/" title="Simple Git Project Management Guide"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Simple Git Project Management Guide</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Docker Tutorial</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Anaconda">Anaconda</h2>
+<h3 id="环境管理">环境管理</h3>
+<ul>
+<li><code>conda env list</code>或<code>conda info --envs</code> :查看所有已创建的环境（当前活动的环境会用一个星号 (*) 标出）</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda <span class="hljs-built_in">env</span> list<br><span class="hljs-comment"># conda environments:</span><br><span class="hljs-comment">#</span><br>base                  *  /Users/richard/anaconda3<br>hexo-rag                 /Users/richard/anaconda3/envs/hexo-rag<br>yolov11-env              /Users/richard/anaconda3/envs/yolov11-<span class="hljs-built_in">env</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>conda create -n &lt;env_name&gt; python=&lt;python_version&gt; package1 package2 ...</code> :创建一个环境，指定Python版本和要安装的包</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda create -n my_env python=3.12 pandas numpy<br><span class="hljs-comment"># 创建名为 my_env 的环境，指定python版本为3.12，并安装 pandas 和 numpy 包</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>conda activate &lt;env_name&gt;</code> :激活一个环境（在行首显示当前环境名称）</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda activate my_env<br>(my_env) richard@RicharddeMacBook-Air ~ % <br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>conda deactivate</code> :退出当前环境</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">(my_env) richard@RicharddeMacBook-Air ~ % conda deactivate<br>(base) richard@RicharddeMacBook-Air ~ % conda deactivate<br>richard@RicharddeMacBook-Air ~ % <br><span class="hljs-comment"># 可以退回到系统初始环境</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>conda create -n &lt;new_env&gt; --clone &lt;env_name&gt;</code> :克隆一个环境（创建一个新环境，包含与源环境相同的所有包和配置）</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda create -n new_env --<span class="hljs-built_in">clone</span> my_env<br>Source:      /Users/richard/anaconda3/envs/my-env<br>Destination: /Users/richard/anaconda3/envs/new_env<br>Packages: 31<br>Files: 1<br><span class="hljs-comment"># 创建一个名为 new_env 的环境，包含与 my_env 环境相同的所有包和配置</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>conda remove -n &lt;env_name&gt; --all</code> :删除一个环境（删除指定环境及其所有包）</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda remove -n new_env --all<br><br>Remove all packages <span class="hljs-keyword">in</span> environment /Users/richard/anaconda3/envs/new_env:<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="包管理">包管理</h3>
+<ul>
+<li><code> conda list -n &lt;env_name&gt;</code> :列出一个环境的所有包，若无参数则默认列出当前环境的所有包</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda list<br><span class="hljs-comment"># packages in environment at /Users/richard/anaconda3:</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># Name                    Version                   Build  Channel</span><br>_anaconda_depends         2024.02         py311_openblas_1  <br>abseil-cpp                20230802.0           h61975a4_2  <br>aiobotocore               2.7.0           py311hecd8cb5_0  <br>aiohttp                   3.9.3           py311h6c40b1e_0  <br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>conda install -n &lt;env_name&gt; package1 package2 </code> :在指定环境中安装包（可以安装指定版本的包，或限制版本范围）</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda install pandas=1.5.3  <span class="hljs-comment"># 安装1.5.3版本</span><br>conda install <span class="hljs-string">"numpy&gt;=1.21,&lt;1.24"</span>  <span class="hljs-comment"># 安装1.21到1.24之间的版本</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-danger">
+            <p>不要在conda环境中用pip安装包</p><ul><li>导致不同版本的软件包依赖冲突</li><li>conda 指令无法正常管理pip安装的软件包（安装/更新/卸载）</li></ul>
+          </div>
+<ul>
+<li><code>conda update -n &lt;env_name&gt; --all</code> :更新指定环境所有包到最新版本</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda update -n my_env --all<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="导出与导入环境">导出与导入环境</h3>
+<ul>
+<li><code>conda env export &gt; environment.yml</code>：  将当前环境的包信息导出为<code>environment.yml</code>文件，方便他人复现：</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda <span class="hljs-built_in">env</span> <span class="hljs-built_in">export</span> -n yolov11-env &gt; environment.yml<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <ul><li><code>-n yolov11-env</code>：用于指定要导出的环境名称（如果不写 -n，默认导出当前激活的环境）</li></ul>
+          </div>
+<ul>
+<li><code>conda env create -f environment.yml</code>：根据<code>environment.yml</code>文件快速创建相同环境</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air ~ % conda <span class="hljs-built_in">env</span> create -f environment.yml<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="配置镜像源">配置镜像源</h3>
+<ul>
+<li>配置清华、中科大等镜像源加速下载：</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/<br>conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/<br>conda config --<span class="hljs-built_in">set</span> show_channel_urls <span class="hljs-built_in">yes</span>  <span class="hljs-comment"># 显示包的来源渠道</span><br></code></pre></td></tr></tbody></table></figure>
+<h3 id="清理与维护">清理与维护</h3>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda clean -p  <span class="hljs-comment"># 清理未使用的包</span><br>conda clean -t  <span class="hljs-comment"># 清理tar包缓存</span><br>conda clean -a  <span class="hljs-comment"># 清理所有缓存（包括索引和未使用的包）</span><br></code></pre></td></tr></tbody></table></figure>
+<p><a target="_blank" rel="noopener" href="https://hub.docker.com/repositories/richard110206">DockerHub</a></p>
+<p>dockerfile-&gt;dockerimage(如何正确设置容器的说明，存储在注册表中）-&gt;dockercontainer</p>
+<p>出现拉取<code>requests</code>时候超时的问题：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">=&gt; CANCELED [4/4] RUN pip3 install -r requirements.txt                 101.2s<br></code></pre></td></tr></tbody></table></figure>
+<p>在 <code>Dockerfile</code> 中配置全局镜像源为清华大学镜像源解决</p>
+<figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-keyword">FROM</span> python:<span class="hljs-number">3.9</span>-slim-buster<br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> ./requirements.txt ./requirements.txt</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> ./main.py ./main.py</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> pip config <span class="hljs-built_in">set</span> global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> pip install -r requirements.txt</span><br><span class="hljs-keyword">CMD</span><span class="language-bash"> [<span class="hljs-string">"python3"</span>, <span class="hljs-string">"./main.py"</span>]</span><br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@RicharddeMacBook-Air <span class="hljs-built_in">test</span> % docker build -t python-test .<br>[+] Building 9.0s (10/10) FINISHED                        docker:desktop-linux<br> =&gt; [internal] load build definition from Dockerfile                      0.0s<br> =&gt; =&gt; transferring dockerfile: 278B                                      0.0s<br> =&gt; [internal] load metadata <span class="hljs-keyword">for</span> docker.io/library/python:3.9-slim-buste  0.0s<br> =&gt; [internal] load .dockerignore                                         0.0s<br> =&gt; =&gt; transferring context: 2B                                           0.0s<br> =&gt; [1/5] FROM docker.io/library/python:3.9-slim-buster@sha256:320a7a425  0.0s<br> =&gt; =&gt; resolve docker.io/library/python:3.9-slim-buster@sha256:320a7a425  0.0s<br> =&gt; [internal] load build context                                         0.0s<br> =&gt; =&gt; transferring context: 63B                                          0.0s<br> =&gt; CACHED [2/5] COPY ./requirements.txt ./requirements.txt               0.0s<br> =&gt; CACHED [3/5] COPY ./main.py ./main.py                                 0.0s<br> =&gt; [4/5] RUN pip config <span class="hljs-built_in">set</span> global.index-url https://pypi.tuna.tsinghua  0.6s<br> =&gt; [5/5] RUN pip install -r requirements.txt                             8.2s<br> =&gt; exporting to image                                                    0.2s<br> =&gt; =&gt; exporting layers                                                   0.1s<br> =&gt; =&gt; exporting manifest sha256:141fb8ff8b81af29e322ca4900514b916baf04e  0.0s <br> =&gt; =&gt; exporting config sha256:e299cb6be9a3b32c54e48d1af9a0dac8cc3b4118e  0.0s <br> =&gt; =&gt; exporting attestation manifest sha256:33eba2c9f12699afb00e6e5ed9a  0.0s <br> =&gt; =&gt; exporting manifest list sha256:3b9393a9d83c2a31c938e4c7343ad95dea  0.0s <br> =&gt; =&gt; naming to docker.io/library/python-test:latest                     0.0s<br> =&gt; =&gt; unpacking to docker.io/library/python-test:latest                  0.1s<br>richard@RicharddeMacBook-Air <span class="hljs-built_in">test</span> % docker run python-test       <br>hello world<br></code></pre></td></tr></tbody></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Tutorial/" class="category-chain-item">Tutorial</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/updating/" class="print-no-link">#updating</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Docker Tutorial</div>
+      <div>http://example.com/2025/10/18/Tutorial/Docker-Tutorial/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 18, 2025</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>November 12, 2025</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/12/Python/Pythonic/" title="Pythonic">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Pythonic</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/10/18/Python/Ollama-API-For-Python/" title="Ollama API For Python">
+                        <span class="hidden-mobile">Ollama API For Python</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

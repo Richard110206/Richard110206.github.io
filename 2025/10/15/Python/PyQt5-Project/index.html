@@ -1,0 +1,922 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="经过过去一年的学习，踩过的无数的坑告诉我单单学习语法是远远不够的，看似知识点面面俱到，实则之间功能的使用难以串联起来，且一段时间后便会大幅遗忘，所以现在我打算以项目驱动的方式进行学习，在完成简单项目的过程中对代码进行梳理和学习！ This is my first trial,it’s time for pyqt5,let’s go! PyQt5 后面会先附上项目完整代码，再对代码进行逐行的梳理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyQt5 Project">
+<meta property="og:url" content="http://example.com/2025/10/15/Python/PyQt5-Project/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="经过过去一年的学习，踩过的无数的坑告诉我单单学习语法是远远不够的，看似知识点面面俱到，实则之间功能的使用难以串联起来，且一段时间后便会大幅遗忘，所以现在我打算以项目驱动的方式进行学习，在完成简单项目的过程中对代码进行梳理和学习！ This is my first trial,it’s time for pyqt5,let’s go! PyQt5 后面会先附上项目完整代码，再对代码进行逐行的梳理">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-15T07:37:27.000Z">
+<meta property="article:modified_time" content="2025-11-12T06:48:09.964Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta property="article:tag" content="updating">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>PyQt5 Project - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LQX&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/other/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>Else</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/other/life-musings/" target="_self">
+                    
+                    <span>精进日记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/08/13/other/Casual-Chronicles/" target="_self">
+                    
+                    <span>生活杂谈</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/banner_img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="PyQt5 Project"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-15 15:37" pubdate>
+          October 15, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">PyQt5 Project</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>  经过过去一年的学习，踩过的无数的坑告诉我单单学习语法是远远不够的，看似知识点面面俱到，实则之间功能的使用难以串联起来，且一段时间后便会大幅遗忘，所以现在我打算以项目驱动的方式进行学习，在完成简单项目的过程中对代码进行梳理和学习！</p>
+<h5 id="This-is-my-first-trial-it’s-time-for-pyqt5-let’s-go">This is my first trial,it’s time for pyqt5,let’s go!</h5>
+<h2 id="PyQt5">PyQt5</h2>
+<p>后面会先附上项目完整代码，再对代码进行<strong>逐行的梳理和解析</strong>！</p>
+<h3 id="Labels">Labels</h3>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=nFLADhwXjW4">Python PyQt5 LABELS are easy! 🏷️</a></p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QApplication,QMainWindow,QLabel<br><span class="hljs-keyword">from</span> PyQt5.QtGui <span class="hljs-keyword">import</span> QFont<br><span class="hljs-keyword">from</span> PyQt5.QtCore <span class="hljs-keyword">import</span> Qt<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MainWindow</span>(<span class="hljs-title class_ inherited__">QMainWindow</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.setWindowTitle(<span class="hljs-string">"My cool first GUI"</span>)<br>        <span class="hljs-variable language_">self</span>.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">400</span>, <span class="hljs-number">300</span>)<br><br>        label=QLabel(<span class="hljs-string">"Hello"</span>,<span class="hljs-variable language_">self</span>)<br>        label.setFont(QFont(<span class="hljs-string">"Arial"</span>,<span class="hljs-number">40</span>))<br>        label.setGeometry(<span class="hljs-number">50</span>,<span class="hljs-number">50</span>,<span class="hljs-number">200</span>,<span class="hljs-number">50</span>)<br>        label.setStyleSheet(<span class="hljs-string">"color:blue;"</span><br>                            <span class="hljs-string">"background-color:gray;"</span><br>                            <span class="hljs-string">"font-weight:bold;"</span><br>                            <span class="hljs-string">"font-style:italic;"</span><br>                            <span class="hljs-string">"text-decoration:underline"</span>)<br><br>        <span class="hljs-comment"># label.setAlignment(Qt.AlignTop)</span><br>        <span class="hljs-comment"># label.setAlignment(Qt.AlignBottom)</span><br>        <span class="hljs-comment"># label.setAlignment(Qt.AlignHCenter)</span><br><br>        <span class="hljs-comment"># label.setAlignment(Qt.AlignRight)</span><br>        <span class="hljs-comment"># label.setAlignment(Qt.AlignHCenter)</span><br>        <span class="hljs-comment"># label.setAlignment(Qt.AlignLeft)</span><br><br>        label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)<br>        label.setAlignment(Qt.AlignHCenter | Qt.AlignBottom)<br>        label.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    app=QApplication(sys.argv)<br>    window=MainWindow()<br>    window.show()<br>    sys.exit(app.exec_())<br><br><span class="hljs-keyword">if</span> __name__==<span class="hljs-string">"__main__"</span>:<br>    main()<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br></code></pre></td></tr></tbody></table></figure>
+<p>导入<code>sys</code>模块，可以理解为这是 Python 与它自身运行环境以及操作系统之间的一个桥梁。</p>
+<div class="note note-info">
+            <h4 id="1-与命令行交互">1.与命令行交互</h4><ul><li><code>sys.argv</code> 是一个列表，包含了命令行参数。<ul><li><code>sys.argv[0]</code> 是脚本的名称。</li><li><code>sys.argv[1:]</code> 是用户在命令行中输入的参数列表。</li></ul></li></ul><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">"脚本名:"</span>, sys.argv[<span class="hljs-number">0</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">"参数个数:"</span>, <span class="hljs-built_in">len</span>(sys.argv))<br><br><span class="hljs-keyword">for</span> i, arg <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(sys.argv):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f"参数 <span class="hljs-subst">{i}</span>: <span class="hljs-subst">{arg}</span>"</span>)<br></code></pre></td></tr></tbody></table></figure><p>当你从终端或命令提示符运行一个 Python 脚本时，在脚本名后面输入的参数都会被存储在这里：</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">richard@RicharddeMacBook-Air pyqt5 % python3 test1.py hello world          <br>脚本名: test1.py<br>参数个数: 3<br>参数 0: test1.py<br>参数 1: hello<br>参数 2: world<br></code></pre></td></tr></tbody></table></figure><h4 id="2-控制程序退出">2.控制程序退出</h4><ul><li><code>sys.exit([arg])</code>：用于退出 Python 程序。通常用于在某种条件满足时提前结束程序。<ul><li><code>arg</code> 是可选的退出状态码。默认值为 0，表示正常退出。非零值通常用于表示异常退出。</li></ul></li></ul><h4 id="3-查看系统路径和模块">3.查看系统路径和模块</h4><ul><li><code>sys.path</code> 是一个列表，包含了 Python 解释器搜索模块的路径。<ul><li>当你导入一个模块时，Python 解释器会在 <code>sys.path</code> 中列出的路径中搜索该模块。</li></ul></li><li><code>sys.modules</code> 是一个字典，包含了当前已导入的模块。<ul><li>键是模块的名称，值是模块对象。</li><li>你可以使用 <code>sys.modules</code> 来检查某个模块是否已经导入，或者获取已导入模块的引用。</li></ul></li></ul><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><br><span class="hljs-comment"># 打印当前所有的模块搜索路径</span><br><span class="hljs-keyword">for</span> path <span class="hljs-keyword">in</span> sys.path:<br>    <span class="hljs-built_in">print</span>(path)<br><span class="hljs-string">"""</span><br><span class="hljs-string">/Users/richard/PyCharmMiscProject</span><br><span class="hljs-string">/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python39.zip</span><br><span class="hljs-string">/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9</span><br><span class="hljs-string">/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/lib-dynload</span><br><span class="hljs-string">/Users/richard/Library/Python/3.9/lib/python/site-packages</span><br><span class="hljs-string">/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/site-packages</span><br><span class="hljs-string">"""</span><br></code></pre></td></tr></tbody></table></figure><h4 id="4-获取系统-解释器信息">4.获取系统/解释器信息</h4><ul><li><code>sys.version</code> 获取当前 Python 解释器的版本信息。</li><li><code>sys.platform</code> 获取当前操作系统的名称，常用于编写跨平台代码。</li></ul><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-built_in">str</span>=sys.platform<br><br><span class="hljs-keyword">if</span> <span class="hljs-built_in">str</span>==<span class="hljs-string">'win32'</span>: <span class="hljs-comment"># windows</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f"这是在<span class="hljs-subst">{<span class="hljs-built_in">str</span>}</span>上运行的程序"</span>)<br><span class="hljs-keyword">elif</span> <span class="hljs-built_in">str</span>==<span class="hljs-string">'darwin'</span>: <span class="hljs-comment"># macos</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f"这是在<span class="hljs-subst">{<span class="hljs-built_in">str</span>}</span>上运行的程序"</span>)<br><span class="hljs-keyword">elif</span> <span class="hljs-built_in">str</span>==<span class="hljs-string">'linux'</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f"这是在<span class="hljs-subst">{<span class="hljs-built_in">str</span>}</span>上运行的程序"</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f"这是在<span class="hljs-subst">{<span class="hljs-built_in">str</span>}</span>上运行的程序"</span>)<br></code></pre></td></tr></tbody></table></figure>
+          </div>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QApplication, QMainWindow, QLabel<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>PyQt5.QtWidgets</code>：Qt 的窗口组件模块，包含构建 GUI 的核心类。
+<ul>
+<li><code>QApplication</code>：应用程序主类，管理应用程序的生命周期、事件循环等，每个 PyQt 程序必须有且仅有一个QApplication实例。</li>
+<li><code>QMainWindow</code>：主窗口类，提供标准的窗口结构（标题栏、菜单栏、工具栏等），适合作为程序的主窗口。</li>
+<li><code>QLabel</code>：标签组件，用于显示文本或图像。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PyQt5.QtCore <span class="hljs-keyword">import</span> Qt<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>PyQt5.QtCore</code>：核心模块，包含 Qt 框架的基础类和功能。
+<ul>
+<li><code>Qt</code>：枚举类，包含了 Qt 框架中常用的常量和枚举值。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PyQt5.QtGui <span class="hljs-keyword">import</span> QFont<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>PyQt5.QtGui</code>：图形相关模块，包含字体、颜色、图像等视觉元素的类。
+<ul>
+<li><code>QFont</code>：字体类，用于设置文本的字体、大小、样式等。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MainWindow</span>(<span class="hljs-title class_ inherited__">QMainWindow</span>):<br></code></pre></td></tr></tbody></table></figure>
+<p>定义<code>MainWindow</code>类，继承自<code>QMainWindow</code>，表示程序的主窗口。通过继承，我们可以复用<code>QMainWindow</code>的所有功能（如窗口大小调整、标题设置等），并添加自定义逻辑。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-built_in">super</span>().__init__()<br></code></pre></td></tr></tbody></table></figure>
+<p>类的初始化方法（构造函数），用于初始化窗口属性。<br>
+<code>super().__init__()</code>：调用父类<code>QMainWindow</code>的初始化方法，确保父类的功能正常工作（必须调用，否则窗口可能无法正常显示）。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.setWindowTitle(<span class="hljs-string">"My cool first GUI"</span>)<br></code></pre></td></tr></tbody></table></figure>
+<p><code>setWindowTitle()</code>：<code>QMainWindow</code>的方法，设置窗口标题为字符串参数内容。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">400</span>, <span class="hljs-number">300</span>)<br></code></pre></td></tr></tbody></table></figure>
+<p><code>setGeometry(x, y, width, height)</code>：设置窗口的位置和大小。</p>
+<p><strong>参数含义：</strong></p>
+<ul>
+<li><code>x</code> 和 <code>y</code> 分别表示窗口左上角相对于屏幕的坐标(坐标原点在屏幕左上角，向右为 x 轴正方向，向下为 y 轴正方向)</li>
+<li><code>width</code> 和 <code>height</code> 分别表示窗口的宽度和高度</li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">label = QLabel(<span class="hljs-string">"Hello"</span>, <span class="hljs-variable language_">self</span>)<br></code></pre></td></tr></tbody></table></figure>
+<p>创建<code>QLabel</code>实例，显示文本，并指定父组件为<code>self</code>（即当前<code>MainWindow</code>窗口）。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">label.setFont(QFont(<span class="hljs-string">"Arial"</span>, <span class="hljs-number">40</span>))<br></code></pre></td></tr></tbody></table></figure>
+<p>设置标签的大小和字体</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">label.setGeometry(<span class="hljs-number">50</span>, <span class="hljs-number">50</span>, <span class="hljs-number">200</span>, <span class="hljs-number">50</span>)<br></code></pre></td></tr></tbody></table></figure>
+<p>设置标签在父组件中的位置和大小（相对于父窗口左上角）</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">label.setStyleSheet(<span class="hljs-string">"color:blue;"</span><br>                    <span class="hljs-string">"background-color:gray;"</span> <span class="hljs-comment"># 背景颜色</span><br>                    <span class="hljs-string">"font-weight:bold;"</span> <span class="hljs-comment"># 字体加粗</span><br>                    <span class="hljs-string">"font-style:italic;"</span> <span class="hljs-comment"># 字体斜体</span><br>                    <span class="hljs-string">"text-decoration:underline"</span>) <span class="hljs-comment"># 下划线</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>setStyleSheet()</code>：通过 CSS 样式表设置组件的外观（PyQt 支持部分 CSS 语法）。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">label.setAlignment(Qt.AlignTop) <span class="hljs-comment"># 垂直顶部对齐</span><br>label.setAlignment(Qt.AlignBottom) <span class="hljs-comment"># 垂直底部对齐</span><br>label.setAlignment(Qt.AlignHCenter) <span class="hljs-comment"># 水平居中对齐</span><br>label.setAlignment(Qt.AlignRight) <span class="hljs-comment"># 水平右对齐</span><br>label.setAlignment(Qt.AlignLeft) <span class="hljs-comment"># 水平左对齐</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>|</code>（位或运算符）实现组合对齐方式：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)<br>label.setAlignment(Qt.AlignHCenter | Qt.AlignBottom)<br>label.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    app = QApplication(sys.argv) <span class="hljs-comment"># 创建QApplication实例</span><br>    window = MainWindow() <span class="hljs-comment"># 创建窗口</span><br>    window.show() <span class="hljs-comment"># 显示窗口</span><br></code></pre></td></tr></tbody></table></figure>
+<p>PyQt 组件默认隐藏，必须调用<code>show()</code>才会显示</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QApplication,QMainWindow,QLabel<br><span class="hljs-keyword">from</span> PyQt5.QtGui <span class="hljs-keyword">import</span> QPixmap<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MainWindow</span>(<span class="hljs-title class_ inherited__">QMainWindow</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.setWindowTitle(<span class="hljs-string">"My cool first GUI"</span>)<br>        <span class="hljs-variable language_">self</span>.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">400</span>, <span class="hljs-number">300</span>)<br><br>        label=QLabel(<span class="hljs-variable language_">self</span>)<br>        label.setGeometry(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">250</span>,<span class="hljs-number">250</span>)<br><br>        pixmap=QPixmap(<span class="hljs-string">"../lqx.png"</span>)<br>        label.setPixmap(pixmap)<br><br>        label.setScaledContents(<span class="hljs-literal">True</span>)<br>        <span class="hljs-comment"># label.setGeometry(self.width()-label.width(),self.width()-label.width(),label.width(),label.height())</span><br>        label.setGeometry((<span class="hljs-variable language_">self</span>.width()-label.width())//<span class="hljs-number">2</span>,(<span class="hljs-variable language_">self</span>.height()-label.height())//<span class="hljs-number">2</span>,label.width(),label.height())<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    app=QApplication(sys.argv)<br>    window=MainWindow()<br>    window.show()<br>    sys.exit(app.exec_())<br><br><span class="hljs-keyword">if</span> __name__==<span class="hljs-string">"__main__"</span>:<br>    main()<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>QPixmap</code>：Qt 中用于处理图像的类，支持加载多种格式图片（如 PNG、JPG 等）</li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">label.setPixmap(pixmap)<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>setPixmap()</code>：<code>QLabel</code>的方法，将<code>QPixmap</code>对象设置为标签的显示内容，使标签从显示文本转为显示图像。</li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">label.setScaledContents(<span class="hljs-literal">True</span>)<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>setScaledContents(bool)</code>：设置图像是否自适应标签大小。
+<ul>
+<li><code>True</code>：图像会自动缩放以填满整个标签（可能改变宽高比）。</li>
+<li><code>False</code>（默认）：图像按原始大小显示，若超过标签尺寸则被截断。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Layout">Layout</h3>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ml-mBl77h6Q">Python PyQt5 LAYOUT MANAGERS are easy! 🧲</a></p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> (QApplication,QMainWindow,QLabel,QWidget,QVBoxLayout,QHBoxLayout,QGridLayout)<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MainWindow</span>(<span class="hljs-title class_ inherited__">QMainWindow</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">400</span>, <span class="hljs-number">300</span>)<br>        <span class="hljs-variable language_">self</span>.initUI()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">initUI</span>(<span class="hljs-params">self</span>):<br>        central_widget=QWidget()<br>        <span class="hljs-variable language_">self</span>.setCentralWidget(central_widget)<br><br>        label1 = QLabel(<span class="hljs-string">"#1"</span>,<span class="hljs-variable language_">self</span>)<br>        label2 = QLabel(<span class="hljs-string">"#2"</span>, <span class="hljs-variable language_">self</span>)<br>        label3 = QLabel(<span class="hljs-string">"#3"</span>, <span class="hljs-variable language_">self</span>)<br>        label4 = QLabel(<span class="hljs-string">"#4"</span>, <span class="hljs-variable language_">self</span>)<br>        label5 = QLabel(<span class="hljs-string">"#5"</span>, <span class="hljs-variable language_">self</span>)<br><br>        label1.setStyleSheet(<span class="hljs-string">"background-color:red"</span>)<br>        label2.setStyleSheet(<span class="hljs-string">"background-color:yellow"</span>)<br>        label3.setStyleSheet(<span class="hljs-string">"background-color:green"</span>)<br>        label4.setStyleSheet(<span class="hljs-string">"background-color:blue"</span>)<br>        label5.setStyleSheet(<span class="hljs-string">"background-color:purple"</span>)<br>        <span class="hljs-string">"""</span><br><span class="hljs-string">        vbox = QVBoxLayout()</span><br><span class="hljs-string"></span><br><span class="hljs-string">        vbox.addWidget(label1)</span><br><span class="hljs-string">        vbox.addWidget(label2)</span><br><span class="hljs-string">        vbox.addWidget(label3)</span><br><span class="hljs-string">        vbox.addWidget(label4)</span><br><span class="hljs-string">        vbox.addWidget(label5)</span><br><span class="hljs-string"></span><br><span class="hljs-string">        central_widget.setLayout(vbox)</span><br><span class="hljs-string">        """</span><br>        <span class="hljs-comment"># 5 个标签垂直排列，宽度默认填满窗口，高度平均分配</span><br>        <span class="hljs-string">"""</span><br><span class="hljs-string">        hbox=QHBoxLayout()</span><br><span class="hljs-string"></span><br><span class="hljs-string">        hbox.addWidget(label1)</span><br><span class="hljs-string">        hbox.addWidget(label2)</span><br><span class="hljs-string">        hbox.addWidget(label3)</span><br><span class="hljs-string">        hbox.addWidget(label4)</span><br><span class="hljs-string">        hbox.addWidget(label5)</span><br><span class="hljs-string"></span><br><span class="hljs-string">        central_widget.setLayout(hbox)</span><br><span class="hljs-string">        """</span><br>        <span class="hljs-comment"># 5 个标签水平排列，高度默认填满窗口，宽度平均分配。</span><br><br>        grid=QGridLayout()<br><br>        grid.addWidget(label1,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>)<br>        grid.addWidget(label2,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)<br>        grid.addWidget(label3,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)<br>        grid.addWidget(label4,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)<br>        grid.addWidget(label5,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<br>        <span class="hljs-comment"># 组件按行列坐标排列，形成类似表格的结构：</span><br>        central_widget.setLayout(grid)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    app=QApplication(sys.argv)<br>    window=MainWindow()<br>    window.show()<br>    sys.exit(app.exec_())<br><br><span class="hljs-keyword">if</span> __name__==<span class="hljs-string">"__main__"</span>:<br>    main()<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QVBoxLayout, QHBoxLayout, QGridLayout<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>QVBoxLayout</code>：<strong>垂直</strong>布局，组件按从上到下的顺序排列。</li>
+<li><code>QHBoxLayout</code>：<strong>水平</strong>布局，组件按从左到右的顺序排列。</li>
+<li><code>QGridLayout</code>：<strong>网格</strong>布局，组件按行列坐标定位，类似表格。</li>
+</ul>
+<h3 id="Button">Button</h3>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=9pl55MxZlG4">Python PyQt5 BUTTONS are easy! 🛎️</a></p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> (QApplication,QMainWindow,QLabel,QPushButton)<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MainWindow</span>(<span class="hljs-title class_ inherited__">QMainWindow</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.setGeometry(<span class="hljs-number">700</span>, <span class="hljs-number">300</span>, <span class="hljs-number">500</span>, <span class="hljs-number">500</span>)<br>        <span class="hljs-variable language_">self</span>.button=QPushButton(<span class="hljs-string">"Click me!"</span>,<span class="hljs-variable language_">self</span>)<br>        <span class="hljs-comment"># 创建QPushButton实例，父组件为self（即主窗口）</span><br>        <span class="hljs-variable language_">self</span>.label=QLabel(<span class="hljs-string">"Hello"</span>,<span class="hljs-variable language_">self</span>)<br>        <span class="hljs-variable language_">self</span>.initUI()<br><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">initUI</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-variable language_">self</span>.button.setGeometry(<span class="hljs-number">150</span>,<span class="hljs-number">200</span>,<span class="hljs-number">200</span>,<span class="hljs-number">100</span>)<br>        <span class="hljs-variable language_">self</span>.button.setStyleSheet(<span class="hljs-string">"font-size:30px"</span>)<br>        <span class="hljs-variable language_">self</span>.button.clicked.connect(<span class="hljs-variable language_">self</span>.on_click)<br><br>        <span class="hljs-variable language_">self</span>.label.setGeometry(<span class="hljs-number">210</span>,<span class="hljs-number">300</span>,<span class="hljs-number">200</span>,<span class="hljs-number">100</span>)<br>        <span class="hljs-variable language_">self</span>.label.setStyleSheet(<span class="hljs-string">"font-size:30px"</span>)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">on_click</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-string">"""</span><br><span class="hljs-string">        print("Button clicked")</span><br><span class="hljs-string">        self.button.setText("Clicked")  # 修改按钮文本，反馈点击状态</span><br><span class="hljs-string">        self.button.setDisabled(True)  # 禁用按钮（变为灰色，无法再次点击）</span><br><span class="hljs-string">        """</span><br>        <span class="hljs-variable language_">self</span>.label.setText(<span class="hljs-string">"Goodbye"</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    app=QApplication(sys.argv)<br>    window=MainWindow()<br>    window.show()<br>    sys.exit(app.exec_())<br><br><span class="hljs-keyword">if</span> __name__==<span class="hljs-string">"__main__"</span>:<br>    main()<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.button.clicked.connect(<span class="hljs-variable language_">self</span>.on_click)<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>clicked</code>：<code>QPushButton</code>的核心信号，当按钮被点击时触发（无需传递状态参数，只需响应点击动作）。</li>
+<li><code>connect</code>：将信号绑定到自定义槽函数<code>on_click</code>，实现点击后的逻辑处理</li>
+</ul>
+<h3 id="Checkbox">Checkbox</h3>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=VgnUB_vzR9I">Python PyQt5 CHECKBOXES are easy! ✅</a></p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QApplication,QMainWindow,QCheckBox<br><span class="hljs-keyword">from</span> PyQt5.QtCore <span class="hljs-keyword">import</span> Qt<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MainWindow</span>(<span class="hljs-title class_ inherited__">QMainWindow</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.setGeometry(<span class="hljs-number">700</span>, <span class="hljs-number">300</span>, <span class="hljs-number">500</span>, <span class="hljs-number">500</span>)<br>        <span class="hljs-variable language_">self</span>.checkbox = QCheckBox(<span class="hljs-string">"Do you like food"</span>,<span class="hljs-variable language_">self</span>)<br>        <span class="hljs-variable language_">self</span>.initUI()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">initUI</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-variable language_">self</span>.checkbox.setGeometry(<span class="hljs-number">10</span>,<span class="hljs-number">0</span>,<span class="hljs-number">500</span>,<span class="hljs-number">100</span>)<br>        <span class="hljs-variable language_">self</span>.checkbox.setStyleSheet(<span class="hljs-string">"font-size: 30x;"</span><br>                                    <span class="hljs-string">"font-family: Arial;"</span>)<br>        <span class="hljs-variable language_">self</span>.checkbox.setChecked(<span class="hljs-literal">True</span>)<br>        <span class="hljs-comment"># 确定默认是否为选中状态</span><br>        <span class="hljs-variable language_">self</span>.checkbox.stateChanged.connect(<span class="hljs-variable language_">self</span>.checkbox_changed)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">checkbox_changed</span>(<span class="hljs-params">self,state</span>):<br>        <span class="hljs-comment"># print(state)</span><br>        <span class="hljs-comment"># if state==2:</span><br>        <span class="hljs-keyword">if</span> state == Qt.Checked:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">"You like food"</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">"You don't like food"</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    app=QApplication(sys.argv)<br>    window=MainWindow()<br>    window.show()<br>    sys.exit(app.exec_())<br><br><span class="hljs-keyword">if</span> __name__==<span class="hljs-string">"__main__"</span>:<br>    main()<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="Radio-Button">Radio Button</h3>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=DZ3-ij_JHE0">Python PyQt5 RADIO BUTTONS are easy! 🔘</a></p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QApplication, QMainWindow, QRadioButton,QButtonGroup<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MainWindow</span>(<span class="hljs-title class_ inherited__">QMainWindow</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.setGeometry(<span class="hljs-number">700</span>,<span class="hljs-number">300</span>,<span class="hljs-number">500</span>,<span class="hljs-number">400</span>)<br>        <span class="hljs-variable language_">self</span>.radio1=QRadioButton(<span class="hljs-string">"Visa"</span>,<span class="hljs-variable language_">self</span>)<br>        <span class="hljs-variable language_">self</span>.radio2 = QRadioButton(<span class="hljs-string">"Mastercard"</span>, <span class="hljs-variable language_">self</span>)<br>        <span class="hljs-variable language_">self</span>.radio3 = QRadioButton(<span class="hljs-string">"Gift Card"</span>, <span class="hljs-variable language_">self</span>)<br>        <span class="hljs-variable language_">self</span>.radio4 = QRadioButton(<span class="hljs-string">"In-Store"</span>, <span class="hljs-variable language_">self</span>)<br>        <span class="hljs-variable language_">self</span>.radio5 = QRadioButton(<span class="hljs-string">"Online"</span>, <span class="hljs-variable language_">self</span>)<br>        <span class="hljs-variable language_">self</span>.button_group1=QButtonGroup(<span class="hljs-variable language_">self</span>)<br>        <span class="hljs-variable language_">self</span>.button_group2=QButtonGroup(<span class="hljs-variable language_">self</span>)<br>        <span class="hljs-variable language_">self</span>.initUI()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">initUI</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-variable language_">self</span>.radio1.setGeometry(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">300</span>,<span class="hljs-number">50</span>)<br>        <span class="hljs-variable language_">self</span>.radio2.setGeometry(<span class="hljs-number">0</span>,<span class="hljs-number">50</span>,<span class="hljs-number">300</span>,<span class="hljs-number">50</span>)<br>        <span class="hljs-variable language_">self</span>.radio3.setGeometry(<span class="hljs-number">0</span>,<span class="hljs-number">100</span>,<span class="hljs-number">300</span>,<span class="hljs-number">50</span>)<br>        <span class="hljs-variable language_">self</span>.radio4.setGeometry(<span class="hljs-number">0</span>, <span class="hljs-number">150</span>, <span class="hljs-number">300</span>, <span class="hljs-number">50</span>)<br>        <span class="hljs-variable language_">self</span>.radio5.setGeometry(<span class="hljs-number">0</span>, <span class="hljs-number">200</span>, <span class="hljs-number">300</span>, <span class="hljs-number">50</span>)<br><br>        <span class="hljs-variable language_">self</span>.setStyleSheet(<span class="hljs-string">"QRadioButton{"</span><br>                           <span class="hljs-string">"font-size:20px;"</span><br>                           <span class="hljs-string">"font-family:Arial;"</span><br>                           <span class="hljs-string">"padding:10px;"</span><br>                           <span class="hljs-string">"}"</span>)<br><br>        <span class="hljs-variable language_">self</span>.button_group1.addButton(<span class="hljs-variable language_">self</span>.radio1)<br>        <span class="hljs-variable language_">self</span>.button_group1.addButton(<span class="hljs-variable language_">self</span>.radio2)<br>        <span class="hljs-variable language_">self</span>.button_group1.addButton(<span class="hljs-variable language_">self</span>.radio3)<br>        <span class="hljs-variable language_">self</span>.button_group2.addButton(<span class="hljs-variable language_">self</span>.radio4)<br>        <span class="hljs-variable language_">self</span>.button_group2.addButton(<span class="hljs-variable language_">self</span>.radio5)<br><br>        <span class="hljs-variable language_">self</span>.radio1.toggled.connect(<span class="hljs-variable language_">self</span>.radio_button_changed)<br>        <span class="hljs-variable language_">self</span>.radio2.toggled.connect(<span class="hljs-variable language_">self</span>.radio_button_changed)<br>        <span class="hljs-variable language_">self</span>.radio3.toggled.connect(<span class="hljs-variable language_">self</span>.radio_button_changed)<br>        <span class="hljs-variable language_">self</span>.radio4.toggled.connect(<span class="hljs-variable language_">self</span>.radio_button_changed)<br>        <span class="hljs-variable language_">self</span>.radio5.toggled.connect(<span class="hljs-variable language_">self</span>.radio_button_changed)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">radio_button_changed</span>(<span class="hljs-params">self, checked</span>):<br>        radio_button = <span class="hljs-variable language_">self</span>.sender()<br>        <span class="hljs-keyword">if</span> radio_button.isChecked():<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f"<span class="hljs-subst">{radio_button.text()}</span> is selected"</span>)<br>        <span class="hljs-comment"># print("You select something!")</span><br><br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    app = QApplication(sys.argv)<br>    main_window = MainWindow()<br>    main_window.show()<br>    sys.exit(app.exec_())<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:<br>    main()<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>QRadioButton</code>：单选按钮组件，用于从多个选项中选择唯一一项（与复选框的多选项不同），常见于互斥选项场景（如支付方式、性别选择）。</li>
+<li><code>QButtonGroup</code>：按钮组组件，用于管理一组单选按钮，实现 “互斥选择”（同一组内只能有一个按钮被选中），简化分组逻辑。</li>
+</ul>
+<h3 id="Signal-and-Slot">Signal and Slot</h3>
+<ul>
+<li><strong>信号（<code>Signal</code>）</strong>：组件在特定事件发生时发出的 “通知”，是事件的 “触发器”。比如按钮被点击（<code>clicked</code>）、复选框状态变化（<code>stateChanged</code>）、单选按钮选中切换（<code>toggled</code>）等，都是组件自带的信号。</li>
+<li><strong>槽（<code>Slot</code>）</strong>：用于接收信号并执行具体逻辑的函数，是事件的 “处理器”，如自定义函数（如<code>on_click</code>）。</li>
+</ul>
+<h4 id="1-准备组件（创建信号源和处理对象）">1. 准备组件（创建信号源和处理对象）</h4>
+<p>先创建产生信号的组件（如按钮QPushButton）和需要被处理的对象（如标签QLabel），确保组件被正确初始化。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 创建信号源（按钮，点击时发信号）</span><br><span class="hljs-variable language_">self</span>.button = QPushButton(<span class="hljs-string">"点击修改文本"</span>, <span class="hljs-variable language_">self</span>)<br><span class="hljs-comment"># 2. 创建处理对象（标签，文本需被修改）</span><br><span class="hljs-variable language_">self</span>.label = QLabel(<span class="hljs-string">"初始文本"</span>, <span class="hljs-variable language_">self</span>)<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="2-定义槽函数（编写信号触发后的逻辑）">2. 定义槽函数（编写信号触发后的逻辑）</h4>
+<p>自定义一个<strong>函数</strong>，用于<strong>处理信号触发后的具体操作</strong>（如修改标签文本、打印日志等）。槽函数的参数需与信号传递的参数匹配（可选，部分信号无参数）。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 自定义槽函数：接收信号后修改标签文本</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">on_button_click</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-variable language_">self</span>.label.setText(<span class="hljs-string">"按钮被点击啦！"</span>)<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="3-绑定信号与槽（建立关联）">3. 绑定信号与槽（建立关联）</h4>
+<p>通过组件的<code>connect()</code>方法，将 “信号” 与 “槽函数” 绑定，完成 “事件→响应” 的关联。<strong><code>语法：信号源.信号.connect(槽函数)</code></strong></p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 将按钮的"clicked"信号，绑定到自定义槽函数on_button_click</span><br><span class="hljs-variable language_">self</span>.button.clicked.connect(<span class="hljs-variable language_">self</span>.on_button_click)<br></code></pre></td></tr></tbody></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/updating/" class="print-no-link">#updating</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>PyQt5 Project</div>
+      <div>http://example.com/2025/10/15/Python/PyQt5-Project/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 15, 2025</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>November 12, 2025</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/10/18/Python/Ollama-API-For-Python/" title="Ollama API For Python">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Ollama API For Python</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/10/12/Python/Python-Web-Scraping/" title="Python Web Scraping">
+                        <span class="hidden-mobile">Python Web Scraping</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

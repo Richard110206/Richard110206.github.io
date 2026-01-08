@@ -1,0 +1,1174 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="问题 A: 机器人王国里的路径长度                      ▶ 问题 A: 机器人王国里的路径长度                                  题目描述在一个机器人王国里，围绕首都分N层构建卫星城市。以首都为圆心，以路相连分出两个卫星城在第一个层，然后每个卫星城又有路相连分出两个卫星城在下一层，但每条路的长度不同。第N层的卫星城不再分出新的卫星城。现在人类只">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CUMT-Datastructure-Practice 4">
+<meta property="og:url" content="http://example.com/2025/06/27/Data%20structure/CUMT-Datastructure-Practice-4/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="问题 A: 机器人王国里的路径长度                      ▶ 问题 A: 机器人王国里的路径长度                                  题目描述在一个机器人王国里，围绕首都分N层构建卫星城市。以首都为圆心，以路相连分出两个卫星城在第一个层，然后每个卫星城又有路相连分出两个卫星城在下一层，但每条路的长度不同。第N层的卫星城不再分出新的卫星城。现在人类只">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/CUMT-Datastructure-Practice-4.png">
+<meta property="article:published_time" content="2025-06-27T04:57:31.000Z">
+<meta property="article:modified_time" content="2025-08-27T03:33:17.124Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta property="article:tag" content="sort">
+<meta property="article:tag" content="queue">
+<meta property="article:tag" content="hashtable">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/CUMT-Datastructure-Practice-4.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>CUMT-Datastructure-Practice 4 - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LQX&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/other/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>Else</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/other/life-musings/" target="_self">
+                    
+                    <span>精进日记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/08/13/other/Casual-Chronicles/" target="_self">
+                    
+                    <span>生活杂谈</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/banner_img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CUMT-Datastructure-Practice 4"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-27 12:57" pubdate>
+          June 27, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Data Structure"
+        id="heading-e226710d16f039ef02ab4b3ec3a63ed1" role="tab" data-toggle="collapse" href="#collapse-e226710d16f039ef02ab4b3ec3a63ed1"
+        aria-expanded="true"
+      >
+        Data Structure
+        <span class="list-group-count">(9)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-e226710d16f039ef02ab4b3ec3a63ed1"
+           role="tabpanel" aria-labelledby="heading-e226710d16f039ef02ab4b3ec3a63ed1">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2025/08/22/Data%20structure/Linkedlist/" title="Array and Linkedlist"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Array and Linkedlist</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/09/17/Data%20structure/BinaryTree/" title="BinaryTree"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">BinaryTree</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/06/08/Data%20structure/CUMT-Datastructure-Assignment-1/" title="CUMT-Datastructure-Assignment 1"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CUMT-Datastructure-Assignment 1</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/06/18/Data%20structure/CUMT-Datastructure-Assignment-2/" title="CUMT-Datastructure-Assignment 2"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CUMT-Datastructure-Assignment 2</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/06/18/Data%20structure/CUMT-Datastructure-Practice-2/" title="CUMT-Datastructure-Practice 2"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CUMT-Datastructure-Practice 2</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/06/24/Data%20structure/CUMT-Datastructure-Practice-3/" title="CUMT-Datastructure-Practice 3"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CUMT-Datastructure-Practice 3</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/06/27/Data%20structure/CUMT-Datastructure-Practice-4/" title="CUMT-Datastructure-Practice 4"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">CUMT-Datastructure-Practice 4</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/08/26/Data%20structure/Hashtable/" title="Hashtable"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Hashtable</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/08/23/Data%20structure/Stack-and-Queue/" title="Stack and Queue"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Stack and Queue</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">CUMT-Datastructure-Practice 4</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="问题-A-机器人王国里的路径长度">问题 A: 机器人王国里的路径长度</h2>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-a5ff173a" role="button" aria-expanded="false" aria-controls="collapse-a5ff173a">
+        <div class="fold-arrow">▶</div> 问题 A: 机器人王国里的路径长度
+      </div>
+      <div class="fold-collapse collapse" id="collapse-a5ff173a">
+        <div class="fold-content">
+          <h3 id="题目描述">题目描述</h3><p>在一个机器人王国里，围绕首都分N层构建卫星城市。以首都为圆心，以路相连分出两个卫星城在第一个层，然后每个卫星城又有路相连分出两个卫星城在下一层，但每条路的长度不同。第N层的卫星城不再分出新的卫星城。现在人类只探知到所有直接相连的城市间的路程，你能计算某个卫星城到达首都的路程吗？</p><h3 id="输入">输入</h3><p>第一行为N，表示机器人王国里有N层卫星城，N最大为10。从第二行开始，共2N+1-2行，每行分别是城市的代号到其分出的卫星城的代号和它们间的路程。 代号用若干个字母表示，直连路程最大为100。最后一行是某卫星城的代号。</p><h3 id="输出">输出</h3><p>根据最后一行的卫星城代号，求该卫星城到首都的路程。</p><h3 id="样例输入">样例输入</h3><figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-number">2</span><br><span class="hljs-selector-tag">A</span> F <span class="hljs-number">20</span><br><span class="hljs-selector-tag">B</span> D <span class="hljs-number">100</span><br><span class="hljs-selector-tag">G</span> <span class="hljs-selector-tag">A</span> <span class="hljs-number">5</span><br><span class="hljs-selector-tag">G</span> <span class="hljs-selector-tag">B</span> <span class="hljs-number">10</span><br><span class="hljs-selector-tag">A</span> C <span class="hljs-number">6</span><br><span class="hljs-selector-tag">B</span> E <span class="hljs-number">30</span><br>D<br></code></pre></td></tr></tbody></table></figure><h3 id="样例输出">样例输出</h3><figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">110<br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
+<h3 id="问题分析">问题分析</h3>
+<p>本题需要根据当前<code>target</code>不断向上<strong>回溯寻找其父节点</strong>，将<code>distance</code>值返回加入到总路程<code>sum</code>中即可，这里使用哈希表存储每个城市的父城市和到父城市的距离。</p>
+<h3 id="完整代码">完整代码</h3>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unordered_map&gt;</span><span class="hljs-comment">//哈希表容器</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span><span class="hljs-comment">//处理字符串</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cmath&gt;</span><span class="hljs-comment">//这里用于幂运算</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">city</span> {<br>	string parent;<span class="hljs-comment">//父城市名称</span><br>	<span class="hljs-type">int</span> distance;<span class="hljs-comment">//到父城市的距离</span><br>};<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{<br>	unordered_map&lt;string, city&gt; path;<span class="hljs-comment">//存储城市路径关系的哈希表</span><br>	<span class="hljs-type">int</span> N;<br>	cin &gt;&gt; N;<br>	<span class="hljs-type">int</span> number = <span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>, N + <span class="hljs-number">1</span>) - <span class="hljs-number">2</span>;<span class="hljs-comment">//计算读取的城市个数</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; number;i ++) {<br>		string start, end;<br>		<span class="hljs-type">int</span> distance;<br>		cin &gt;&gt; start &gt;&gt; end &gt;&gt; distance;<br>		path[end] = { start,distance };<span class="hljs-comment">//进行存储</span><br>	}<br>	string target;<br>	cin &gt;&gt; target;<br>	<span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">while</span> (path.<span class="hljs-built_in">find</span>(target)!=path.<span class="hljs-built_in">end</span>()){<br>	<span class="hljs-comment">//直至当前的目标城市无法查找到父城市是停止</span><br>		sum += path[target].distance;<br>		target = path[target].parent;<span class="hljs-comment">//将当前目标城市向上移动</span><br>	}<br>	cout &lt;&lt; sum &lt;&lt; endl;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="注释">注释</h3>
+<p><code>&lt;unordered_map&gt;</code>是C++标准库中提供<strong>无序关联容器</strong>的头文件，它实现了基于哈希表的<strong>键值对存储结构</strong>，它具有以下特性：</p>
+<ul>
+<li>元素<strong>无序存储</strong>，不会根据关键字值或映射值按<strong>任何特定顺序排序</strong></li>
+<li>键必须<strong>唯一</strong>（不允许重复键）</li>
+<li>根据关键字来引用，而<strong>不是根据索引来引用</strong></li>
+<li>使用<strong>链表处理哈希冲突</strong>（<strong>链地址法</strong>）</li>
+</ul>
+<p>构造哈希表：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">unordered_map&lt;KeyType, ValueType&gt; map_name;<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">unordered_map</span>(<span class="hljs-type">int</span>,<span class="hljs-type">int</span>) position;<br>unordered_map&lt;string,string&gt; name;<br>unordered_map&lt;string,<span class="hljs-type">int</span>&gt; age;<br></code></pre></td></tr></tbody></table></figure>
+<ol>
+<li><strong>元素添加</strong></li>
+</ol>
+<ul>
+<li>声明时<strong>使用初始化列表</strong>进行初始化：</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp">unordered_map&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt; position = {{<span class="hljs-number">1</span>,<span class="hljs-number">10</span>},{<span class="hljs-number">2</span>,<span class="hljs-number">20</span>},{<span class="hljs-number">3</span>,<span class="hljs-number">30</span>}};<br>unordered_map&lt;string, string&gt; capital_city = {<br>    {<span class="hljs-string">"UK"</span>, <span class="hljs-string">"London"</span>},<br>    {<span class="hljs-string">"France"</span>, <span class="hljs-string">"Paris"</span>},<br>    {<span class="hljs-string">"Germany"</span>, <span class="hljs-string">"Berlin"</span>}<br>};<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>
+<p>使用<code>[]</code>运算符添加：</p>
+<ul>
+<li>如果键<strong>不存在</strong>，会<strong>插入一个新的键值对</strong></li>
+<li>如果键<strong>已存在</strong>，则会<strong>覆盖</strong>原有的值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp">unordered_map&lt;string, <span class="hljs-type">int</span>&gt; age_map;<br>age_map[<span class="hljs-string">"Alice"</span>] = <span class="hljs-number">25</span>; <span class="hljs-comment">// 插入 {"Alice", 25}</span><br>age_map[<span class="hljs-string">"Bob"</span>] = <span class="hljs-number">30</span>;   <span class="hljs-comment">// 插入 {"Bob", 30}</span><br>age_map[<span class="hljs-string">"Alice"</span>] = <span class="hljs-number">26</span>; <span class="hljs-comment">// 更新，现在 {"Alice", 26}</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>
+<p>使用<code>insert()</code>：插入一个键值对 <code>pair&lt;Key, Value&gt;</code>:</p>
+<ul>
+<li>返回值是一个 <code>pair&lt;iterator, bool&gt;</code></li>
+<li><code>name.first</code>是<strong>指向插入元素的迭代器</strong></li>
+<li><code>name.second</code>是 bool 类型，表示<strong>插入是否成功</strong>（true 表示成功，false 表示键已存在）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> result = age_map.<span class="hljs-built_in">insert</span>({<span class="hljs-string">"Charlie"</span>, <span class="hljs-number">28</span>}); <br><span class="hljs-comment">// result 是一个 pair&lt;iterator, bool&gt;</span><br><span class="hljs-comment">// result.first 是指向插入元素的迭代器</span><br><span class="hljs-comment">// result.second 是 bool 类型，表示插入是否成功（true 表示成功，false 表示键已存在）</span><br><span class="hljs-keyword">if</span> (result.second) {<br>    std::cout &lt;&lt; <span class="hljs-string">"Insertion successful!\n"</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<ol start="2">
+<li><strong>元素访问</strong></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>成员函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[]</code>运算符</td>
+<td><strong>访问</strong>元素（键不存在时会插入默认值）</td>
+</tr>
+<tr>
+<td><code>map.at(key)</code></td>
+<td>安全<strong>访问</strong>元素（不存在时<strong>抛出out_of_range异常</strong>）</td>
+</tr>
+<tr>
+<td><code>map.find(key)</code></td>
+<td>返回指向元素的<strong>迭代器</strong>（不存在时<strong>返回end()</strong>）</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> alice_age = age_map[<span class="hljs-string">"Alice"</span>]; <span class="hljs-comment">// 存在，返回 26</span><br><span class="hljs-type">int</span> dave_age = age_map[<span class="hljs-string">"Dave"</span>];   <span class="hljs-comment">// 不存在！会自动插入 {"Dave", 0}，然后返回 0</span><br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> alice_age = age_map.<span class="hljs-built_in">at</span>(<span class="hljs-string">"Alice"</span>); <span class="hljs-comment">// 存在，返回 26</span><br><span class="hljs-type">int</span> dave_age = age_map.<span class="hljs-built_in">at</span>(<span class="hljs-string">"Dave"</span>);   <span class="hljs-comment">// 不存在！抛出异常</span><br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> it = age_map.<span class="hljs-built_in">find</span>(<span class="hljs-string">"Bob"</span>);<br><span class="hljs-keyword">if</span> (it != age_map.<span class="hljs-built_in">end</span>()) {<br>    <span class="hljs-comment">// it-&gt;first 是键 (”Bob“)</span><br>    <span class="hljs-comment">// it-&gt;second 是值 (30)</span><br>    cout &lt;&lt; <span class="hljs-string">"Found Bob, age: "</span> &lt;&lt; it-&gt;second &lt;&lt; endl;<br>} <span class="hljs-keyword">else</span> {<br>    cout &lt;&lt; <span class="hljs-string">"Bob not found.\n"</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<ol start="3">
+<li><strong>容量查询</strong></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>成员函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>map.empty()</code></td>
+<td>判断容器是否为空</td>
+</tr>
+<tr>
+<td><code>map.size()</code></td>
+<td>返回元素个数</td>
+</tr>
+</tbody>
+</table>
+<ol start="4">
+<li><strong>修改操作</strong></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>成员函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>map.insert({key, value})</code></td>
+<td>插入键值对（返回pair&lt;iterator, bool&gt;）</td>
+</tr>
+<tr>
+<td><code>map.emplace(key, value)</code></td>
+<td><strong>直接构造元素</strong>（避免临时对象）</td>
+</tr>
+<tr>
+<td><code>map.erase(key)</code></td>
+<td><strong>删除指定键的元素</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>通过<strong>迭代器</strong>删除：</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> it = age_map.<span class="hljs-built_in">find</span>(<span class="hljs-string">"Bob"</span>);<br><span class="hljs-keyword">if</span> (it != age_map.<span class="hljs-built_in">end</span>()) {<br>    age_map.<span class="hljs-built_in">erase</span>(it); <span class="hljs-comment">// 删除迭代器指向的元素</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>通过<strong>键</strong>删除：</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">size_t</span> num_removed = age_map.<span class="hljs-built_in">erase</span>(<span class="hljs-string">"Charlie"</span>); <span class="hljs-comment">// 返回被删除的元素个数（0 或 1）</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>insert()</code> &amp;&amp; <code>emplace()</code>的区别：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">map.<span class="hljs-built_in">insert</span>({<span class="hljs-string">"apple"</span>, <span class="hljs-number">2</span>});<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">map.<span class="hljs-built_in">emplace</span>(<span class="hljs-string">"apple"</span>, <span class="hljs-number">3</span>);<br></code></pre></td></tr></tbody></table></figure>
+<ol start="5">
+<li><strong>查找与统计</strong></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>成员函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>map.count(key)</code></td>
+<td>判断<strong>键是否存在</strong>（返回bool）</td>
+</tr>
+<tr>
+<td><code>map.contains(key)</code></td>
+<td>返回<strong>关键字出现的次数</strong></td>
+</tr>
+</tbody>
+</table>
+<ol start="6">
+<li><strong>遍历元素</strong></li>
+</ol>
+<ul>
+<li>使用范围 for 循环</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> <span class="hljs-keyword">auto</span>&amp; pair : age_map) {<br>    cout &lt;&lt; pair.first &lt;&lt; <span class="hljs-string">": "</span> &lt;&lt; pair.second &lt;&lt; endl;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>使用迭代器</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> it = age_map.<span class="hljs-built_in">begin</span>(); it != age_map.<span class="hljs-built_in">end</span>(); ++it) {<br>    cout &lt;&lt; it-&gt;first &lt;&lt; <span class="hljs-string">": "</span> &lt;&lt; it-&gt;second &lt;&lt; endl;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h2 id="问题-D-寻找第二小的数">问题 D: 寻找第二小的数</h2>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-b7bb3a6d" role="button" aria-expanded="false" aria-controls="collapse-b7bb3a6d">
+        <div class="fold-arrow">▶</div> 问题 D: 寻找第二小的数
+      </div>
+      <div class="fold-collapse collapse" id="collapse-b7bb3a6d">
+        <div class="fold-content">
+          <h3 id="题目描述">题目描述</h3><p>求n个整数中第二小的数。<br>相同的整数看成一个数。比如，有5个数分别是1,1,3,4,5，那么第二小的数就是3。</p><h3 id="输入">输入</h3><p>输入包含多组测试数据。输入的第一行是一个整数C，表示有C组测试数据；<br>每组测试数据的第一行是一个整数n，表示本组测试数据有n个整数（2&lt;=n&lt;=10），接着一行是n个整数（每个数均小于100）。</p><h3 id="输出">输出</h3><p>为每组测试数据输出第二小的整数，如果不存在第二小的整数则输出“NO”，每组输出占一行。</p><h3 id="样例输入">样例输入</h3><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">3</span><br><span class="hljs-number">2</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span><br><span class="hljs-number">5</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span><br><span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">1</span><br></code></pre></td></tr></tbody></table></figure><h3 id="样例输出">样例输出</h3><figure class="highlight gams"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-number">2</span><br><span class="hljs-number">3</span><br><span class="hljs-keyword">NO</span><br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
+<h3 id="问题分析-v2">问题分析</h3>
+<p>用逆序的优先队列即可完成！</p>
+<h4 id="完整代码-v2">完整代码</h4>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;queue&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">find</span><span class="hljs-params">()</span> </span>{<br>	priority_queue &lt;<span class="hljs-type">int</span>, vector&lt;<span class="hljs-type">int</span>&gt;, greater&lt;<span class="hljs-type">int</span>&gt;&gt; pq;<br>	<span class="hljs-type">int</span> m;<br>	cin &gt;&gt; m;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; m;i++) {<br>		<span class="hljs-type">int</span> a;<br>		cin &gt;&gt; a;<br>		pq.<span class="hljs-built_in">push</span>(a);<br>	}<br>	<span class="hljs-type">int</span> min = pq.<span class="hljs-built_in">top</span>();<br>	pq.<span class="hljs-built_in">pop</span>();<br>	<span class="hljs-keyword">while</span> (!pq.<span class="hljs-built_in">empty</span>() &amp;&amp; min == pq.<span class="hljs-built_in">top</span>()) {<br>		pq.<span class="hljs-built_in">pop</span>();<br>	}<br>	<span class="hljs-keyword">if</span> (pq.<span class="hljs-built_in">empty</span>()) {<br>		cout &lt;&lt; <span class="hljs-string">"NO"</span> &lt;&lt; endl;<br>	}<br>	<span class="hljs-keyword">else</span> cout &lt;&lt; pq.<span class="hljs-built_in">top</span>() &lt;&lt; endl;<br>}<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{<br>	<span class="hljs-type">int</span> n;<br>	cin &gt;&gt; n;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; n;i++) {<br>		<span class="hljs-built_in">find</span>();<br>	}<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h2 id="问题-E-按十进制各位和排序">问题 E: 按十进制各位和排序</h2>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-78f48315" role="button" aria-expanded="false" aria-controls="collapse-78f48315">
+        <div class="fold-arrow">▶</div> 问题 E: 按十进制各位和排序
+      </div>
+      <div class="fold-collapse collapse" id="collapse-78f48315">
+        <div class="fold-content">
+          <h3 id="题目描述">题目描述</h3><p>对于给定的正整数序列，按照每个数的十进制形式各个位上的数之和从大到小排序，各个位上的数和相同的按照本身大小排序，大的在前，小的在后。</p><h3 id="输入">输入</h3><p>第一行 1 个整数 n,表示序列的大小。( 0 &lt; n ≤ 1000) 第二行 n 个正整数，表示序列的每个数，每个数不大于 100000000。</p><h3 id="输出">输出</h3><p>输出按照题目要求排序后的序列。</p><h3 id="样例输入">样例输入</h3><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">6 </span><br><span class="hljs-symbol">17 </span><span class="hljs-number">26</span> <span class="hljs-number">9</span> <span class="hljs-number">13</span> <span class="hljs-number">88</span> <span class="hljs-number">22</span><br></code></pre></td></tr></tbody></table></figure><h3 id="样例输出">样例输出</h3><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">88 </span><span class="hljs-number">9</span> <span class="hljs-number">26</span> <span class="hljs-number">17</span> <span class="hljs-number">22</span> <span class="hljs-number">13</span><br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
+<h3 id="问题分析-v3">问题分析</h3>
+<p>要将其十进制排序后的结果与原本大小匹配，这里使用了冒泡排序完成。</p>
+<h3 id="完整代码-v3">完整代码</h3>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Sum</span><span class="hljs-params">(<span class="hljs-type">int</span> a)</span> </span>{<span class="hljs-comment">//十进制各个位数求和函数</span><br>	<span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">while</span> (a != <span class="hljs-number">0</span>) {<br>		sum += a % <span class="hljs-number">10</span>;<br>		a = a / <span class="hljs-number">10</span>;<br>	}<br>	<span class="hljs-keyword">return</span> sum;<br>}<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{<br>	<span class="hljs-type">int</span> n;<br>	cin &gt;&gt; n;<br>	vector &lt;<span class="hljs-type">int</span>&gt; <span class="hljs-built_in">order</span>(n);<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; n;i++) {<br>		cin &gt;&gt; order[i];<br>	}<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; n ; i++) {<span class="hljs-comment">//进行冒泡排序</span><br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span> ;j &lt; n-i<span class="hljs-number">-1</span>;j++) {<br>			<span class="hljs-keyword">if</span> (<span class="hljs-built_in">Sum</span>(order[j]) &lt; <span class="hljs-built_in">Sum</span>(order[j + <span class="hljs-number">1</span>]) ||<br>				(<span class="hljs-built_in">Sum</span>(order[j]) == <span class="hljs-built_in">Sum</span>(order[j + <span class="hljs-number">1</span>]) &amp;&amp; order[j] &lt; order[j + <span class="hljs-number">1</span>])) {<br>				<span class="hljs-type">int</span> temp=order[j];<br>				order[j]=order[j<span class="hljs-number">+1</span>];<br>				order[j<span class="hljs-number">+1</span>]=temp;<br>			}<br>		}<br>	}<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; n; i++) {<br>		cout&lt;&lt;order[i]&lt;&lt;<span class="hljs-string">" "</span>;<br>	}<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h2 id="问题-F-奇偶数的排序">问题 F: 奇偶数的排序</h2>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-b019705e" role="button" aria-expanded="false" aria-controls="collapse-b019705e">
+        <div class="fold-arrow">▶</div> 问题 F: 奇偶数的排序
+      </div>
+      <div class="fold-collapse collapse" id="collapse-b019705e">
+        <div class="fold-content">
+          <h3 id="题目描述">题目描述</h3><p>给你10个正整数，其中5个奇数、5个偶数，先递减排奇数，然后再递增排偶数。请编程实现。</p><h3 id="输入">输入</h3><p>一行10个正整数（int类型范围）。</p><h3 id="输出">输出</h3><p>先递减排5个奇数，然后再递增排5个偶数，各个数之间有一个空格间隔。</p><h3 id="样例输入">样例输入</h3><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span> <span class="hljs-number">6</span> <span class="hljs-number">7</span> <span class="hljs-number">8</span> <span class="hljs-number">10</span> <span class="hljs-number">9</span><br></code></pre></td></tr></tbody></table></figure><h3 id="样例输出">样例输出</h3><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">9 </span><span class="hljs-number">7</span> <span class="hljs-number">5</span> <span class="hljs-number">3</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">4</span> <span class="hljs-number">6</span> <span class="hljs-number">8</span> <span class="hljs-number">10</span><br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
+<h3 id="问题分析-v4">问题分析</h3>
+<p>分别使用优先队列和逆序优先队列对奇数偶数进行排序，再依次输出队首元素。</p>
+<h3 id="完整代码-v4">完整代码</h3>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;queue&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{<br>	priority_queue&lt;<span class="hljs-type">int</span>&gt; odd;<span class="hljs-comment">//奇数的优先队列</span><br>	priority_queue &lt;<span class="hljs-type">int</span>, vector&lt;<span class="hljs-type">int</span>&gt;, greater&lt;<span class="hljs-type">int</span>&gt;&gt;  even;<span class="hljs-comment">//偶数逆序优先队列</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; <span class="hljs-number">10</span>;i++) {<br>		<span class="hljs-type">int</span> a;<br>		cin &gt;&gt; a;<br>		<span class="hljs-keyword">if</span> (a % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) {<br>			even.<span class="hljs-built_in">push</span>(a);<br>		}<br>		<span class="hljs-keyword">else</span> odd.<span class="hljs-built_in">push</span>(a);<br>	}<br>	<span class="hljs-keyword">while</span>(!odd.<span class="hljs-built_in">empty</span>()) {<br>		cout &lt;&lt; odd.<span class="hljs-built_in">top</span>()&lt;&lt;<span class="hljs-string">" "</span>;<br>		odd.<span class="hljs-built_in">pop</span>();<br>	}<br>	<span class="hljs-keyword">while</span> (!even.<span class="hljs-built_in">empty</span>() ){<br>		cout &lt;&lt; even.<span class="hljs-built_in">top</span>()&lt;&lt;<span class="hljs-string">" "</span>;<br>		even.<span class="hljs-built_in">pop</span>();<br>	}<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>封面来源：: <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=FsfRsGFHuv4">Learn Hash Tables in 13 minutes</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Data-Structure/" class="category-chain-item">Data Structure</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/sort/" class="print-no-link">#sort</a>
+      
+        <a href="/tags/queue/" class="print-no-link">#queue</a>
+      
+        <a href="/tags/hashtable/" class="print-no-link">#hashtable</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CUMT-Datastructure-Practice 4</div>
+      <div>http://example.com/2025/06/27/Data structure/CUMT-Datastructure-Practice-4/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>June 27, 2025</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>August 27, 2025</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/07/09/other/From-OpenCV-to-YOLOv5-Object-Detection-from-Theory-to-Practice/" title="From OpenCV to YOLOv5">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">From OpenCV to YOLOv5</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/24/Data%20structure/CUMT-Datastructure-Practice-3/" title="CUMT-Datastructure-Practice 3">
+                        <span class="hidden-mobile">CUMT-Datastructure-Practice 3</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

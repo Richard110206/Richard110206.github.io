@@ -1,0 +1,1244 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="This document summarizes my key takeaways from the Shell module of MIT’s The Missing Semester course, focusing on:Interaction and Automation Power!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell Magic">
+<meta property="og:url" content="http://example.com/2025/07/27/Tutorial/Shell-Magic/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="This document summarizes my key takeaways from the Shell module of MIT’s The Missing Semester course, focusing on:Interaction and Automation Power!">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/Shell%20Magic%20Notes%20from%20The%20Missing%20Semeste.jpeg">
+<meta property="article:published_time" content="2025-07-27T14:34:30.000Z">
+<meta property="article:modified_time" content="2025-09-02T04:07:50.712Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/Shell%20Magic%20Notes%20from%20The%20Missing%20Semeste.jpeg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Shell Magic - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LQX&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/other/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>Else</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/other/life-musings/" target="_self">
+                    
+                    <span>精进日记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/08/13/other/Casual-Chronicles/" target="_self">
+                    
+                    <span>生活杂谈</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/banner_img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Shell Magic"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-27 22:34" pubdate>
+          July 27, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Tutorial"
+        id="heading-368fe771261fcb18f7988833c9294a20" role="tab" data-toggle="collapse" href="#collapse-368fe771261fcb18f7988833c9294a20"
+        aria-expanded="true"
+      >
+        Tutorial
+        <span class="list-group-count">(10)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-368fe771261fcb18f7988833c9294a20"
+           role="tabpanel" aria-labelledby="heading-368fe771261fcb18f7988833c9294a20">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2025/09/21/Tutorial/CMake-Tutorial/" title="CMake Tutorial"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CMake Tutorial</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/18/Tutorial/Docker-Tutorial/" title="Docker Tutorial"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Docker Tutorial</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/08/27/Tutorial/GitHub-Connection-Deep-Dive/" title="GitHub Connection Deep Dive"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">GitHub Connection Deep Dive</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/07/12/Tutorial/Hexo-Hacks-Unleash-Your-Blogging-Magic/" title="Hexo,Unleash Your Blogging Magic"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Hexo,Unleash Your Blogging Magic</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/09/27/Tutorial/ICP-Filing/" title="ICP Filing"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ICP Filing</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/08/21/Tutorial/Offload-Your-Hexo-Images/" title="Offload Your Hexo Images"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Offload Your Hexo Images</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/07/28/Tutorial/Powerful-Editor-Vim/" title="Powerful Editor:Vim"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Powerful Editor:Vim</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/05/29/Tutorial/Markdown%EF%BC%8CPractical%20Guide%20to%20Writing%20Blogs%EF%BC%81/" title="Practical Guide to Writing Blogs！"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Practical Guide to Writing Blogs！</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/07/27/Tutorial/Shell-Magic/" title="Shell Magic"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Shell Magic</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/07/13/Tutorial/Simple-Git-Project-Management-Guide/" title="Simple Git Project Management Guide"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Simple Git Project Management Guide</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Shell Magic</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <div class="note note-info">
+            <p>对计算机的学生而言，许多开发工具是未来老师或企业默认你已经“精通”的，然而未经学校系统培训的我们或许会对此感到迷茫，正如 MIT 课程 <strong><a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/">The Missing Semester of Your CS Education</a></strong> 所强调的： <strong>“掌握基础工具是程序员的核心竞争力”</strong>。这个课程会帮助你入门、了解一些计算机常用的开发工具，也算是程序员的自我修养吧！<strong>Let’s Go！</strong>😄</p>
+          </div>
+<p>相关课程在b站也有双语翻译（大部分应该都能听懂，就是有个好像是西班牙的老师带点口音听起来有点不适应😢）<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uc411N7eK/?spm_id_from=333.1387.favlist.content.click&amp;vd_source=54c2981c1a7a8e0433b7d23096150b7a">[自制双语字幕] 计算机教育缺失的一课(2020) - 第1讲 - 课程概览与 shell</a></p>
+<hr>
+<p>  不论是在电影里还是在我们初识计算机的过程中，都会看到一个黑乎乎的窗口，只要输入几行代码就可以完成酷炫的操作，但是你或许对这有一点疑惑，这到底是<code>terminal</code>、<code>bash</code>、<code>zsh</code>还是<code>powershell</code>，他们到底是如何区分的呢？</p>
+<p>1.<code>Terminal</code>：用户终端，用来启动<code>shell</code>，这也可以说算是一个“工具”，活跃在为用户服务的<strong>前端</strong><br>
+2.<code>Shell</code>：是一个<strong>命令行解释器</strong>，负责接收用户输入的命令并将其<strong>解释</strong>为计算机可以执行的操作，与<code>Terminal</code>相比，是活跃于用户服务<strong>后端的程序</strong>，以下都是<code>Shell</code>在不同操作系统中的实现：</p>
+<ul>
+<li><code>Bash</code>：是一种<strong>常用的Shell</strong>，在<code>Linux</code>和<code>macOS</code>中默认安装。</li>
+<li><code>Zsh</code>：是一种<strong>功能强大的Shell</strong>，在<code>macOS</code>中默认安装，也可以在<code>Linux</code>中安装。</li>
+<li><code>PowerShell</code>：是一种<strong>Windows</strong>系统下的<strong>命令行工具</strong>，用于<strong>管理Windows系统</strong>和<strong>执行PowerShell脚本</strong>。</li>
+</ul>
+<h2 id="Shell">Shell</h2>
+<p>  当熟悉的<strong>可视化界面</strong>无法实现你想要的功能时，<code>Shell</code>将成为你与计算机交互的强大工具。相比<strong>图形界面有限的按钮和滑块</strong>，命令行提供了更灵活、更强大的控制方式，允许你通过<strong>文本命令和脚本实现自动化操作</strong>。本文基于<code>VMware</code>虚拟机中的<code>Ubuntu 22.04</code>发行版演示基础<code>Shell</code>操作：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">date</span><br>Sat Jul 26 03:27:54 PM CST 2025<br></code></pre></td></tr></tbody></table></figure>
+<p>第一行通常是用户名、机器名称和当前所在路径</p>
+<div class="note note-danger">
+            <ul><li><code>Windows</code>中路径通常使用<strong>反斜杠</strong><code>\</code>分隔，每个驱动器都有一个单独的路径结构。</li><li><code>Linux</code> / <code>macOS</code> 中这些路径使用<strong>正斜杠</strong><code>/</code>分隔，他们挂载在同一个命名空间下。</li></ul>
+          </div>
+<p>开头的斜杠表示从文件系统的顶部开始。</p>
+<div class="note note-warning">
+            <ul><li>相对路径：相对于当前位置的路径</li><li>绝对路径：完整路径，从顶部开始</li></ul>
+          </div>
+<hr>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello World"</span><br>Hello World<br></code></pre></td></tr></tbody></table></figure>
+<p><code>echo</code>可以将后面的参数<strong>打印</strong>在屏幕上</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">which</span> <span class="hljs-built_in">echo</span><br>/usr/bin/echo<br></code></pre></td></tr></tbody></table></figure>
+<p><code>which</code>可以用于<strong>寻找后面参数文件的绝对位置</strong></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">pwd</span><br>/home/richard<br></code></pre></td></tr></tbody></table></figure>
+<p><code>pwd</code>（<code>Print Working Directory</code>）<strong>打印当前所在路径</strong></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">cd</span> /home<br>richard@richard-VMware-Virtual-Platform:/home$ <br></code></pre></td></tr></tbody></table></figure>
+<p><code>cd</code>（<code>Change Directory</code>）表示更改当前目录</p>
+<p>这是更方便<strong>切换目录</strong>的方式：</p>
+<div class="note note-warning">
+            <ul><li><code>.</code>表示<strong>当前</strong>目录</li><li><code>..</code>表示<strong>父</strong>目录</li></ul>
+          </div>
+<p><strong>注意</strong>：使用相对路径能提高命令在不同电脑上的<strong>兼容性</strong>！</p>
+<hr>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:/$ <span class="hljs-built_in">ls</span><br>bin                home               mnt   sbin.usr-is-merged  usr<br>bin.usr-is-merged  lib                opt   snap                var<br>boot               lib64              proc  srv<br>cdrom              lib.usr-is-merged  root  swap.img<br>dev                lost+found         run   sys<br>etc                media              sbin  tmp<br></code></pre></td></tr></tbody></table></figure>
+<p><code>ls</code>会列出当前目录中的文件，这能够快速浏览文件</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:/home$ <span class="hljs-built_in">cd</span> ~<br>richard@richard-VMware-Virtual-Platform:~$<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-warning">
+            <ul><li><code>cd ~</code>能够快速<strong>回到用户主目录</strong></li><li><code>cd -</code>切换到<strong>上一个工作目录</strong></li></ul>
+          </div>
+<hr>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> --<span class="hljs-built_in">help</span><br>Usage: <span class="hljs-built_in">ls</span> [OPTION]... [FILE]...<br>List information about the FILEs (the current directory by default).<br>Sort entries alphabetically <span class="hljs-keyword">if</span> none of -cftuvSUX nor --<span class="hljs-built_in">sort</span> is specified.<br></code></pre></td></tr></tbody></table></figure>
+<p><code>--help</code>参数显示<strong>命令帮助信息</strong></p>
+<hr>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> -l<br>total 40<br>drwxr-xr-x 2 richard richard 4096 Mar  9 10:21 Desktop<br>drwxr-xr-x 2 richard richard 4096 Mar  9 10:21 Documents<br><br>lrwxrwxrwx   1 root root          7 Apr 22  2024 bin -&gt; usr/bin<br>drwxr-xr-x   2 root root       4096 Feb 26  2024 bin.usr-is-merged<br><span class="hljs-comment"># 仅列举部分进行展示说明</span><br></code></pre></td></tr></tbody></table></figure>
+<p><strong>文件类型</strong>（第<code>1</code>个字符）</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>类型</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>d</code></td>
+<td>目录</td>
+<td>文件夹</td>
+<td><code>drwxr-xr-x</code></td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>普通文件</td>
+<td>文本/二进制文件</td>
+<td><code>-rw-r--r--</code></td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td>符号链接</td>
+<td>软链接文件</td>
+<td><code>lrwxrwxrwx</code></td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>字符设备</td>
+<td>终端等串行设备</td>
+<td><code>crw--w----</code></td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td>块设备</td>
+<td>磁盘等存储设备</td>
+<td><code>brw-rw----</code></td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>套接字</td>
+<td>进程通信文件</td>
+<td><code>srwxrwxrwx</code></td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>管道</td>
+<td><code>FIFO</code> 管道文件</td>
+<td><code>prw-------</code></td>
+</tr>
+</tbody>
+</table>
+<p>用户权限分为 <strong>3组</strong>（每组<code>3</code>字符），分别对应：</p>
+<table>
+<thead>
+<tr>
+<th>组别</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>所有者权限</td>
+<td><code>rwx</code></td>
+</tr>
+<tr>
+<td>所属组权限</td>
+<td><code>r-x</code></td>
+</tr>
+<tr>
+<td>其他用户</td>
+<td><code>r-x</code></td>
+</tr>
+</tbody>
+</table>
+<p>权限字符<strong>含义</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>权限</th>
+<th>对文件的影响</th>
+<th>对目录的影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>r</code></td>
+<td>读</td>
+<td>查看文件内容</td>
+<td>列出目录内容（<code>ls</code>）</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td>写</td>
+<td>修改/删除文件</td>
+<td>创建/删除目录内文件</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td>执行</td>
+<td>运行程序/脚本</td>
+<td>进入目录（<code>cd</code>）</td>
+</tr>
+<tr>
+<td><code>-</code></td>
+<td>无</td>
+<td>无权限</td>
+<td>无权限</td>
+</tr>
+</tbody>
+</table>
+<div class="note note-danger">
+            <p>⚠️<strong>注意</strong>：</p><ol><li>即使文件本身有 <code>w</code> 权限，如果所在目录没有<code> w</code>，你只能<strong>清空或删除文件内容</strong>，却仍然<strong>无法删除或重命名</strong>它</li><li>如果我想要访问一个目录，<strong>必须拥有其所有父目录的权限</strong>：<code>/usr/bin/echo</code>我必须拥有<code>/usr</code> <code>/bin</code>目录的权限，否则我将不被允许访问该文件，因为我将无法进入其中的目录</li></ol>
+          </div>
+<p><code>mv</code>能将文件<strong>修改位置并重命名</strong><br>
+<code>cp</code>复制文件 需要两个参数 一个要<strong>复制的文件路径</strong> <strong>一个目标文件路径</strong><br>
+<code>rm</code>用于<strong>删除文件</strong><br>
+<code>rmdir</code>能<strong>删除一个目录</strong> 但它只能删除<strong>空目录</strong> 防止不小心删除一大堆文件<br>
+<code>mkdir</code><strong>创建目录</strong></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> My Photos<br></code></pre></td></tr></tbody></table></figure>
+<p><code>mkdir</code>创建目录</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> <span class="hljs-string">"My Photos"</span><br></code></pre></td></tr></tbody></table></figure>
+<p>这里如果不加上上引号则会创建"My"和"Photos"两个目录，因为<code>Bash</code>（或其他 <code>Shell</code>）会<strong>将空格视为命令参数的分隔符</strong>，相当于<strong>命令收到了两个独立的参数</strong>，因此它会创建两个独立的目录！</p>
+<div class="note note-info">
+            <p>或者使用<strong>反斜杠</strong>来转义空格，反斜杠会告诉 Shell：下一个字符是普通字符，不要把它当做特殊符号处理！</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> My\ Photos<br></code></pre></td></tr></tbody></table></figure>
+          </div>
+<p><code>man+指令</code> 查找手册</p>
+<p><code>ctrl</code>+<code>l</code>清空窗口</p>
+<h3 id="输入流和输出流">输入流和输出流</h3>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> hello &gt; hello.txt<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> &gt; hello.txt<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">cat</span> hello.txt<br>Desktop<br>Documents<br>Downloads<br>fizzbuzz.py<br>hello2.txt<br>hello.txt<br>Music<br>Pictures<br>Public<br>snap<br>Templates<br>Videos<br>web<br></code></pre></td></tr></tbody></table></figure>
+<p>这样就可以将输出到屏幕的信息<strong>存储</strong>起来！</p>
+<div class="note note-warning">
+            <ul><li><code>&gt;</code>覆盖输出到文件</li><li><code>&lt;</code>从文件读取输入</li></ul>
+          </div>
+<hr>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">cat</span> hello.txt<br>hello<br></code></pre></td></tr></tbody></table></figure>
+<p>通过<code>cat</code>指令输出文件内容</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">cat</span> &lt;hello.txt&gt;hello2.txt<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">cat</span> hello2.txt<br>hello<br></code></pre></td></tr></tbody></table></figure>
+<p><code>&lt;</code>将<code>hello.txt</code>作为输入内容并通过<code>&gt;</code>将<code>cat</code>打印的任何内容输出到<code>hello2.txt</code>文件中</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">cat</span> &lt;hello.txt&gt;&gt;hello2.txt<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">cat</span> hello2.txt<br>hello<br>hello<br></code></pre></td></tr></tbody></table></figure>
+<p><code>&gt;&gt;</code>表示追加而不是覆盖(<code>append instead of overwrite</code>)</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> -l|<span class="hljs-built_in">tail</span> -n1<br>drwxrwxr-x 3 richard richard 4096 Mar  9 12:26 web<br></code></pre></td></tr></tbody></table></figure>
+<p>管道运算符<code>|</code>作用是将<strong>左侧命令的输出</strong>作为<strong>右侧命令的输入</strong>：可以连接多个命令形成<strong>处理流水线</strong></p>
+<p><code>tail</code>将输出最后一行的内容</p>
+<hr>
+<h3 id="用户权限管理">用户权限管理</h3>
+<p><code>root</code>相当于<code>Windows</code>的管理员权限，是一位<strong>超级用户</strong>，可以做任何想做的事情，但是倘若一直使用<code>root</code>用户操作计算机，如果运行了错误的程序，那会彻底毁坏你的电脑！</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:/sys/class/backlight$ <span class="hljs-built_in">sudo</span> su<br>[<span class="hljs-built_in">sudo</span>] password <span class="hljs-keyword">for</span> richard: <br>root@richard-VMware-Virtual-Platform:/sys/class/backlight# <br></code></pre></td></tr></tbody></table></figure>
+<p>通过<code>sudo su</code>来进入<code>root</code>身份，同时提示符由<code>$</code>变为<code>#</code></p>
+<hr>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@richard-VMware-Virtual-Platform:/sys/class/backlight# <span class="hljs-built_in">exit</span><br><span class="hljs-built_in">exit</span><br>richard@richard-VMware-Virtual-Platform:/sys/class/backlight$<br></code></pre></td></tr></tbody></table></figure>
+<p><code>exit</code>来退出用户权限</p>
+<hr>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ xdg-open hello.txt<br></code></pre></td></tr></tbody></table></figure>
+<p>这样就可以直接在<code>terminal</code>打开文件！</p>
+<hr>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ foo=bar<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-variable">$foo</span><br>bar<br></code></pre></td></tr></tbody></table></figure>
+<p>在<code>shell</code>中，<code>$</code>符号是一个特殊字符，主要用于变量展开。当你在变量名前面加上$时，<code>shell</code>会将其替换为该变量的值！</p>
+<ul>
+<li><code> foo</code> 会被<code>Shell</code>视为普通字符串</li>
+<li><code>$foo</code> 告诉<code>Shell</code>这是一个需要展开的变量</li>
+</ul>
+<hr>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello"</span><br>Hello<br>richard@richard-VMware-Virtual-Platform:~$ foo=World<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello foo"</span><br>Hello foo<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello <span class="hljs-variable">$foo</span>"</span><br>Hello World<br></code></pre></td></tr></tbody></table></figure>
+<p>在<code>shell</code>中我们一定要非常注意<strong>空格</strong><code>space</code>的使用，它是用作不同参数间的分隔符，倘若多打一个可能就会出现报错！</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-literal">false</span><br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> $?<br>1<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-literal">true</span><br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> $?<br>0<br></code></pre></td></tr></tbody></table></figure>
+<p><code>$? </code>是一个特殊变量，存储上一个命令的退出状态码</p>
+<div class="note note-warning">
+            <ul><li><code>false</code> 是一个 Shell 内置命令，返回非零退出状态（失败）设置退出状态码为 1（表示失败）</li><li><code>true</code> 也是一个 Shell 内置命令，返回零退出状态（成功）退出状态码被设为 0（表示成功）</li></ul>
+          </div>
+<p>  这里看上去有点反常理，我们学的其他编程语言中<code>0</code>是<code>false</code>，非零是<code>true</code>，为什么这里反过来了？<br>
+  当我们想到<code>c</code>、<code>c++</code>中<code>main</code><strong>函数结束的返回值</strong>或许就不奇怪了！<code>main() </code>函数默认返回<code>0</code> 表示成功，非零表示错误（如 <code>return 1</code>;）。</p>
+<p>再考虑到程序运行只有两种可能：</p>
+<ol>
+<li>完全成功（<strong>唯一状态 0</strong>）</li>
+<li>失败（可能有多种原因，<strong>用不同非零值区分</strong>）：</li>
+</ol>
+<div class="note note-warning">
+            <ul><li>0 = 没有错误（成功）</li><li>1 = 通用错误</li><li>2 = 参数错误</li><li>3 = 文件不存在</li></ul>
+          </div>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-literal">false</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"Oops fail"</span><br>Oops fail<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-literal">true</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"Will be not be printed"</span><br>richard@richard-VMware-Virtual-Platform:~$<br></code></pre></td></tr></tbody></table></figure>
+<p><code>shell</code>中<code>||</code>同样遵循<strong>短路原则</strong>，<code>&amp;&amp;</code>同理！</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">echo</span> <span class="hljs-string">"We are now at <span class="hljs-subst">$(pwd)</span>"</span><br>We are now at /home/richard<br></code></pre></td></tr></tbody></table></figure>
+<p><code>shell</code>中使用<code>$(command)</code>进行<strong>命令替换</strong></p>
+<hr>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span><br>Desktop    Downloads   hello.txt  Pictures  snap       Videos<br>Documents  hello2.txt  Music      Public    Templates  web<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> *.txt<br>hello2.txt  hello.txt<br></code></pre></td></tr></tbody></table></figure>
+<p><code>*</code>是一个<strong>通配符</strong>（<code>globbing</code>）：表示<strong>匹配任意数量的任意字符</strong>（<strong>包括零个字符</strong>）。<code>Shell</code>会在执行<code>ls</code> 前先展开 <code>*.txt</code>，将其替换为所有匹配的文件名，相当于寻找所有后缀为<code>.txt</code>的文件！</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> hello?.txt<br>hello2.txt<br>richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">ls</span> hello*.txt<br>hello2.txt  hello.txt<br></code></pre></td></tr></tbody></table></figure>
+<p>这里可以看到<code>?</code>也是<strong>通配符</strong>，表示匹配任意一个字符（区别是必须存在，<strong>不能匹配空字符</strong>）</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/usr/bin/env python3 #自动查找python3</span><br></code></pre></td></tr></tbody></table></figure>
+<p>通过<code>Shell</code>调用<code>Python</code>脚本可以充分发挥两者的优势：<code>Shell</code>的<strong>流程控制能力</strong>结合<code>Python</code>的<strong>丰富库函数</strong>，但我们要在路径中找到并配置好<code>python</code>解释器。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">import sys<br></code></pre></td></tr></tbody></table></figure>
+<p>由于<code>shell</code>默认不会执行<code>python</code>指令，我们需要添加库函数，来让<code>python</code>接受<code>shell</code>传递的参数</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">history</span><br></code></pre></td></tr></tbody></table></figure>
+<p>我们可以使用⬆️来一个个<strong>浏览历史记录命令</strong>，我们也可以使用<code>history</code>直接打印所有历史命令！</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">history</span> | grep git<br></code></pre></td></tr></tbody></table></figure>
+<p>我们通过<code>history +N | grep +指令</code>来查找所有与指令字符串相匹配的<code>N</code>条历史记录命令！</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">tree<br></code></pre></td></tr></tbody></table></figure>
+<p>能列出<strong>目录结构性</strong>的位置！</p>
+<hr>
+<p><code>wc</code>（word count）是一个用于<strong>统计文本文件中单词、行、字符等</strong>的<strong>命令行工具</strong>。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">wc</span> [选项参数]... [文件]...<br></code></pre></td></tr></tbody></table></figure>
+<p>可选参数：</p>
+<ul>
+<li><code>c</code> 或 <code>--bytes</code>: 显示<strong>字节数</strong></li>
+<li><code>m</code>或 <code>--chars</code>: 显示<strong>字符数</strong> 对于多字节字符（如中文），这与 -c 不同</li>
+<li><code>w</code> 或 <code>--words</code>: 显示<strong>单词数</strong>（以空格、制表符、换行符分隔的字符串）</li>
+<li><code>l</code> 或 <code>--lines</code>: 显示<strong>行数</strong></li>
+<li><strong>不指定</strong>任何选项: 默认会<strong>同时显示行数、单词数、字节数，以及文件名</strong></li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ <span class="hljs-built_in">wc</span> hello.txt<br> 13  13 109 hello.txt<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ruby">richard<span class="hljs-variable">@richard</span>-<span class="hljs-title class_">VMware</span>-<span class="hljs-title class_">Virtual</span>-<span class="hljs-title class_">Platform</span><span class="hljs-symbol">:~</span><span class="hljs-variable">$ </span>wc --word hello.txt<br><span class="hljs-number">13</span> hello.txt<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="关机与重启">关机与重启</h3>
+<p>1.<code>shutdown</code></p>
+<ul>
+<li><code>-r</code> 或 <code>--reboot</code>: 重新启动系统</li>
+<li><code>-h</code> 或 <code>--halt</code>: 关闭系统</li>
+<li><code>-c</code> 或 <code>--cancel</code>: 取消之前的计划关机或重启</li>
+<li><code>-t</code> 或 <code>--time &lt;时间&gt;</code>: 指定关机或重启的时间（格式：<code>HH:MM</code>）</li>
+<li><code>-k</code> 或 <code>--kill</code>: 不关机，只发送<code>SIGTERM</code>信号给所有进程</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@richard-VMware-Virtual-Platform:~$ shutdown -r<br>Reboot scheduled <span class="hljs-keyword">for</span> Tue 2025-09-02 12:05:06 CST, use <span class="hljs-string">'shutdown -c'</span> to cancel.<br></code></pre></td></tr></tbody></table></figure>
+<p>2.<code>reboot</code></p>
+<ul>
+<li><code>-f</code> 或 <code>--force</code>: 强制重启，不发送<code>SIGTERM</code>信号</li>
+<li><code>-n</code> 或 <code>--no-fsync</code>: 不执行<code>fsync</code>系统调用，加快重启速度</li>
+<li><code>-w</code> 或 <code>--wait</code>: 等待所有进程结束后再重启</li>
+<li><code>-i</code> 或 <code>--init</code>: 关机之前，关闭所有网络接口</li>
+</ul>
+<ol start="3">
+<li><code>init</code></li>
+<li><code>poweroff</code></li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Tutorial/" class="category-chain-item">Tutorial</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/shell/" class="print-no-link">#shell</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Shell Magic</div>
+      <div>http://example.com/2025/07/27/Tutorial/Shell-Magic/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 27, 2025</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>September 2, 2025</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/07/28/Tutorial/Powerful-Editor-Vim/" title="Powerful Editor:Vim">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Powerful Editor:Vim</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/25/Python/The-CS61A-Lab-Notebook1/" title="The CS61A Lab Notebook1">
+                        <span class="hidden-mobile">The CS61A Lab Notebook1</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

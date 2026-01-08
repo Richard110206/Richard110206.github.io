@@ -1,0 +1,1043 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="CMake is a cross-platform build system that simplifies compiling code across different operating systems and compilers. This post offers a concise introduction to its core concepts and basic usage.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMake Tutorial">
+<meta property="og:url" content="http://example.com/2025/09/21/Tutorial/CMake-Tutorial/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="CMake is a cross-platform build system that simplifies compiling code across different operating systems and compilers. This post offers a concise introduction to its core concepts and basic usage.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/CMake-Tutorial.png?raw=true">
+<meta property="article:published_time" content="2025-09-21T01:37:34.000Z">
+<meta property="article:modified_time" content="2025-09-30T07:21:31.076Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta property="article:tag" content="CMake">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/CMake-Tutorial.png?raw=true">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>CMake Tutorial - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LQX&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/other/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>Else</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/other/life-musings/" target="_self">
+                    
+                    <span>精进日记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/08/13/other/Casual-Chronicles/" target="_self">
+                    
+                    <span>生活杂谈</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/banner_img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CMake Tutorial"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-09-21 09:37" pubdate>
+          September 21, 2025 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Tutorial"
+        id="heading-368fe771261fcb18f7988833c9294a20" role="tab" data-toggle="collapse" href="#collapse-368fe771261fcb18f7988833c9294a20"
+        aria-expanded="true"
+      >
+        Tutorial
+        <span class="list-group-count">(10)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-368fe771261fcb18f7988833c9294a20"
+           role="tabpanel" aria-labelledby="heading-368fe771261fcb18f7988833c9294a20">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2025/09/21/Tutorial/CMake-Tutorial/" title="CMake Tutorial"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">CMake Tutorial</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/18/Tutorial/Docker-Tutorial/" title="Docker Tutorial"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Docker Tutorial</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/08/27/Tutorial/GitHub-Connection-Deep-Dive/" title="GitHub Connection Deep Dive"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">GitHub Connection Deep Dive</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/07/12/Tutorial/Hexo-Hacks-Unleash-Your-Blogging-Magic/" title="Hexo,Unleash Your Blogging Magic"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Hexo,Unleash Your Blogging Magic</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/09/27/Tutorial/ICP-Filing/" title="ICP Filing"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">ICP Filing</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/08/21/Tutorial/Offload-Your-Hexo-Images/" title="Offload Your Hexo Images"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Offload Your Hexo Images</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/07/28/Tutorial/Powerful-Editor-Vim/" title="Powerful Editor:Vim"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Powerful Editor:Vim</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/05/29/Tutorial/Markdown%EF%BC%8CPractical%20Guide%20to%20Writing%20Blogs%EF%BC%81/" title="Practical Guide to Writing Blogs！"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Practical Guide to Writing Blogs！</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/07/27/Tutorial/Shell-Magic/" title="Shell Magic"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Shell Magic</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/07/13/Tutorial/Simple-Git-Project-Management-Guide/" title="Simple Git Project Management Guide"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Simple Git Project Management Guide</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">CMake Tutorial</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="前言">前言</h2>
+<p>  当我们只需要编译一个cpp文件时，在macOS系统中可以直接<strong>使用g++进行编译</strong>，<strong>运行生成的可执行文件</strong>即可。（对应c语言的是gcc）</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@RicharddeMacBook-Air 1 % <span class="hljs-built_in">touch</span> hello.cpp<br>richard@RicharddeMacBook-Air 1 % vim hello.cpp<br>richard@RicharddeMacBook-Air 1 % g++ hello.cpp<br>richard@RicharddeMacBook-Air 1 % <span class="hljs-built_in">ls</span>    <br>a.out		hello.cpp<br>richard@RicharddeMacBook-Air 1 % ./a.out <br>hello world<br></code></pre></td></tr></tbody></table></figure>
+<p>  我们平时在编写程序时<strong>通常只有一个源文件</strong>，所有的代码都写在这个文件中，直接编译即可；但是在实际的项目中，通常会有<strong>多个模块</strong>，而每个模块又由多个源文件、头文件、第三方库组成，这时候再去一个个的编译效率就会低很多，而构建所做的就是自动化完成编译、链接、打包的过程，我们平时使用的ide都内置了构建系统。</p>
+<h2 id="一、CMake">一、CMake</h2>
+<p>   CMake 全称为 Cross Paltform Make，从名字中就能看出来这是一款<strong>跨平台</strong>的构建工具，它是<strong>不自带编译工具</strong>的，是比 Makefile 更高层次的构建工具， 相当于一个 CMake 配置文件就可以自动生成 Makefile文件（或是对应操作系统的配置文件）</p>
+<table>
+<thead>
+<tr>
+<th>操作系统</th>
+<th>常用编译器（C/C++）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux</td>
+<td><code>GCC（gcc/g++）</code>：开源且默认；<br><code>Clang（clang/clang++）</code>：兼容性好。</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><code>Clang：Xcode</code> 内置；<br><code>GCC</code>：可通过包管理器安装（非默认）。</td>
+</tr>
+<tr>
+<td>Windows</td>
+<td><code>MSVC（Microsoft Visual C++）</code>：VS内置；<br><code>MinGW/GCC</code>：跨平台兼容。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="（一）、只有单个源文件的情况">（一）、只有单个源文件的情况</h3>
+<p>我们在根目录添加文件<code>CMakeLists.txt</code>，内容如下：</p>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs txt">cmake_minimum_required(VERSION 3.31)<br>project(untitled)<br><br>set(CMAKE_CXX_STANDARD 20)<br><br>add_executable(untitled main.cpp)<br></code></pre></td></tr></tbody></table></figure>
+<p>让我们来逐行解析一下这段文本</p>
+<div class="note note-info">
+            <ul><li><code>cmake_minimum_required(VERSION 3.31)</code></li></ul><p>用于指定 CMake 的<strong>最低版本要求</strong></p><ul><li><code>project(untitled)</code></li></ul><p>用于定义项目的名称</p><ul><li><code>set(CMAKE_CXX_STANDARD 20)</code></li></ul><p>用于设置 <strong>C++ 标准</strong></p><ul><li><code>add_executable(untitled main.cpp)</code></li></ul><p>用于添加一个<strong>可执行文件</strong>，并<strong>指定它的源文件</strong></p>
+          </div>
+<p>  随后我们即可通过这个 <code>CMakeLists.txt</code> 文件生成目标平台下的原生工程，如Windows下的Visual Stdio工程，macOS下的<code>Xcode</code>工程，Linux下的<code>Makefile</code>工程，这个过程在<code>cmake</code>中叫做配置（<code>config</code>）,这个过程本质上<strong>解决了跨平台编译问题</strong>。</p>
+<hr>
+<p>  我们运行<code>cmake</code>，它会读取 <code>CMakeLists.txt</code> 配置文件，根据项目结构、编译选项等信息，自动生成适用于当前系统的<code>Makefile</code>（或其他构建系统文件）</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@RicharddeMacBook-Air project % cmake .<br>-- The C compiler identification is AppleClang 17.0.0.17000013<br>-- The CXX compiler identification is AppleClang 17.0.0.17000013<br>-- Detecting C compiler ABI info<br>-- Detecting C compiler ABI info - <span class="hljs-keyword">done</span><br>-- Check <span class="hljs-keyword">for</span> working C compiler: /usr/bin/cc - skipped<br>-- Detecting C compile features<br>-- Detecting C compile features - <span class="hljs-keyword">done</span><br>-- Detecting CXX compiler ABI info<br>-- Detecting CXX compiler ABI info - <span class="hljs-keyword">done</span><br>-- Check <span class="hljs-keyword">for</span> working CXX compiler: /usr/bin/c++ - skipped<br>-- Detecting CXX compile features<br>-- Detecting CXX compile features - <span class="hljs-keyword">done</span><br>-- Configuring <span class="hljs-keyword">done</span> (0.4s)<br>-- Generating <span class="hljs-keyword">done</span> (0.0s)<br>-- Build files have been written to: /Users/richard/project<br></code></pre></td></tr></tbody></table></figure>
+<p>这时我们发现文件夹下多了很多文件：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@RicharddeMacBook-Air project % <span class="hljs-built_in">ls</span><br>cmake_install.cmake	CMakeFiles		hello.cpp<br>CMakeCache.txt		CMakeLists.txt		Makefile<br></code></pre></td></tr></tbody></table></figure>
+<p>再运行<code>make</code>，它会读取 <code>CMake</code> 生成的 <code>Makefile</code>，并按照规则：</p>
+<ul>
+<li><strong>编译</strong>所有源代码文件（如 .cpp）为目标文件（.o）</li>
+<li>将目标文件<strong>链接成最终的可执行程序</strong>（如你看到的 main）</li>
+<li><strong>处理依赖关系</strong>（比如某个文件修改后，只重新编译受影响的部分）</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@RicharddeMacBook-Air project % make<br>[ 50%] Building CXX object CMakeFiles/main.dir/hello.cpp.o<br>[100%] Linking CXX executable main<br>[100%] Built target main<br></code></pre></td></tr></tbody></table></figure>
+<p>我们再查看文件夹，发现多出了一个名为 <code>main</code>的可执行程序</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@RicharddeMacBook-Air project % <span class="hljs-built_in">ls</span><br>cmake_install.cmake	CMakeLists.txt		Makefile<br>CMakeCache.txt		hello.cpp<br>CMakeFiles		main<br></code></pre></td></tr></tbody></table></figure>
+<p>这时我们再运行这个可执行文件就成功输出了：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@RicharddeMacBook-Air project % ./main<br>hello world<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="（二）、工程中的应用-多文件">（二）、工程中的应用(多文件)</h3>
+<p>我们先来学习一下头文件的使用方法。</p>
+<h4 id="1-头文件保护">1.头文件保护</h4>
+<p>用于防止头文件被重复包含导致的编译错误</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> _UTILS_H_    <span class="hljs-comment">// 唯一标识符，通常是"_文件名_H_"格式</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _UTILS_H_    <span class="hljs-comment">// 定义该标识符</span></span><br><br><span class="hljs-comment">// 头文件内容（声明、宏等）</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span>  <span class="hljs-comment">// _UTILS_H_  // 结束条件编译</span></span><br></code></pre></td></tr></tbody></table></figure>
+<h4 id="2-只放声明，不放定义">2. 只放声明，不放定义</h4>
+<p>头文件的核心作用是声明接口，而非实现代码，否则可能导致 “多重定义” 错误。</p>
+<p>✅ 允许的内容（声明）：</p>
+<ul>
+<li>函数声明（int add(int a, int b);）</li>
+<li>类 / 结构体声明（class MyClass; 或完整类定义，类内可包含函数声明）</li>
+<li>变量声明（需加extern，如 extern int global_var;）</li>
+<li>宏定义（#define MAX 100）</li>
+<li>模板声明或定义（模板必须在头文件中实现，特殊情况）</li>
+</ul>
+<p>❌ 不允许的内容（定义，除非有特殊处理）：</p>
+<ul>
+<li>普通函数定义（除非用inline修饰）写在相应源文件中</li>
+<li>非extern变量定义（如 int global_var = 0; 会导致重复定义）</li>
+<li>可执行代码（如独立的for循环、cout语句等）</li>
+</ul>
+<h4 id="CMake-应用">CMake 应用</h4>
+<p>编写主函数：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs main.cpp">#include &lt;iostream&gt;<br>#include "test1.h"<br>#include "test2.h"<br><br>int main(){<br>std::cout&lt;&lt;"hello world"&lt;&lt;std::endl;<br>testfunc1();<br>testfunc2();<br>return 0;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>头文件：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs test1.h">#ifndef _TEST1_H<br>#define _TEST1_H<br><br>#include &lt;iostream&gt;<br><br>void testfunc1();<br><br>#endif /*_TEST1_H*/<br></code></pre></td></tr></tbody></table></figure>
+<p>对应的实现文件：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs test1.cpp">#include &lt;iostream&gt;<br>#include "test1.h"<br><br>void testfunc1(){<br>std::cout&lt;&lt;"this is testfunc1"&lt;&lt;std::endl;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>文件夹下文件目录：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@RicharddeMacBook-Air project % <span class="hljs-built_in">ls</span><br>main.cpp	test1.cpp	test1.h		test2.cpp	test2.h<br></code></pre></td></tr></tbody></table></figure>
+<p>编写<code>CMakeLists.txt</code>，将源文件都包含在里面：</p>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs txt">cmake_minimum_required(VERSION 3.10)<br><br>project(project)<br><br>add_executable(main main.cpp test1.cpp test2.cpp)<br></code></pre></td></tr></tbody></table></figure>
+<p>其余步骤与上文相同，运行结果如下：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@RicharddeMacBook-Air project % ./main<br>hello world<br>this is testfunc1<br>this is testfunc2<br></code></pre></td></tr></tbody></table></figure>
+<p>但是如果文件很多，我们在写<code>CMakeLists.txt</code>的时候，如果将每个源文件都写上去，效率显然很低，CMake 提供一种<strong>更简便</strong>的方法：</p>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs txt">cmake_minimum_required(VERSION 3.10)<br><br>project(project)<br><br>aux_source_directory(. SRC_LIST)<br># 将当前目录下的所有源文件添加到SRC_LIST中<br>add_executable(main ${SRC_LIST})<br># 将SRC_LIST中的源文件编译成可执行文件main<br></code></pre></td></tr></tbody></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Tutorial/" class="category-chain-item">Tutorial</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CMake/" class="print-no-link">#CMake</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CMake Tutorial</div>
+      <div>http://example.com/2025/09/21/Tutorial/CMake-Tutorial/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>September 21, 2025</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>September 30, 2025</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/09/27/Tutorial/ICP-Filing/" title="ICP Filing">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ICP Filing</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/09/20/Algorithm/Dynamic-Programming/" title="Dynamic Programming">
+                        <span class="hidden-mobile">Dynamic Programming</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

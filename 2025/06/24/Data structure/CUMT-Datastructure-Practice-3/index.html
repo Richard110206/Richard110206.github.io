@@ -1,0 +1,1097 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Problems involving binary trees stored in linked lists, Huffman trees, priority queues, Dijkstra&#39;s algorithm, and Kruskal&#39;s algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CUMT-Datastructure-Practice 3">
+<meta property="og:url" content="http://example.com/2025/06/24/Data%20structure/CUMT-Datastructure-Practice-3/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="Problems involving binary trees stored in linked lists, Huffman trees, priority queues, Dijkstra&#39;s algorithm, and Kruskal&#39;s algorithm">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/CUMT-Datastructure-Practice-3.png">
+<meta property="article:published_time" content="2025-06-24T04:57:21.000Z">
+<meta property="article:modified_time" content="2025-09-19T14:19:41.390Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta property="article:tag" content="binary tree">
+<meta property="article:tag" content="huffman tree">
+<meta property="article:tag" content="queue">
+<meta property="article:tag" content="Dijkstra">
+<meta property="article:tag" content="Kruskal">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/CUMT-Datastructure-Practice-3.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>CUMT-Datastructure-Practice 3 - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LQX&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/other/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>Else</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/other/life-musings/" target="_self">
+                    
+                    <span>精进日记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/08/13/other/Casual-Chronicles/" target="_self">
+                    
+                    <span>生活杂谈</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/banner_img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CUMT-Datastructure-Practice 3"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-24 12:57" pubdate>
+          June 24, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.1k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Data Structure"
+        id="heading-e226710d16f039ef02ab4b3ec3a63ed1" role="tab" data-toggle="collapse" href="#collapse-e226710d16f039ef02ab4b3ec3a63ed1"
+        aria-expanded="true"
+      >
+        Data Structure
+        <span class="list-group-count">(9)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-e226710d16f039ef02ab4b3ec3a63ed1"
+           role="tabpanel" aria-labelledby="heading-e226710d16f039ef02ab4b3ec3a63ed1">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2025/08/22/Data%20structure/Linkedlist/" title="Array and Linkedlist"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Array and Linkedlist</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/09/17/Data%20structure/BinaryTree/" title="BinaryTree"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">BinaryTree</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/06/08/Data%20structure/CUMT-Datastructure-Assignment-1/" title="CUMT-Datastructure-Assignment 1"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CUMT-Datastructure-Assignment 1</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/06/18/Data%20structure/CUMT-Datastructure-Assignment-2/" title="CUMT-Datastructure-Assignment 2"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CUMT-Datastructure-Assignment 2</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/06/18/Data%20structure/CUMT-Datastructure-Practice-2/" title="CUMT-Datastructure-Practice 2"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CUMT-Datastructure-Practice 2</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/06/24/Data%20structure/CUMT-Datastructure-Practice-3/" title="CUMT-Datastructure-Practice 3"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">CUMT-Datastructure-Practice 3</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/06/27/Data%20structure/CUMT-Datastructure-Practice-4/" title="CUMT-Datastructure-Practice 4"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CUMT-Datastructure-Practice 4</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/08/26/Data%20structure/Hashtable/" title="Hashtable"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Hashtable</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/08/23/Data%20structure/Stack-and-Queue/" title="Stack and Queue"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Stack and Queue</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">CUMT-Datastructure-Practice 3</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="问题-A-二叉链表存储的二叉树">问题 A: 二叉链表存储的二叉树</h2>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-60202c99" role="button" aria-expanded="false" aria-controls="collapse-60202c99">
+        <div class="fold-arrow">▶</div> 问题 A: 二叉链表存储的二叉树
+      </div>
+      <div class="fold-collapse collapse" id="collapse-60202c99">
+        <div class="fold-content">
+          <h3 id="题目描述">题目描述</h3><p>树形结构是一类重要的非线性数据结构，其中以树和二叉树最为常用。对于每一个结点至多只有两棵子树的一类树，称其为二叉树。二叉树的链式存储结构是一类重要的数据结构.在本题中，将会给出一个按照先序遍历得出的字符串，空格代表空的子节点，大写字母代表节点内容。请通过这个字符串建立二叉树，并按照题目描述中的一种先序遍历和两种中序遍历的算法分别输出每一个非空节点。</p><h3 id="输入">输入</h3><p>输入只有一行，包含一个字符串S，用来建立二叉树。保证S为合法的二叉树先序遍历字符串，节点内容只有大写字母，且S的长度不超过100。</p><h3 id="输出">输出</h3><p>共有三行，每一行包含一串字符，表示分别按先序、中序、中序得出的节点内容，每个字母后输出一个空格。请注意行尾输出换行。</p><h3 id="样例输入">样例输入</h3><figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">ABC  DE <span class="hljs-selector-tag">G</span>  F <br></code></pre></td></tr></tbody></table></figure><h3 id="样例输出">样例输出</h3><figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">A</span> <span class="hljs-selector-tag">B</span> C D E <span class="hljs-selector-tag">G</span> F <br>C <span class="hljs-selector-tag">B</span> E <span class="hljs-selector-tag">G</span> D F <span class="hljs-selector-tag">A</span> <br>C <span class="hljs-selector-tag">B</span> E <span class="hljs-selector-tag">G</span> D F <span class="hljs-selector-tag">A</span><br></code></pre></td></tr></tbody></table></figure><h3 id="提示">提示</h3><p>遍历是二叉树各种操作的基础，可以在遍历的过程中对节点进行各种操作。通过二叉树的遍历，可以建立二叉树。而先序、中序和后序遍历分别具有各自的特点，是探索二叉树性质的绝佳“武器”。</p>
+        </div>
+      </div>
+    </div>
+<h3 id="问题分析">问题分析</h3>
+<p>本题依照题目使用<strong>二叉树链式存储结构</strong>进行二叉树的建立和遍历。</p>
+<ol>
+<li>设计二叉树的<code>struct</code>的节点结构，包含数据元素和左子叶节点和右子叶节点（使用<strong>构造函数</strong>给结点赋初值和初始化节点指针）。</li>
+<li>用<strong>递归</strong>的思想实现二叉树的构建，若索引值<code>index</code>非空，则构建节点，再依次递归构建左子树，递归构建右子树。</li>
+<li>递归遍历注意访问和<strong>递归的调用顺序</strong>即可。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>遍历方式</th>
+<th>访问顺序</th>
+<th>递归调用顺序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>先序遍历</td>
+<td>根 → 左 → 右</td>
+<td>访问 → 左递归 → 右递归</td>
+</tr>
+<tr>
+<td>中序遍历</td>
+<td>左 → 根 → 右</td>
+<td>左递归 → 访问 → 右递归</td>
+</tr>
+<tr>
+<td>后序遍历</td>
+<td>左 → 右 → 根</td>
+<td>左递归 → 右递归 → 访问</td>
+</tr>
+</tbody>
+</table>
+<h3 id="完整代码">完整代码</h3>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">BinaryTreeNode</span> {<br>	<span class="hljs-type">char</span> data;<br>	BinaryTreeNode* left;<br>	BinaryTreeNode* right;<br>	<span class="hljs-built_in">BinaryTreeNode</span>(<span class="hljs-type">char</span> x):<span class="hljs-built_in">data</span>(x),<span class="hljs-built_in">left</span>(<span class="hljs-literal">nullptr</span>),<span class="hljs-built_in">right</span>(<span class="hljs-literal">nullptr</span>){}<br>};<br><span class="hljs-comment">//若不构造函数则创建节点时需要:</span><br><span class="hljs-comment">//BinaryTreeNode* node = new BinaryTreeNode{'A', nullptr, nullptr};</span><br><span class="hljs-function">BinaryTreeNode* <span class="hljs-title">buildtree</span><span class="hljs-params">(string str, <span class="hljs-type">int</span>&amp; index)</span> </span>{<br>	<span class="hljs-keyword">if</span> (index &gt;= str.<span class="hljs-built_in">size</span>() || str[index] == <span class="hljs-string">' '</span>) {<br>	<span class="hljs-comment">//若索引值超出范围或者为空</span><br>		index++;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;<br>	}<br>	BinaryTreeNode* node = <span class="hljs-keyword">new</span> <span class="hljs-built_in">BinaryTreeNode</span>(str[index++]);<br>	<span class="hljs-comment">//创建新节点，递归构建左右子树</span><br>	node-&gt;left = <span class="hljs-built_in">buildtree</span>(str, index);<br>	node-&gt;right = <span class="hljs-built_in">buildtree</span>(str, index);<br>	<span class="hljs-keyword">return</span> node;<br>};<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">preOrder</span><span class="hljs-params">(BinaryTreeNode* root)</span> </span>{<span class="hljs-comment">//前序遍历</span><br>	<span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) {<br>		<span class="hljs-keyword">return</span>;<br>	}<br>	cout &lt;&lt; root-&gt;data &lt;&lt; <span class="hljs-string">" "</span>;<br>	<span class="hljs-built_in">preOrder</span>(root-&gt;left);<br>	<span class="hljs-built_in">preOrder</span>(root-&gt;right);<br>};<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">inOrder</span><span class="hljs-params">(BinaryTreeNode* root)</span> </span>{<span class="hljs-comment">//中序遍历</span><br>	<span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) {<br>		<span class="hljs-keyword">return</span>;<br>	}<br>	<span class="hljs-built_in">inOrder</span>(root-&gt;left);<br>	cout &lt;&lt; root-&gt;data &lt;&lt; <span class="hljs-string">" "</span>;<br>	<span class="hljs-built_in">inOrder</span>(root-&gt;right);<br>};<br><span class="hljs-comment">//void postOrder(BinaryTreeNode* root) {后序遍历</span><br><span class="hljs-comment">//	if (root == nullptr) {</span><br><span class="hljs-comment">//		return;</span><br><span class="hljs-comment">//	}</span><br><span class="hljs-comment">//	postOrder(root-&gt;left);</span><br><span class="hljs-comment">//	postOrder(root-&gt;right);</span><br><span class="hljs-comment">//	cout &lt;&lt; root-&gt;data &lt;&lt; " ";</span><br><span class="hljs-comment">//};</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{<br>	string str;<br>	<span class="hljs-built_in">getline</span>(cin,str);<br>	<span class="hljs-comment">//注意用getline需要读取空格</span><br>	<span class="hljs-type">int</span> index=<span class="hljs-number">0</span>;<br>	BinaryTreeNode* root=<span class="hljs-built_in">buildtree</span>(str, index);<br>	<span class="hljs-built_in">preOrder</span>(root);<br>	cout &lt;&lt; endl;<br>	<span class="hljs-built_in">inOrder</span>(root);<br>	cout &lt;&lt; endl;<br>	<span class="hljs-built_in">inOrder</span>(root);<br>	cout &lt;&lt; endl;<br>	<span class="hljs-comment">//postOrder(root);</span><br>	<span class="hljs-comment">//cout &lt;&lt; endl;</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h2 id="B题：哈夫曼树">B题：哈夫曼树</h2>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-f47957e7" role="button" aria-expanded="false" aria-controls="collapse-f47957e7">
+        <div class="fold-arrow">▶</div> B题：哈夫曼树
+      </div>
+      <div class="fold-collapse collapse" id="collapse-f47957e7">
+        <div class="fold-content">
+          <h3 id="题目描述">题目描述</h3><p>哈夫曼树，第一行输入一个数n，表示叶结点的个数。需要用这些叶结点生成哈夫曼树，根据哈夫曼树的概念，这些结点有权值，即weight，题目需要输出所有叶子结点的路径长度与权值的乘积之和。</p><h3 id="输入">输入</h3><p>输入有多组数据。<br>每组第一行输入一个数n，接着输入n个叶节点（叶节点权值不超过100，2&lt;=n&lt;=1000）。</p><h3 id="输出">输出</h3><p>输出权值。</p><h3 id="样例输入">样例输入</h3><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">2</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">8</span> <br><span class="hljs-number">3</span><br><span class="hljs-symbol">5 </span><span class="hljs-number">11</span> <span class="hljs-number">30</span> <br></code></pre></td></tr></tbody></table></figure><h3 id="样例输出">样例输出</h3><figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">10<br>62<br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
+<h3 id="问题分析-v2">问题分析</h3>
+<ol>
+<li>将<strong>所有权值作为单独的树</strong>（每个树只有一个节点）</li>
+<li>每次选择<strong>权值最小的两棵树合并</strong>，形成新的子树，新树的权值为两子树权值之和</li>
+<li>将新树根节点作为新的子树，重复上述过程，直到只剩下一棵树</li>
+<li>计算合并过程中所有中间结果的<strong>累加和</strong></li>
+</ol>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;queue&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">huffman</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>{<br>	priority_queue &lt;<span class="hljs-type">int</span>, vector&lt;<span class="hljs-type">int</span>&gt;, greater&lt;<span class="hljs-type">int</span>&gt;&gt; minqueue;<br>	<span class="hljs-comment">//创建最小优先队列</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; n;i++) {<br>		<span class="hljs-type">int</span> a;<br>		cin &gt;&gt; a;<br>		minqueue.<span class="hljs-built_in">push</span>(a);<br>	}   <span class="hljs-comment">// 读取n个权值并存入最小堆</span><br>	<span class="hljs-type">int</span> total = <span class="hljs-number">0</span>;<span class="hljs-comment">//带权路径长度</span><br>	<span class="hljs-comment">// 隐式构建哈夫曼树</span><br>	<span class="hljs-keyword">while</span> (!minqueue.<span class="hljs-built_in">empty</span>()) {<br>		<span class="hljs-type">int</span> parent = minqueue.<span class="hljs-built_in">top</span>();<br>		minqueue.<span class="hljs-built_in">pop</span>();<br>		<span class="hljs-comment">//取出当前最小值</span><br>		<span class="hljs-keyword">if</span> (minqueue.<span class="hljs-built_in">empty</span>()) {<br>			<span class="hljs-keyword">break</span>;<span class="hljs-comment">//当队列中只有一个元素时退出循环</span><br>		}<br>		parent += minqueue.<span class="hljs-built_in">top</span>();<br>		minqueue.<span class="hljs-built_in">pop</span>();<br>		<span class="hljs-comment">//取出次小值</span><br>		total +=  parent;<br>		minqueue.<span class="hljs-built_in">push</span>(parent);<br>	}<br>	cout &lt;&lt; total &lt;&lt; endl;<br>}<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{<br>	<span class="hljs-type">int</span> n;<br>	<span class="hljs-keyword">while</span> (cin &gt;&gt; n) {<br>		<span class="hljs-built_in">huffman</span>(n);<br>	}<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="注释">注释</h3>
+<p><strong>优先队列：</strong> 这是一种特殊的队列，每次<code>push</code>进去一个数，它就会自动按照大小排好队，<code>top</code>就能得到队首元素（最大值），<code>pop</code>就会弹出队首元素（队列中最大值）。定义方法如下：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">priority_queue&lt;<span class="hljs-type">int</span>&gt; pq;<span class="hljs-comment">//int型优先队列</span><br></code></pre></td></tr></tbody></table></figure>
+<p>若我们不满足其降序排列我们还可以将其调整为升序排列：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">priority_queue &lt;<span class="hljs-type">int</span>, vector&lt;<span class="hljs-type">int</span>&gt;, greater&lt;<span class="hljs-type">int</span>&gt;&gt; pq;<span class="hljs-comment">//int型逆序优先队列</span><br></code></pre></td></tr></tbody></table></figure>
+<h2 id="C题：树的遍历">C题：树的遍历</h2>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-bdd057f7" role="button" aria-expanded="false" aria-controls="collapse-bdd057f7">
+        <div class="fold-arrow">▶</div> C题：树的遍历
+      </div>
+      <div class="fold-collapse collapse" id="collapse-bdd057f7">
+        <div class="fold-content">
+          <h3 id="题目描述">题目描述</h3><p>  假设二叉树中的所有键值都是不同的正整数。唯一的二叉树可以通过给定的后序和顺序遍历序列，或前序和顺序遍历序列来确定。但是，如果仅给出后序和前序遍历序列，则相应的树可能不再是唯一的。<br>  现在给出一对后序和前序遍历序列，您应该输出树的相应的中序遍历序列。如果树不是唯一的，只需输出其中任何一个。</p><h3 id="输入">输入</h3><p>每个输入文件包含一个测试用例。对于每种情况，第一行给出正整数N（≤30），即二叉树中的节点总数。第二行给出预订序列，第三行给出后序序列。一行中的所有数字都用空格分隔。</p><h3 id="输出">输出</h3><p>对于每个测试用例，如果树是唯一的，则首先是行中的Yes，否则是No。然后在下一行中打印相应二叉树的中序遍历序列。如果解决方案不是唯一的，那么任何答案都可以。保证至少存在一种解决方案。一行中的所有数字必须用一个空格分隔，并且行的末尾不能有额外的空格。</p><h3 id="样例输入">样例输入</h3><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">7</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">6</span> <span class="hljs-number">7</span> <span class="hljs-number">5</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">6</span> <span class="hljs-number">7</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span> <span class="hljs-number">3</span> <span class="hljs-number">1</span><br></code></pre></td></tr></tbody></table></figure><h3 id="样例输出">样例输出</h3><figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Yes</span><br><span class="hljs-attribute">2</span> <span class="hljs-number">1</span> <span class="hljs-number">6</span> <span class="hljs-number">4</span> <span class="hljs-number">7</span> <span class="hljs-number">3</span> <span class="hljs-number">5</span><br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
+<h3 id="问题分析-v3">问题分析</h3>
+<p>  已知前序、中序二叉树唯一确定，已知中序、后序二叉树唯一确定，而<strong>已知前序和后序二叉树无法唯一确定</strong>。</p>
+<p>  前序序列的第一个节点必与后序序列最后一个节点相同，为根节点；前序序列的第二个节点为左子树的根节点（如果有左子树的话），在后续序列中寻找该节点，则划分了左右子树，其左边的所有节点属于左子树，右边的节点（直到根节点之前）属于右子树。</p>
+<p>  因而我们可以使用前序和后序序列递归地分割左右子树，并直接生成中序序列。</p>
+<p>  而如果前序的第二个节点在后序中位于根节点前的位置，说明该节点可以是左子树或右子树的根，此时树不唯一，可以任意选择左右子树。</p>
+<h3 id="完整代码-v2">完整代码</h3>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br>vector&lt;<span class="hljs-type">int</span>&gt; in, pre, post;<br><span class="hljs-comment">//定义全局变量，分别为前序、中序、后序序列</span><br><span class="hljs-type">bool</span> unique = <span class="hljs-literal">true</span>;<span class="hljs-comment">//标记二叉树是否唯一</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-type">int</span> preL, <span class="hljs-type">int</span> preR, <span class="hljs-type">int</span> postL, <span class="hljs-type">int</span> postR)</span> </span>{<br><span class="hljs-comment">//分别标记了前序和后序序列的左右边界</span><br>    <span class="hljs-keyword">if</span> (preL == preR) {<br>        in.<span class="hljs-built_in">push_back</span>(pre[preL]);<br>        <span class="hljs-keyword">return</span>;<br>    }<br>    <span class="hljs-keyword">if</span> (pre[preL] == post[postR]) {<br>        <span class="hljs-type">int</span> i = preL + <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span> (i &lt;= preR &amp;&amp; pre[i] != post[postR - <span class="hljs-number">1</span>]) i++;<br>        <span class="hljs-comment">//在后序序列中寻找左子树的根节点</span><br>        <span class="hljs-keyword">if</span> (i - preL &gt; <span class="hljs-number">1</span>)<br>            <span class="hljs-built_in">build</span>(preL + <span class="hljs-number">1</span>, i - <span class="hljs-number">1</span>, postL, postL + (i - preL - <span class="hljs-number">1</span>) - <span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">else</span><br>            unique = <span class="hljs-literal">false</span>;<br>        in.<span class="hljs-built_in">push_back</span>(post[postR]);<br>        <span class="hljs-built_in">build</span>(i, preR, postL + (i - preL - <span class="hljs-number">1</span>), postR - <span class="hljs-number">1</span>);<br>    }<br>}<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{<br>    <span class="hljs-type">int</span> n;<br>    cin &gt;&gt; n;<br>    pre.<span class="hljs-built_in">resize</span>(n);<br>    post.<span class="hljs-built_in">resize</span>(n);<br>    <span class="hljs-comment">//为全局变量重新分配空间</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span>&amp; val : pre) cin &gt;&gt; val;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span>&amp; val : post) cin &gt;&gt; val;<br>    <span class="hljs-comment">//读入数据（注意是&amp;索引值）</span><br>    <span class="hljs-built_in">build</span>(<span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>);<br>    cout &lt;&lt; (unique ? <span class="hljs-string">"Yes"</span> : <span class="hljs-string">"No"</span>) &lt;&lt; endl;<br>    <span class="hljs-keyword">if</span> (!in.<span class="hljs-built_in">empty</span>()) {<br>        cout &lt;&lt; in[<span class="hljs-number">0</span>];<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; in.<span class="hljs-built_in">size</span>(); ++i)<br>            cout &lt;&lt; <span class="hljs-string">" "</span> &lt;&lt; in[i];<br>    }<br>    cout &lt;&lt; endl;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h2 id="D题：最短路径">D题：最短路径</h2>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-aa984d44" role="button" aria-expanded="false" aria-controls="collapse-aa984d44">
+        <div class="fold-arrow">▶</div> D题：最短路径
+      </div>
+      <div class="fold-collapse collapse" id="collapse-aa984d44">
+        <div class="fold-content">
+          <h3 id="题目描述">题目描述</h3><p>一个迷宫地图中，多个房间由单向通道相连，房间号从1到N依次编号。你能编程求解任意房间间的最短路径长度吗？</p><h3 id="输入">输入</h3><p>第一行是迷宫中的房间数N和单项通道数M（0&lt;N,M&lt;100），接下来M行，每行三个数x,y,z，表示一个通道是从x到y,且通道长度是z(z&lt;1000）。<br>最后一行是start和end，分别是起点房间号和终点房间号。</p><h3 id="输出">输出</h3><p>输出起点房间号和终点房间号间的最短路径长度。如果没有通路，输出STOP。</p><h3 id="样例输入">样例输入</h3><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">7 </span><span class="hljs-number">9</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">3</span> <span class="hljs-number">2</span><br><span class="hljs-symbol">3 </span><span class="hljs-number">4</span> <span class="hljs-number">2</span><br><span class="hljs-symbol">6 </span><span class="hljs-number">3</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">6</span> <span class="hljs-number">3</span><br><span class="hljs-symbol">6 </span><span class="hljs-number">7</span> <span class="hljs-number">6</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">5</span> <span class="hljs-number">4</span><br><span class="hljs-symbol">5 </span><span class="hljs-number">4</span> <span class="hljs-number">2</span><br><span class="hljs-symbol">5 </span><span class="hljs-number">7</span> <span class="hljs-number">5</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">7</span><br></code></pre></td></tr></tbody></table></figure><h3 id="样例输出">样例输出</h3><figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">12<br></code></pre></td></tr></tbody></table></figure>
+        </div>
+      </div>
+    </div>
+<h3 id="问题分析-v4">问题分析</h3>
+<p>最短路径路径问题，我们这里采用<strong>Dijkstra算法</strong>进行求解。</p>
+<div class="note note-info">
+            <ol><li><strong>构造邻接矩阵</strong><code>graph</code><strong>存储带权有向图</strong>。</li><li>将起始顶点的距离设为0，其他所有顶点的距离<code>distance</code>设为无穷大（即从<code>start</code>到<code>i</code>的最短路径长度）。</li><li>将起始顶点加入已访问集合<code>visited</code>。</li><li><strong>遍历未访问顶点</strong>，找出距离起始点最短的顶点，将其加入已访问集合。</li><li>更新<code>distance</code>的距离，如果新计算的距离小于当前距离，则<strong>更新距离</strong>。</li><li>重复步骤3和4，<strong>直到所有顶点都被访问过</strong>。</li></ol>
+          </div>
+<h3 id="完整代码-v3">完整代码</h3>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;climits&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{<br>	<span class="hljs-type">int</span> M, N;<br>	cin &gt;&gt; N &gt;&gt; M;<br>	vector&lt;<span class="hljs-type">int</span>&gt;<span class="hljs-built_in">distance</span>(N, INT_MAX);<span class="hljs-comment">//存放start到i点的最短路径长度</span><br>	<span class="hljs-function">vector&lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-title">visited</span><span class="hljs-params">(N, <span class="hljs-literal">false</span>)</span></span>;<span class="hljs-comment">//记录当前顶点是否已被访问过</span><br>	vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">graph</span>(N, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(N, <span class="hljs-number">0</span>));<br>	<span class="hljs-comment">//有向图的邻接矩阵（二维数组）</span><br>	<span class="hljs-type">int</span> p, q, length;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; M;i++){<br>		cin &gt;&gt; p &gt;&gt; q &gt;&gt; length;<br>		graph[p<span class="hljs-number">-1</span>][q<span class="hljs-number">-1</span>] = length;<br>		<span class="hljs-comment">//均采用 0-based索引</span><br>	}<br>	<span class="hljs-type">int</span> start, end;<br>	cin &gt;&gt; start &gt;&gt; end;<br>	visited[start - <span class="hljs-number">1</span>] = <span class="hljs-literal">true</span>;<br>	distance[start - <span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; N;i++) {<br>		<span class="hljs-keyword">if</span> (graph[start - <span class="hljs-number">1</span>][i] != <span class="hljs-number">0</span>) {<br>			distance[i] = graph[start - <span class="hljs-number">1</span>][i];<br>			<span class="hljs-comment">//用start的邻接矩阵对distance数组进行初始化</span><br>		}<br>	}<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j &lt;N;j++){<br>		<span class="hljs-type">int</span> small = INT_MAX;<br>		<span class="hljs-type">int</span> tag = <span class="hljs-number">-1</span>;<span class="hljs-comment">//标记最小顶点的索引</span><br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;i &lt;= N;i++) {<br>			<span class="hljs-keyword">if</span> (distance[i - <span class="hljs-number">1</span>] &lt; small &amp;&amp; !visited[i - <span class="hljs-number">1</span>]) {<br>				small = distance[i - <span class="hljs-number">1</span>];<br>				tag = i;<br>			}<br>		}<br>		<span class="hljs-keyword">if</span> (tag == <span class="hljs-number">-1</span>) {<br>			<span class="hljs-keyword">break</span>;<br>			<span class="hljs-comment">//若没有找到最小索引</span><br>			<span class="hljs-comment">//邻接矩阵已经全部遍历完成</span><br>			<span class="hljs-comment">//退出循环</span><br>		}<br>		visited[tag - <span class="hljs-number">1</span>] = <span class="hljs-literal">true</span>;<span class="hljs-comment">//标记已访问</span><br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;i &lt;= N;i++) {<br>			<span class="hljs-keyword">if</span> (graph[tag - <span class="hljs-number">1</span>][i - <span class="hljs-number">1</span>]!=<span class="hljs-number">0</span> &amp;&amp; <br>			distance[tag - <span class="hljs-number">1</span>] + graph[tag - <span class="hljs-number">1</span>][i - <span class="hljs-number">1</span>] &lt; distance[i - <span class="hljs-number">1</span>]) {<br>			distance[i - <span class="hljs-number">1</span>] = distance[tag - <span class="hljs-number">1</span>] + graph[tag - <span class="hljs-number">1</span>][i - <span class="hljs-number">1</span>];<br>			<span class="hljs-comment">//如果当前路径为最短路径则进行更新</span><br>			}<br>		}<br>	}<br>		<span class="hljs-keyword">if</span> (distance[end - <span class="hljs-number">1</span>] != INT_MAX) {<br>			cout &lt;&lt; distance[end<span class="hljs-number">-1</span>] &lt;&lt; endl;<br>		}<br>		<span class="hljs-comment">//若distance==INT_MAX，则没有通路</span><br>		<span class="hljs-keyword">else</span> cout &lt;&lt; <span class="hljs-string">"STOP"</span> &lt;&lt; endl;<br>     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h2 id="E题：最小生成树">E题：最小生成树</h2>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-565331b2" role="button" aria-expanded="false" aria-controls="collapse-565331b2">
+        <div class="fold-arrow">▶</div> E题：最小生成树
+      </div>
+      <div class="fold-collapse collapse" id="collapse-565331b2">
+        <div class="fold-content">
+          <h3 id="题目描述">题目描述</h3><p>最小生成树问题是实际生产生活中十分重要的一类问题。假设需要在n个城市之间建立通信联络网，则连通n个城市只需要n-1条线路。这时，自然需要考虑这样一个问题，即如何在最节省经费的前提下建立这个通信网。<br>可以用连通网来表示n个城市以及n个城市之间可能设置的通信线路，其中网的顶点表示城市，边表示两个城市之间的线路，赋于边的权值表示相应的代价。对于n个顶点的连通网可以建立许多不同的生成树，每一棵生成树都可以是一个通信网。现在，需要选择一棵生成树，使总的耗费最小。这个问题就是构造连通网的最小代价生成树，简称最小生成树。一棵生成树的代价就是树上各边的代价之和。<br>而在常用的最小生成树构造算法中，普里姆（Prim）算法是一种非常常用的算法。<br>在本题中，读入一个无向图的邻接矩阵（即数组表示），建立无向图并按照以上描述中的算法建立最小生成树，并输出最小生成树的代价。</p><h3 id="输入">输入</h3><p>输入的第一行包含一个正整数n，表示图中共有n个顶点。其中n不超过50。<br>以后的n行中每行有n个用空格隔开的整数，对于第i行的第j个整数，如果不为0，则表示第i个顶点和第j个顶点有直接连接且代价为相应的值，0表示没有直接连接。当i和j相等的时候，保证对应的整数为0。<br>输入保证邻接矩阵为对称矩阵，即输入的图一定是无向图，且保证图中只有一个连通分量。</p><h3 id="输出">输出</h3><p>只有一个整数，即最小生成树的总代价。请注意行尾输出换行。</p><h3 id="样例输入">样例输入</h3><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">4</span><br><span class="hljs-symbol">0 </span><span class="hljs-number">2</span> <span class="hljs-number">4</span> <span class="hljs-number">0</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">0</span> <span class="hljs-number">3</span> <span class="hljs-number">5</span><br><span class="hljs-symbol">4 </span><span class="hljs-number">3</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">0 </span><span class="hljs-number">5</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span><br></code></pre></td></tr></tbody></table></figure><h3 id="样例输出">样例输出</h3><figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">6<br></code></pre></td></tr></tbody></table></figure><h3 id="提示">提示</h3><p>在本题中，需要掌握图的深度优先遍历的方法，并需要掌握无向图的连通性问题的本质。通过求出无向图的连通分量和对应的生成树，应该能够对图的连通性建立更加直观和清晰的概念。</p>
+        </div>
+      </div>
+    </div>
+<h3 id="问题分析-v5">问题分析</h3>
+<p>完成本题首先要掌握要掌握两种计算最小生成树的方法：<strong>普利姆（Prim）算法</strong>、<strong>克鲁斯卡尔（Kruskal）算法</strong>。（当然本题只要求使用普利姆算法）</p>
+<h4 id="普利姆算法（-点）">普利姆算法（+点）</h4>
+<div class="note note-info">
+            <ol><li>选择任意一个顶点作为起始点，将其加入最小生成树中</li><li>从未选择的顶点中选择<strong>与现有生成树连线权重最小的顶点</strong>，将其加入到现有生成树中</li><li>重复上述步骤，直到最小生成树包含了图中的所有顶点。</li></ol>
+          </div>
+<h4 id="克鲁斯卡尔算法（-边）">克鲁斯卡尔算法（+边）</h4>
+<div class="note note-info">
+            <ol><li>从不属于最小生成树的边中<strong>找到权值最小的边</strong>，判断最小边及其连接的两个顶点加入到最小生成树<strong>是否会形成环路</strong>。</li><li>若不形成环路，则将此最小边及其连接的顶点并入最小生成树。</li><li>若形成环路，则永远不再看此边，然后从剩下的且不属于最小生成树的边中，寻找权值最小的边。</li><li>重复上述步骤，直至所有顶点均连接在一起，并没有形成环路时，最小生成树就找到了。</li></ol>
+          </div>
+<p>根据题意这里使用普利姆算法进行编程求解，用<code>key</code>记录当前生成树与各个顶点的最小值，<code>visited</code>记录当前顶点是否被访问，外循环<code>n</code>次，每次将一个顶点加入最小生成树中。</p>
+<h3 id="完整代码-v4">完整代码</h3>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;climits&gt;</span><span class="hljs-comment">//用于INT_MAX的数组初始化</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{<br>	<span class="hljs-type">int</span> n;<br>	cin &gt;&gt; n;<br>	vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">matrix</span>(n, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n));<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; n;i++) {<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>;j &lt; n;j++) {<br>			cin &gt;&gt; matrix[i][j];<span class="hljs-comment">//读入邻接矩阵</span><br>		}<br>	}<br>	vector &lt;<span class="hljs-type">int</span>&gt; <span class="hljs-built_in">key</span>(n,INT_MAX);<br>	<span class="hljs-comment">//记录当前生成树与各顶点的最小值并不断更新</span><br>	vector &lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-built_in">visited</span>(n, <span class="hljs-literal">false</span>);<br>	<span class="hljs-comment">//记录当前顶点是否已经被访问过</span><br>	key[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<br>	<span class="hljs-type">int</span> total = <span class="hljs-number">0</span>;<span class="hljs-comment">//记录最小生成树的总权值</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; n;i++) {<br>		<span class="hljs-type">int</span> u = <span class="hljs-number">-1</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>;j &lt; n;j++) {<br>			<span class="hljs-keyword">if</span> (!visited[j] &amp;&amp; (u == <span class="hljs-number">-1</span> || key[j] &lt; key[u])) {<br>				u = j;<span class="hljs-comment">//找到当前与生成树的最小权值点顶点</span><br>			}<br>		}<br>		visited[u] = <span class="hljs-literal">true</span>;<br>		total += key[u];<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> v = <span class="hljs-number">0</span>;v &lt; n;v++) {<br>			<span class="hljs-keyword">if</span> (!visited[v] &amp;&amp; matrix[u][v]!=<span class="hljs-number">0</span> &amp;&amp; matrix[u][v] &lt; key[v]) {<br>				key[v] = matrix[u][v];<br>				<span class="hljs-comment">//对key生成树到顶点的最小值进行更新</span><br>			}<br>		}<br><br>	}<br>	cout &lt;&lt; total &lt;&lt; endl;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="注释-v2">注释</h3>
+<p><code>&lt;climits&gt;</code>头文件，定义了与整数类型的大小和范围相关的宏常量，常用<code>INT_MAX</code>和<code>INT_MIN</code>对<strong>数组变量进行初始化</strong>。</p>
+<p>封面来源: <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=j0OUwduDOS0">Shortest Path Algorithms Explained (Dijkstra’s &amp; Bellman-Ford)</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Data-Structure/" class="category-chain-item">Data Structure</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/binary-tree/" class="print-no-link">#binary tree</a>
+      
+        <a href="/tags/huffman-tree/" class="print-no-link">#huffman tree</a>
+      
+        <a href="/tags/queue/" class="print-no-link">#queue</a>
+      
+        <a href="/tags/Dijkstra/" class="print-no-link">#Dijkstra</a>
+      
+        <a href="/tags/Kruskal/" class="print-no-link">#Kruskal</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CUMT-Datastructure-Practice 3</div>
+      <div>http://example.com/2025/06/24/Data structure/CUMT-Datastructure-Practice-3/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>June 24, 2025</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>September 19, 2025</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/06/27/Data%20structure/CUMT-Datastructure-Practice-4/" title="CUMT-Datastructure-Practice 4">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CUMT-Datastructure-Practice 4</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/18/Data%20structure/CUMT-Datastructure-Assignment-2/" title="CUMT-Datastructure-Assignment 2">
+                        <span class="hidden-mobile">CUMT-Datastructure-Assignment 2</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

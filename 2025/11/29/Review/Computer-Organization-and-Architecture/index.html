@@ -1,0 +1,2448 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Based on textbooks and Bilibili lectures, a systematic review of core knowledge in Computer Organization and Architecture.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Computer Organization and Architecture">
+<meta property="og:url" content="http://example.com/2025/11/29/Review/Computer-Organization-and-Architecture/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="Based on textbooks and Bilibili lectures, a systematic review of core knowledge in Computer Organization and Architecture.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Computer%20Organization.jpg?raw=true">
+<meta property="article:published_time" content="2025-11-29T13:49:43.000Z">
+<meta property="article:modified_time" content="2026-01-05T06:59:36.593Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta property="article:tag" content="Computer Science">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Computer%20Organization.jpg?raw=true">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Computer Organization and Architecture - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LQX&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/other/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>Else</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/other/life-musings/" target="_self">
+                    
+                    <span>精进日记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/08/13/other/Casual-Chronicles/" target="_self">
+                    
+                    <span>生活杂谈</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/banner_img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Computer Organization and Architecture"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-29 21:49" pubdate>
+          November 29, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          109 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Review"
+        id="heading-457dd55184faedb7885afd4009d70163" role="tab" data-toggle="collapse" href="#collapse-457dd55184faedb7885afd4009d70163"
+        aria-expanded="true"
+      >
+        Review
+        <span class="list-group-count">(4)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-457dd55184faedb7885afd4009d70163"
+           role="tabpanel" aria-labelledby="heading-457dd55184faedb7885afd4009d70163">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2025/09/02/Review/College-Physics-2/" title="College Physics 2"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">College Physics 2</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/11/29/Review/Computer-Organization-and-Architecture/" title="Computer Organization and Architecture"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Computer Organization and Architecture</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/09/04/Review/Digital-Circuits-and-Logic-Design/" title="Digital Circuits and Logic Design"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Digital Circuits and Logic Design</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/09/04/Review/Probability-Theory/" title="Probability Theory"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Probability Theory</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Computer Organization and Architecture</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="运算方法">运算方法</h2>
+<h4 id="双符号位">双符号位</h4>
+<p>双符号位表示带符号数时，符号位的组合含义为：</p>
+<ul>
+<li>00：正，无溢出；</li>
+<li>01：正溢出（上溢）；</li>
+<li>10：负溢出（下溢）；</li>
+<li>11：负，无溢出</li>
+</ul>
+<h4 id="IEEE754">IEEE754</h4>
+<p>浮点数表示标准：</p>
+<ul>
+<li>1 位符号位（S）：0 表示正数，1 表示负数</li>
+<li>8 位阶码（E）：存储指数的 “偏移值”（偏移量为 127）</li>
+<li>23 位尾数（M）：存储小数部分（隐含一个最高位的 “1”，节省空间）</li>
+</ul>
+<div class="note note-info">
+            <p>以<code>11.375</code>为例，步骤如下：</p><ol><li>将十进制转二进制</li></ol><p>$11.375_{10} = 1011.011_2$（整数部分 11→1011，小数部分 0.375=0.25+0.125→011）</p><ol start="2"><li>规格化二进制（转为 $1.xxxxx \times 2^e$ 形式）</li></ol><p>$1011.011_2 = 1.011011 \times 2^3$</p><p>→ 指数 $e=3$，尾数部分为<code>011011</code>（隐含前面的 “1”）</p><ol start="3"><li>计算阶码（E）</li></ol><p>阶码是 “指数 + 偏移量 127”：$E = 3 + 127 = 130_{10} = 10000010_2$</p><ol start="4"><li>拼接结构</li></ol><ul><li>符号位 S：正数→<code>0</code></li><li>阶码 E：<code>10000010</code></li><li>尾数 M：<code>011011</code>后面补 0 到 23 位→<code>01101100000000000000000</code></li></ul><figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">0 </span><span class="hljs-number">10000010</span> <span class="hljs-number">01101100000000000000000</span><br></code></pre></td></tr></tbody></table></figure>
+          </div>
+<h4 id="浮点运算方法和浮点运算器">浮点运算方法和浮点运算器</h4>
+<ol>
+<li>阶码（双符号位补码）+ 尾数（双符号位补码）的形式</li>
+</ol>
+<ul>
+<li>正数：00.1xxxxx</li>
+<li>负数：11.0xxxxx</li>
+</ul>
+<ol start="2">
+<li>比较阶码大小并完成对阶（<strong>小阶向大阶看齐</strong>）：对齐小数点，以便进行尾数的加减运算</li>
+</ol>
+<ul>
+<li>右移：左边空缺的位会用符号位填充（补码运算中，正数填 0，负数填 1）</li>
+<li>左移：右边空缺的位用 0 填充</li>
+</ul>
+<ol start="3">
+<li>尾数求和：与定点数加减法方法相同</li>
+<li>规格化处理</li>
+<li>舍入处理：规格化后最低有效位丢失，会造成一定误差，要进行舍入处理
+<ul>
+<li>就近舍入</li>
+<li>朝0舍入</li>
+<li>朝+无穷舍入</li>
+<li>朝-无穷舍入</li>
+</ul>
+</li>
+<li>判断溢出（考试的时候记得进行判断）
+<ul>
+<li>阶码上溢</li>
+<li>阶码下溢</li>
+<li>尾数上溢</li>
+<li>尾数下溢</li>
+</ul>
+</li>
+</ol>
+<h2 id="存储系统">存储系统</h2>
+<h4 id="存储器三剑客">存储器三剑客</h4>
+<ul>
+<li>
+<p>主存（内存）：用来存放计算机<strong>运行期间所需要的程序和数据</strong>，CPU可以直接随机的进行读/写访问，存取速度快。</p>
+</li>
+<li>
+<p>外存：用来存放<strong>暂时不参与运行</strong>的程序和数据，以及一些需要<strong>永久性保存</strong>的信息，容量极大，但存取速度低，CPU不能直接访问，信息必须调入主存后CPU才能使用。</p>
+</li>
+<li>
+<p>CPU和主存之间还有高速缓冲存储器cache<strong>存放正在执行的程序段和数据</strong>，通常被放在CPU芯片中，存储容量小，价格高</p>
+</li>
+</ul>
+<h4 id="按存取方式分类">按存取方式分类</h4>
+<ul>
+<li>
+<p>随机存储器RAM</p>
+<ul>
+<li>
+<p>优点：对RAM任意单元的<strong>读写时间相同</strong>，与物理地址无关（类似数组）</p>
+</li>
+<li>
+<p>缺点：一旦断电，RAM失去存储信息</p>
+<ul>
+<li>静态SRAM：双稳态触发器，制造cache</li>
+<li>动态DRAM：mos管和电容，主存</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>只读存储器ROM</p>
+<ul>
+<li>优点：断电之后不会丢失存储信息，适合<strong>存储固定程序和数据</strong></li>
+<li>缺点：一经写入，之后只能读取，不能再次写入，里面的内容固定不变</li>
+</ul>
+</li>
+<li>
+<p><strong>顺序</strong>存取存储器：磁带</p>
+<ul>
+<li>缺点：必须数着存储单元的物理地址顺序，顺次访问（串行访问）（类似链表）必须从前往后遍历才能找到需要访问的单元，存取时间与存取的物理地址相关</li>
+</ul>
+</li>
+<li>
+<p>直接存取存储器DAM：光盘（随机+顺序存取相结合）</p>
+<ul>
+<li>特点：先通过随机访问，确定一个较小的存储区域，在在这小区域内顺序查找</li>
+</ul>
+</li>
+<li>
+<p>相联存储器：按照内容寻址，将所存的内容的某一部分作为检索项（关键字）去检索</p>
+</li>
+</ul>
+<h3 id="寻址">寻址</h3>
+<ul>
+<li>字节编址最小形式单位是一个字节，可以按字节。半字，字寻址</li>
+<li>字编址最小心是单位是一个字，仅支持，按字寻址</li>
+</ul>
+<ol>
+<li>字节（Byte）：固定标准，<strong>1字节 = 8位（bit）</strong>，全球统一。</li>
+<li>不同机器字长的换算示例：
+<ul>
+<li>32位机器：1字 = 4字节（32位），1半字 = 2字节（16位）；</li>
+<li>16位机器：1字 = 2字节（16位），1半字 = 1字节（8位）；</li>
+<li>64位机器（通用）：1字 = 8字节（64位），1半字 = 4字节（32位）。</li>
+</ul>
+</li>
+</ol>
+<div class="note note-info">
+            <p>机器字长是 CPU 的硬件属性，指 CPU 一次能处理的二进制数据位数（32 位 / 64 位）就比如我们知道的windows32位/64位系统：具体差异体现在：</p><ul><li>寻址能力：32 位系统最大支持约 4GB 内存（受限于 32 位地址线寻址上限），64 位系统可支持远超 4GB（理论上达 16EB），多开软件、运行大型程序（如设计软件、游戏）时更不易卡顿。</li><li>软件兼容性：32 位系统无法运行 64 位软件，64 位系统可兼容运行大部分 32 位软件</li><li>运算性能：64 位 CPU 一次能处理更多数据，对复杂计算（如视频渲染、编程编译）的效率比 32 位更高，日常简单操作（聊天、浏览网页）差异不明显。</li></ul>
+          </div>
+<div class="note note-info">
+            <p>1GB = 1024MB，1MB = 1024KB，1KB = 1024B</p>
+          </div>
+<div class="note note-danger">
+            <ul><li>核心原则：<strong>“字” 的长度永远等于机器字长</strong>，“半字” 是 “字”长度的一半，均以字节为最小单位换算。</li></ul>
+          </div>
+<h3 id="存储速度">存储速度</h3>
+<div class="note note-info">
+            <ul><li>1 s（秒）= 10³ ms（毫秒）= 1000 ms</li><li>1 ms（毫秒）= 10³ μs（微秒）= 1000 μs</li><li>1 μs（微秒）= 10³ ns（纳秒）= 1000 ns</li></ul>
+          </div>
+<ul>
+<li>
+<p>访问时间：</p>
+<ul>
+<li>读出时间$T_A$</li>
+<li>写入时间$T_W$</li>
+</ul>
+</li>
+<li>
+<p>存储周期：进行一次<strong>读写操作</strong>所需要的全部时间，就是存储器进行连续读写操作所允许的最短时间间隔</p>
+</li>
+<li>
+<p>存储带宽：表示存储器被连续访问时可以提供的数据传送速率，字节/秒</p>
+</li>
+</ul>
+<div class="note note-info">
+            <ul><li>存取时间：存储器从读出或者写入一次信息所需要的平均时间</li><li>存取周期：<strong>连续两次访问存储器</strong>之间所必需的最短时间间隔</li></ul>
+          </div>
+<h4 id="存储介质">存储介质</h4>
+<ul>
+<li>
+<p>磁存储器：存取速度慢，但成本低</p>
+</li>
+<li>
+<p>光存储器：用激光束照射盘面，靠盘面的不同反射率来读出数据，便于携带</p>
+</li>
+<li>
+<p>半导体存储器</p>
+</li>
+</ul>
+<h4 id="RAM工作原理">RAM工作原理</h4>
+<p>存放一个二进制的物理器件叫做存储元，地址码相同的多个存储元构成一个存储单元，若干存储单元的集合构成存储体</p>
+<ul>
+<li>
+<p>DRAM：用于主存，由mos管和电容组成，当电容存储的电荷数超过阈值（电量），电容所在的存储元表示1</p>
+<ul>
+<li>写入：给高电压，mos管导通，充电</li>
+<li>读出：mos管导通，若电容有电，电流流出，通过外接信号放大器检测电容的电压信息，放电后需要再次充电进行恢复（破坏性读出）；漏电需<br>
+要刷新 ，重新将电荷充满</li>
+</ul>
+</li>
+<li>
+<p>SRAM双稳态触发器（6个mos管）：存取速度按快，用于cache</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>特征</th>
+<th>SRAM</th>
+<th>DRAM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>构成</td>
+<td>双稳态触发器</td>
+<td>电容</td>
+</tr>
+<tr>
+<td>破坏性读出</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>再生</td>
+<td>不需要</td>
+<td>需要</td>
+</tr>
+<tr>
+<td>易失性</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>送行列地址</td>
+<td>同时送</td>
+<td>行列分开送</td>
+</tr>
+<tr>
+<td>引脚数量</td>
+<td>较多</td>
+<td>较少</td>
+</tr>
+<tr>
+<td>速度</td>
+<td>快</td>
+<td>慢</td>
+</tr>
+<tr>
+<td>刷新</td>
+<td>不需要</td>
+<td>需要</td>
+</tr>
+<tr>
+<td>集成度</td>
+<td>低</td>
+<td>高</td>
+</tr>
+<tr>
+<td>功耗</td>
+<td>高</td>
+<td>低</td>
+</tr>
+<tr>
+<td>价格</td>
+<td>高</td>
+<td>低</td>
+</tr>
+</tbody>
+</table>
+<h4 id="线选法">线选法</h4>
+<p>$n$个地址引脚定义$2_n$的地址空间，</p>
+<ul>
+<li>缺点：译码后输出端的线数量过多</li>
+</ul>
+<h4 id="重合法">重合法</h4>
+<p>双译码法 ：核心原理类似笛卡尔坐标系，通过“行地址+列地址”的地址对唯一确定存储单元，适用于大容量存储场景。若地址引脚总数为$n$，可将其分为行、列两组地址线（每组$n/2$根），此时译码后的输出引脚数量仅需$2×(n/2) + 1$，相较于线选法大幅减少，尤其适配大容量动态存储器件。</p>
+<ol>
+<li>地址传输技术差异</li>
+</ol>
+<ul>
+<li>DRAM：采用行列地址复用技术。基于重合法原理，分两次先后将行地址、列地址传入译码驱动电路，可使地址线数量减半，有效降低硬件成本。</li>
+<li>SRAM：采用行列地址独立传输技术，无需地址复用。</li>
+</ul>
+<h3 id="DRAM的刷新机制">DRAM的刷新机制</h3>
+<p>DRAM依靠电容存储电荷来保存数据，存在电荷泄漏问题，需定期刷新：</p>
+<ul>
+<li>刷新单位：以行为单位进行整体刷新；</li>
+<li>刷新周期：电荷保持周期为10~64ms，若未在周期内刷新，电容电荷会流失，导致存储数据丢失。</li>
+</ul>
+<p>关键问题：刷新操作期间，DRAM无法响应CPU的读写访问，因此CPU访问内存与内存控制器的刷新操作之间会存在内存争用现象。</p>
+<h4 id="集中刷新">集中刷新</h4>
+<p>前面周期都用来进行读写或者保持工作，后面<strong>集中进行刷新</strong></p>
+<ul>
+<li>优点：读写操作期间不受刷新操作的影响，速度较快</li>
+<li>缺点：存在<strong>较长的死区时间</strong>，集中在刷新的读写周期内，CPU较长时间不能访问存储器，行数越多，死区时间越长</li>
+</ul>
+<h4 id="分散刷新">分散刷新</h4>
+<p>将存储周期变为$t_c '$变为$t_c+t_r$（变相增长存储周期）对于每个存储周期前半段用来进行读写或者保持操作，后半段用来刷新</p>
+<ul>
+<li>优点：不存在长时间的“死区”</li>
+<li>缺点：<strong>刷新过于频繁</strong>，严重影响系统的速度</li>
+</ul>
+<h4 id="异步刷新">异步刷新</h4>
+<p><strong>将集中刷新和分散刷新的方式相结合</strong>，将128次刷新分散在2ms的时间内，每过一段时间，暂停读写，执行 1 次刷新（刷 1 行）</p>
+<ul>
+<li>优点：死时间的分布更加分散，避免CPU连续等待过久的时间</li>
+</ul>
+<div class="note note-info">
+            <ul><li>分散刷新是 “读写必带刷新”—— 只要用存储器，就必须同时承担刷新开销，每个周期都慢；</li><li>异步刷新是 “读写和刷新分离”—— 大部分时间读写都全速，刷新只在间隙插入，仅插空时影响。</li></ul>
+          </div>
+<p>动态存储器的刷新<strong>按行进行</strong>，为了减少刷新周期，可以减少存储矩阵的行数，增加列数</p>
+<h3 id="只读存储器ROM">只读存储器ROM</h3>
+<ul>
+<li>
+<p>掩模式只读存储器MROM：在芯片生产过程中直接写入，写入后任何人都无法改变</p>
+<ul>
+<li>优点：<strong>可靠性高</strong></li>
+<li>缺点：<strong>灵活性差</strong></li>
+</ul>
+</li>
+<li>
+<p>一次可编程只读存储器<strong>PROM</strong>：允许用户一次性编程写入程序</p>
+</li>
+<li>
+<p>可擦除可编程只读存储器<strong>EPROM</strong>：用户可以写入还能进行多次修改，不能取代RAM，因为编程次数有限，而且写入时间过长</p>
+</li>
+<li>
+<p><strong>flash</strong>存储器：闪存，支持快速擦出和重写，写入前必须先擦除</p>
+</li>
+<li>
+<p>固态硬盘<strong>SSD</strong>：基于闪存，价格较高</p>
+</li>
+</ul>
+<h3 id="主存容量扩展">主存容量扩展</h3>
+<ul>
+<li>存储介质：具有两种<strong>明显区别且稳定的物理状态</strong>（分别表示0和1） 通常使用半导体材料或者磁化材料，</li>
+</ul>
+<p>$存储容量=存储字数(单元数)\times存储字长$</p>
+<div class="note note-info">
+            <p>$16k(地址线数目)\times8位（数据线数目)$</p><ul><li>地址线数目 $2^4 \times 2^{10} = 2^{14}$，地址线位数 $n = \log_2(2^{14}) = 14$</li><li>数据线数目$=8$</li></ul>
+          </div>
+<h4 id="位扩展">位扩展</h4>
+<p>通过译码器控制扩展后的芯片选通</p>
+<h4 id="字扩展">字扩展</h4>
+<ul>
+<li>
+<p>线选法：用除片内寻址外的高位地址线连接存储芯片的片选端</p>
+<ul>
+<li>优点：不需要地址译码器，线路简单</li>
+<li>缺点：地址空间不连续，不能充分利用系统的存储器的空间</li>
+</ul>
+</li>
+</ul>
+<div class="note note-info">
+            <p>将$16K \times 8bit$扩展为$64K \times 8bit$:</p><p>第一片：最低地址：<strong>1110</strong> 00 0000 0000 0000 最高地址：<strong>1110</strong> 11 1111 1111 1111</p><p>第二片：最低地址：<strong>1101</strong> 00 0000 0000 0000 最高地址：<strong>1101</strong> 11 1111 1111 1111</p><p>第三片：最低地址：<strong>1011</strong> 00 0000 0000 0000 最高地址：<strong>1011</strong> 11 1111 1111 1111</p><p>第四片：最低地址：<strong>0111</strong> 00 0000 0000 0000 最高地址：<strong>0111</strong> 11 1111 1111 1111</p>
+          </div>
+<ul>
+<li>译码片选法：用除片内寻址外的高位地址线通过地址译码器产生片选信号</li>
+</ul>
+ <div class="note note-info">
+            <p>将16Kx8bit扩展为64Kx8bit:</p><p>第一片：最低地址：<strong>00</strong>00 0000 0000 0000 最高地址：<strong>00</strong>11 1111 1111 1111</p><p>第二片：最低地址：<strong>01</strong>00 0000 0000 0000 最高地址：<strong>01</strong>11 1111 1111 1111</p><p>第三片：最低地址：<strong>10</strong>00 0000 0000 0000 最高地址：<strong>10</strong>11 1111 1111 1111</p><p>第四片：最低地址：<strong>11</strong>00 0000 0000 0000 最高地址：<strong>11</strong>11 1111 1111 1111</p>
+          </div>
+<ul>
+<li>高位多体交叉访问存储器（<strong>串行</strong>）：高位地址产生片选信号，选择不同的存储模块；低位地址选择存储模块中不同的存储单元<code>模块地址</code>+<code>块内地址</code>，读出一个数据的平均时间为$T$</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">模块号</th>
+<th style="text-align:center">地址编址序列</th>
+<th style="text-align:center">对应二进制地址的最低两位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">M₀</td>
+<td style="text-align:center">0,1,2,3,…7</td>
+<td style="text-align:center">00</td>
+</tr>
+<tr>
+<td style="text-align:center">M₁</td>
+<td style="text-align:center">8,9,10,11,…15</td>
+<td style="text-align:center">01</td>
+</tr>
+<tr>
+<td style="text-align:center">M₃</td>
+<td style="text-align:center">24,25,26,27,…31</td>
+<td style="text-align:center">11</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>低位多体交叉访问存储器（<strong>并行</strong>）：相邻的地址处在不同的存储体中，同一存储体中地址不相邻<code>块内地址</code>+<code>模块地址</code>，使得多个模块可以同时工作，读出一个数据的平均时间为$\frac{T+(n-1)r}{n}$，极限值为$r$，读取数据的时间大幅缩短。（要求$T&gt;mr$，以实现流水线的功能）</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">模块号</th>
+<th style="text-align:center">地址编址序列</th>
+<th style="text-align:center">对应二进制地址的最低两位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">M₀</td>
+<td style="text-align:center">0, 4, 8, 12, …, 4i,…</td>
+<td style="text-align:center">00</td>
+</tr>
+<tr>
+<td style="text-align:center">M₁</td>
+<td style="text-align:center">1, 5, 9, 13, …, 4i+1,…</td>
+<td style="text-align:center">01</td>
+</tr>
+<tr>
+<td style="text-align:center">M₂</td>
+<td style="text-align:center">2, 6, 10, 14, …, 4i+2,…</td>
+<td style="text-align:center">10</td>
+</tr>
+</tbody>
+</table>
+<h3 id="主存">主存</h3>
+<h4 id="磁盘">磁盘</h4>
+<p>由磁盘驱动器、磁盘控制器、磁头、盘片线组成 （从外往里数为0，1，2号磁道），磁道被分为很多<strong>扇区</strong></p>
+<p>由多个盘片构成，每个盘片分成上下两个盘面，每个盘面有多个圆环构成，圆盘上均匀分布磁介质（用来存储0和1）尽管磁道长度不同，但是<strong>每个磁道存储的数据量相同</strong>，因此<strong>从外到内磁道的位密度逐渐变大</strong>，顺时针分扇区，扇区间有扇区间隙，多个<strong>磁道号相同的磁道</strong>，共同构成一个<strong>柱面</strong>，柱面号即为磁道号，多个盘片绑在一个电机上，旋转时，盘面会同时旋转。</p>
+<ul>
+<li>道密度：沿<strong>磁道半径方向单位长度上的磁道数</strong></li>
+<li>位密度：磁道<strong>单位长度上能记录的二进制代码位数</strong></li>
+</ul>
+<div class="note note-info">
+            <p>如果某文件长度超过一个磁道的容量，应将它记录在同一个<strong>柱面</strong>上:因为不需要重新找道，数据读/写速度快</p>
+          </div>
+<ul>
+<li>
+<p>磁道的容量：</p>
+<ul>
+<li>非格式化（此记录表面可利用的磁化单元数）：$柱面数 \times 盘面数 \times 每条磁道的磁化单元数$</li>
+<li>格式化（按照某种特定格式存储，如<strong>含有校验信息</strong>）：格式化的容量比非格式化的小，$记录面数 \times 柱面数 \times 每道扇区数 \times 每个扇区的容量$</li>
+</ul>
+</li>
+</ul>
+<p>存取时间=寻道时间（磁头到目的磁道）（取平均时间最外到最内到一半）+旋转延迟时间（磁头定位到读写扇区时间）（平均取旋转半周）+传输时间（传输数据所花费的时间）</p>
+<p>CPU➡️磁盘控制器➡️磁盘驱动器➡️磁盘</p>
+<ul>
+<li>$总容量 = 有效记录面数 \times 每面磁道数 \times 每道容量$</li>
+<li>$数据传输率 = 每道容量 \times 转速$</li>
+<li>$平均等待时间=\frac{1}{2 \times n}$</li>
+</ul>
+<p>磁盘寻址：<code>记录面号(位) + 磁道号(位) + 扇区号(位)</code></p>
+<ol>
+<li>确定访问哪个磁盘组（由多个磁盘构成）</li>
+<li>确定应该访问哪个<strong>柱面</strong></li>
+<li>确定应该访问到<strong>盘面</strong></li>
+<li>确定<strong>扇区</strong></li>
+</ol>
+<ul>
+<li>
+<p>磁盘阵列（RAID）:用独立磁盘构成具有冗余能力的阵列（0～5分别代表不同的架构与功能）</p>
+<ul>
+<li>RAID0：无数据校验，不提供冗余策略，没有容错能力</li>
+<li>RAID1：无差别写入两份磁盘，分为工作磁盘和镜像磁盘，利用率只有50%，两块当一块使用</li>
+</ul>
+</li>
+</ul>
+<h4 id="固态硬盘-SSD">固态硬盘(SSD)</h4>
+<p>与U盘无本质差别，只是容量更大，存取性能更好</p>
+<ul>
+<li>
+<p>优点：启动快、抗摔性好</p>
+</li>
+<li>
+<p>缺点：一个块的写入次数不能过多，一般不超过10w次，否则会因为默算而无法再次写入;引入磨损均衡：避免数据重复在某个空间写入，以保证各个存储区域磨损程度基本一致</p>
+<ul>
+<li>动态：写入数据时，<strong>自动选择</strong>较新的内存块</li>
+<li>静态：SSD检测并自动进行数据分配，平常的读写操作在较新的闪存块中进行</li>
+</ul>
+</li>
+</ul>
+<h3 id="高速缓冲存储器">高速缓冲存储器</h3>
+<ul>
+<li>时间局部性：同一变量/指令短时间内被多次访问/执行</li>
+<li>空间局部性：指令顺序执行/数组等<strong>连续结构</strong>存储体在相邻的位置以短时间内被顺次访问</li>
+</ul>
+<p>通过在cache设置有效位，来判断CPU的cache中是否有主存有效信息</p>
+<h4 id="CPU在cache中的访问过程">CPU在cache中的访问过程</h4>
+<p>先检查cache中有没有要访问的信息</p>
+<ul>
+<li>若有，直接从cache读取，即<strong>cache命中</strong></li>
+<li>若无，则从主存中把当前访问信息所在的一个主存块复制到cache中</li>
+</ul>
+<p>$命中率=\frac{命中次数}{访问总次数}$</p>
+<ul>
+<li>命中时，CPU直接在cache中存取信息：$T=T_c$</li>
+<li>缺失时，需要从主存读取一个主存块送到cache：$T=T_m+T_c$</li>
+</ul>
+<p>平均访问时间：$T=pT_c+(1-p)(T_m+T_c)$，由于局部性的特点，cache的命中率可以很高</p>
+<h4 id="cache行和主存的映射方式">cache行和主存的映射方式</h4>
+<p>先将主存高位地址的标记与cache进行比较，若相等且有效值为1则命中直接取出信息；若不相等则CPU从主存中读出信息送到cache任意空闲行中，有效位置1，并设置标记</p>
+<ul>
+<li>
+<p>全相联映射：主存可以复制到cache任意行中只要有空闲的cache块<code>主存标记+块内地址</code></p>
+<ul>
+<li>优点：冲突概率低，空间利用率高，命中率高</li>
+<li>缺点：标记比较速度较慢，实现成本较高，要按内容寻址的相联存储器</li>
+</ul>
+</li>
+<li>
+<p>直接映射：映射到特定行<code>主存标记+cache行号+块内地址</code></p>
+<ul>
+<li>$cache行号=主存块号 \mod cache行数$</li>
+</ul>
+</li>
+<li>
+<p>组相联映射：将cache分成多个组，组内有多行，主存可以放在特定组的任意行（组间采用直接映射，组内采用全相联映射）<code>主存标记+组地址（cache行号/路数）+块内地址</code></p>
+</li>
+</ul>
+<h4 id="替换策略">替换策略</h4>
+<ul>
+<li>
+<p>随机算法（rand）：为依据程序访问的局部性原理，导致命中率较低</p>
+</li>
+<li>
+<p>先进先出（FIFO）：选择<strong>最高调用</strong>的cache行进行替换</p>
+</li>
+<li>
+<p>近期最少使用（LRU）</p>
+<ul>
+<li>命中时，所命中的行计数器清零，比其低的计数器加一，其余不变</li>
+<li>未命中且还有空闲行时，新装入的行的计数器置0，其余全加1</li>
+<li>未命中且无空闲行时，计数值最大的信息被替换，新装入的行的计数器置0，其余加1</li>
+</ul>
+<p>抖动：集中访问的存储区超过cache的大小时，命中率变得很低</p>
+</li>
+<li>
+<p>最不经常使用（LFU）：将一段时间被访问次数最少的cache行换出</p>
+</li>
+</ul>
+<h4 id="不一致性">不一致性</h4>
+<p>写给cache时，会导致主存和cache不一致的问题</p>
+<ul>
+<li>
+<p>全写法：写操作时，若写命中，则同时写cache和主存：需要额外引入写缓冲，CPU在将数据写入cache时也写入写缓冲，然后由写缓冲将需要写入的数据写回主存</p>
+<ul>
+<li>缺点：增加访存次数</li>
+</ul>
+</li>
+<li>
+<p>写回法：写命中时，信息写入cache而不写入主存，直到cache被替换出去时，才将数据写回主存，需要给cache增加<code>脏位</code>（<code>修改位</code>）</p>
+</li>
+<li>
+<p>写分配法：写回主存后，把写入过的主存调入cache中</p>
+</li>
+<li>
+<p>非写分配法：写回主存后，不调入cache</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">命中时</th>
+<th style="text-align:center">未命中时</th>
+<th style="text-align:center">需要</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">方式一</td>
+<td style="text-align:center">全写法</td>
+<td style="text-align:center">非写分配法</td>
+<td style="text-align:center">写缓冲</td>
+</tr>
+<tr>
+<td style="text-align:center">方式二</td>
+<td style="text-align:center">写回法</td>
+<td style="text-align:center">写分配法</td>
+<td style="text-align:center">附设脏位</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cache分离">cache分离</h4>
+<ul>
+<li>
+<p>统一cache：刚出现时<strong>指令和数据都放在里面</strong></p>
+<ul>
+<li>优点：设计和实现相对简单</li>
+<li>缺点：存取数据又要读指令时会发生冲突</li>
+</ul>
+</li>
+<li>
+<p>独立cache：<strong>分开为指令cache和数据cache</strong></p>
+<ul>
+<li>指令cache（顺序执行）比数据cache（跳转访问）有更好的空间局部性</li>
+</ul>
+</li>
+</ul>
+<p>将cache集成在CPU中称为第一级cache：减少对片外总线的访问，加快存取速度；但由于容量较小，CPU和主存之间设置的cache为第二级cache。</p>
+<ul>
+<li>L1和L2全写法</li>
+<li>L2和主存写回法。</li>
+</ul>
+<h2 id="指令">指令</h2>
+<p>指令字长：一条指令所包含的二进制代码的位数，与机器字长美与固定关系，会影响指令时间开销，<code>操作码+地址码</code></p>
+<ul>
+<li>单字长指令：访存一次即可完整取出</li>
+<li>双字长指令：需要<strong>访存两次</strong>，耗费两个存取周期</li>
+<li>半字长指令</li>
+</ul>
+<h4 id="指令按地址码分类">指令按地址码分类</h4>
+<ul>
+<li>
+<p>零地址指令：<code>OP</code></p>
+<ul>
+<li>不需要操作数：空操作、停机、关中断指令</li>
+<li>两个操作数在<strong>堆栈</strong>计算机中（隐含寻址）</li>
+</ul>
+</li>
+<li>
+<p>一地址指令：<code>OP+A1</code></p>
+<ul>
+<li>进行<code>OP</code>操作后放回原地址：加1、减1、求反、求补、移位</li>
+<li>将结果存入默认地址如<strong>累加器</strong>中</li>
+</ul>
+</li>
+<li>
+<p>二地址指令<code>OP+A1+A2</code></p>
+<ul>
+<li><code>A1</code>是目的操作数<code>A2</code>是源操作数，将运算结果存入<code>A1</code></li>
+</ul>
+</li>
+<li>
+<p>三地址指令：<code>OP+A1+A2+A3(结果)</code></p>
+</li>
+<li>
+<p>四地址指令：<code>OP+A1+A2+A3(结果)+A4(下址)</code></p>
+</li>
+</ul>
+<h4 id="指令长度">指令长度</h4>
+<p>操作码随着地址码的减少而增加</p>
+<ul>
+<li><strong>定长</strong>指令字结构：所有指令长度相等</li>
+<li><strong>变长</strong>指令字结构：长度应功能而异，地址指令增加用扩展操作码，各个操作码是前缀编码，任何操作码都不是其他编码的前缀（即通过扫描前几个操作码即可判断是什么指令，不会出现重复）</li>
+</ul>
+<h4 id="ISA">ISA</h4>
+<p>指令集体系结构定义了计算机系统中的指令的集合以及这些指令的<strong>规范</strong>，不关心是什么操作系统以及一些较为细节底层的内容，主要包括：</p>
+<ul>
+<li>指令格式，寻址方式，操作类型</li>
+<li>操作数类型，操作数的寻址方式</li>
+<li>寄存器编号、个数、位数</li>
+<li>指令执行过程的控制方式</li>
+</ul>
+<h3 id="寻址-v2">寻址</h3>
+<h4 id="指令寻址">指令寻址</h4>
+<ul>
+<li>
+<p>顺序寻址：程序计数器（PC）+1，根据PC的内容取指并执行，自动形成下一跳指令的地址</p>
+</li>
+<li>
+<p>跳跃寻址：程序转移类指令</p>
+</li>
+<li>
+<p>直接寻址</p>
+</li>
+<li>
+<p>相对寻址</p>
+</li>
+<li>
+<p>间接寻址</p>
+</li>
+</ul>
+<h4 id="数据寻址">数据寻址</h4>
+<p><code> 操作码+寻址特征+形式地址</code>，<code>寻址方式+形式地址=有效地址</code></p>
+<ul>
+<li>
+<p>立即寻址：<code>OP+#+A</code>，只要取出指令也就取出了可以立即使用的操作数</p>
+<ul>
+<li>优点：操作码和操作数同时去除，不必再次访问主存</li>
+<li>缺点：操作数是指令的一部分，不能被修改</li>
+</ul>
+</li>
+<li>
+<p>直接寻址：形式地址直接给出就是有效地址</p>
+<ul>
+<li>优点：不需要任何寻址运算，简单便于硬件实现</li>
+<li>缺点：寻址范围受限</li>
+</ul>
+</li>
+<li>
+<p>寄存器寻址：给出的是通用寄存器的编号（有效地址就是寄存器的编号），寄存器中存放着操作数</p>
+<ul>
+<li>优点：从寄存器中存取数据比从主存中快，寄存器数量少，地址码字段比主存单元地址字段短，可以缩短指令长度，提高指令执行速度</li>
+<li>缺点：造价昂贵，无法提供大量存储空间</li>
+</ul>
+</li>
+<li>
+<p>隐含寻址：不直接给出操作数的地址，而是在指令中隐含着操作数地址（隐含在寄存器中）。</p>
+<ul>
+<li>优点：指令更短</li>
+<li>缺点：需要添加额外额硬件来实现</li>
+</ul>
+</li>
+<li>
+<p>间接寻址： 在地址为A的主存单元存储了操作数的有效地址，相当于进行跳转（一级、多级寻址通过间址标志位0、1判断是否已经找到有效地址还是需要继续间接选址）</p>
+<ul>
+<li>优点：扩大了操作数的寻址范围</li>
+<li>缺点：增加了访问主存的次数</li>
+</ul>
+</li>
+<li>
+<p>寄存器间接寻址：指令中的地址吗给出的是通用寄存器的编号，在指定的寄存器中存放操作数的有效地址</p>
+<ul>
+<li>只需要一次访存</li>
+</ul>
+</li>
+<li>
+<p>基址寻址：将基址寄存器内容加上形式地址形成有效地址，面向系统，内容由操作熊确定，其值无法改变</p>
+<ul>
+<li>隐式：专用基址寄存器</li>
+<li>显示：通用寄存器</li>
+</ul>
+</li>
+<li>
+<p>变址寻址：将变址寄存器内容加上形式地址形成有效地址，变址面向用户，相当于一个可由用户改变的偏移量，而原有效地址是一个首地址</p>
+<ul>
+<li>优点：扩大寻址范围，循环中修改偏移量便利数组空间</li>
+</ul>
+</li>
+<li>
+<p>相对寻址：由程序计数器（PC）提供脊椎地址，形式地址作为偏移量</p>
+<ul>
+<li>优点：操作数的地址与指令地址相差一个固定偏移量，便于程序浮动</li>
+</ul>
+</li>
+<li>
+<p>堆栈寻址：</p>
+</li>
+<li>
+<p>扩展变址寻址：</p>
+</li>
+<li>
+<p>基址变址寻址：</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">寻址方式</th>
+<th style="text-align:center">有效地址</th>
+<th style="text-align:center">访存次数</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">立即寻址</td>
+<td style="text-align:center">A即是操作数</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">无需寻址即可获得操作数</td>
+</tr>
+<tr>
+<td style="text-align:center">直接寻址</td>
+<td style="text-align:center">EA=A</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">无需寻址即可获得操作数</td>
+</tr>
+<tr>
+<td style="text-align:center">一次间接寻址</td>
+<td style="text-align:center">EA=(A)</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">间接寻址次数越多，访存次数越多</td>
+</tr>
+<tr>
+<td style="text-align:center">寄存器寻址</td>
+<td style="text-align:center">EA=R₁</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">速度较快且可有效缩短指令字长</td>
+</tr>
+<tr>
+<td style="text-align:center">寄存器间接一次寻址</td>
+<td style="text-align:center">EA=(R₁)</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">比一次间接寻址快些</td>
+</tr>
+<tr>
+<td style="text-align:center">相对寻址</td>
+<td style="text-align:center">EA=(PC)+A</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">常用于转移指令</td>
+</tr>
+<tr>
+<td style="text-align:center">基址寻址</td>
+<td style="text-align:center">EA=(BR)+A</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">常用于多道程序</td>
+</tr>
+<tr>
+<td style="text-align:center">变址寻址</td>
+<td style="text-align:center">EA=(IX)+A</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">常用于循环程序和数组问题</td>
+</tr>
+<tr>
+<td style="text-align:center">前变址方式</td>
+<td style="text-align:center">EA=((IX)+A)</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">后变址方式</td>
+<td style="text-align:center">EA=(IX)+(A)</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">基址变址寻址</td>
+<td style="text-align:center">EA=(BR)+(IX)+A</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">最灵活的一种寻址方式</td>
+</tr>
+<tr>
+<td style="text-align:center">软堆栈</td>
+<td style="text-align:center">需要专门的寄存器保存栈顶</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">成本低、容量大、速度慢</td>
+</tr>
+<tr>
+<td style="text-align:center">硬堆栈</td>
+<td style="text-align:center">无需栈顶指针</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">成本高、容量小、速度快</td>
+</tr>
+<tr>
+<td style="text-align:center">隐含寻址</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">简化地址结构</td>
+</tr>
+</tbody>
+</table>
+<h3 id="x86">x86</h3>
+<h4 id="寄存器">寄存器</h4>
+<ul>
+<li>
+<p>EAX（32）=E（16）+AX（16）</p>
+<ul>
+<li>AX=AH（8）+AL（8）</li>
+</ul>
+</li>
+<li>
+<p>EAX是扩展累加寄存器（accumulator），通常用于存储操作结果。</p>
+</li>
+<li>
+<p>EBX是扩展基地址寄存器（base），可以在内存寻址时存放基地址。（基址寄存器）</p>
+</li>
+<li>
+<p>ECX是扩展计数寄存器（count），是某些指令的计数器。</p>
+</li>
+<li>
+<p>EDX是扩展数据寄存器（data），与EAX经常配合使用。</p>
+</li>
+<li>
+<p>ESI/EDI是扩展源/目标指针寄存器（source index/destination），其中，ESI通常用于存储当前正在处理的源数据（source data）的索引或地址。例如数组访问中使用，以指向数据的来源位置。（变址寄存器）</p>
+</li>
+<li>
+<p>EBP是扩展基址指针寄存器（base pointer），一般用于指示 ESP是扩展堆栈指针寄存器（stack pointer），一般用于指示栈顶。</p>
+</li>
+</ul>
+<h4 id="指令格式">指令格式</h4>
+<p>汇编指令：<code>助记符+目的操作数+源操作数</code></p>
+<ul>
+<li>R[r]表示寄存器r的值</li>
+<li>M[addr]表示内存地址为addr的值</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作数类型</th>
+<th style="text-align:center">寻址方式</th>
+<th style="text-align:center">举例</th>
+<th style="text-align:center">值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">立即数</td>
+<td style="text-align:center">立即数寻址</td>
+<td style="text-align:center">0xff</td>
+<td style="text-align:center">255</td>
+</tr>
+<tr>
+<td style="text-align:center">寄存器</td>
+<td style="text-align:center">寄存器寻址</td>
+<td style="text-align:center">eax</td>
+<td style="text-align:center">R[eax]</td>
+</tr>
+<tr>
+<td style="text-align:center">内存</td>
+<td style="text-align:center">直接寻址</td>
+<td style="text-align:center">[var]</td>
+<td style="text-align:center">M[var]</td>
+</tr>
+<tr>
+<td style="text-align:center">内存</td>
+<td style="text-align:center">寄存器间接寻址</td>
+<td style="text-align:center">[eax]</td>
+<td style="text-align:center">M[R[eax]]</td>
+</tr>
+<tr>
+<td style="text-align:center">内存</td>
+<td style="text-align:center">基址寻址</td>
+<td style="text-align:center">[ebx+4]</td>
+<td style="text-align:center">M[R[ebx]+4]</td>
+</tr>
+<tr>
+<td style="text-align:center">内存</td>
+<td style="text-align:center">变址寻址</td>
+<td style="text-align:center">[ebx+esi+4]</td>
+<td style="text-align:center">M[R[ebx]+R[esi]+4]</td>
+</tr>
+<tr>
+<td style="text-align:center">内存</td>
+<td style="text-align:center">比例变址寻址</td>
+<td style="text-align:center">[ebx+eax*4+3]</td>
+<td style="text-align:center">M[R[ebx]+R[eax]*4+3]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="常用指令">常用指令</h3>
+<h4 id="MOV指令">MOV指令</h4>
+<p><code>mov 目的操作数, 源操作数</code>；将源操作数复制到目的操作数，源操作数内容不变 （<code>;</code>为注释标识符，用于解释代码，不会对指令执行产生影响）</p>
+<ol>
+<li><code>mov &lt;reg&gt;, &lt;reg&gt;</code>；将一个寄存器的内容移动到另一个寄存器。
+<ul>
+<li><code>mov EAX, EBX</code>；将EBX寄存器的内容复制到EAX寄存器</li>
+</ul>
+</li>
+<li><code>mov &lt;mem&gt;, &lt;reg&gt;</code>；将寄存器的内容移动到内存地址。
+<ul>
+<li><code>mov DWORD PTR [ECX], EAX</code>；将EAX寄存器的内容复制到ECX指向的内存地址</li>
+</ul>
+</li>
+<li><code>mov &lt;reg&gt;, &lt;mem&gt;</code>；将内存内容移动到寄存器。
+<ul>
+<li><code>mov EBX, DWORD PTR [EAX]</code>；将EAX指向的内存地址的内容复制到EBX寄存器   （<code>PTR</code>操作符放在内存操作数之前指明其位数）</li>
+<li><code>BYTE PTR</code>：表示操作数为单字节</li>
+<li><code>WORD PTR</code>：表示操作数为字(双字节)</li>
+<li><code>DWORD PTR</code>：表示操作数为双字(四字节)</li>
+</ul>
+</li>
+<li><code>mov &lt;mem&gt;, &lt;con&gt;</code>；将一个常量移动到内存。
+<ul>
+<li><code>mov DWORD PTR [EBP+4], 12345</code>；将常量12345存储在EBP加上偏移4的内存地址</li>
+</ul>
+</li>
+<li><code>mov &lt;reg&gt;, &lt;con&gt;</code>；将一个常量移动到寄存器。
+<ul>
+<li><code>mov EDX, 0FFh</code>；将立即数0FFh（即255的十六进制表示）赋值给EDX寄存器</li>
+</ul>
+</li>
+</ol>
+<p><code>mov</code>指令的两个操作数不能同时是内存</p>
+<h4 id="add-sub指令">add/sub指令</h4>
+<p>将目的操作数与源操作数相加减并将结果报存在目的操作数种，源操作数保持不变</p>
+<p><code>add/sub+源操作数+目的操作数</code></p>
+<ol>
+<li><code>add/sub &lt;reg&gt;,&lt;reg&gt;</code>两个寄存器</li>
+<li><code>add/sub &lt;reg&gt;,&lt;mem&gt;</code>寄存器和内存</li>
+<li><code>add/sub&lt;reg&gt;,&lt;con&gt;</code>寄存器和内存</li>
+<li><code>add/sub &lt;reg&gt;,&lt;con&gt;</code>寄存器和常量</li>
+<li><code>add/sub &lt;mem&gt;,&lt;con&gt;</code>内存和常量</li>
+</ol>
+<h4 id="inc-dec指令">inc/dec指令</h4>
+<p><code>inc/dec &lt;reg&gt;</code>自增自减</p>
+<h4 id="imui指令">imui指令</h4>
+<ol>
+<li>两个操作数：两数相乘结果报存在第一个操作数中</li>
+<li>三个操作数，二、三相乘结果保存在第一次操作数中</li>
+</ol>
+<h4 id="and-or-xor指令">and/or/xor指令</h4>
+<p><code>add/or/xor 目的操作数 源操作数</code></p>
+<h4 id="not指令">not指令</h4>
+<p><code>not 操作数</code></p>
+<h4 id="neg指令">neg指令</h4>
+<p><code>neg 操作数</code> 取相反数</p>
+<h4 id="shl-shr指令">shl/shr指令</h4>
+<ul>
+<li><code>shl/shr 操作数1 操作数2</code>逻辑左移和右移
+<ul>
+<li><code>shl eax 1</code>；将<code>eax</code>左移1位置</li>
+<li><code>shr ebb,cl</code>；将<code>ebx</code>右移<code>n</code>位</li>
+</ul>
+</li>
+</ul>
+<h4 id="cmp-test指令">cmp/test指令</h4>
+<p>只设置条件码而不改变操作数</p>
+<ul>
+<li><code>cmp</code>比较两数大小
+<ul>
+<li><code>cmp eax,ebx</code>不改变值，只影响状态标志</li>
+</ul>
+</li>
+<li><code>test</code>进行逻辑与</li>
+</ul>
+<h4 id="无条件转移指令">无条件转移指令</h4>
+<p><code>jmp &lt;label&gt;</code>代码跳转到<code>&lt;label&gt;</code>执行</p>
+<figure class="highlight x86asm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-keyword">mov</span> <span class="hljs-built_in">EAX</span>, <span class="hljs-number">1</span>    <span class="hljs-comment">; EAX = 1</span><br><span class="hljs-keyword">jmp</span> skip      <span class="hljs-comment">; 直接跳到 skip 标签</span><br><span class="hljs-keyword">mov</span> <span class="hljs-built_in">EAX</span>, <span class="hljs-number">2</span>    <span class="hljs-comment">; 这条指令被跳过！</span><br><span class="hljs-symbol">skip:</span><br><span class="hljs-keyword">mov</span> <span class="hljs-built_in">EBX</span>, <span class="hljs-built_in">EAX</span>  <span class="hljs-comment">; 这里 EBX = 1</span><br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight x86asm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-keyword">mov</span> <span class="hljs-built_in">ECX</span>, <span class="hljs-number">3</span>     <span class="hljs-comment">; 设置循环3次</span><br><span class="hljs-keyword">mov</span> <span class="hljs-built_in">EAX</span>, <span class="hljs-number">0</span>     <span class="hljs-comment">; 用来计数</span><br><span class="hljs-symbol"></span><br><span class="hljs-symbol">my_loop:</span><br><span class="hljs-keyword">add</span> <span class="hljs-built_in">EAX</span>, <span class="hljs-number">1</span>     <span class="hljs-comment">; 每次加1</span><br><span class="hljs-keyword">jmp</span> my_loop    <span class="hljs-comment">; 无条件跳回开头，形成死循环</span><br></code></pre></td></tr></tbody></table></figure>
+<h4 id="调用子程序">调用子程序</h4>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs x86asmcall">call &lt;function&gt; ;调用其他程序（函数调用）<br>ret ;指令返回<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight x86asm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-meta">section</span> .text<br><span class="hljs-meta">global</span> _start<br><span class="hljs-symbol"></span><br><span class="hljs-symbol">_start:</span><br>    <span class="hljs-keyword">call</span> print_hello    <span class="hljs-comment">; 调用打印函数</span><br>    <br>    <span class="hljs-comment">; 退出程序</span><br>    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">eax</span>, <span class="hljs-number">1</span>          <span class="hljs-comment">; 系统调用号 1 = exit</span><br>    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">ebx</span>, <span class="hljs-number">0</span>          <span class="hljs-comment">; 返回码 0</span><br>    <span class="hljs-keyword">int</span> <span class="hljs-number">0x80</span>            <span class="hljs-comment">; 调用内核</span><br><span class="hljs-symbol"></span><br><span class="hljs-symbol">print_hello:</span><br>    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">edx</span>, len        <span class="hljs-comment">; 字符串长度</span><br>    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">ecx</span>, msg        <span class="hljs-comment">; 字符串地址 (原代码写成了meg)</span><br>    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">ebx</span>, <span class="hljs-number">1</span>          <span class="hljs-comment">; 文件描述符 1 = stdout</span><br>    <span class="hljs-keyword">mov</span> <span class="hljs-built_in">eax</span>, <span class="hljs-number">4</span>          <span class="hljs-comment">; 系统调用号 4 = write</span><br>    <span class="hljs-keyword">int</span> <span class="hljs-number">0x80</span>            <span class="hljs-comment">; 调用内核</span><br>    <span class="hljs-keyword">ret</span>                 <span class="hljs-comment">; 返回到 call 的下一条指令</span><br><br><span class="hljs-meta">section</span> .data<br>msg <span class="hljs-built_in">db</span> <span class="hljs-string">'Hello World'</span>, <span class="hljs-number">0xA</span>  <span class="hljs-comment">; 加上换行符</span><br>len <span class="hljs-built_in">equ</span> $ - msg            <span class="hljs-comment">; 计算字符串长度</span><br></code></pre></td></tr></tbody></table></figure>
+<h4 id="Jcondition指令">Jcondition指令</h4>
+<p>结合<code>cmp</code>使用的条件转移指令</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">指令</th>
+<th style="text-align:center">跳转条件</th>
+<th style="text-align:center">跳转描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>je</code>/<code>jz</code></td>
+<td style="text-align:center">ZF</td>
+<td style="text-align:center">相等/零</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>jne</code>/<code>jnz</code></td>
+<td style="text-align:center">ZF</td>
+<td style="text-align:center">不相等/非零</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>js</code></td>
+<td style="text-align:center">SF</td>
+<td style="text-align:center">负数</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>jns</code></td>
+<td style="text-align:center">SF</td>
+<td style="text-align:center">非负数</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>ZF</code>（Zero Flag）零标志</li>
+<li><code>SF</code>（Sign Flag）符号位标志</li>
+</ul>
+<figure class="highlight x86asm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-keyword">mov</span> <span class="hljs-built_in">eax</span>, <span class="hljs-number">5</span><br><span class="hljs-keyword">mov</span> <span class="hljs-built_in">ebx</span>, <span class="hljs-number">5</span><br><span class="hljs-keyword">cmp</span> <span class="hljs-built_in">eax</span>, <span class="hljs-built_in">ebx</span>    <span class="hljs-comment">; 比较 eax 和 ebx</span><br><span class="hljs-keyword">je</span> equal_label  <span class="hljs-comment">; 如果相等，跳转到 equal_label</span><br><br><span class="hljs-comment">; 如果不相等，继续执行这里...</span><br></code></pre></td></tr></tbody></table></figure>
+<h4 id="转换">转换</h4>
+<ul>
+<li><code>if-else</code>语句</li>
+</ul>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">if</span>(a&gt;b){<br>  c=a;<br>}<br><span class="hljs-keyword">else</span> {<br>  c=b;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight x86asm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-keyword">mov</span> <span class="hljs-built_in">eax</span>, <span class="hljs-number">7</span>    <span class="hljs-comment">; a = 7</span><br><span class="hljs-keyword">mov</span> <span class="hljs-built_in">ebx</span>, <span class="hljs-number">6</span>    <span class="hljs-comment">; b = 6</span><br><span class="hljs-keyword">cmp</span> <span class="hljs-built_in">eax</span>, <span class="hljs-built_in">ebx</span>  <span class="hljs-comment">; 比较 a 和 b</span><br><span class="hljs-keyword">jg</span> greater    <span class="hljs-comment">; 如果 a &gt; b，跳转到 greater</span><br><span class="hljs-keyword">mov</span> <span class="hljs-built_in">ecx</span>, <span class="hljs-built_in">ebx</span>  <span class="hljs-comment">; 否则：c = b</span><br><span class="hljs-keyword">jmp</span> end<br><span class="hljs-symbol">greater:</span><br><span class="hljs-keyword">mov</span> <span class="hljs-built_in">ecx</span>, <span class="hljs-built_in">eax</span>  <span class="hljs-comment">; c = a</span><br><span class="hljs-symbol">end:</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>for</code>循环</li>
+</ul>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> result=<span class="hljs-number">0</span>;<br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=<span class="hljs-number">100</span>;i++){<br>  result+=i;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight x86asm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-keyword">mov</span> <span class="hljs-built_in">eax</span>, <span class="hljs-number">0</span>        <span class="hljs-comment">; result = 0</span><br><span class="hljs-keyword">mov</span> <span class="hljs-built_in">edx</span>, <span class="hljs-number">1</span>        <span class="hljs-comment">; i = 1</span><br><span class="hljs-symbol"></span><br><span class="hljs-symbol">l1:</span><br><span class="hljs-keyword">add</span> <span class="hljs-built_in">eax</span>, <span class="hljs-built_in">edx</span>      <span class="hljs-comment">; result += i</span><br><span class="hljs-keyword">inc</span> <span class="hljs-built_in">edx</span>           <span class="hljs-comment">; i++</span><br><span class="hljs-keyword">cmp</span> <span class="hljs-built_in">edx</span>, <span class="hljs-number">100</span>      <span class="hljs-comment">; 比较 i 和 100</span><br><span class="hljs-keyword">jle</span> l1            <span class="hljs-comment">; 如果 i &lt;= 100，继续循环</span><br><span class="hljs-symbol"></span><br><span class="hljs-symbol">l2:</span><br></code></pre></td></tr></tbody></table></figure>
+<h4 id="AT-T格式">AT&amp;T格式</h4>
+<p>和Intel同用于编写x86汇编程序，只是两种不同的语法风格</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">AT&amp;T格式</th>
+<th style="text-align:center">Intel格式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>mov $100,%eax</code></td>
+<td style="text-align:center"><code>mov eax,100</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mov %eax,&amp;ebx</code></td>
+<td style="text-align:center"><code>mov ebx,eax</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>mov %eax,(%ebx)</code></td>
+<td style="text-align:center"><code>mov [ebx],eax</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>AT&amp;T只能用小写字母，Intel对大小写不敏感</p>
+</li>
+<li>
+<p>AT&amp;T第一个为源操作数，第二个为目的操作数</p>
+</li>
+<li>
+<p>AT&amp;T寄存器需要加前缀<code>%</code>，立即数需要加前缀<code>$</code></p>
+</li>
+<li>
+<p>内存寻址时，AT&amp;T用<code>()</code>，Intel用<code>[]</code></p>
+</li>
+<li>
+<p>复杂寻址时，<code>disp(base, index,scale)</code>分别表示偏移量、基址寄存器、变址寄存器、比例因子，如<code>8(%edx,%eax,2)</code>，表示<code>M[R[edx]+R[eax]*2+8]</code></p>
+</li>
+</ul>
+<h4 id="CISC-RISC">CISC &amp;&amp; RISC</h4>
+<ul>
+<li>
+<p>CISC（复杂complex指令集计算机）</p>
+<ul>
+<li>指令复杂、长度不固定</li>
+<li>使用频度、执行时间相差大</li>
+<li>x86</li>
+</ul>
+</li>
+<li>
+<p>RISC（精简reduced指令集计算机）</p>
+<ul>
+<li>ARM、MIPS、RISC-V</li>
+<li>指令简单、长度固定</li>
+</ul>
+</li>
+</ul>
+<h2 id="CPU">CPU</h2>
+<p>指令周期：一条指令从取出到执行完成所需要的时间。指令周期通常用若干个CPU周期来表示，CPU周期又称为机器周期。一个CPU周期有包含若干个时钟周期（T周期、处理操作的基本单位）</p>
+<table>
+<thead>
+<tr>
+<th>CPU工作周期</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>取指周期</td>
+<td>取指令</td>
+</tr>
+<tr>
+<td>间址周期</td>
+<td>取操作数有效地址（当指令中地址需要间接寻址时）</td>
+</tr>
+<tr>
+<td>执行周期</td>
+<td>取操作数，存操作数（<code>jmp x</code>可跳过）</td>
+</tr>
+<tr>
+<td>中断周期</td>
+<td>保存断电（IO有中断请求时）</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs RTL">(PC)→MAR, Read <br>M(MAR)→MDR, (PC)+1→PC      <br>(MDR)→IR   <br></code></pre></td></tr></tbody></table></figure>
+<h4 id="数据通路">数据通路</h4>
+<p>寄存器之间传送信息的通路</p>
+<h4 id="寄存器传递语言RTL">寄存器传递语言RTL</h4>
+<ul>
+<li>用<code>(r)</code>代表寄存器r的内容</li>
+<li>用<code>M(add)</code>代表主存单元addr的内容</li>
+<li>用<code>(A)-&gt;B</code>或<code>B&lt;-(A)</code>表示数据传送，其中A为源操作数，B为目的操作数</li>
+<li>程序计数器<code>(PC)</code>表示其内容</li>
+</ul>
+<h4 id="单周期处理器">单周期处理器</h4>
+<ul>
+<li>一条指令从头到尾，在<strong>1 个时钟周期内</strong>完成（CPI=1）。</li>
+<li>时钟周期的时长，得按 “最复杂指令的执行时间” 来定（要等最慢的步骤做完）。</li>
+<li>一个时钟周期内，控制器的控制信号不能变。</li>
+</ul>
+<h4 id="多周期处理器">多周期处理器</h4>
+<ul>
+<li>一条指令拆成<strong>多个步骤</strong>，每个步骤用 1 个时钟周期（CPI&gt;1）。</li>
+<li>不同指令可以按 “自身复杂程度” 安排时钟周期数（简单指令用的周期少，复杂的用的多）。</li>
+<li>时钟周期时长按 “单个步骤（比如一次存储器读写）” 的时间来定，不用迁就最复杂指令。</li>
+</ul>
+<h3 id="CPU控制器模型">CPU控制器模型</h3>
+<h4 id="1-硬布线控制器">1. 硬布线控制器</h4>
+<p>整个过程是<strong>纯硬件电路的即时响应</strong>， 没有中间的软件 / 微程序层，硬件电路同时接收三类信号：</p>
+<ul>
+<li>指令译码信号：由指令寄存器中的操作码<code>OP</code>，经指令译码器翻译得到；</li>
+<li>时序信号：由时序发生器产生的机器周期（如取指 / 执行周期）、节拍信号（周期内的时间片）；</li>
+<li>反馈信号：来自执行单元的标志位（如运算结果是否为零相当于<code>if</code>语句的条件）、I/O 的状态等。</li>
+</ul>
+<p>上述信号输入到硬布线控制器组合逻辑单元，通过<strong>预先设计的门电路</strong>，直接进行硬件层面的运算。</p>
+<h4 id="2-微程序控制器">2. 微程序控制器</h4>
+<ol>
+<li><strong>把机器指令拆成微程序</strong>：每条机器指令对应一段 “微程序”（由多个 “微指令” 组成），每个微指令包含若干 “微命令”（对应具体硬件动作）。</li>
+<li><strong>从控制存储器读微程序</strong>：控制存储器（专门存微程序的硬件）根据当前机器指令的操作码，读出对应的微程序。</li>
+<li><strong>按微指令发控制信号</strong>：时序发生器定节奏，按顺序执行微程序里的微指令，每个微指令输出对应的微命令，指挥硬件完成微操作。</li>
+</ol>
+<p>取指等公共阶段被封装，实际上只需要实现执行阶段。</p>
+<h4 id="流水线">流水线</h4>
+<p>假设有五个功能：</p>
+<ul>
+<li>
+<p>吞吐率：单位时间内能完成的指令数，$T_p=\frac{n}{T_{max}\times(n+4)}$</p>
+</li>
+<li>
+<p>CPI：每条指令的时钟周期数，$CPI  =\frac{n}{n+4}$</p>
+</li>
+<li>
+<p>流水线加速比：$S_p=\frac{n\times m\times \Delta t}{m\times \Delta t+(n-1)\Delta t}=\frac{n\times m}{m+n-1}$</p>
+</li>
+</ul>
+<h2 id="总线">总线</h2>
+<p>多个部件之间采用总线连接的方式，可大大降低部件间互联的复杂性，大幅度减少连接的数量</p>
+<h4 id="性质">性质</h4>
+<ul>
+<li>分时：在任何时刻只可以有一个部件向总线上发送消息</li>
+<li>共享：可以有一个或多个部件接收消息</li>
+</ul>
+<h4 id="类型分类">类型分类</h4>
+<ul>
+<li>
+<p>内部总线：CPU内部连接各寄存器、ALU 运算部件之间的总线</p>
+</li>
+<li>
+<p>系统总线：CPU同其他计算机系统的其他高速功能相互连接的总线</p>
+<ul>
+<li>数据总线：传输数据、指令、终端类型</li>
+<li>地址总线：源数据、目的数据所在的主存单元或I/O端口的地址，单向传输总线，反映寻址空间</li>
+<li>控制总线：传输命令、反馈信号，总线请求/允许、中断请求/回答、存储器读写（命令相对指令更简单）</li>
+</ul>
+</li>
+<li>
+<p>I/O总线</p>
+</li>
+</ul>
+<h4 id="传输方式分类">传输方式分类</h4>
+<ul>
+<li>串行总线：一条双向或两条单向，适合长距离通信</li>
+<li>并行总线：实现多比特位的同时传输
+<ul>
+<li>缺点：信息位有延迟，数据线之间相互干扰造成传输错误，适合近距离通信</li>
+</ul>
+</li>
+</ul>
+<h4 id="系统总线">系统总线</h4>
+<ul>
+<li>
+<p>单总线结构：将CPU、主存、I/O设备挂在一组总线上</p>
+<ul>
+<li>优点：结构简单、成本低、易于接入新设备</li>
+<li>缺点：带宽低、负载重、不支持并发传送</li>
+</ul>
+</li>
+<li>
+<p>双总线结构：</p>
+<ul>
+<li>主存总线：用于在CPU、主存、通道之间传送数据</li>
+<li>I/O总线：在多个外部设备和通道之间传送数据（I/O接口连接，通过I/O通道与主存总线连接交换数据）
+<ul>
+<li>优点：将低速I/O设备从单总线上分离出来</li>
+<li>缺点：增加通道硬件设备</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>三总线结构：在双总线的基础上增加了DMA总线形成的</p>
+<ul>
+<li>DMA总线：用于在内存和高速外设之间传送数据
+<ul>
+<li>优点：提高I/O设备性能，更快响应命令、提高系统吞吐量</li>
+<li>缺点：任意时刻只能使用一种总线</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="数据传送方式">数据传送方式</h4>
+<ul>
+<li>非突发传送：每个周期内都是先传地址在传数据（每次只传一个数据）（$2n$个周期）</li>
+<li>突发（猝发）性传送方式：传送首地址，然后可以传输多个连续单元的数据（$1+n$个周期）</li>
+</ul>
+<h2 id="I-O系统">I/O系统</h2>
+<h4 id="I-O核心寄存器">I/O核心寄存器</h4>
+<p>三者数据都通过<strong>数据线</strong>传输</p>
+<ul>
+<li>数据缓冲寄存器（数据端口）：暂存 CPU / 内存与外设间的数据，CPU 可读写。</li>
+<li>状态寄存器（状态端口）：记录接口 / 设备状态，CPU 仅能读（获取外设状态）。</li>
+<li>控制寄存器（控制端口）：保存 CPU 对外设的控制命令，CPU 仅能写（向外设发指令）。</li>
+</ul>
+<h4 id="I-O端口及其编址">I/O端口及其编址</h4>
+<ul>
+<li>
+<p>统一编址：外部设备地址与内存地址统一编址，通过不同的地址区域来进行划分。不需要设置专门的I/O指令。采用<code>Load/Store</code>访存指令就可以访问外部设备</p>
+<ul>
+<li>优点：更加灵活方便，共享访存指令的寻址方式和保护机制</li>
+<li>缺点：占用了主存空间的地址，减少了主存可用容量；译码过程更加复杂，降低寻址速度</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight mips"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs MIPS"><span class="hljs-keyword">lw </span>$<span class="hljs-built_in">t0</span> <span class="hljs-number">0x00000004</span> <span class="hljs-comment"># 从ROM读取一个字</span><br><span class="hljs-keyword">sb </span>$<span class="hljs-built_in">t0</span> <span class="hljs-number">0xff000004</span> <span class="hljs-comment"># 写一个字节到内存</span><br><span class="hljs-keyword">sb </span>$<span class="hljs-built_in">t0</span> <span class="hljs-number">0xffff0004</span> <span class="hljs-comment"># 写一个字节到I/O设备</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>
+<p>独立编址：I/O映射方式，对主存空间和I/O端口地址分别进行编址，地址范围可以重叠，需要专门的I/O指令来表明访问的是I/O地址空间</p>
+<ul>
+<li>优点：I/O端口只需要少量地址线，译码更加简单，寻址速度更快；指令更加清晰，便于理解和检查</li>
+<li>缺点：专门的I/O指令只包含简单的传输操作，降低了程序设计的灵活性，而且CPu需要分别提供专门的读写命令，总线控制逻辑更加复杂；需要专门的硬件保护措施</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight mips"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs MIPS">MOV [<span class="hljs-keyword">BX], </span>AL <span class="hljs-comment"># 将 AL 内容送 BX 对应的内存单元</span><br><br>OUT DX, AL <span class="hljs-comment"># 将 AL 字节写入 DX 对应的 I/O 端口</span><br>IN AL, DX <span class="hljs-comment"># 从 DX 对应的 I/O 端口读取 1 字节到 AL</span><br></code></pre></td></tr></tbody></table></figure>
+<h4 id="程序查询">程序查询</h4>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs x86">MOV DX, 0x0000   ; 将键盘“设备状态寄存器(DSR)”的端口地址0x0000存入DX寄存器<br>                 ; （端口地址由硬件映射表决定，这里DSR对应0x0000）<br>keypoll:         ; 轮询标签（循环入口）<br>IN AL, DX        ; 从DX指向的端口（即键盘DSR）读取8位数据，存入AL寄存器<br>TEST AL, 1       ; 对AL的最低位（Ready位）做测试：<br>                 ; TEST指令会计算 AL &amp; 1，结果影响标志位（若Ready=1，结果非0；Ready=0则结果为0）<br>JZ keypoll       ; 若TEST结果为0（即Ready=0，键盘未准备好），则跳回keypoll继续循环查询<br>MOV DX, 0x0004   ; 当Ready=1时，将键盘“数据缓冲寄存器(DBR)”的端口地址0x0004存入DX<br>IN AL, DX        ; 从DX指向的端口（即键盘DBR）读取8位数据（键盘输入的字符ASCII码），存入AL<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>
+<p>优点：设计简单、硬件少</p>
+</li>
+<li>
+<p>缺点：CPU要花费很多时间来查询和等待</p>
+</li>
+</ul>
+<h3 id="I-O控制方式">I/O控制方式</h3>
+<h4 id="程序查询方式">程序查询方式</h4>
+<ul>
+<li>
+<p>独占查询：设备启动后，CPU 全程循环查询外设状态，直到设备就绪。</p>
+<ul>
+<li>CPU 100% 时间用于 I/O 轮询，和外设完全串行工作；</li>
+<li>实现简单，但<strong>CPU 资源浪费严重</strong></li>
+</ul>
+</li>
+<li>
+<p>定时查询：CPU 启动设备后，通过<strong>定时中断</strong>周期性查询状态，期间可运行其他程序。</p>
+<ul>
+<li>CPU 可以并行运行其他任务，<strong>资源利用率比独占查询高</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="中断方式">中断方式</h4>
+<p>不能使用I/O中断的情况：外设数据传输速率远大于CPU速率。即外设刚把缓冲寄存器填满，CPU 还没来得及处理，外设又要传新数据了，旧数据会被新数据覆盖，直接丢失。</p>
+<h4 id="DMA方式">DMA方式</h4>
+<p>Direct Memory Access ：让外设和内存直接传数据，不用经过 CPU</p>
+<ol>
+<li>预处理：CPU 初始化 DMA 控制器，随后继续执行原程序。</li>
+<li>发请求：I/O 设备就绪后，向 DMA 控制器发 DMA 请求。</li>
+<li>争总线：DMA 控制器向 CPU 请求总线控制权。</li>
+<li>传数据：CPU 让出总线，DMA 控制器直接控制 I/O 与内存传输数据。</li>
+<li>后处理：传输完成，DMA 控制器发中断请求；CPU 收请求后，执行中断服务程序做数据校验等收尾工作。</li>
+</ol>
+<ul>
+<li>整个数据块传送过程都不需要CPU的参与，CPU只在最初的DMA控制器初始化和最后的DMA结束处理时才介入，用于I/O的开销非常小</li>
+</ul>
+<h4 id="DMA和CPU冲突">DMA和CPU冲突</h4>
+<ul>
+<li>
+<p>停止访存：当 I/O 设备有 DMA 请求时，DMA 接口让 CPU 暂停访存、交出总线控制权，直到 DMA 传完数据再归还。</p>
+<ul>
+<li>优点：控制简单，适合高速 I/O 设备成组传数据</li>
+<li>缺点：DMA 工作时 CPU 基本闲置。</li>
+</ul>
+</li>
+<li>
+<p>周期挪用：因 I/O 访存优先级更高，I/O 会 “挪用” 1 个存取周期传 1 个数据后立刻释放总线（单字传送）。</p>
+<ul>
+<li>CPU 不访存则无冲突；</li>
+<li>CPU 正在访存则等其周期结束再让总线；</li>
+<li>二者同时访存则 CPU 暂时让权。
+<ul>
+<li>优点：兼顾 I/O 传送与 CPU、主存效率</li>
+<li>缺点：每次挪用都要申请、建立和归还总线控制权</li>
+<li>适合 I/O 请求 “不规律、速度中等” 的设备（比如打印机），按需借用不浪费资源。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>DMA和CPU交替访存：把 CPU 工作周期分成两个时间片，分别给 CPU 和 DMA 轮流访存（适用于 CPU 周期长于主存存取周期的情况，轮流时间固定）。</p>
+<ul>
+<li>优点：无需申请 / 归还总线，通过分时控制总线使用权</li>
+<li>缺点：硬件逻辑复杂</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">对比维度</th>
+<th style="text-align:center">中断方式</th>
+<th style="text-align:center">DMA 方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">程序影响 &amp; 资源占用</td>
+<td style="text-align:center">是程序切换，需保护 / 恢复现场，占用 CPU 资源</td>
+<td style="text-align:center">不中断现行程序，无需保护现场，仅预处理 / 后处理占用 CPU</td>
+</tr>
+<tr>
+<td style="text-align:center">请求响应时机</td>
+<td style="text-align:center">仅在<strong>每条指令执行结束时</strong>响应</td>
+<td style="text-align:center">可在<strong>任意机器周期结束时</strong>（取指、间址、执行周期后）响应</td>
+</tr>
+<tr>
+<td style="text-align:center">CPU 干预情况</td>
+<td style="text-align:center">传输过程需要 CPU 干预</td>
+<td style="text-align:center">传输过程无需 CPU 干预，速率高，适合高速外设成组传输</td>
+</tr>
+<tr>
+<td style="text-align:center">请求优先级</td>
+<td style="text-align:center">优先级低于 DMA 请求</td>
+<td style="text-align:center">优先级高于中断请求</td>
+</tr>
+<tr>
+<td style="text-align:center">功能范围</td>
+<td style="text-align:center">可处理异常事件</td>
+<td style="text-align:center">仅局限于大批数据传送</td>
+</tr>
+<tr>
+<td style="text-align:center">数据传送方式</td>
+<td style="text-align:center">依靠程序传送</td>
+<td style="text-align:center">依靠硬件传送</td>
+</tr>
+</tbody>
+</table>
+<h4 id="中断优先级">中断优先级</h4>
+<ul>
+<li>
+<p>响应优先级：当多个中断源同时请求时，CPU 按<strong>固定的硬件线路规则</strong>，先响应优先级高的中断、后响应优先级低的中断，是 CPU 响应设备中断请求的先后次序。（使用优先编码器实现）</p>
+<ul>
+<li>大类优先级：不可屏蔽中断 &gt; 内部异常 &gt; 可屏蔽中断</li>
+<li>内部异常细分：硬件终止（最高）&gt; 指令异常 / 自陷等程序故障</li>
+<li>传输类中断：DMA 中断请求 &gt; I/O 设备传送的中断请求</li>
+<li>I/O 传送类细分：高速设备 &gt; 低速设备；输入设备 &gt; 输出设备；实时控制设备 &gt; 普通设备</li>
+</ul>
+</li>
+<li>
+<p>处理优先级：CPU 执行某中断服务程序时，可响应更高优先级的中断请求，即中断嵌套</p>
+<ul>
+<li>通过配置个设备中的中断屏蔽值，可以动态改变处理优先级的次序（不能改变中断响应优先级）</li>
+</ul>
+</li>
+</ul>
+<h2 id="Verilog语言">Verilog语言</h2>
+<p>事实上我们已经有了硬件描述语言ahdl的基础，verilog上手并不困难，因此在这里罗列一些基本的例子，简单阅读后即可了解个大概，然后再对特别的语法部分进行针对性讲解！</p>
+<ul>
+<li>四位二进制加法计数器</li>
+</ul>
+<figure class="highlight verilog"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">module</span> CNT4(CLK,Q);<br>  <span class="hljs-keyword">input</span> CLK;<br>  <span class="hljs-keyword">output</span> [<span class="hljs-number">3</span>:<span class="hljs-number">0</span>] Q;<br>  <br>  <span class="hljs-keyword">reg</span> [<span class="hljs-number">3</span>:<span class="hljs-number">0</span>]Q1;<br>  <br>  <span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> CLK)<br>    <span class="hljs-keyword">begin</span><br>      Q1&lt;=Q1+<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">end</span><br>  <span class="hljs-keyword">assign</span> Q=Q1;<br><span class="hljs-keyword">endmodule</span><br></code></pre></td></tr></tbody></table></figure>
+<h4 id="always语句"><code>always</code>语句</h4>
+<p>只有满足激活条件才能被执行，其中赋值目标必须是reg型，如果有多条赋值语句则必须使用<code>begin</code>和<code>end</code>包裹（相当于<code>if</code>语句中的<code>{}</code>）</p>
+<ul>
+<li>边沿敏感：
+<ul>
+<li><code>(posedge 信号名)</code>信号上升沿到来</li>
+<li><code>(negedge 信号名)</code>信号下降沿到来</li>
+</ul>
+</li>
+<li>电平敏感：<code>(信号名列表)</code>信号列表中的任一个信号有变化</li>
+</ul>
+<h4 id="阻塞赋值-vs-非阻塞赋值">阻塞赋值 vs. 非阻塞赋值</h4>
+<p>激活前：<code>M1=0</code>，<code>M2=0</code>，<code>Q=0</code>，设<code>A</code>、<code>B</code>同时由0变为1。</p>
+<figure class="highlight verilog"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">always</span> @ (A,B)<br>  <span class="hljs-keyword">begin</span> <br>    M1=A;<br>    M2=B&amp;M1;<br>    Q=M1|M2;<br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></tbody></table></figure>
+<p>阻塞赋值的特点是<strong>赋值语句执行完，变量的值立刻更新</strong>，后面的语句要等前面的 “阻塞” 结束才能执行，像 “排队办事，一个办完下一个来”。</p>
+<p>步骤拆解（A、B 变 1 后）：</p>
+<ul>
+<li>第一步：<code>M1 = A</code> → A 现在是 1，所以<code>M1立刻变成1</code>；</li>
+<li>第二步：<code>M2 = B &amp; M1</code> → B 是 1，M1 已经是 1，所以<code>M2立刻变成1&amp;1=1</code>；</li>
+<li>第三步：<code>Q = M1 | M2</code> → M1=1、M2=1，所以<code>Q立刻变成1|1=1</code>；</li>
+</ul>
+<p>最终结果：<code>M1=1、M2=1、Q=1</code>。</p>
+<figure class="highlight verilog"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">always</span> @ (A,B)<br>  <span class="hljs-keyword">begin</span> <br>    M1&lt;=A;<br>    M2&lt;=B&amp;M1;<br>    Q&lt;=M1|M2;<br>  <span class="hljs-keyword">end</span><br></code></pre></td></tr></tbody></table></figure>
+<p>非阻塞赋值的特点是<strong>赋值语句先 “暂存操作”，等整个<code>begin-end</code>块里的语句都执行完，再统一更新所有变量的值</strong>，像 “先把所有订单记下来，最后一起发货”。</p>
+<p>步骤拆解（A、B 变 1 后）：</p>
+<ul>
+<li>第一步：<code>M1 &lt;= A</code> → 暂存 “M1 要变成 1”，但<strong>现在 M1 还是原来的 0</strong>；</li>
+<li>第二步：<code>M2 &lt;= B &amp; M1</code> → B 是 1，但 M1 还是 0，所以暂存 “M2 要变成 1&amp;0=0”；</li>
+<li>第三步：<code>Q &lt;= M1 | M2</code> → M1=0、M2=0，所以暂存 “Q 要变成 0|0=0”；</li>
+<li>等整个块执行完，统一更新：先把 M1 改成 1，再把 M2 改成 0，最后把 Q 改成 0；</li>
+</ul>
+<p>最终结果：<code>M1=1、M2=0、Q=0</code>。</p>
+<hr>
+<ul>
+<li>设计组合电路时常用阻塞赋值</li>
+<li>设计时序电路时常用非阻塞赋值</li>
+</ul>
+<h4 id="模块例化">模块例化</h4>
+<ul>
+<li>底层模块</li>
+</ul>
+<figure class="highlight verilog"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">module</span> DFF (CLK,D,Q)<br>  <span class="hljs-keyword">output</span> <span class="hljs-keyword">reg</span> Q;<br>  <span class="hljs-keyword">input</span> CLK,D;<br>  <span class="hljs-keyword">always</span> @ (<span class="hljs-keyword">posedge</span> CLK)<br>    Q&lt;=D;<br><span class="hljs-keyword">endmodule</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>顶层模块：对底层模块进行实例化，相当于C++的类进行实例化调用（这里叫端口映射）</li>
+</ul>
+<figure class="highlight verilog"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">module</span> examp(clk,d,a,q)<br>  <span class="hljs-keyword">output</span> q;<br>  <span class="hljs-keyword">input</span> clk,d,a;<br>  <br>  <span class="hljs-keyword">wire</span> d1;<br>  <span class="hljs-keyword">wire</span> q1;<br>  <br>  DFF dff1(<span class="hljs-variable">.CLK</span>(clk),<span class="hljs-variable">.D</span>(d1),<span class="hljs-variable">.Q</span>(q1));<br>  DFF dff2(q1,d,q);<br>  <br>  <span class="hljs-keyword">or</span> (d1,a,q);<br>  <br><span class="hljs-keyword">endmodule</span><br></code></pre></td></tr></tbody></table></figure>
+<p>事实上，这里的端口映射使用了两种方法，其实按照函数传参的方法看即可也比较方便，符合阅读习惯</p>
+<ol>
+<li>
+<p>命名法：<code>(.底层端口名1(外界信号名1),.底层端口名2(外界信号名2))</code></p>
+</li>
+<li>
+<p>顺序法：<code>(外界信号名1,外界信号名2)</code></p>
+</li>
+</ol>
+<h4 id="底层模块门原语">底层模块门原语</h4>
+<p>这是Verilog语言提供的已经设计好的门，可以直接调用，其中实例名可以忽略，且只能采用顺序法，输出在前，输入在后：<code>and(out,in1,in2)</code>。</p>
+<h2 id="真题拟合">真题拟合</h2>
+<p>CPU的组成：由算术逻辑运算单元、操作控制器组成。</p>
+<ul>
+<li>ALU：算术逻辑运算单元。执行算术运算、逻辑运算并测试</li>
+<li>操作控制器：协调和指挥整个系统的操作，取指令并执行。</li>
+<li>A和B：运算器前端的数据暂存器，也称运算寄存器，用来暂存参加运算的操作数</li>
+<li>R0～R3：CPU的通用寄存器组，存放操作数。</li>
+<li>IR-指令寄存器器：保存当前正在执行的指令的指令码 Instruction Register</li>
+<li>PC-程序计数器：其保持的总是将要执行的下一条指令的地址，由于大多数指令都是按顺序来执行的，所以修改的过程通常只是简单的对PC加1。</li>
+<li>AR—地址寄存器：用来保存当前CPU所访问的内存单元的地址（指令地址或操作数地址） Address Register</li>
+<li>DR—数据（缓冲）寄存器：用来暂存写入内存单元的数据及从内存单元读出的数据 Data Register</li>
+</ul>
+<p>指令周期流程图：</p>
+<figure class="highlight clean"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs clean">PC-&gt;AR<br>M-&gt;DR<br>DR-&gt;IR<br></code></pre></td></tr></tbody></table></figure>
+<p>$按字编址的寻址单元数 = 总字节数 \div 每字字节数$</p>
+<ul>
+<li>程序查询方式中，主机需不断轮询设备状态，设备未准备好时主机等待，因此主机与设备是串行工作的；</li>
+<li>中断、DMA、通道方式下，主机可在设备传输时执行其他任务，属于并行 / 半并行工作</li>
+</ul>
+<p>补码比原码 / 反码多表示一个最小负数(8 位补码中，10000000 表示 - 128，而原码 / 反码中10000000无合法数值含义)</p>
+<p>隐指令是指令系统中没有的指令，由硬件自动执行</p>
+<ul>
+<li>静态微程序控制器的微程序存储在 ROM（不可改写）中；</li>
+<li>动态微程序控制器的微程序可存储在 EPROM（可擦写改写）（速度较慢，无法替代RAM高速读写的需求）中，支持微程序的修改与更新</li>
+</ul>
+<p>16 位浮点数需平衡范围（阶码）与精度（尾数）：</p>
+<ul>
+<li>阶码过短（范围太小）</li>
+<li>尾数过短（精度不足）</li>
+</ul>
+<p>流水线的每个时钟周期是统一的固定值，时钟周期必须能覆盖耗时最长的那个过程段</p>
+<ul>
+<li>多重中断的中断服务程序：</li>
+</ul>
+<ol>
+<li>保护断点；</li>
+<li>保护现场；</li>
+<li>开中断；</li>
+<li>执行中断服务程序</li>
+</ol>
+<p>同步通信和异步通信的主要区别是前者有公共时钟，总线上的所有设备按统一的时序，统一的传输周期进行信息传输，通信双方按约定好的时序联络。后者没有公共时钟，没有固定的传输周期，采用应答方式通信，具体的联络方式有不互锁、半互锁和全互锁三种。不互锁方式通信双方没有相互制约关系；半互锁方式通信双方有简单的制约关系；全互锁方式通信双方有完全的制约关系。其中全互锁通信可靠性最高。</p>
+<ul>
+<li>顺序存储器：$t_1=mT$</li>
+<li>交叉存储器：$t_2=T+(m-1)\tau$</li>
+</ul>
+<h3 id="祖传大题">祖传大题</h3>
+<ol>
+<li>浮点数运算</li>
+<li>cache 映射，字、位扩展</li>
+<li>指令格式</li>
+<li>cache 命中率</li>
+<li>磁盘容量、时间计算</li>
+<li>程序执行流程框图</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">特性</th>
+<th style="text-align:center">程序查询方式</th>
+<th style="text-align:center">程序中断方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">CPU 工作方式</td>
+<td style="text-align:center">CPU 主动循环查询设备状态，直到设备准备好</td>
+<td style="text-align:center">设备准备好后主动向 CPU 发送中断请求，CPU 在执行完当前指令后响应</td>
+</tr>
+<tr>
+<td style="text-align:center">CPU 利用率</td>
+<td style="text-align:center">低（查询期间 CPU 无法做其他工作）</td>
+<td style="text-align:center">高（CPU 可在设备准备期间执行其他任务）</td>
+</tr>
+<tr>
+<td style="text-align:center">响应延迟</td>
+<td style="text-align:center">大（可能需要等待一个完整的查询周期）</td>
+<td style="text-align:center">小（设备准备好后立即触发中断，无额外等待）</td>
+</tr>
+<tr>
+<td style="text-align:center">实时性</td>
+<td style="text-align:center">差（无法及时响应设备的紧急请求）</td>
+<td style="text-align:center">好（可优先响应高优先级中断）</td>
+</tr>
+</tbody>
+</table>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Review/" class="category-chain-item">Review</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Computer-Science/" class="print-no-link">#Computer Science</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Computer Organization and Architecture</div>
+      <div>http://example.com/2025/11/29/Review/Computer-Organization-and-Architecture/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 29, 2025</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>January 5, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/26/Leetcode-Collection/Leetcode-Mistake-Collection-3/" title="Leetcode-Mistake-Collection-3">
+                        <span class="hidden-mobile">Leetcode-Mistake-Collection-3</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
