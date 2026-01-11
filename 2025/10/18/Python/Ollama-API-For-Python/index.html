@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Ollama%20API.png?raw=true">
 <meta property="article:published_time" content="2025-10-18T01:01:10.000Z">
-<meta property="article:modified_time" content="2025-12-05T15:41:22.561Z">
+<meta property="article:modified_time" content="2026-01-11T17:22:39.129Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="updating">
 <meta property="article:tag" content="Python">
@@ -306,7 +306,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k words
+          2.1k words
         
       </span>
     
@@ -317,7 +317,7 @@
         
         
         
-          15 mins
+          18 mins
         
       </span>
     
@@ -522,6 +522,44 @@
 <div class="note note-info">
             <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@app.post(<span class="hljs-params"><span class="hljs-string">"/generate"</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">generate</span>(<span class="hljs-params">prompt: <span class="hljs-built_in">str</span>, x_api_key: <span class="hljs-built_in">str</span> = Depends(<span class="hljs-params">verify_api_key</span>)</span>):<br>    API_KEY_CREDITS[x_api_key] -= <span class="hljs-number">1</span><br>    response = ollama.chat(<br>        model=<span class="hljs-string">"mistral"</span>,<br>        messages=[{<span class="hljs-string">"role"</span>: <span class="hljs-string">"user"</span>, <span class="hljs-string">"content"</span>: prompt}]<br>    )<br>    <span class="hljs-keyword">return</span> {<span class="hljs-string">"response"</span>: response[<span class="hljs-string">"message"</span>][<span class="hljs-string">"content"</span>]}<br></code></pre></td></tr></tbody></table></figure><ul><li><code>@app.post("/generate")</code>：这是 FastAPI 的路由装饰器<ul><li><code>.post("/generate")</code> ：当客户端以 POST 方法访问 <code>/generate</code> 路径时，会执行下面的 <code>generate</code> 函数。</li><li><code>Depends(verify_api_key)</code>：表示在执行 <code>generate</code> 函数前，先执行 <code>verify_api_key</code> 函数（之前定义的密钥验证函数），并将其返回值传给 <code>x_api_key</code>，如果 <code>verify_api_key</code> 验证失败（抛出 401 错误），<code>generate</code> 函数不会执行，直接返回错误给客户端。</li></ul></li><li><code>ollama.chat(model,messages)</code>：用于与 AI 模型进行对话交互<ul><li><code>model="mistral"</code>：指定使用的 AI 模型是 “mistral”。</li><li><code>messages=[{"role": "user", "content": prompt}]</code>：这是一个消息列表，包含一个用户消息。<ul><li><code>"role": "user"</code>：表示这是一个用户消息。</li><li><code>"content": prompt</code>：用户消息的内容是 <code>prompt</code> 变量的值。</li></ul></li></ul></li></ul><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">messages=[<br>    {<span class="hljs-string">"role"</span>: <span class="hljs-string">"system"</span>, <span class="hljs-string">"content"</span>: <span class="hljs-string">"who are you?"</span>},<br>    {<span class="hljs-string">"role"</span>: <span class="hljs-string">"user"</span>, <span class="hljs-string">"content"</span>: <span class="hljs-string">"tell me what's LLM?"</span>},<br>]<br></code></pre></td></tr></tbody></table></figure>
           </div>
+<h3 id="在代码中调用大模型API">在代码中调用大模型API</h3>
+<p>在老版本的<code>openai</code>库中的调用方式：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> openai<br><br>openai.api_key=<span class="hljs-string">"YOUR_OPENAI_API_KEY"</span><br>openai.base_url=<span class="hljs-string">"https://api.deepseek.com/v1"</span><br><br>response=openai.ChatCompletion.create(<br>    model=<span class="hljs-string">"deepseek-chat"</span>,<br>    messages=[<br>        {<span class="hljs-string">"role"</span>:<span class="hljs-string">"system"</span>,<span class="hljs-string">"content"</span>:<span class="hljs-string">"你是一名经验丰富的程序员"</span>},<br>        {<span class="hljs-string">"role"</span>:<span class="hljs-string">"user"</span>,<span class="hljs-string">"content"</span>:<span class="hljs-string">"如何调用大模型api接口"</span>},<br>        {<span class="hljs-string">"role"</span>:<span class="hljs-string">"assistant"</span>,<span class="hljs-string">"content"</span>:<span class="hljs-string">"API的使用方法"</span>}<br>    ]<br>)<br><br><span class="hljs-built_in">print</span>(response.choices[<span class="hljs-number">0</span>].message[<span class="hljs-string">"content"</span>])<br></code></pre></td></tr></tbody></table></figure>
+<p>在新版本中<code>openai</code>重构了 API 的调用方式：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openai <span class="hljs-keyword">import</span> OpenAI<br><br>client=OpenAI(<br>    api_key=<span class="hljs-string">"YOUR_OPENAI_API_KEY"</span>,<br>    base_url=<span class="hljs-string">"https://api.deepseek.com/v1"</span><br>)<br><br>response=client.chat.completions.create(<br>    model=<span class="hljs-string">"deepseek-chat"</span>,<br>    messages=[<br>        {<span class="hljs-string">"role"</span>:<span class="hljs-string">"system"</span>,<span class="hljs-string">"content"</span>:<span class="hljs-string">"你是一名经验丰富的程序员"</span>},<br>        {<span class="hljs-string">"role"</span>:<span class="hljs-string">"user"</span>,<span class="hljs-string">"content"</span>:<span class="hljs-string">"如何调用大模型api接口"</span>},<br>        {<span class="hljs-string">"role"</span>:<span class="hljs-string">"assistant"</span>,<span class="hljs-string">"content"</span>:<span class="hljs-string">"API的使用方法"</span>}<br>    ]<br>)<br><br><span class="hljs-built_in">print</span>(response.choices[<span class="hljs-number">0</span>].message.content)<br></code></pre></td></tr></tbody></table></figure>
+<ol>
+<li><code>role</code>只有三种可选参数：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>含义</th>
+<th>谁说的话</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"system"</code></td>
+<td>系统设定</td>
+<td>程序员/开发者设定的</td>
+</tr>
+<tr>
+<td><code>"user"</code></td>
+<td>用户</td>
+<td>实际使用产品的用户</td>
+</tr>
+<tr>
+<td><code>"assistant"</code></td>
+<td>AI助手</td>
+<td>AI 自己之前的回复</td>
+</tr>
+</tbody>
+</table>
+<ol start="2">
+<li>事实上，在<code>client.chat.completions.create</code>也有其他的可选参数，可参考上文<code>Modelfile</code>相关内容：</li>
+</ol>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python">temperature=<span class="hljs-number">0.5</span>,        <span class="hljs-comment"># 中等创造性</span><br>top_p=<span class="hljs-number">0.9</span>,             <span class="hljs-comment"># 多样性采样</span><br>frequency_penalty=<span class="hljs-number">0.2</span>,  <span class="hljs-comment"># 轻微减少重复</span><br>presence_penalty=<span class="hljs-number">0.1</span>,   <span class="hljs-comment"># 轻微鼓励新话题</span><br><br><span class="hljs-comment"># 输出控制</span><br>max_tokens=<span class="hljs-number">500</span>,        <span class="hljs-comment"># 限制输出长度</span><br>stream=<span class="hljs-literal">False</span>,          <span class="hljs-comment"># 非流式</span><br>n=<span class="hljs-number">1</span>,                   <span class="hljs-comment"># 生成1个回答</span><br><br><span class="hljs-comment"># 特殊功能</span><br>response_format={<span class="hljs-string">"type"</span>: <span class="hljs-string">"json_object"</span>},  <span class="hljs-comment"># 要求JSON输出</span><br><br><span class="hljs-comment"># 其他</span><br>seed=<span class="hljs-number">42</span>,               <span class="hljs-comment"># 固定随机种子</span><br>user=<span class="hljs-string">"user_001"</span>        <span class="hljs-comment"># 用户标识</span><br></code></pre></td></tr></tbody></table></figure>
                 
               </div>
             
@@ -591,7 +629,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>December 5, 2025</div>
+          <div>January 12, 2026</div>
         </div>
       
       
