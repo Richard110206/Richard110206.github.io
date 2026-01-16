@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>Getting Started with AI Agents</title>
+    <link href="/2026/01/15/Agent/Getting-Started-with-AI-Agents/"/>
+    <url>/2026/01/15/Agent/Getting-Started-with-AI-Agents/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Computer Organization and Architecture</title>
     <link href="/2025/11/29/Review/Computer-Organization-and-Architecture/"/>
     <url>/2025/11/29/Review/Computer-Organization-and-Architecture/</url>
@@ -692,11 +705,11 @@
     
     <tags>
       
+      <tag>updating</tag>
+      
       <tag>CPP</tag>
       
       <tag>syntax</tag>
-      
-      <tag>updating</tag>
       
     </tags>
     
@@ -721,13 +734,13 @@
     
     <tags>
       
-      <tag>updating</tag>
-      
       <tag>stack</tag>
       
       <tag>queue</tag>
       
       <tag>datastructure</tag>
+      
+      <tag>updating</tag>
       
     </tags>
     
@@ -979,9 +992,9 @@
     
     <tags>
       
-      <tag>algorithm</tag>
-      
       <tag>sort</tag>
+      
+      <tag>algorithm</tag>
       
     </tags>
     
@@ -1066,11 +1079,11 @@
     
     <tags>
       
-      <tag>OOP</tag>
+      <tag>updating</tag>
       
       <tag>CPP</tag>
       
-      <tag>updating</tag>
+      <tag>OOP</tag>
       
     </tags>
     
@@ -1189,11 +1202,11 @@
     
     <tags>
       
-      <tag>hashtable</tag>
-      
       <tag>sort</tag>
       
       <tag>queue</tag>
+      
+      <tag>hashtable</tag>
       
     </tags>
     
@@ -1220,9 +1233,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>queue</tag>
-      
       <tag>huffman tree</tag>
+      
+      <tag>queue</tag>
       
       <tag>Dijkstra</tag>
       
@@ -1251,11 +1264,11 @@
     
     <tags>
       
+      <tag>algorithm</tag>
+      
       <tag>stack</tag>
       
       <tag>binary tree</tag>
-      
-      <tag>algorithm</tag>
       
     </tags>
     
