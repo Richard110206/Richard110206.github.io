@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/Shell%20Magic%20Notes%20from%20The%20Missing%20Semeste.jpeg">
 <meta property="article:published_time" content="2025-07-27T14:34:30.000Z">
-<meta property="article:modified_time" content="2026-01-16T17:21:34.616Z">
+<meta property="article:modified_time" content="2026-01-16T17:48:00.754Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary_large_image">
@@ -303,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k words
+          3.4k words
         
       </span>
     
@@ -314,7 +314,7 @@
         
         
         
-          27 mins
+          29 mins
         
       </span>
     
@@ -791,6 +791,7 @@
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">❯ wsl --install Debian<br>正在下载: Debian GNU/Linux<br>正在安装: Debian GNU/Linux<br>已成功安装分发。可以通过 “wsl.exe -d Debian” 启动它<br>正在启动 Debian...<br>Please create a default UNIX user account. The username does not need to match your Windows username.<br>For more information visit: https://aka.ms/wslusers<br>Enter new UNIX username: richard<br>New password:<br>Retype new password:<br>passwd: password updated successfully<br>usermod: no changes<br></code></pre></td></tr></tbody></table></figure>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) PS C:\Users\Legion&gt; wsl -l -v<br>  NAME              STATE           VERSION<br>* Ubuntu            Running         2<br>  Debian            Running         2<br>  docker-desktop    Stopped         2<br></code></pre></td></tr></tbody></table></figure>
 <h2 id="Scripts">Scripts</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV17m411U7cC/?spm_id_from=333.337.search-card.all.click&amp;vd_source=54c2981c1a7a8e0433b7d23096150b7a">30分钟Shell光速入门教程</a></p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@LAPTOP-THUPDMQ0:~/test$ vim hello.sh<br></code></pre></td></tr></tbody></table></figure>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello Shell"</span><br><span class="hljs-built_in">date</span><br><span class="hljs-built_in">whoami</span><br></code></pre></td></tr></tbody></table></figure>
 <ul>
@@ -850,7 +851,10 @@
 </tr>
 </tbody>
 </table>
-
+<h4 id="猜数字小游戏">猜数字小游戏</h4>
+<p>下面是一个猜数字小游戏来练习简单的shell语法！</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br>channel=<span class="hljs-string">"猜数字小游戏"</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">"请输入您的姓名"</span><br><span class="hljs-built_in">read</span> name<br><span class="hljs-built_in">echo</span> <span class="hljs-string">"您好，<span class="hljs-variable">$name</span>，欢迎来到<span class="hljs-variable">$channel</span> "</span><br>number=$(<span class="hljs-built_in">shuf</span> -i 1-10 -n 1)<br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$number</span><br><span class="hljs-keyword">while</span> <span class="hljs-literal">true</span><br><span class="hljs-keyword">do</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">"请输入一个1-10之间的数字"</span><br><span class="hljs-built_in">read</span> guess<br><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$guess</span> -eq <span class="hljs-variable">$number</span> ]]; <span class="hljs-keyword">then</span><br>	<span class="hljs-built_in">echo</span> <span class="hljs-string">"恭喜您猜对了！是否继续？（y/n）："</span><br>	<span class="hljs-built_in">read</span> choice<br>	<span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$choice</span> = <span class="hljs-string">"y"</span> ]] || [[ <span class="hljs-variable">$choice</span> = <span class="hljs-string">"Y"</span> ]]; <span class="hljs-keyword">then</span><br>		number=$((RANDOM%<span class="hljs-number">10</span>+<span class="hljs-number">1</span>))<br>		<span class="hljs-built_in">echo</span> <span class="hljs-variable">$number</span><br>		<span class="hljs-built_in">continue</span><br>	<span class="hljs-keyword">else</span><br>		<span class="hljs-built_in">break</span><br>	<span class="hljs-keyword">fi</span><br><span class="hljs-keyword">elif</span> [[ <span class="hljs-variable">$guess</span> -lt <span class="hljs-variable">$number</span> ]]; <span class="hljs-keyword">then</span><br>	<span class="hljs-built_in">echo</span> <span class="hljs-string">"小了"</span><br><span class="hljs-keyword">else</span><br>	<span class="hljs-built_in">echo</span> <span class="hljs-string">"大了"</span><br><span class="hljs-keyword">fi</span><br><span class="hljs-keyword">done</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">"游戏结束，再见！"</span><br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs bash">richard@LAPTOP-THUPDMQ0:~/test$ ./hello.sh<br>请输入您的姓名<br>richard<br>您好，richard，欢迎来到猜数字小游戏<br>6<br>请输入一个1-10之间的数字<br>4<br>小了<br>请输入一个1-10之间的数字<br>6<br>恭喜您猜对了！是否继续？（y/n）：<br>y<br>1<br>请输入一个1-10之间的数字<br>3<br>大了<br>请输入一个1-10之间的数字<br>1<br>恭喜您猜对了！是否继续？（y/n）：<br>n<br>游戏结束，再见！<br></code></pre></td></tr></tbody></table></figure>
                 
               </div>
             
