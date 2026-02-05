@@ -19,15 +19,15 @@
   <meta name="author" content="Li Qinxuan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一、热力图">
+    <meta name="description" content="一、折线图 123456789101112131415import matplotlib.pyplot as plt import numpy as npimport pandas as pdplt.style.use(&#39;default&#39;)x&#x3D;[1,2,3,4,5]y&#x3D;[2,4,6,8,10]plt.plot(x,y)plt.plot(y,x)plt.xlabel(&quot;X Axis&quot;)plt.yla">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Matplotlib:Python Visualization">
 <meta property="og:url" content="http://example.com/2025/09/13/Python/Matplotlib-Python-Visualization/index.html">
 <meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
-<meta property="og:description" content="一、热力图">
+<meta property="og:description" content="一、折线图 123456789101112131415import matplotlib.pyplot as plt import numpy as npimport pandas as pdplt.style.use(&#39;default&#39;)x&#x3D;[1,2,3,4,5]y&#x3D;[2,4,6,8,10]plt.plot(x,y)plt.plot(y,x)plt.xlabel(&quot;X Axis&quot;)plt.yla">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-09-13T01:52:54.000Z">
-<meta property="article:modified_time" content="2025-11-12T06:48:24.045Z">
+<meta property="article:modified_time" content="2026-02-05T10:25:24.858Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="updating">
 <meta name="twitter:card" content="summary_large_image">
@@ -301,7 +301,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4 words
+          607 words
         
       </span>
     
@@ -312,7 +312,7 @@
         
         
         
-          1 mins
+          6 mins
         
       </span>
     
@@ -478,7 +478,117 @@
             
               <div class="markdown-body">
                 
-                <h2 id="一、热力图">一、热力图</h2>
+                <h2 id="一、折线图">一、折线图</h2>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt <br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>plt.style.use(<span class="hljs-string">'default'</span>)<br><br>x=[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]<br>y=[<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>,<span class="hljs-number">10</span>]<br><br>plt.plot(x,y)<br>plt.plot(y,x)<br>plt.xlabel(<span class="hljs-string">"X Axis"</span>)<br>plt.ylabel(<span class="hljs-string">"Y Axis"</span>)<br>plt.title(<span class="hljs-string">"Simple Line Plot"</span>)<br>plt.show()<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt <br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>plt.style.use(<span class="hljs-string">'default'</span>)<br><br>x=np.linspace(<span class="hljs-number">0</span>,<span class="hljs-number">10</span>,<span class="hljs-number">100</span>)<br>y=np.sin(x)<br><br>plt.plot(x,y)<br>plt.xlabel(<span class="hljs-string">"X Axis"</span>)<br>plt.ylabel(<span class="hljs-string">"Y Axis"</span>)<br>plt.title(<span class="hljs-string">"y=sin(x)"</span>)<br>plt.show()<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt <br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>x=np.linspace(<span class="hljs-number">0</span>,<span class="hljs-number">10</span>,<span class="hljs-number">100</span>)<br>y1=np.sin(x)<br>y2=np.cos(x)<br>y3=np.sin(x)*np.cos(x)<br><br>plt.figure(figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">6</span>))<br>plt.plot(x,y1,label=<span class="hljs-string">"sin(x)"</span>)<br>plt.plot(x,y2,label=<span class="hljs-string">"cos(x)"</span>)<br>plt.plot(x,y3,label=<span class="hljs-string">"sin(x)*cos(x)"</span>)<br>plt.xlabel(<span class="hljs-string">"X Axis"</span>)<br>plt.ylabel(<span class="hljs-string">"Y Axis"</span>)<br>plt.title(<span class="hljs-string">"Mutiple Functions"</span>)<br>plt.legend()<br>plt.grid(<span class="hljs-literal">True</span>,alpha=<span class="hljs-number">0.3</span>)<br>plt.show()<br></code></pre></td></tr></tbody></table></figure>
+<p>我们可以通过一个简洁的格式字符串 <code>[color][marker][line]</code>来按顺序组合颜色、标记和线型。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt <br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>x=np.linspace(<span class="hljs-number">0</span>,<span class="hljs-number">10</span>,<span class="hljs-number">20</span>)<br>plt.figure(figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">6</span>))<br>plt.plot(x,x,<span class="hljs-string">"b-"</span>,label=<span class="hljs-string">"Solid line"</span>,linewidth=<span class="hljs-number">2</span>)<br>plt.plot(x,x+<span class="hljs-number">1</span>,<span class="hljs-string">"r--"</span>,label=<span class="hljs-string">"Dashed line"</span>,linewidth=<span class="hljs-number">2</span>)<br>plt.plot(x,x+<span class="hljs-number">2</span>,<span class="hljs-string">"g-"</span>,label=<span class="hljs-string">"Dash-dot line"</span>,linewidth=<span class="hljs-number">2</span>)<br>plt.plot(x,x+<span class="hljs-number">3</span>,<span class="hljs-string">"m:"</span>,label=<span class="hljs-string">"Dotted line"</span>,linewidth=<span class="hljs-number">2</span>)<br>plt.plot(x,x+<span class="hljs-number">4</span>,<span class="hljs-string">"co-"</span>,label=<span class="hljs-string">"Circles"</span>,linewidth=<span class="hljs-number">2</span>)<br>plt.plot(x,x+<span class="hljs-number">5</span>,<span class="hljs-string">"s-"</span>,label=<span class="hljs-string">"Squares"</span>,linewidth=<span class="hljs-number">2</span>)<br>plt.plot(x,x+<span class="hljs-number">6</span>,<span class="hljs-string">"^-"</span>,label=<span class="hljs-string">"Triangles"</span>,linewidth=<span class="hljs-number">2</span>)<br><br>plt.xlabel(<span class="hljs-string">"X Axis"</span>)<br>plt.ylabel(<span class="hljs-string">"Y Axis"</span>)<br>plt.title(<span class="hljs-string">"Line Styles and Markers"</span>)<br>plt.legend()<br>plt.grid(<span class="hljs-literal">True</span>,alpha=<span class="hljs-number">0.3</span>)<br>plt.show()<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="颜色">颜色</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">颜色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>b</code></td>
+<td style="text-align:center">blue（蓝色）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>r</code></td>
+<td style="text-align:center">red（红色）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>g</code></td>
+<td style="text-align:center">green（绿色）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>c</code></td>
+<td style="text-align:center">cyan（青色）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>m</code></td>
+<td style="text-align:center">magenta（品红色）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>y</code></td>
+<td style="text-align:center">yellow（黄色）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>k</code></td>
+<td style="text-align:center">black（黑色）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="标记">标记</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">标记样式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>o</code></td>
+<td style="text-align:center">circle（圆圈）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>s</code></td>
+<td style="text-align:center">square（正方形）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>^</code></td>
+<td style="text-align:center">triangle（三角形）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>*</code></td>
+<td style="text-align:center">star（星形）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>+</code></td>
+<td style="text-align:center">plus（加号）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>x</code></td>
+<td style="text-align:center">x（叉号）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="线型">线型</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">线型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>-</code></td>
+<td style="text-align:center">solid（实线）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>--</code></td>
+<td style="text-align:center">dashed（虚线）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-.</code></td>
+<td style="text-align:center">dash-dot（点划线）</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>:</code></td>
+<td style="text-align:center">dotted（点线）</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt <br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>x=np.linspace(<span class="hljs-number">0</span>,<span class="hljs-number">10</span>,<span class="hljs-number">100</span>)<br>plt.figure(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">8</span>))<br>plt.plot(x,np.sin(x),color=<span class="hljs-string">"steelblue"</span>,linewidth=<span class="hljs-number">2</span>,label=<span class="hljs-string">"strrlblue"</span>)<br>plt.plot(x,np.cos(x),color=<span class="hljs-string">"#FF6B6B"</span>,linewidth=<span class="hljs-number">2</span>,label=<span class="hljs-string">"#FF6B6B(Hex)"</span>)<br>plt.plot(x,np.sin(x)*np.cos(x),color=<span class="hljs-string">"darkgreen"</span>,linestyle=<span class="hljs-string">"--"</span>,label=<span class="hljs-string">"darkgreen dashed"</span>)<br><br><br>plt.xlabel(<span class="hljs-string">"X Axis"</span>,fontsize=<span class="hljs-number">12</span>)<br>plt.ylabel(<span class="hljs-string">"Y Axis"</span>,fontsize=<span class="hljs-number">12</span>)<br>plt.title(<span class="hljs-string">"Custom Colors and Styles"</span>,fontsize=<span class="hljs-number">14</span>,fontweight=<span class="hljs-string">"bold"</span>)<br>plt.legend(fontsize=<span class="hljs-number">12</span>)<br>plt.grid(<span class="hljs-literal">True</span>,alpha=<span class="hljs-number">0.3</span>)<br>plt.show()<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="散点图">散点图</h3>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt <br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>np.random.seed(<span class="hljs-number">1</span>)<br>x=np.random.randn(<span class="hljs-number">200</span>)<br>y=<span class="hljs-number">2</span>*x+np.random.randn(<span class="hljs-number">200</span>)*<span class="hljs-number">0.5</span><br><br>plt.figure(figsize=(<span class="hljs-number">8</span>,<span class="hljs-number">6</span>))<br>plt.scatter(x,y,alpha=<span class="hljs-number">0.6</span>)<br>plt.xlabel(<span class="hljs-string">"X values"</span>)<br>plt.ylabel(<span class="hljs-string">"Y values"</span>)<br>plt.title(<span class="hljs-string">"Scatter plot"</span>)<br>plt.legend(fontsize=<span class="hljs-number">12</span>)<br>plt.grid(<span class="hljs-literal">True</span>,alpha=<span class="hljs-number">0.3</span>)<br>plt.show()<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt <br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br>np.random.seed(<span class="hljs-number">1</span>) <span class="hljs-comment"># 随机数种子保证可复现</span><br>x=np.random.randn(<span class="hljs-number">100</span>) <span class="hljs-comment"># 生成100个标准正态分布的随机数</span><br>y=np.random.randn(<span class="hljs-number">100</span>)<br>colors=np.random.rand(<span class="hljs-number">100</span>) <span class="hljs-comment"># [0,1)区间的均匀分布随机数</span><br>sizes=<span class="hljs-number">1000</span>*np.random.rand(<span class="hljs-number">100</span>)<br><br>plt.figure(figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">6</span>))<br>plt.scatter(x,y,c=colors,s=sizes,alpha=<span class="hljs-number">0.6</span>,cmap=<span class="hljs-string">"plasma"</span>) <span class="hljs-comment"># 对之前的[0,1)区间的颜色随机数进行“编译”</span><br>plt.colorbar(label=<span class="hljs-string">"Color intensity"</span>)<br>plt.xlabel(<span class="hljs-string">"X values"</span>)<br>plt.ylabel(<span class="hljs-string">"Y values"</span>)<br>plt.title(<span class="hljs-string">"Scatter Plot with Color and Size Variations"</span>,fontsize=<span class="hljs-number">12</span>)<br>plt.legend(fontsize=<span class="hljs-number">12</span>)<br>plt.grid(<span class="hljs-literal">True</span>,alpha=<span class="hljs-number">0.3</span>)<br>plt.show()<br></code></pre></td></tr></tbody></table></figure>
 
                 
               </div>
@@ -543,7 +653,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>November 12, 2025</div>
+          <div>February 5, 2026</div>
         </div>
       
       
