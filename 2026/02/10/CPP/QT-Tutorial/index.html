@@ -19,13 +19,15 @@
   <meta name="author" content="Li Qinxuan">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
+    <meta name="description" content="一个简单 GUI 项目 这里手写代码完成一个简易版win+R的界面框： 123456789101112131415161718192021222324252627282930313233343536373839404142434445#include &lt;QApplication&gt;#include &lt;QLabel&gt;#include &lt;QLineEdit&gt;#incl">
+<meta property="og:type" content="article">
 <meta property="og:title" content="QT Tutorial">
 <meta property="og:url" content="http://example.com/2026/02/10/CPP/QT-Tutorial/index.html">
 <meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="一个简单 GUI 项目 这里手写代码完成一个简易版win+R的界面框： 123456789101112131415161718192021222324252627282930313233343536373839404142434445#include &lt;QApplication&gt;#include &lt;QLabel&gt;#include &lt;QLineEdit&gt;#incl">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-02-10T06:43:57.000Z">
-<meta property="article:modified_time" content="2026-02-10T06:44:24.084Z">
+<meta property="article:modified_time" content="2026-02-10T11:54:37.889Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -298,7 +300,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 words
+          676 words
         
       </span>
     
@@ -309,7 +311,7 @@
         
         
         
-          1 mins
+          6 mins
         
       </span>
     
@@ -488,7 +490,56 @@
             
               <div class="markdown-body">
                 
-                
+                <h4 id="一个简单-GUI-项目">一个简单 GUI 项目</h4>
+<p>这里手写代码完成一个简易版<code>win</code>+<code>R</code>的界面框：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;QApplication&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;QLabel&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;QLineEdit&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;QPushButton&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;QHBoxLayout&gt;</span> <span class="hljs-comment">// 水平布局</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;QVBoxLayout&gt;</span> <span class="hljs-comment">// 垂直布局</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;QWidget&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc,<span class="hljs-type">char</span> *argv[])</span></span>{<br><br>    <span class="hljs-function">QApplication <span class="hljs-title">app</span><span class="hljs-params">(argc,argv)</span></span>;<br><br>    QLabel *infoLabel=<span class="hljs-keyword">new</span> QLabel;<br>    QLabel *openLabel=<span class="hljs-keyword">new</span> QLabel;<br>    QLineEdit *cmdLineEdit=<span class="hljs-keyword">new</span> QLineEdit;<br>    QPushButton *commitButton=<span class="hljs-keyword">new</span> QPushButton;<br>    QPushButton *cancelButton=<span class="hljs-keyword">new</span> QPushButton;<br>    QPushButton *browseButton=<span class="hljs-keyword">new</span> QPushButton;<br><br>    infoLabel-&gt;<span class="hljs-built_in">setText</span>(<span class="hljs-string">"input cmd"</span>);<br>    openLabel-&gt;<span class="hljs-built_in">setText</span>(<span class="hljs-string">"open"</span>);<br>    commitButton-&gt;<span class="hljs-built_in">setText</span>(<span class="hljs-string">"commit"</span>);<br>    cancelButton-&gt;<span class="hljs-built_in">setText</span>(<span class="hljs-string">"cancel"</span>);<br>    browseButton-&gt;<span class="hljs-built_in">setText</span>(<span class="hljs-string">"browse"</span>);<br><br>    QHBoxLayout *cmdLayout=<span class="hljs-keyword">new</span> QHBoxLayout;<br>    cmdLayout-&gt;<span class="hljs-built_in">addWidget</span>(openLabel);<br>    cmdLayout-&gt;<span class="hljs-built_in">addWidget</span>(cmdLineEdit);<br><br>    QHBoxLayout *buttonLayout=<span class="hljs-keyword">new</span> QHBoxLayout;<br>    buttonLayout-&gt;<span class="hljs-built_in">addWidget</span>(commitButton);<br>    buttonLayout-&gt;<span class="hljs-built_in">addWidget</span>(cancelButton);<br>    buttonLayout-&gt;<span class="hljs-built_in">addWidget</span>(browseButton);<br><br>    QVBoxLayout *mainLayout=<span class="hljs-keyword">new</span> QVBoxLayout;<br>    mainLayout-&gt;<span class="hljs-built_in">addWidget</span>(infoLabel);<br>    mainLayout-&gt;<span class="hljs-built_in">addLayout</span>(cmdLayout);<br>    mainLayout-&gt;<span class="hljs-built_in">addLayout</span>(buttonLayout);<br><br>    QWidget window;<br>    window.<span class="hljs-built_in">setLayout</span>(mainLayout);<br>    window.<span class="hljs-built_in">show</span>();<br><br>    <span class="hljs-keyword">return</span> app.<span class="hljs-built_in">exec</span>();<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="编译流程">编译流程</h4>
+<p>打开 Qt 安装后自带的<code>「Qt 6.9.2 (MinGW 64-bit)」</code>命令提示符，如果使用系统默认<code>CMD</code>编译需要配置环境变量较为麻烦。</p>
+<ol>
+<li>生成基础的<code>.pro</code>项目文件</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">qmake -project<br></code></pre></td></tr></tbody></table></figure>
+<ol start="2">
+<li>根据<code>.pro</code>文件生成 <code>Makefile</code></li>
+</ol>
+<ul>
+<li>如果修改了<code>.pro</code>（比如加 QT 模块<code>QT += core gui widget</code>），必须重新执行这一步。</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">qmake<br></code></pre></td></tr></tbody></table></figure>
+<ol start="3">
+<li>执行编译，生成可执行文件</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">mingw32-make -j4<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>
+<p><code>mingw32-make</code>是 MinGW 的编译工具，会读取 <code>Makefile</code> 的规则调用 <code>g++</code> 编译；</p>
+</li>
+<li>
+<p><code>-j4</code>是多核编译（4 核），加快编译速度，可根据自己 CPU 核心数调整（比如<code>-j8</code>）；</p>
+</li>
+<li>
+<p>若仅修改源码（未改<code>.pro</code>），无需重新执行<code>qmake -project</code>和<code>qmake</code>，直接执行这一步即可（make 会自动检测文件修改）。</p>
+</li>
+</ul>
+<ol start="4">
+<li>切换到编译产物目录</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> release<br></code></pre></td></tr></tbody></table></figure>
+<ol start="5">
+<li>运行编译好的可执行文件</li>
+</ol>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">qmake.exe<br></code></pre></td></tr></tbody></table></figure>
+<h2 id="QtCreator">QtCreator</h2>
+<h3 id="信号与槽">信号与槽</h3>
+<p>可以将UI控件与事件（函数）相关联起来，在“设计”界面右击，选项中选择“转到槽”：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Widget::on_commitButton_clicked</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-comment">// 获取lineEdit数据</span><br>    QString program=ui-&gt;cmdLineEdit-&gt;<span class="hljs-built_in">text</span>();<br>    <span class="hljs-comment">// 创建process对象</span><br>    QProcess *myProcess=<span class="hljs-keyword">new</span> <span class="hljs-built_in">QProcess</span>(<span class="hljs-keyword">this</span>);<br>    myProcess-&gt;<span class="hljs-built_in">start</span>(program);<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>以上<code>on_控件名_事件名</code> 是 Qt 的 <strong>“自动关联（Auto-Connection）”</strong> 机制，但是在实际开发中，为了代码可读性更高、命名更自由，我们通常会<strong>手动绑定信号和槽</strong>：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">"widget.h"</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">"ui_widget.h"</span></span><br><br>Widget::<span class="hljs-built_in">Widget</span>(QWidget *parent)<br>    : <span class="hljs-built_in">QWidget</span>(parent)<br>    , <span class="hljs-built_in">ui</span>(<span class="hljs-keyword">new</span> Ui::Widget)<br>{<br>    ui-&gt;<span class="hljs-built_in">setupUi</span>(<span class="hljs-keyword">this</span>);<br>    <br>    <span class="hljs-comment">// 手动绑定：按钮的clicked信号 关联到 自定义的槽函数executeCommand</span><br>    <span class="hljs-built_in">connect</span>(ui-&gt;commitButton, &amp;QPushButton::clicked, <span class="hljs-keyword">this</span>, &amp;Widget::executeCommand);<br>}<br><br>Widget::~<span class="hljs-built_in">Widget</span>()<br>{<br>    <span class="hljs-keyword">delete</span> ui;<br>}<br><br><span class="hljs-comment">// 自定义命名的槽函数，不再受on_控件名_事件名的限制</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Widget::executeCommand</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>{<br>    QString program = ui-&gt;cmdLineEdit-&gt;<span class="hljs-built_in">text</span>();<br>    QProcess *myProcess = <span class="hljs-keyword">new</span> <span class="hljs-built_in">QProcess</span>(<span class="hljs-keyword">this</span>);<br>    myProcess-&gt;<span class="hljs-built_in">start</span>(program);<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>通过手动绑定的方式添加<code>回车</code>确认的功能：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++">Widget::<span class="hljs-built_in">Widget</span>(QWidget *parent)<br>    : <span class="hljs-built_in">QWidget</span>(parent)<br>    , <span class="hljs-built_in">ui</span>(<span class="hljs-keyword">new</span> Ui::Widget)<br>{<br>    ui-&gt;<span class="hljs-built_in">setupUi</span>(<span class="hljs-keyword">this</span>);<br><br>    <span class="hljs-comment">// 连接信号与槽 发出信号、发出什么信号、谁处理信号、如何处理</span><br>    <span class="hljs-built_in">connect</span>(ui-&gt;cmdLineEdit,<span class="hljs-built_in">SIGNAL</span>(<span class="hljs-built_in">returnPressed</span>()),<span class="hljs-keyword">this</span>,<span class="hljs-built_in">SLOT</span>(<span class="hljs-built_in">on_commitButton_clicked</span>()));<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>当我们的事件不是很多的时候，连接信号与槽的时候可以是用<code>lambda</code>表达式：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-built_in">connect</span>(ui-&gt;browseButton,&amp;QPushButton::clicked,[<span class="hljs-keyword">this</span>](){<br>            QMessageBox::<span class="hljs-built_in">information</span>(<span class="hljs-keyword">this</span>,<span class="hljs-string">"信息"</span>,<span class="hljs-string">"点击浏览"</span>);<br>});<br></code></pre></td></tr></tbody></table></figure>
+
                 
               </div>
             
