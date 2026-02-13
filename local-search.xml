@@ -1024,9 +1024,9 @@
     
     <tags>
       
-      <tag>algorithm</tag>
-      
       <tag>sort</tag>
+      
+      <tag>algorithm</tag>
       
     </tags>
     
@@ -1234,11 +1234,11 @@
     
     <tags>
       
-      <tag>hashtable</tag>
-      
       <tag>sort</tag>
       
       <tag>queue</tag>
+      
+      <tag>hashtable</tag>
       
     </tags>
     
@@ -1265,9 +1265,9 @@
       
       <tag>binary tree</tag>
       
-      <tag>queue</tag>
-      
       <tag>huffman tree</tag>
+      
+      <tag>queue</tag>
       
       <tag>Dijkstra</tag>
       
@@ -1296,11 +1296,11 @@
     
     <tags>
       
+      <tag>algorithm</tag>
+      
       <tag>stack</tag>
       
       <tag>binary tree</tag>
-      
-      <tag>algorithm</tag>
       
     </tags>
     
