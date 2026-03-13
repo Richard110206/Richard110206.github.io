@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/CMake-Tutorial.png?raw=true">
 <meta property="article:published_time" content="2025-09-21T01:37:34.000Z">
-<meta property="article:modified_time" content="2025-09-30T07:21:31.076Z">
+<meta property="article:modified_time" content="2026-03-13T09:29:47.672Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="CMake">
 <meta name="twitter:card" content="summary_large_image">
@@ -314,7 +314,7 @@
         
         
         
-          11 mins
+          12 mins
         
       </span>
     
@@ -568,23 +568,34 @@
 <p>头文件的核心作用是声明接口，而非实现代码，否则可能导致 “多重定义” 错误。</p>
 <p>✅ 允许的内容（声明）：</p>
 <ul>
-<li>函数声明（int add(int a, int b);）</li>
-<li>类 / 结构体声明（class MyClass; 或完整类定义，类内可包含函数声明）</li>
-<li>变量声明（需加extern，如 extern int global_var;）</li>
-<li>宏定义（#define MAX 100）</li>
+<li>函数声明（<code>int add(int a, int b);</code>）</li>
+<li>类 / 结构体声明（<code>class MyClass;</code> 或完整类定义，类内可包含函数声明）</li>
+<li>变量声明（需加<code>extern</code>，如 <code>extern int global_var</code>;）</li>
+<li>宏定义（<code>#define MAX 100</code>）</li>
 <li>模板声明或定义（模板必须在头文件中实现，特殊情况）</li>
 </ul>
 <p>❌ 不允许的内容（定义，除非有特殊处理）：</p>
 <ul>
-<li>普通函数定义（除非用inline修饰）写在相应源文件中</li>
-<li>非extern变量定义（如 int global_var = 0; 会导致重复定义）</li>
-<li>可执行代码（如独立的for循环、cout语句等）</li>
+<li>普通函数定义（除非用<code>inline</code>修饰）写在相应源文件中</li>
+<li>非extern变量定义（如 <code>int global_var = 0</code>; 会导致重复定义）</li>
+<li>可执行代码（如独立的<code>for</code>循环、<code>cout</code>语句等）</li>
+</ul>
+<h4 id="3-好处">3. 好处</h4>
+<ul>
+<li>编译速度<br>
+如果把实现都写在 <code>.h</code> 文件，任何修改这个文件，所有 <code>#include</code> 它的文件都要重新编译</li>
+<li>代码组织
+<ul>
+<li><code>.h</code> 文件：快速浏览类的结构和接口</li>
+<li><code>.cpp</code> 文件：看具体实现细节</li>
+</ul>
+</li>
 </ul>
 <h4 id="CMake-应用">CMake 应用</h4>
 <p>编写主函数：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs main.cpp">#include &lt;iostream&gt;<br>#include "test1.h"<br>#include "test2.h"<br><br>int main(){<br>std::cout&lt;&lt;"hello world"&lt;&lt;std::endl;<br>testfunc1();<br>testfunc2();<br>return 0;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">"test1.h"</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">"test2.h"</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{<br>std::cout&lt;&lt;<span class="hljs-string">"hello world"</span>&lt;&lt;std::endl;<br><span class="hljs-built_in">testfunc1</span>();<br><span class="hljs-built_in">testfunc2</span>();<br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
 <p>头文件：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs test1.h">#ifndef _TEST1_H<br>#define _TEST1_H<br><br>#include &lt;iostream&gt;<br><br>void testfunc1();<br><br>#endif /*_TEST1_H*/<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> _TEST1_H</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _TEST1_H</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">testfunc1</span><span class="hljs-params">()</span></span>;<br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">/*_TEST1_H*/</span></span><br></code></pre></td></tr></tbody></table></figure>
 <p>对应的实现文件：</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs test1.cpp">#include &lt;iostream&gt;<br>#include "test1.h"<br><br>void testfunc1(){<br>std::cout&lt;&lt;"this is testfunc1"&lt;&lt;std::endl;<br>}<br></code></pre></td></tr></tbody></table></figure>
 <p>文件夹下文件目录：</p>
@@ -658,7 +669,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>September 30, 2025</div>
+          <div>March 13, 2026</div>
         </div>
       
       
