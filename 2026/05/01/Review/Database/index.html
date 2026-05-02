@@ -19,23 +19,23 @@
   <meta name="author" content="Li Qinxuan">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
-<meta property="og:title" content="Operator Overloading in C++">
-<meta property="og:url" content="http://example.com/2025/07/19/CPP/Operator-Overloading-in-C++/index.html">
+    <meta name="description" content="DBS&#x3D;DB（硬件）+DBMS（软件OS）+USER E-R图  方框：表示一个实体集 菱形框：表示属性和实体之间的联系（均使用无向边进行连接） 椭圆框：表示属性  数据结构  层次结构：用树状层次结构表示关系（只有根节点没有双亲节点）  采用指针实现，结构简单、层次分明，查询效率高 难以表达非层次的复杂关系，树状结构插入和删除节点困难   网状模型：用有向图表示关系  能够直接表示实体世界的关系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Database">
+<meta property="og:url" content="http://example.com/2026/05/01/Review/Database/index.html">
 <meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="DBS&#x3D;DB（硬件）+DBMS（软件OS）+USER E-R图  方框：表示一个实体集 菱形框：表示属性和实体之间的联系（均使用无向边进行连接） 椭圆框：表示属性  数据结构  层次结构：用树状层次结构表示关系（只有根节点没有双亲节点）  采用指针实现，结构简单、层次分明，查询效率高 难以表达非层次的复杂关系，树状结构插入和删除节点困难   网状模型：用有向图表示关系  能够直接表示实体世界的关系">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-07-19T15:00:29.000Z">
-<meta property="article:modified_time" content="2025-07-19T15:26:25.197Z">
+<meta property="article:published_time" content="2026-05-01T12:26:01.000Z">
+<meta property="article:modified_time" content="2026-05-02T14:45:29.765Z">
 <meta property="article:author" content="Li Qinxuan">
-<meta property="article:tag" content="C++">
-<meta property="article:tag" content="OOP">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Operator Overloading in C++ - Welcome To Li Qinxuan&#39;s Blog！</title>
+  <title>Database - Welcome To Li Qinxuan&#39;s Blog！</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -277,7 +277,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Operator Overloading in C++"></span>
+            <span id="subtitle" data-typed-text="Database"></span>
           
         </div>
 
@@ -288,8 +288,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-19 23:00" pubdate>
-          July 19, 2025 pm
+        <time datetime="2026-05-01 20:26" pubdate>
+          May 1, 2026 pm
         </time>
       </span>
     
@@ -300,7 +300,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 words
+          1.4k words
         
       </span>
     
@@ -311,7 +311,7 @@
         
         
         
-          1 mins
+          12 mins
         
       </span>
     
@@ -350,134 +350,6 @@
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
-  <aside class="sidebar category-bar" style="margin-right: -1rem">
-    
-
-
-
-
-
-<div class="category-list">
-  
-  
-    
-    
-    
-    <div class="category row nomargin-x">
-      <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="CPP"
-        id="heading-4c162442ef22c58f6f1e330e6b692c7e" role="tab" data-toggle="collapse" href="#collapse-4c162442ef22c58f6f1e330e6b692c7e"
-        aria-expanded="true"
-      >
-        CPP
-        <span class="list-group-count">(6)</span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-      <div class="category-collapse collapse show" id="collapse-4c162442ef22c58f6f1e330e6b692c7e"
-           role="tabpanel" aria-labelledby="heading-4c162442ef22c58f6f1e330e6b692c7e">
-        
-        
-          
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2025/08/25/CPP/CPP-Syntax-Bits-and-Bobs/" title="CPP Syntax Bits and Bobs"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">CPP Syntax Bits and Bobs</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2025/08/25/CPP/Lambda-Expression-in-CPP/" title="Lambda Expression in CPP"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Lambda Expression in CPP</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2026/02/10/CPP/QT-Tutorial/" title="QT Tutorial"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">QT Tutorial</span>
-        </a>
-      
-    
-  </div>
-
-          
-  
-    
-    
-    
-    <div class="category-sub row nomargin-x">
-      <a class="category-subitem 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="OOP"
-        id="heading-ce4195da808656beae0c97fed9194192" role="tab" data-toggle="collapse" href="#collapse-ce4195da808656beae0c97fed9194192"
-        aria-expanded="true"
-      >
-        OOP
-        <span class="list-group-count">(3)</span>
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      
-      <div class="category-collapse collapse show" id="collapse-ce4195da808656beae0c97fed9194192"
-           role="tabpanel" aria-labelledby="heading-ce4195da808656beae0c97fed9194192">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2025/07/22/CPP/Classes-and-Objects-in-C++/" title="Classes and Objects in C++"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">Classes and Objects in C++</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2025/07/19/CPP/Operator-Overloading-in-C++/" title="Operator Overloading in C++"
-           class="list-group-item list-group-item-action
-           active">
-          <span class="category-post">Operator Overloading in C++</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2025/07/17/CPP/The-Four-Pillars-of-OOP-in-C++/" title="The Four Pillars of OOP in C++"
-           class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">The Four Pillars of OOP in C++</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-        
-      </div>
-    </div>
-  
-</div>
-
-
-  </aside>
-
 
     </div>
 
@@ -485,12 +357,227 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Operator Overloading in C++</h1>
+            <h1 id="seo-header">Database</h1>
             
             
               <div class="markdown-body">
                 
-                
+                <p>DBS=DB（硬件）+DBMS（软件OS）+USER</p>
+<h4 id="E-R图">E-R图</h4>
+<ul>
+<li>方框：表示一个实体集</li>
+<li>菱形框：表示属性和实体之间的联系（均使用无向边进行连接）</li>
+<li>椭圆框：表示属性</li>
+</ul>
+<h4 id="数据结构">数据结构</h4>
+<ul>
+<li>层次结构：用树状层次结构表示关系（只有根节点没有双亲节点）
+<ul>
+<li>采用指针实现，结构简单、层次分明，查询效率高</li>
+<li>难以表达非层次的复杂关系，树状结构插入和删除节点困难</li>
+</ul>
+</li>
+<li>网状模型：用有向图表示关系
+<ul>
+<li>能够直接表示实体世界的关系</li>
+<li>结构、编程复杂</li>
+</ul>
+</li>
+<li>关系模型：用二维表格表示（行：元组）（列：属性）
+<ul>
+<li>通过表间的关键字（公共属性）进行联系</li>
+</ul>
+</li>
+<li>面向对象数据模型</li>
+</ul>
+<h4 id="系统结构">系统结构</h4>
+<p>记录型：<code>(学号，姓名，性别，专业，籍贯，年龄)</code></p>
+<p>记录值：<code>(08241120，李仔仔，男，计算机，江苏南京，21)</code></p>
+<p>两两模式之间有映像，当修改某一个模式时只需要修改映像即可。</p>
+<ul>
+<li>
+<p>外部模式：用户与数据库的接口</p>
+<ul>
+<li>外映像：数据逻辑独立性（当模式（全局逻辑结构）改变时，外模式 / 模式映像保证外模式不变，应用程序基于外模式编写，因此应用程序不用修改）</li>
+</ul>
+</li>
+<li>
+<p>概念模式（模式）：一个数据库只有一个模式</p>
+<ul>
+<li>内映像：数据物理独立性（把数据库从机械硬盘迁移到固态硬盘（物理存储改变），应用程序完全感知不到，不用做任何修改）</li>
+</ul>
+</li>
+<li>
+<p>内部模式：数据库的物理结构和存储方式</p>
+</li>
+<li>
+<p>选择运算（行）$\sigma$</p>
+</li>
+<li>
+<p>投影运算（列）$\Pi$</p>
+</li>
+<li>
+<p>连接运算</p>
+<ul>
+<li>直接连接</li>
+<li>自然连接（有公共属性的去掉重复列）</li>
+</ul>
+</li>
+<li>
+<p>除法运算</p>
+</li>
+</ul>
+<h3 id="SQL语句">SQL语句</h3>
+<ul>
+<li>启动数据库</li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">mysql -u root -p<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>查看所有的数据库</li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">show databases;<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>使用具体的数据库</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysql&gt; show databases;<br>+--------------------+<br>| Database           |<br>+--------------------+<br>| exp                |<br>| information_schema |<br>| mysql              |<br>| performance_schema |<br>| sys                |<br>+--------------------+<br>5 rows <span class="hljs-keyword">in</span> <span class="hljs-built_in">set</span> (0.01 sec)<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>删除数据库</li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">drop database testdb;<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="基础语法">基础语法</h4>
+<ul>
+<li>
+<p>定义主关键字</p>
+<ul>
+<li>在属性及其类型后加上保留字<code>PRIMARYKEY</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE TABLE 学生{<br>学号 CHAR(8) PRIMARY KEY,<br>姓名 CHAR(4),<br>出生年份 SMALLINT;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>在列出关系模式的所有属性后，附加一个声明<code>PRIMARY KEY (属性)</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE TABLE 学生{<br>学号 CHAR(8),<br>姓名 CHAR(4),<br>出生年份 SMALLINT,<br>PRIMARY KEY(学号);<br>}<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>非空 (<code>NOT NULL</code>) 约束和唯一 (<code>UNIQUE</code>) 约束结合在的作用等同于主键(<code>PRIMARY KEY</code>) 约束</li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE TABLE 学生{<br>学号 CHAR(8) NOT NULL UNIQUE,<br>课程名 CHAR(4),<br>学时 SMALLINT,<br>}<br></code></pre></td></tr></tbody></table></figure>
+</li>
+</ul>
+<p>如果主关键字有两个，则只能在属性列表最后来定义关键字。</p>
+<h4 id="外部关键字">外部关键字</h4>
+<ul>
+<li>属性名和类型后进行声明</li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE TABLE 学习{<br>学号 CHAR(8) REFERENCE (学生)(学号), <br>成绩 SMALLINT, <br>PRIMARY KEY （学号）;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>属性列表末尾进行声明</li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE TABLE 学习{<br>学号 CHAR(8), <br>成绩 SMALLINT, <br>PRIMARY KEY （学号），<br>FOREIGN KEY （学号） REFERENCES 学生（学号）;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="默认">默认</h4>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql">性别 CHAR( 2 ) DEFAULT '男＇，<br>年龄 SMALLINT DEFAULT 19;<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="修改和删除基本表">修改和删除基本表</h4>
+<ul>
+<li>增加</li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql">ALTER TABLE 学生 <br>ADD COLUMN 年龄 SMALLINT;<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>删除</li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">ALTER TABLE 学生 DROP COLUMN 年龄;<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>修改</li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">ALTER TABLE 课程 ALTER COLUMN 课程名 CHAR(20); <br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p>修改后列的长度不能短于原本的长度</p>
+          </div>
+<ul>
+<li>删除表</li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">ALTER TABLE 临时表 CASCSDE;<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="索引的建立与删除">索引的建立与删除</h4>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE [ UNIQUE][ CLUSTER] INDEX ＜索引名＞ ON ＜表名＞ （＜列名＞ ［＜次序＞］［，＜列名＞［＜次序＞］］．）<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>建立索引</li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE UNIQUE INDEX idx<br>ON 学习 (学号 ASC, 课程号 DESC);<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>删除索引</li>
+</ul>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mysql">DROP INDEX idx<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="查询">查询</h4>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT [ ALL | DISTINCT) ＜属性列表＞<br>FROM ＜表名或视图名＞ ［，＜表名或视图名＞］<br>[WHERE ＜条件表达式＞］<br>[GROUP BY ＜列名＞ ] <br>[HAVING ＜条件表达式＞］<br>[ORDER BY ＜列名＞ [ ASC | DESC)); <br></code></pre></td></tr></tbody></table></figure>
+<h4 id="数据更新">数据更新</h4>
+<h3 id="关系规范化">关系规范化</h3>
+<ul>
+<li>候选码：能唯一标识一行记录的最小属性组</li>
+<li>主属性：包含在任何一个候选码中的属性</li>
+</ul>
+<h4 id="计算候选码">计算候选码</h4>
+<ul>
+<li>初次筛选
+<ul>
+<li>一定属于：只出现在左边、左右均没有出现过的</li>
+<li>可能属于：左右都出现</li>
+<li>一定不属于：只出现在右边</li>
+</ul>
+</li>
+<li>先对确定的属性进行闭包运算，若不能构成候选码则再组合待定的属性，直到得到的属性能够推出全部的属性
+<ul>
+<li>$A<sup>{(0)}=A$、$A</sup>{(1)}=A<sup>{(0)}推出来的$、$A</sup>{(2)}=A^{(1)}可以推出来的$ 直至 $A<sup>{(n-1)}=A</sup>{(n)}$</li>
+</ul>
+</li>
+</ul>
+<h4 id="最小函数依赖集">最小函数依赖集</h4>
+<ul>
+<li>拆分右侧
+<ul>
+<li>例如：将<code>A-&gt;BC</code>拆分为<code>A-&gt;B</code>和<code>A-&gt;C</code></li>
+</ul>
+</li>
+<li>去除自身求闭包
+<ul>
+<li>例如：<code>AB-&gt;C</code>，若去除<code>AB</code>自身能推出的<code>C</code>，基于剩余的依赖关系求<code>AB</code>的闭包，若仍能推出<code>C</code>，那么删除多余的<code>AB-&gt;C</code></li>
+</ul>
+</li>
+<li>左侧最小化
+<ul>
+<li>例如：目前保留的关系有<code>ABC-&gt;D</code>，则观察左边能否互相推出</li>
+</ul>
+</li>
+</ul>
+<h4 id="范式">范式</h4>
+<ul>
+<li>第一范式（1NF）：每一个属性名和属性值都不可再分（原子属性）
+<ul>
+<li>复合属性分解为原子属性</li>
+<li>关系模式分解</li>
+</ul>
+</li>
+<li>第二范式（2NF）：每一个非主属性都完全依赖于码
+<ul>
+<li>分解关系模式，使得每个属性都对主码完全函数依赖</li>
+</ul>
+</li>
+<li>第三范式（3NF）：每个非主属性既不部分依赖于码也不传递依赖于码
+<ul>
+<li>将传递依赖的函数拆成两个关系模式</li>
+</ul>
+</li>
+<li>BCNF：决定因素都必须是候选码</li>
+</ul>
+<h3 id="数据库设计">数据库设计</h3>
+<ul>
+<li>横线标注主码</li>
+<li>波浪线标注外码</li>
+</ul>
+<h3 id="数据库保护">数据库保护</h3>
+<p>事务具有原子性，只能全被执行或者全不被执行（回滚）。</p>
+<p>并行：多个事件同一时刻发生（硬件条件是有多个CPU）</p>
+<p>并发：多个事件同一时期发生</p>
+<p>可以自己阻塞自己，当需要别的来唤醒</p>
+<p>可以自己挂起自己，当需要别的![image-20260310104348342](/Users/richard/Library/Application Support/typora-user-images/image-20260310104348342.png)</p>
+<p>临界资源：在一段时间只能允许一个进程使用的资源</p>
+
                 
               </div>
             
@@ -498,43 +585,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/CPP/" class="category-chain-item">CPP</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/CPP/OOP/" class="category-chain-item">OOP</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/C/" class="print-no-link">#C++</a>
-      
-        <a href="/tags/OOP/" class="print-no-link">#OOP</a>
-      
-    </div>
   
 </div>
 
@@ -544,8 +594,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Operator Overloading in C++</div>
-      <div>http://example.com/2025/07/19/CPP/Operator-Overloading-in-C++/</div>
+      <div>Database</div>
+      <div>http://example.com/2026/05/01/Review/Database/</div>
     </div>
     <div class="license-meta">
       
@@ -557,13 +607,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>July 19, 2025</div>
+          <div>May 1, 2026</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>July 19, 2025</div>
+          <div>May 2, 2026</div>
         </div>
       
       
@@ -594,18 +644,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/07/22/CPP/Classes-and-Objects-in-C++/" title="Classes and Objects in C++">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Classes and Objects in C++</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/07/17/CPP/The-Four-Pillars-of-OOP-in-C++/" title="The Four Pillars of OOP in C++">
-                        <span class="hidden-mobile">The Four Pillars of OOP in C++</span>
+                      <a href="/2026/04/01/Tutorial/Debugging-and-Profiling/" title="Debugging and Profiling">
+                        <span class="hidden-mobile">Debugging and Profiling</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
