@@ -1,0 +1,1153 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Windows 常用网络命令              以下命令均在 cmd 中运行（Win+R → 输入 cmd → 回车）。            ipconfig — 查看&#x2F;更新本机网络配置              这是什么？ 查看本机的 IP 地址、子网掩码、网关、DNS 等网络参数。什么时候用？ 上不了网时第一步就跑这个，看看自己有没有拿到 IP、网关对不对。            1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NetLab 2">
+<meta property="og:url" content="http://example.com/2026/05/25/Lab/NetLab%201-2/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="Windows 常用网络命令              以下命令均在 cmd 中运行（Win+R → 输入 cmd → 回车）。            ipconfig — 查看&#x2F;更新本机网络配置              这是什么？ 查看本机的 IP 地址、子网掩码、网关、DNS 等网络参数。什么时候用？ 上不了网时第一步就跑这个，看看自己有没有拿到 IP、网关对不对。            1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-05-25T12:44:15.000Z">
+<meta property="article:modified_time" content="2026-05-25T13:53:57.680Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>NetLab 2 - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LQX&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/other/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>Else</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/other/life-musings/" target="_self">
+                    
+                    <span>精进日记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/08/13/other/Casual-Chronicles/" target="_self">
+                    
+                    <span>生活杂谈</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/banner_img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="NetLab 2"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-05-25 20:44" pubdate>
+          May 25, 2026 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">NetLab 2</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Windows-常用网络命令">Windows 常用网络命令</h2>
+<div class="note note-info">
+            <p>以下命令均在 <strong>cmd</strong> 中运行（Win+R → 输入 <code>cmd</code> → 回车）。</p>
+          </div>
+<h3 id="ipconfig-—-查看-更新本机网络配置">ipconfig — 查看/更新本机网络配置</h3>
+<div class="note note-primary">
+            <p><strong>这是什么？</strong> 查看本机的 IP 地址、子网掩码、网关、DNS 等网络参数。<br><strong>什么时候用？</strong> 上不了网时第一步就跑这个，看看自己有没有拿到 IP、网关对不对。</p>
+          </div>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cmd">:: 最常用：查看本机 IP、子网掩码、默认网关<br>&gt; <span class="hljs-built_in">ipconfig</span><br><br>Windows IP 配置<br><br>以太网适配器 以太网:<br>   IPv4 地址 . . . . . . . . : <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">100</span>    ← 你的 IP<br>   子网掩码  . . . . . . . . : <span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">0</span>     ← 子网掩码<br>   默认网关  . . . . . . . . : <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span>       ← 出口路由器地址<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cmd">:: 查看完整信息（含 MAC、DHCP、DNS 等）<br>&gt; <span class="hljs-built_in">ipconfig</span> /all<br><br>以太网适配器 以太网:<br>   物理地址(MAC) . . . . . . : AA-BB-CC-DD-EE-FF  ← 网卡物理地址，全球唯一<br>   DHCP 已启用 . . . . . . . : 是                ← IP 是否自动分配<br>   IPv4 地址 . . . . . . . . : <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">100</span>(首选)<br>   默认网关  . . . . . . . . : <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br>   DNS 服务器  . . . . . . . : <span class="hljs-number">202</span>.<span class="hljs-number">102</span>.<span class="hljs-number">128</span>.<span class="hljs-number">68</span>    ← 域名解析服务器<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cmd">:: 上不了网的排错：释放 → 重新获取<br>&gt; <span class="hljs-built_in">ipconfig</span> /release      ← 交还 IP 给 DHCP 服务器<br>&gt; <span class="hljs-built_in">ipconfig</span> /renew        ← 重新申请 IP<br><br>:: 网站换了 IP 但你还访问到旧地址？清 DNS 缓存<br>&gt; <span class="hljs-built_in">ipconfig</span> /flushdns<br>已成功刷新 DNS 解析缓存。<br></code></pre></td></tr></tbody></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/all</code></td>
+<td>显示完整信息（MAC、DHCP、DNS 等）</td>
+</tr>
+<tr>
+<td><code>/release</code></td>
+<td>释放 IP（归还给 DHCP）</td>
+</tr>
+<tr>
+<td><code>/renew</code></td>
+<td>重新获取 IP</td>
+</tr>
+<tr>
+<td><code>/flushdns</code></td>
+<td>清除 DNS 缓存</td>
+</tr>
+<tr>
+<td><code>/displaydns</code></td>
+<td>查看当前 DNS 缓存内容</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ping-—-测试两台主机能否通信">ping — 测试两台主机能否通信</h3>
+<div class="note note-primary">
+            <p><strong>这是什么？</strong> 向目标发一个 ICMP 包，对方收到后回一个确认包，以此判断<strong>网络通不通</strong>。<br><strong>什么时候用？</strong> 上不了网时：先 ping 网关 → 通了说明局域网 OK；再 ping 公网 IP（<code>8.8.8.8</code>）→ 通了说明外网 OK；再 ping 域名 → 不通说明 DNS 有问题。</p>
+          </div>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cmd">:: 基本用法：<span class="hljs-built_in">ping</span> 目标（默认发 <span class="hljs-number">4</span> 个包，每个 <span class="hljs-number">32</span> 字节）<br>&gt; <span class="hljs-built_in">ping</span> <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br><br>正在 <span class="hljs-built_in">Ping</span> <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span> 具有 <span class="hljs-number">32</span> 字节的数据:<br>来自 <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span> 的回复: 字节=<span class="hljs-number">32</span> 时间&lt;<span class="hljs-number">1</span>ms TTL=<span class="hljs-number">64</span><br>来自 <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span> 的回复: 字节=<span class="hljs-number">32</span> 时间&lt;<span class="hljs-number">1</span>ms TTL=<span class="hljs-number">64</span><br>来自 <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span> 的回复: 字节=<span class="hljs-number">32</span> 时间=<span class="hljs-number">1</span>ms TTL=<span class="hljs-number">64</span><br>来自 <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span> 的回复: 字节=<span class="hljs-number">32</span> 时间&lt;<span class="hljs-number">1</span>ms TTL=<span class="hljs-number">64</span><br><br><span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span> 的 <span class="hljs-built_in">Ping</span> 统计信息:<br>    数据包: 已发送 = <span class="hljs-number">4</span>，已接收 = <span class="hljs-number">4</span>，丢失 = <span class="hljs-number">0</span> (<span class="hljs-number">0</span>% 丢失)，<br>往返行程的估计时间(以毫秒为单位):<br>    最短 = <span class="hljs-number">0</span>ms，最长 = <span class="hljs-number">1</span>ms，平均 = <span class="hljs-number">0</span>ms<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cmd">:: 指定次数 (-n) 和包大小 (-l)<br>&gt; <span class="hljs-built_in">ping</span> -n <span class="hljs-number">10</span> -l <span class="hljs-number">1024</span> www.baidu.com<br><br>:: 反向解析：已知 IP 想知道它是谁 (-a)<br>&gt; <span class="hljs-built_in">ping</span> -a <span class="hljs-number">220</span>.<span class="hljs-number">181</span>.<span class="hljs-number">38</span>.<span class="hljs-number">148</span><br>正在 <span class="hljs-built_in">Ping</span> jtactsjf01a18038.n.shopee.com [<span class="hljs-number">220</span>.<span class="hljs-number">181</span>.<span class="hljs-number">38</span>.<span class="hljs-number">148</span>] 具有 <span class="hljs-number">32</span> 字节的数据:<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <ul><li><code>-t</code> 持续 Ping（Ctrl+C 停止）</li><li><code>-i TTL</code> 设置生存时间（每经过一个路由器 TTL 减 1，减到 0 则丢弃——这就是网络层数据包的"寿命"）</li><li><code>-w timeout</code> 超时等待时间（毫秒）</li><li>返回 <code>请求超时</code> = 对方没响应；返回 <code>目标主机不可达</code> = 路由不可达</li></ul>
+          </div>
+<h3 id="tracert-—-追踪数据包经过了哪些路由器">tracert — 追踪数据包经过了哪些路由器</h3>
+<div class="note note-primary">
+            <p><strong>这是什么？</strong> 探测你的电脑到目标之间经过了哪些路由器（每一"跳"）以及每跳的延迟。<br><strong>什么时候用？</strong> ping 不通时用来定位"断在哪一跳"。比如 ping 不通百度，跑 tracert 看第几跳断了，就能判断问题出在校园网还是运营商。</p>
+          </div>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cmd">&gt; tracert www.baidu.com<br><br>通过最多 <span class="hljs-number">30</span> 个跃点跟踪到 www.a.shifen.com [<span class="hljs-number">110</span>.<span class="hljs-number">242</span>.<span class="hljs-number">68</span>.<span class="hljs-number">66</span>] 的路由:<br>  <span class="hljs-number">1</span>    &lt;<span class="hljs-number">1</span> ms    &lt;<span class="hljs-number">1</span> ms    &lt;<span class="hljs-number">1</span> ms  <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span>          ← 第<span class="hljs-number">1</span>跳：你的网关<br>  <span class="hljs-number">2</span>     <span class="hljs-number">2</span> ms     <span class="hljs-number">2</span> ms     <span class="hljs-number">2</span> ms  <span class="hljs-number">10</span>.<span class="hljs-number">10</span>.<span class="hljs-number">10</span>.<span class="hljs-number">1</span>            ← 第<span class="hljs-number">2</span>跳：校园网核心路由<br>  <span class="hljs-number">3</span>     <span class="hljs-number">3</span> ms     <span class="hljs-number">3</span> ms     <span class="hljs-number">4</span> ms  <span class="hljs-number">202</span>.<span class="hljs-number">102</span>.<span class="hljs-number">128</span>.<span class="hljs-number">1</span>         ← 第<span class="hljs-number">3</span>跳：运营商<br>  ...<br>  <span class="hljs-number">8</span>    <span class="hljs-number">12</span> ms    <span class="hljs-number">11</span> ms    <span class="hljs-number">11</span> ms  <span class="hljs-number">110</span>.<span class="hljs-number">242</span>.<span class="hljs-number">68</span>.<span class="hljs-number">66</span>         ← 到达目标<br>跟踪完成。<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <ul><li><code>-d</code> 不解析主机名（跳过 DNS 查询，更快）</li><li><code>-h maximum_hops</code> 最大跳数（默认 30）</li><li>输出中 <code>* * *</code> 表示该跳超时未响应（可能对方禁止了 ICMP）</li></ul>
+          </div>
+<h3 id="nslookup-—-查询域名对应的-IP-地址">nslookup — 查询域名对应的 IP 地址</h3>
+<div class="note note-primary">
+            <p><strong>这是什么？</strong> 查询 DNS 记录，即"这个域名对应哪个 IP"。<br><strong>什么时候用？</strong> 浏览器打不开网站但 ping IP 能通 → 怀疑 DNS 有问题就用这个。</p>
+          </div>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cmd">:: 查询百度对应的 IP<br>&gt; nslookup www.baidu.com<br><br>服务器:  dns.cmu.edu.cn           ← 你当前使用的 DNS 服务器<br><span class="hljs-function">Address:  202.102.128.68</span><br><span class="hljs-function"></span><br><span class="hljs-function">非权威应答:</span><br><span class="hljs-function">名称:    <span class="hljs-title">www.a.shifen.com</span>         ← 实际服务器名</span><br><span class="hljs-function"><span class="hljs-title">Address</span>:  110.242.68.66          ← 对应 <span class="hljs-title">IP</span></span><br><span class="hljs-function"><span class="hljs-title">Aliases</span>:  <span class="hljs-title">www.baidu.com</span>           ← 别名</span><br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmd">:: 指定用 Google DNS 查询（绕过本地 DNS 排错）<br>&gt; nslookup www.baidu.com <span class="hljs-number">8</span>.<span class="hljs-number">8</span>.<span class="hljs-number">8</span>.<span class="hljs-number">8</span><br></code></pre></td></tr></tbody></table></figure>
+<h3 id="netstat-—-查看本机的网络连接状态">netstat — 查看本机的网络连接状态</h3>
+<div class="note note-primary">
+            <p><strong>这是什么？</strong> 显示本机当前所有网络连接、侦听端口、路由表和协议统计。<br><strong>什么时候用？</strong> 怀疑电脑有异常程序联网、想看某个端口被谁占用、排查端口冲突。</p>
+          </div>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cmd">:: 查看所有 TCP 连接和侦听端口<br>&gt; netstat -an<br><br>活动连接<br>  协议    本地地址          外部地址              状态<br>  TCP     <span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>:<span class="hljs-number">80</span>        <span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>:<span class="hljs-number">0</span>              LISTENING      ← 有人在监听<span class="hljs-number">80</span>端口<br>  TCP     <span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>:<span class="hljs-number">443</span>       <span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>:<span class="hljs-number">0</span>              LISTENING      ← HTTPS<br>  TCP     <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">100</span>:<span class="hljs-number">5241</span>  <span class="hljs-number">120</span>.<span class="hljs-number">232</span>.<span class="hljs-number">145</span>.<span class="hljs-number">185</span>:<span class="hljs-number">443</span>   ESTABLISHED    ← 已建立的连接<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmd">&gt; netstat -an -p tcp    :: 只看 TCP<br>&gt; netstat -r             :: 查看路由表<br>&gt; netstat -s             :: 各协议统计信息<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p>常用参数：<code>-a</code> 所有端口，<code>-n</code> 数字形式（不解析域名，更快），<code>-o</code> 显示进程 PID，<code>-b</code> 显示程序名（需管理员权限）。</p>
+          </div>
+<h3 id="arp-—-查看-IP-与-MAC-地址的映射表">arp — 查看 IP 与 MAC 地址的映射表</h3>
+<div class="note note-primary">
+            <p><strong>这是什么？</strong> ARP（地址解析协议）负责把 <strong>IP 地址</strong>翻译成<strong>网卡物理地址（MAC）</strong>。<code>arp -a</code> 查看本机缓存的映射表。<br><strong>什么时候用？</strong> 局域网通信异常时检查 ARP 表有没有被篡改（ARP 欺骗攻击会改这个表）。</p>
+          </div>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cmd">&gt; arp -a<br><br>接口: <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">100</span> --- <span class="hljs-number">0</span>x3<br>  Internet 地址         物理地址              类型<br>  <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span>           aa-bb-cc-<span class="hljs-number">11</span>-<span class="hljs-number">22</span>-<span class="hljs-number">33</span>     动态   ← 网关的 MAC<br>  <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">101</span>         <span class="hljs-number">00</span>-<span class="hljs-number">11</span>-<span class="hljs-number">22</span>-<span class="hljs-number">33</span>-<span class="hljs-number">44</span>-<span class="hljs-number">55</span>     动态   ← 邻居的 MAC<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmd">&gt; arp -s <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">200</span>  <span class="hljs-number">00</span>-aa-<span class="hljs-number">00</span>-<span class="hljs-number">62</span>-c6-<span class="hljs-number">09</span>   :: 手动添加静态映射<br>&gt; arp -d <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">200</span>                      :: 删除指定记录<br>&gt; arp -d *                                 :: 清空所有缓存<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="route-—-查看和管理本机路由表">route — 查看和管理本机路由表</h3>
+<div class="note note-primary">
+            <p><strong>这是什么？</strong> 路由表决定你的电脑发出去的数据包该往哪个网关走。<br><strong>什么时候用？</strong> 多网卡环境（有线+无线+VPN），需要控制数据走哪个出口；或排查"访问某个网段走错了路"。</p>
+          </div>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cmd">&gt; route <span class="hljs-built_in">print</span><br><br>IPv4 路由表<br>活动路由:<br>网络目标        网络掩码          网关       接口       跃点数<br><span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>          <span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>      <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span>   <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">100</span>     <span class="hljs-number">25</span>   ← 默认路由（其他都走这）<br><span class="hljs-number">127</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>        <span class="hljs-number">255</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>         在链路上     <span class="hljs-number">127</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">1</span>    <span class="hljs-number">331</span>   ← 本机回环<br><span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">0</span>    <span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">0</span>         在链路上   <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">100</span>    <span class="hljs-number">291</span>   ← 本局域网直连<br></code></pre></td></tr></tbody></table></figure>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cmd">:: 添加路由：访问 <span class="hljs-number">10</span>.x.x.x 走指定网关<br>&gt; route ADD <span class="hljs-number">10</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span> MASK <span class="hljs-number">255</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span> <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span> METRIC <span class="hljs-number">3</span> <span class="hljs-keyword">IF</span> <span class="hljs-number">2</span><br>                目标网段^   ^掩码^         ^网关^        ^成本  ^网卡编号<br>:: 永久路由（重启后保留）<br>&gt; route -p ADD <span class="hljs-number">10</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span> MASK <span class="hljs-number">255</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span> <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br>:: 删除路由<br>&gt; route DELETE <span class="hljs-number">10</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p>匹配规则：最长前缀优先。<code>0.0.0.0</code> 是默认路由（兜底），优先级最低。<code>METRIC</code> 越小优先级越高。</p>
+          </div>
+<h3 id="netsh-—-命令行配置网络参数">netsh — 命令行配置网络参数</h3>
+<div class="note note-primary">
+            <p><strong>这是什么？</strong> Windows 的"网络配置瑞士军刀"，能用命令行完成图形界面里的所有网络配置。<br><strong>什么时候用？</strong> 批量配置多台电脑、写自动化脚本、图形界面点不开时。</p>
+          </div>
+<div class="note note-info">
+            <p>两种用法：通行命令（一行写完）和分级命令（输入 <code>netsh</code> 后进入交互界面逐级选择）。</p>
+          </div>
+<figure class="highlight cmd"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cmd">:: 静态配置 IP、掩码、网关<br>&gt; netsh interface ip <span class="hljs-built_in">set</span> address "以太网" static <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">100</span> <span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">0</span> <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br>:: 静态配置 DNS<br>&gt; netsh interface ip <span class="hljs-built_in">set</span> dns "以太网" static <span class="hljs-number">8</span>.<span class="hljs-number">8</span>.<span class="hljs-number">8</span>.<span class="hljs-number">8</span> primary<br>:: 切回 DHCP 自动获取<br>&gt; netsh interface ip <span class="hljs-built_in">set</span> address "以太网" source=dhcp<br>&gt; netsh interface ip <span class="hljs-built_in">set</span> dns "以太网" source=dhcp<br></code></pre></td></tr></tbody></table></figure>
+<hr>
+<h2 id="Wireshark">Wireshark</h2>
+<div class="note note-primary">
+            <p><strong>这是什么？</strong> 全球最流行的<strong>开源网络抓包分析工具</strong>。它能截获网卡上流经的所有数据包，逐层解析出每一层的协议头部信息（从以太网帧 → IP → TCP → HTTP 应用层），让你"看到"网络中到底在传什么数据。<br><strong>什么时候用？</strong> 前面那些命令（ping、tracert、netstat）只能看到"结果"（通不通、端口有没有开），而 Wireshark 能看到"过程"——每一个包的完整内容。排错时用命令定位大致问题，再用 Wireshark 精确分析包内容。</p>
+          </div>
+<h3 id="过滤器">过滤器</h3>
+<p>Wireshark 有两种过滤器：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>捕捉过滤器</th>
+<th>显示过滤器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作用时机</td>
+<td>开始捕捉<strong>前</strong>设置</td>
+<td>捕捉前或捕捉后均可</td>
+</tr>
+<tr>
+<td>功能</td>
+<td>第一层过滤，控制捕捉数据<strong>数量</strong></td>
+<td>在已捕捉结果中精细筛选</td>
+</tr>
+<tr>
+<td>灵活性</td>
+<td>设置后不可修改</td>
+<td>随时可修改</td>
+</tr>
+<tr>
+<td>复杂度</td>
+<td>较简单</td>
+<td>更强大、更复杂</td>
+</tr>
+</tbody>
+</table>
+<h4 id="捕捉过滤器语法">捕捉过滤器语法</h4>
+<figure class="highlight scss"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs scss">Protocol  <span class="hljs-attribute">Direction</span>  <span class="hljs-built_in">Host</span>(s)  Value  Logical Operations  Other expression<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>
+<p><strong>Protocol（协议）：</strong> <code>ether</code>, <code>fddi</code>, <code>ip</code>, <code>arp</code>, <code>rarp</code>, <code>tcp</code>, <code>udp</code> 等，未指定则匹配全部协议。关键字作值时需加 <code>\</code> 转义。</p>
+</li>
+<li>
+<p><strong>Direction（方向）：</strong> <code>src</code>, <code>dst</code>, <code>src and dst</code>, <code>src or dst</code>，默认 <code>src or dst</code>。</p>
+</li>
+<li>
+<p><strong>Host(s)（主机标识）：</strong> <code>net</code>（网段）, <code>port</code>（单端口）, <code>host</code>（主机）, <code>portrange</code>（端口区间），默认 <code>host</code>。</p>
+</li>
+<li>
+<p><strong>Logical Operations（逻辑运算）：</strong> <code>not</code> &gt; <code>and</code> = <code>or</code>（同级从左向右）。</p>
+</li>
+<li>
+<p><strong>特殊标识：</strong> 仅可搭配 <code>ip</code>、<code>ether</code> 使用 —— <code>multicast</code>（组播）, <code>broadcast</code>（广播）, <code>no broadcast</code>（排除广播）。</p>
+</li>
+</ul>
+<div class="note note-primary">
+            <p>示例：<code>tcp dst 10.1.1.1 80 and tcp dst 10.2.2.2 3128</code></p>
+          </div>
+<h4 id="显示过滤器语法">显示过滤器语法</h4>
+<figure class="highlight wren"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs wren"><span class="hljs-title class_">Protocol</span>  <span class="hljs-title class_">String</span>1  <span class="hljs-title class_">String</span>2  <span class="hljs-title class_">Comparison</span> <span class="hljs-variable">operator</span>  <span class="hljs-title class_">Value</span>  <span class="hljs-title class_">Logical</span> <span class="hljs-title class_">Operations</span><br></code></pre></td></tr></tbody></table></figure>
+<p><strong>比较运算符：</strong></p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>C 语言</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>eq</td>
+<td>==</td>
+<td>等于</td>
+</tr>
+<tr>
+<td>ne</td>
+<td>!=</td>
+<td>不等于</td>
+</tr>
+<tr>
+<td>gt</td>
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>lt</td>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>ge</td>
+<td>&gt;=</td>
+<td>大于等于</td>
+</tr>
+<tr>
+<td>le</td>
+<td>&lt;=</td>
+<td>小于等于</td>
+</tr>
+</tbody>
+</table>
+<p><strong>逻辑运算符：</strong></p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>C 语言</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>and</td>
+<td>&amp;&amp;</td>
+<td>逻辑与</td>
+</tr>
+<tr>
+<td>or</td>
+<td>||</td>
+<td>逻辑或</td>
+</tr>
+<tr>
+<td>xor</td>
+<td>^^</td>
+<td>逻辑异或（仅一个满足时为真）</td>
+</tr>
+<tr>
+<td>not</td>
+<td>!</td>
+<td>逻辑非</td>
+</tr>
+</tbody>
+</table>
+<div class="note note-warning">
+            <p>输入正确时背景变<strong>绿色</strong>，错误时变<strong>红色</strong>。</p>
+          </div>
+<h3 id="OSI-层级与抓包信息的关系">OSI 层级与抓包信息的关系</h3>
+<ul>
+<li><strong>OSI Layer 2</strong> 抓包：Source/Destination 列显示 <strong>MAC 地址</strong>，Port 列为空</li>
+<li><strong>OSI Layer 3 及以上</strong>：Source/Destination 列显示 <strong>IP 地址</strong></li>
+<li><strong>Layer 4 及以上</strong>：Port 列显示 <strong>TCP/UDP 端口号</strong></li>
+</ul>
+<hr>
+<h2 id="Cisco-Packet-Tracer-PT">Cisco Packet Tracer (PT)</h2>
+<div class="note note-primary">
+            <p><strong>这是什么？</strong> Cisco 开发的<strong>免费网络仿真程序</strong>，让你在电脑上虚拟搭建路由器、交换机、PC 等设备，组成一个完整的网络拓扑。它可以模拟数据包在网络中逐跳转发的全过程。<br><strong>什么时候用？</strong> 真实设备太贵不方便，PT 提供了一个安全的实验环境。学完网络理论后，用 PT 搭一个网络验证理论（比如配 RIP 路由、划 VLAN、配 NAT），比看书直观得多。</p>
+          </div>
+<h3 id="两种工作状态">两种工作状态</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>逻辑状态（Logical）</th>
+<th>物理状态（Physical）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用途</td>
+<td>网络设备的逻辑连接及配置（拓扑设计、设备选型、端口参数配置）</td>
+<td>地理布局设计（城市、办公室等地理位置关系）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="两种工作模式">两种工作模式</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>实时模式（Realtime）</th>
+<th>模拟模式（Simulation）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>特点</td>
+<td>连续时间，模拟实际网络工作</td>
+<td>时间暂停，人工控制逐跳传输</td>
+</tr>
+<tr>
+<td>用途</td>
+<td>设备配置、IOS CLI 模拟、即时连通性测试</td>
+<td>可视化观察数据包逐跳转发过程、排错</td>
+</tr>
+</tbody>
+</table>
+<h3 id="连接线类型">连接线类型</h3>
+<table>
+<thead>
+<tr>
+<th>线型</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自动选线</td>
+<td>不确定时使用，一般不建议</td>
+</tr>
+<tr>
+<td>直通线</td>
+<td><strong>不同</strong>设备相连（“异直”）</td>
+</tr>
+<tr>
+<td>交叉线</td>
+<td><strong>相同</strong>设备相连，或路由器↔PC（“同反”）</td>
+</tr>
+<tr>
+<td>光纤</td>
+<td>光纤连接</td>
+</tr>
+<tr>
+<td>DCE/DTE</td>
+<td>路由器之间串行连接，DCE 端需配置时钟</td>
+</tr>
+</tbody>
+</table>
+<div class="note note-info">
+            <p>原则：<strong>“同反异直”</strong> —— 相同设备交叉线，不同设备直通线。</p>
+          </div>
+<h3 id="线缆端点状态指示">线缆端点状态指示</h3>
+<table>
+<thead>
+<tr>
+<th>圆点状态</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>亮绿色</td>
+<td>物理连接就绪，尚未有 Line Protocol status 指示</td>
+</tr>
+<tr>
+<td>闪烁绿色</td>
+<td>连接已激活</td>
+</tr>
+<tr>
+<td>红色</td>
+<td>物理连接不通，没有信号</td>
+</tr>
+<tr>
+<td>黄色</td>
+<td>交换机端口处于"阻塞"状态</td>
+</tr>
+</tbody>
+</table>
+<h3 id="设备配置界面">设备配置界面</h3>
+<p>设备的配置界面有三个标签：</p>
+<ul>
+<li><strong>Physical</strong> — 模块的物理组成配置（添加/删除模块前必须<strong>关闭电源</strong>，不支持热插拔）</li>
+<li><strong>Config</strong> — GUI 图形化配置，包含 GLOBAL / ROUTING / SWITCHING / INTERFACE 四个大项</li>
+<li><strong>CLI</strong> — 命令行配置，与实际路由器配置环境相似</li>
+</ul>
+<h2 id="常见排错要点">常见排错要点</h2>
+<ul>
+<li>路由器默认端口有限，连接前需确认端口是否够用，必要时在 Physical 标签下<strong>添加模块</strong>（如 NM-4E）</li>
+<li>添加/删除模块前必须<strong>关闭设备电源</strong></li>
+<li>PC 需正确配置 <strong>IP 地址、子网掩码、默认网关</strong></li>
+<li>网段划分错误或漏配默认网关会导致 Ping 不通</li>
+<li>组网遵循 <strong>“配置 - 测试 - 排错”</strong> 的循环</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>NetLab 2</div>
+      <div>http://example.com/2026/05/25/Lab/NetLab 1-2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>May 25, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>May 25, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/05/25/Agent/Dive-into-SKILLS/" title="Dive into SKILLS">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Dive into SKILLS</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/05/12/Review/Economy-and-Society/" title="Economy and Society">
+                        <span class="hidden-mobile">Economy and Society</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
