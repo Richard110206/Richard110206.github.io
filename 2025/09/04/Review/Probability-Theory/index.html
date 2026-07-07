@@ -27,7 +27,7 @@
 <meta property="og:description" content="概率论与数理统计期末复习笔记，涵盖随机事件与概率、随机变量与分布、数字特征、大数定律、抽样分布及参数估计等核心知识点。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-09-04T04:54:45.000Z">
-<meta property="article:modified_time" content="2026-05-10T15:28:17.205Z">
+<meta property="article:modified_time" content="2026-07-06T07:22:10.519Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -608,7 +608,7 @@
 <h4 id="正态分布">正态分布</h4>
 <p>$X \sim N(\mu, \sigma^2)$</p>
 <p><strong>概率密度函数</strong>：</p>
-<p>$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e<sup>{-\frac{(x-\mu)</sup>2}{2\sigma^2}}$$</p>
+<p>$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$</p>
 <ul>
 <li>$\mu$：均值，决定曲线<strong>中心位置</strong></li>
 <li>$\sigma$：标准差，决定曲线<strong>离散程度</strong>（$\sigma$ 越小越集中）</li>
@@ -832,7 +832,7 @@
 <li>$E(\chi^2(n)) = n$</li>
 <li>$D(\chi^2(n)) = 2n$</li>
 <li>可加性：$X \sim \chi^2(m)$，$Y \sim \chi^2(n)$ 独立 → $X + Y \sim \chi^2(m+n)$</li>
-<li>$\dfrac{(n-1)S<sup>2}{\sigma</sup>2} \sim \chi^2(n-1)$</li>
+<li>$\dfrac{(n-1)S^2}{\sigma^2} \sim \chi^2(n-1)$</li>
 </ul>
 <h4 id="t-分布">t 分布</h4>
 <p><strong>构造</strong>：$X \sim N(0, 1)$，$Y \sim \chi^2(n)$ 独立 → $T = \dfrac{X}{\sqrt{Y/n}} \sim t(n)$</p>
@@ -853,7 +853,7 @@
 </ul>
 <h3 id="正态总体抽样分布">正态总体抽样分布</h3>
 <div class="note note-info">
-            <p>设 $X_1, X_2, \ldots, X_n$ 来自 $N(\mu, \sigma^2)$，则：</p><ol><li>$\overline{X} \sim N(\mu, \sigma^2/n)$</li><li>$\dfrac{\overline{X} - \mu}{\sigma/\sqrt{n}} \sim N(0, 1)$</li><li>$\dfrac{\overline{X} - \mu}{S/\sqrt{n}} \sim t(n-1)$</li><li>$\dfrac{(n-1)S<sup>2}{\sigma</sup>2} \sim \chi^2(n-1)$</li><li>$\overline{X}$ 与 $S^2$ 独立</li></ol>
+            <p>设 $X_1, X_2, \ldots, X_n$ 来自 $N(\mu, \sigma^2)$，则：</p><ol><li>$\overline{X} \sim N(\mu, \sigma^2/n)$</li><li>$\dfrac{\overline{X} - \mu}{\sigma/\sqrt{n}} \sim N(0, 1)$</li><li>$\dfrac{\overline{X} - \mu}{S/\sqrt{n}} \sim t(n-1)$</li><li>$\dfrac{(n-1)S^2}{\sigma^2} \sim \chi^2(n-1)$</li><li>$\overline{X}$ 与 $S^2$ 独立</li></ol>
           </div>
 <hr>
 <h2 id="第七章-参数估计">第七章 参数估计</h2>
@@ -875,7 +875,7 @@
             <p><strong>注意</strong>：$\prod$ 取对数后变为 $\sum$。若含多个未知参数，则对每个参数求偏导，联立方程组。</p>
           </div>
 <div class="note note-info">
-            <p><strong>例题</strong>：设总体 $X \sim N(\mu, \sigma^2)$，$\mu$ 和 $\sigma^2$ 均未知，求 $\mu$ 和 $\sigma^2$ 的最大似然估计。</p><p><strong>解</strong>：<br>似然函数：$L = \prod_{i=1}^{n} \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x_i - \mu)<sup>2}{2\sigma</sup>2}}$</p><p>取对数：$\ln L = -\frac{n}{2}\ln(2\pi) - \frac{n}{2}\ln\sigma^2 - \frac{1}{2\sigma^2}\sum(x_i - \mu)^2$</p><p>对 $\mu$ 求偏导令为零：$\hat{\mu} = \overline{X}$</p><p>对 $\sigma^2$ 求偏导令为零：$\hat{\sigma}^2 = \frac{1}{n}\sum(X_i - \overline{X})^2$</p>
+            <p><strong>例题</strong>：设总体 $X \sim N(\mu, \sigma^2)$，$\mu$ 和 $\sigma^2$ 均未知，求 $\mu$ 和 $\sigma^2$ 的最大似然估计。</p><p><strong>解</strong>：<br>似然函数：$L = \prod_{i=1}^{n} \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x_i - \mu)^2}{2\sigma^2}}$</p><p>取对数：$\ln L = -\frac{n}{2}\ln(2\pi) - \frac{n}{2}\ln\sigma^2 - \frac{1}{2\sigma^2}\sum(x_i - \mu)^2$</p><p>对 $\mu$ 求偏导令为零：$\hat{\mu} = \overline{X}$</p><p>对 $\sigma^2$ 求偏导令为零：$\hat{\sigma}^2 = \frac{1}{n}\sum(X_i - \overline{X})^2$</p>
           </div>
 <h3 id="矩的定义汇总">矩的定义汇总</h3>
 <table>
@@ -952,8 +952,8 @@
 <td style="text-align:center">单个正态</td>
 <td style="text-align:center">$\sigma^2$</td>
 <td style="text-align:center">$\mu$ 未知</td>
-<td style="text-align:center">$\dfrac{(n-1)S<sup>2}{\sigma</sup>2} \sim \chi^2(n-1)$</td>
-<td style="text-align:center">$\left(\dfrac{(n-1)S<sup>2}{\chi</sup>2_{\alpha/2}}, \dfrac{(n-1)S<sup>2}{\chi</sup>2_{1-\alpha/2}}\right)$</td>
+<td style="text-align:center">$\dfrac{(n-1)S^2}{\sigma^2} \sim \chi^2(n-1)$</td>
+<td style="text-align:center">$\left(\dfrac{(n-1)S^2}{\chi^2_{\alpha/2}}, \dfrac{(n-1)S^2}{\chi^2_{1-\alpha/2}}\right)$</td>
 </tr>
 <tr>
 <td style="text-align:center">两个正态</td>
@@ -973,8 +973,8 @@
 <td style="text-align:center">两个正态</td>
 <td style="text-align:center">$\sigma_1^2 / \sigma_2^2$</td>
 <td style="text-align:center">$\mu_1, \mu_2$ 未知</td>
-<td style="text-align:center">$\dfrac{S_1<sup>2/\sigma_1</sup>2}{S_2<sup>2/\sigma_2</sup>2} \sim F(n_1-1, n_2-1)$</td>
-<td style="text-align:center">$\left(\dfrac{S_1<sup>2}{S_2</sup>2} \cdot \dfrac{1}{F_{\alpha/2}}, \dfrac{S_1<sup>2}{S_2</sup>2} \cdot \dfrac{1}{F_{1-\alpha/2}}\right)$</td>
+<td style="text-align:center">$\dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2} \sim F(n_1-1, n_2-1)$</td>
+<td style="text-align:center">$\left(\dfrac{S_1^2}{S_2^2} \cdot \dfrac{1}{F_{\alpha/2}}, \dfrac{S_1^2}{S_2^2} \cdot \dfrac{1}{F_{1-\alpha/2}}\right)$</td>
 </tr>
 </tbody>
 </table>
@@ -1036,7 +1036,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>May 10, 2026</div>
+          <div>July 6, 2026</div>
         </div>
       
       
