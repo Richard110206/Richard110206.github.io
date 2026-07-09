@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Computer%20Network.png?raw=true">
 <meta property="article:published_time" content="2026-07-04T04:00:00.000Z">
-<meta property="article:modified_time" content="2026-07-05T12:35:04.906Z">
+<meta property="article:modified_time" content="2026-07-09T08:20:04.179Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Review">
 <meta property="article:tag" content="Computer Network">
@@ -304,7 +304,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          17k words
+          18k words
         
       </span>
     
@@ -315,7 +315,7 @@
         
         
         
-          141 mins
+          152 mins
         
       </span>
     
@@ -496,7 +496,7 @@
 <p><strong>时延与利用率关系：</strong> $D = D_0 / (1 - U)$，利用率U增大时，时延D迅速增大。</p>
 <h3 id="1-5-三种交换方式">1.5 三种交换方式</h3>
 <div class="note note-primary">
-            <p><strong>重点：三种交换方式的对比、电路交换三个阶段</strong></p><p><strong>1. 电路交换：</strong> 建立连接 → 数据传输 → 释放连接</p><ul><li>通信时延小、有序、无冲突、控制简单</li><li>建立连接时间长、线路独占、灵活性差</li></ul><p><strong>2. 报文交换：</strong> 存储转发方式，无需建立连接</p><ul><li>动态分配线路、利用率高、提供多目标服务</li><li>转发时延大、需要较大缓存空间</li></ul><p><strong>3. 分组交换：</strong> 存储转发，限制数据块上限</p><ul><li>无建立时延、利用率高、加速传输、适合突发式数据通信</li><li>存在传输时延、需额外信息量、可能失序/丢失/重复</li></ul>
+            <p><strong>重点：三种交换方式的对比、电路交换三个阶段</strong></p><table><thead><tr><th style="text-align:center">特性</th><th style="text-align:center">电路交换</th><th style="text-align:center">报文交换</th><th style="text-align:center">分组交换</th></tr></thead><tbody><tr><td style="text-align:center"><strong>原理</strong></td><td style="text-align:center">建立连接→通话→释放连接</td><td style="text-align:center">整个报文存储转发</td><td style="text-align:center">报文切分为分组，逐个存储转发</td></tr><tr><td style="text-align:center"><strong>是否建立连接</strong></td><td style="text-align:center">是（独占线路）</td><td style="text-align:center">否</td><td style="text-align:center">否</td></tr><tr><td style="text-align:center"><strong>线路利用率</strong></td><td style="text-align:center">低（通信期间独占）</td><td style="text-align:center">高</td><td style="text-align:center">高</td></tr><tr><td style="text-align:center"><strong>时延</strong></td><td style="text-align:center">建立连接后传输快</td><td style="text-align:center">较大（整个报文存储转发）</td><td style="text-align:center">较小（分组短，并行转发）</td></tr><tr><td style="text-align:center"><strong>可靠性</strong></td><td style="text-align:center">连接断开则通信中断</td><td style="text-align:center">较好</td><td style="text-align:center">好（可绕行）</td></tr><tr><td style="text-align:center"><strong>资源分配</strong></td><td style="text-align:center">静态（预分配带宽）</td><td style="text-align:center">动态</td><td style="text-align:center">动态</td></tr><tr><td style="text-align:center"><strong>适用场景</strong></td><td style="text-align:center">实时电话</td><td style="text-align:center">电报</td><td style="text-align:center">互联网（数据通信）</td></tr></tbody></table><p><strong>1. 电路交换：</strong> 通信前先建立一条专用的端到端物理通路，通信期间独占。三个阶段：建立连接 → 数据传输 → 释放连接。</p><ul><li>优点：建立连接后传输速率快，延迟稳定</li><li>缺点：线路利用率低，建立连接时间长，不适合突发数据</li></ul><p><strong>2. 报文交换：</strong> 以整个报文为单位进行存储转发，不建立连接。</p><ul><li>优点：线路利用率高，不需要建立连接</li><li>缺点：报文可能很长，存储转发时延大，对缓存要求高</li></ul><p><strong>3. 分组交换：</strong> 将报文切分为较短的分组，每个分组独立存储转发。</p><ul><li>优点：时延小（分组短），灵活性高，线路利用率高</li><li>缺点：有额外开销（每个分组都要加首部），可能乱序到达</li></ul><div class="note note-warning">            <p><strong>【2025夏 · 简答2】电路交换、报文交换、分组交换优缺点。</strong></p><p>三种交换的核心区别：电路交换建立端到端专用通路，报文交换以整个报文存储转发，分组交换将报文切分为分组逐个存储转发。详见上方对比表。</p>          </div>
           </div>
 <div class="note note-info">
             <p><strong>【作业题】</strong> 长度为100字节的应用层数据交给运输层传送，需加上20字节的TCP首部，再交给网络层传送，继续加上20字节的IP首部，最后交给数据链路层的以太网传送，以太网的首部和尾部共18字节。试求数据的传输效率。</p><p><strong>解答：</strong> 网络传输数据时从应用层到物理层，除物理层外的每一层都需要加上该层的首部结构（数据链路层可能还需要加上校验尾部结构）。</p><p>需要传送的数据量 = 100字节，实际传送的数据量 = 100+20+20+18 = 158字节</p><p>传输效率 = 100/158 ≈ <strong>63.3%</strong></p>
@@ -504,6 +504,61 @@
 <h3 id="1-6-OSI与TCP-IP体系结构">1.6 OSI与TCP/IP体系结构</h3>
 <p><strong>OSI七层（从下到上）：</strong> 物理层 → 数据链路层 → 网络层 → 运输层 → 会话层 → 表示层 → 应用层</p>
 <p><strong>TCP/IP四层：</strong> 网络接口层 → 网际层(IP) → 运输层(TCP/UDP) → 应用层</p>
+<p><strong>三种模型对比：</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">OSI 七层模型</th>
+<th style="text-align:center">TCP/IP 四层模型</th>
+<th style="text-align:center">五层模型（教学用）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">第7层</td>
+<td style="text-align:center">应用层</td>
+<td style="text-align:center">应用层</td>
+<td style="text-align:center">应用层</td>
+</tr>
+<tr>
+<td style="text-align:center">第6层</td>
+<td style="text-align:center">表示层</td>
+<td style="text-align:center">↑</td>
+<td style="text-align:center">↑</td>
+</tr>
+<tr>
+<td style="text-align:center">第5层</td>
+<td style="text-align:center">会话层</td>
+<td style="text-align:center">↑</td>
+<td style="text-align:center">↑</td>
+</tr>
+<tr>
+<td style="text-align:center">第4层</td>
+<td style="text-align:center">运输层</td>
+<td style="text-align:center">运输层</td>
+<td style="text-align:center">运输层</td>
+</tr>
+<tr>
+<td style="text-align:center">第3层</td>
+<td style="text-align:center">网络层</td>
+<td style="text-align:center">网际层</td>
+<td style="text-align:center">网络层</td>
+</tr>
+<tr>
+<td style="text-align:center">第2层</td>
+<td style="text-align:center">数据链路层</td>
+<td style="text-align:center">网络接口层</td>
+<td style="text-align:center">数据链路层</td>
+</tr>
+<tr>
+<td style="text-align:center">第1层</td>
+<td style="text-align:center">物理层</td>
+<td style="text-align:center">↑</td>
+<td style="text-align:center">物理层</td>
+</tr>
+</tbody>
+</table>
 <p><strong>五层协议体系结构（折中方案）：</strong></p>
 <table>
 <thead>
@@ -550,6 +605,24 @@
 <div class="note note-info">
             <p><strong>协议三要素：</strong> 语法（表示规则）、语义（内容）、时序（作用顺序）</p><ul><li>协议是水平的（对等实体之间）</li><li>服务是垂直的（上下层之间）</li><li>接口是同一结点相邻两层间交换信息的连接点（SAP）</li></ul>
           </div>
+<div class="note note-warning">
+            <p><strong>【2024春 · 简答1】TCP/IP和OSI模型的优缺点，内容，联系。</strong></p><p><strong>OSI模型的优缺点：</strong></p><ul><li><strong>优点</strong>: 层次清晰，概念完整，服务/接口/协议三者分离，理论价值高</li><li><strong>缺点</strong>: 严格分层导致效率低，某些功能在不同层重复出现；实现复杂，实际未完全商业化</li></ul><p><strong>TCP/IP模型的优缺点：</strong></p><ul><li><strong>优点</strong>: 实用性强，先有协议后有模型，是互联网的实际标准；网络接口层兼容各种底层网络</li><li><strong>缺点</strong>: 网络接口层定义模糊，没有明确区分物理层和数据链路层；模型层次少，某些功能界定不清</li></ul><p><strong>两者联系：</strong></p><ul><li>都采用分层体系结构</li><li>都基于独立协议栈的概念</li><li>都能实现异构网络互联</li><li>五层模型综合了两者的优点，便于教学</li></ul>
+          </div>
+<p><strong>为什么要分层？</strong></p>
+<p>分层的好处：</p>
+<ol>
+<li>各层之间相互独立（上层不需要知道下层如何实现）</li>
+<li>灵活性好（某一层技术变化不影响其他层）</li>
+<li>结构上可分割</li>
+<li>易于实现和维护</li>
+<li>能促进标准化工作</li>
+</ol>
+<p>分层的坏处：</p>
+<ol>
+<li>降低效率（层层封装/解封装有开销）</li>
+<li>有些功能会在不同层次中重复出现</li>
+</ol>
+<p>层次多少的权衡：层数太少 → 每一层协议太复杂；层数太多 → 描述和综合各层功能时困难较多</p>
 <div class="note note-info">
             <p><strong>C/S方式与P2P方式：</strong></p><ul><li>C/S（客户/服务器）：主动-被动模式，客户请求，服务器提供服务</li><li>P2P（对等连接）：双方都是客户和服务器，本质仍是C/S方式</li></ul>
           </div>
@@ -565,32 +638,12 @@
             <p><strong>【作业题】</strong> 假定信道带宽为3100Hz，最大信息传输速率为35kbit/s，请用香农公式计算：</p><p>（1）若想使最大信息传输速率增加60%，问信噪比S/N应增大到多少倍？</p><p>（2）如果在（1）基础上将信噪比S/N再增大到10倍，问最大信息速率能否再增加20%？</p><p><strong>解答：</strong></p><p>（1）$C_1 = 35 \text{ kbit/s}$，由 $C = W\log_2(1+S/N)$：$S/N_1 = 2^{C_1/W}-1 \approx 2502.97$</p><p>$C_2 = 1.6 \times C_1 = 56 \text{ kbit/s}$，$S/N_2 = 2^{C_2/W}-1 \approx 273275.14$</p><p><strong>S/N应增大到约109倍</strong>（$273275.14/2502.97 \approx 109.18$）</p><p>（2）$S/N_3 = 10 \times S/N_2$，$C_3 = W\log_2(1+S/N_3)$</p><p>增加比例约7.7%，<strong>不能</strong>再增加20%。</p>
           </div>
 <h3 id="2-3-基带编码方式">2.3 基带编码方式</h3>
-<table>
-<thead>
-<tr>
-<th>编码方式</th>
-<th>特点</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>不归零制(NRZ)</strong></td>
-<td>正电平=1，负电平=0，直接转换不经零电平。无自同步能力</td>
-</tr>
-<tr>
-<td><strong>归零制(RZ)</strong></td>
-<td>正脉冲=1，负脉冲=0，脉冲间经过零态</td>
-</tr>
-<tr>
-<td><strong>曼彻斯特编码</strong></td>
-<td>位中间上跳变=0，下跳变=1（也可反过来）。有自同步能力，频带宽度加倍</td>
-</tr>
-<tr>
-<td><strong>差分曼彻斯特编码</strong></td>
-<td>每位中心始终有跳变；位开始边界有跳变=0，无跳变=1。有自同步能力</td>
-</tr>
-</tbody>
-</table>
+<div class="note note-warning">
+            <p><strong>【某年真题 · 简答4】以太网中的基带编码有哪些？</strong></p><p>以太网使用的基带编码主要有以下四种：</p><table><thead><tr><th>编码方式</th><th>规则</th><th>特点</th></tr></thead><tbody><tr><td><strong>不归零制（NRZ）</strong></td><td>高电平=1，低电平=0，直接转换不经零电平</td><td>简单，但无时钟同步，长串0/1易失步</td></tr><tr><td><strong>归零制（RZ）</strong></td><td>正脉冲=1，负脉冲=0，每个码元中间回到零电平</td><td>有时钟信息，但频带利用率低</td></tr><tr><td><strong>曼彻斯特编码</strong></td><td>位中间跳变：上升沿=0，下降沿=1（也可反过来）</td><td>自带时钟同步，效率50%（频带宽度加倍）</td></tr><tr><td><strong>差分曼彻斯特编码</strong></td><td>位中间必跳变；位开始边界：前半个码片与前一个码片后半相同=1，取反=0</td><td>自带时钟同步，抗干扰好（判决依据是边界变化而非电平绝对值）</td></tr></tbody></table><blockquote><p><strong>注意</strong>: 10Mb/s以太网采用曼彻斯特编码，波特率 = 数据率 × 2 = 20 MBaud。</p></blockquote>
+          </div>
+<div class="note note-info">
+            <p><strong>【2025夏 · 计算4】码元率10000，划分为8个振幅，求数据传输率。</strong></p><p><strong>解答：</strong></p><p>由奈氏准则：$C = B \log_2 V$</p><p>其中波特率 $B = 10000$ Baud，码元种类数 $V = 8$</p><p>数据传输率 $C = 10000 \times \log_2 8 = 10000 \times 3 = $ <strong>30000 bit/s = 30 kbit/s</strong></p>
+          </div>
 <div class="note note-info">
             <p><strong>【作业题】</strong> （1）画出数字信息011101001的曼彻斯特编码和差分曼彻斯特编码。</p><p>（2）10Mb/s以太网的码元传输速率是多少？</p><p><strong>解答：</strong></p><p>（1）曼彻斯特编码：每个码元中心有跳变，高→低=1，低→高=0。</p><p>差分曼彻斯特编码：码元前沿有跳变=0，无跳变=1。</p><p>（2）波特率 = 数据率 × 2 = <strong>20 MBaud</strong>（曼彻斯特编码每个码元用两个信号周期）</p>
           </div>
@@ -730,12 +783,18 @@
 </table>
 <ul>
 <li><strong>有效帧长度：64~1518字节</strong>（不含前同步码和帧开始定界符）</li>
-<li>数据字段最小46字节（64-18首尾），不足需填充</li>
+<li>帧首部 = 6+6+2 = <strong>14字节</strong>，帧尾部 = <strong>4字节</strong>（FCS/CRC校验）</li>
+<li>数据字段 = 46~1500字节（MTU = 1500字节）</li>
+<li>最短帧长 = 14+46+4 = <strong>64字节</strong></li>
+<li>最长帧长 = 14+1500+4 = <strong>1518字节</strong></li>
 <li>MAC地址48位 = 6字节，全球唯一（OUI+厂商自分配）</li>
 </ul>
+<div class="note note-info">
+            <p><strong>为什么最短帧长是64字节？</strong></p><ul><li>为了保证发送方在<strong>发送完一个帧之前就能检测到碰撞</strong></li><li>争用期（碰撞窗口）2τ = 51.2μs，10Mbps下 $51.2\mu s \times 10\text{Mbps} = 512\text{ bit} = 64$ 字节</li><li>如果帧长 &lt; 64字节，发送方可能在帧已发完后才收到碰撞信号，无法检测碰撞</li></ul>
+          </div>
 <h3 id="3-6-扩展以太网与设备对比">3.6 扩展以太网与设备对比</h3>
 <div class="note note-primary">
-            <p><strong>重点：集线器、网桥、交换机的异同</strong></p><table><thead><tr><th>设备</th><th>工作层次</th><th>特点</th></tr></thead><tbody><tr><td><strong>转发器/中继器</strong></td><td>物理层</td><td>连接不同网段，消除信号衰减失真</td></tr><tr><td><strong>集线器</strong></td><td>物理层</td><td>多端口转发器，所有端口共享总线带宽，广播域</td></tr><tr><td><strong>网桥</strong></td><td>数据链路层</td><td>根据MAC帧目的地址转发和过滤，分割冲突域</td></tr><tr><td><strong>以太网交换机</strong></td><td>数据链路层</td><td>多接口网桥，全双工，同时连通多对端口，自学习建立帧交换表，独占带宽无碰撞</td></tr></tbody></table><p><strong>交换机自学习算法：</strong></p><ol><li>收到帧 → 查找帧中源地址在交换表中的项目<ul><li>无→新增（源地址、进入接口、有效时间）</li><li>有→更新</li></ul></li><li>查找帧中目的地址在交换表中的项目<ul><li>无→向除进入接口外所有接口广播（泛洪）</li><li>有且接口不同→按表转发</li><li>有且接口相同→丢弃</li></ul></li></ol>
+            <p><strong>重点：集线器、网桥、交换机的异同</strong></p><table><thead><tr><th>设备</th><th>工作层次</th><th>特点</th></tr></thead><tbody><tr><td><strong>转发器/中继器</strong></td><td>物理层</td><td>连接不同网段，消除信号衰减失真</td></tr><tr><td><strong>集线器</strong></td><td>物理层</td><td>多端口转发器，所有端口共享总线带宽，广播域</td></tr><tr><td><strong>网桥</strong></td><td>数据链路层</td><td>根据MAC帧目的地址转发和过滤，分割冲突域</td></tr><tr><td><strong>以太网交换机</strong></td><td>数据链路层</td><td>多接口网桥，全双工，同时连通多对端口，自学习建立帧交换表，独占带宽无碰撞</td></tr></tbody></table><p><strong>交换机自学习算法：</strong></p><ol><li>收到帧 → 查找帧中源地址在交换表中的项目<ul><li>无→新增（源地址、进入接口、有效时间）</li><li>有→更新</li></ul></li><li>查找帧中目的地址在交换表中的项目<ul><li>无→向除进入接口外所有接口广播（泛洪）</li><li>有且接口不同→按表转发</li><li>有且接口相同→丢弃</li></ul></li></ol><p><strong>碰撞域与广播域：</strong></p><table><thead><tr><th>概念</th><th>定义</th></tr></thead><tbody><tr><td><strong>碰撞域（冲突域）</strong></td><td>两台设备同时发送数据会产生碰撞的区域</td></tr><tr><td><strong>广播域</strong></td><td>一个设备发送广播帧，所有能接收到的设备构成的区域</td></tr></tbody></table><p><strong>设备对碰撞域和广播域的影响：</strong></p><table><thead><tr><th>设备</th><th>工作层次</th><th>隔离碰撞域</th><th>隔离广播域</th></tr></thead><tbody><tr><td><strong>集线器（Hub）</strong></td><td>物理层</td><td>❌</td><td>❌</td></tr><tr><td><strong>网桥（Bridge）</strong></td><td>数据链路层</td><td>✅</td><td>❌</td></tr><tr><td><strong>交换机（Switch）</strong></td><td>数据链路层</td><td>✅（每个端口一个）</td><td>❌</td></tr><tr><td><strong>路由器（Router）</strong></td><td>网络层</td><td>✅</td><td>✅</td></tr></tbody></table><p><strong>判断方法：</strong></p><ul><li><strong>碰撞域数量</strong>：看有多少个独立的"不能同时发送"的区域<ul><li>集线器的所有端口共享1个碰撞域</li><li>交换机的每个端口是1个独立的碰撞域</li></ul></li><li><strong>广播域数量</strong>：看有多少个"广播帧无法穿越"的边界<ul><li>集线器/交换机的所有端口属于同1个广播域</li><li>路由器的不同接口属于不同的广播域</li></ul></li></ul>
           </div>
 <div class="note note-info">
             <p><strong>【作业题】</strong> 以太网交换机连接的局域网，各主机IP和子网掩码（255.255.255.240）：</p><p>A: 192.168.1.35，B: 192.168.1.50，C: 192.168.1.46，D: 192.168.1.60，E: 192.168.1.46</p><p>（1）哪些计算机之间可以直接访问？哪些不能？为什么？</p><p>（2）如果交换机换为集线器，情况会变吗？</p><p><strong>解答：</strong></p><p>（1）掩码255.255.255.240（/28），子网按16个地址分块：</p><ul><li>A(35)和E(46)的子网地址 = 192.168.1.32（32~47）</li><li>B(50)、C(46)、D(60)的子网地址 = 192.168.1.48（48~63）</li></ul><p><strong>A和E可以直接访问</strong>；<strong>B、C、D之间可以直接访问</strong>。不同子网间不能直接访问（需路由器）。</p><p>（2）换为集线器后，<strong>情况会变</strong>——集线器不能分隔子网，所有计算机处于同一物理网段，它们之间都可以直接访问。</p>
@@ -1239,7 +1298,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>July 5, 2026</div>
+          <div>July 9, 2026</div>
         </div>
       
       
