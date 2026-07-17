@@ -27,7 +27,7 @@
 <meta property="og:description" content="Joern的安装 可以使用官方文档进行安装，也可以看这个教程：Joern安装与使用，但是安装Joern的时候等待时间太长，总是超时，于是使用了在Joern官网下载压缩包的方式进行安装！ 前置检查 Joern 是基于 JVM（Java 虚拟机）运行的工具，对 Java 版本有明确要求（推荐 JDK &#x2F;17），如果 Java 版本不达标或未安装，执行.&#x2F;joern时会直接报错。打开WSL终端执行以下命">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-01-16T15:02:22.000Z">
-<meta property="article:modified_time" content="2026-01-25T12:22:51.252Z">
+<meta property="article:modified_time" content="2026-07-17T14:07:51.554Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -300,7 +300,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k words
+          4.1k words
         
       </span>
     
@@ -311,7 +311,7 @@
         
         
         
-          14 mins
+          34 mins
         
       </span>
     
@@ -406,6 +406,105 @@
 <li><code>cpg.file.l</code>：查询并列出代码属性图（CPG）中所有 File 类型节点</li>
 </ul>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs bash">joern&gt; cpg.file.l<br>val res7: List[io.shiftleft.codepropertygraph.generated.nodes.File] = List(<br>  File(<br>    code = <span class="hljs-string">"&lt;empty&gt;"</span>,<br>    columnNumber = None,<br>    content = <span class="hljs-string">"&lt;empty&gt;"</span>,<br>    <span class="hljs-built_in">hash</span> = None,<br>    lineNumber = None,<br>    name = <span class="hljs-string">"test_1/test_1.cpp"</span>,<br>    offset = None,<br>    offsetEnd = None,<br>    order = 0<br>  ),<br>  File(<br>    code = <span class="hljs-string">"&lt;empty&gt;"</span>,<br>    columnNumber = None,<br>    content = <span class="hljs-string">"&lt;empty&gt;"</span>,<br>    <span class="hljs-built_in">hash</span> = None,<br>    lineNumber = None,<br>    name = <span class="hljs-string">"&lt;includes&gt;"</span>,<br>    offset = None,<br>    offsetEnd = None,<br>    order = 1<br>  ),<br>  File(<br>    code = <span class="hljs-string">"&lt;empty&gt;"</span>,<br>    columnNumber = None,<br>    content = <span class="hljs-string">"&lt;empty&gt;"</span>,<br>    <span class="hljs-built_in">hash</span> = None,<br>    lineNumber = None,<br>    name = <span class="hljs-string">"&lt;unknown&gt;"</span>,<br>    offset = None,<br>    offsetEnd = None,<br>    order = 0<br>  )<br>)<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="节点查询进阶">节点查询进阶</h3>
+<p>  Joern 的 CPG 是一个融合了 <strong>AST（抽象语法树）、CFG（控制流图）、DDG（数据依赖图）、PDG（程序依赖图）、CG（调用图）</strong> 的多层图结构。掌握不同节点类型的查询是开展深度分析的基础。</p>
+<div class="note note-primary">
+            <p><strong>为什么 CPG 比单一 IR 更好用？</strong><br>传统静态分析往往要在 AST、CFG、DDG 之间来回切换，而 Joern 把它们压缩进同一张图，因此你可以在一行查询中混用「结构 + 控制流 + 数据流」三类语义。例如 <code>cpg.call.name("strcpy").inAst.isControlStructure</code> 就同时利用了 AST 和 CFG 两个维度。</p>
+          </div>
+<h4 id="查询函数调用节点（Call）">查询函数调用节点（Call）</h4>
+<p><code>cpg.call.l</code> 返回代码中所有函数调用节点，常用于排查危险函数、统计 API 使用情况：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">joern&gt; cpg.call.name.l<br>val res8: List[String] = List(<br>  &lt;operator&gt;.assignment, &lt;operator&gt;.lessThan, strcpy, operator.fieldAccess,<br>  c_str, open, is_open, operator.logicalOr, <span class="hljs-built_in">read</span>, std::ios_base::<span class="hljs-keyword">in</span>, ...<br>)<br></code></pre></td></tr></tbody></table></figure>
+<p>如果只关心用户代码中的「危险函数」，可以加上 <code>name</code> 过滤：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">joern&gt; cpg.call.name(<span class="hljs-string">"strcpy|strcat|sprintf|gets|system|popen"</span>).l<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>常用过滤写法</strong></p><ul><li><code>cpg.call.name("strcpy")</code> — 精确匹配</li><li><code>cpg.call.name("strcpy.*")</code> — 正则前缀匹配</li><li><code>cpg.call.nameNot("&lt;operator&gt;.*")</code> — 排除所有内部运算符，只看真实 API</li><li><code>.lineNumber.l</code> — 只取行号</li><li><code>.file.name.l</code> — 只取所在文件</li></ul>
+          </div>
+<h4 id="查询字面量、局部变量与类型">查询字面量、局部变量与类型</h4>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查询所有字符串字面量（常用于查找硬编码口令、URL、IP）</span><br>joern&gt; cpg.literal.code(<span class="hljs-string">".*\".*\".*"</span>).code.l<br><br><span class="hljs-comment"># 列出所有局部变量</span><br>joern&gt; cpg.local.name.l<br><br><span class="hljs-comment"># 列出所有用户自定义类型</span><br>joern&gt; cpg.typeDecl.name.l<br></code></pre></td></tr></tbody></table></figure>
+<p>例如，我们可以用一行查询快速发现代码里所有的「魔术字符串」：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">joern&gt; cpg.literal.where(_.code(<span class="hljs-string">".*\".*\""</span>)).map(l =&gt; (l.lineNumber, l.code)).l<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="查询-AST-子树（按方法-行号定位）">查询 AST 子树（按方法/行号定位）</h4>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看 main 函数完整 AST</span><br>joern&gt; cpg.method.name(<span class="hljs-string">"main"</span>).ast.l<br><br><span class="hljs-comment"># 查看第 167 行（strcpy 那一行）的 AST 节点</span><br>joern&gt; cpg.method.name(<span class="hljs-string">"copyString"</span>).ast.isCall.lineNumber(167).l<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="漏洞模式检测实战">漏洞模式检测实战</h3>
+<p>  Joern 真正强大的地方在于「<strong>用一段查询表达一类漏洞</strong>」。下面我们用同一份 C++ 代码，演示四类常见的检测场景。</p>
+<div class="note note-warning">
+            <p><strong>先理解「漏洞 ≠ 误报」</strong><br>下列查询返回的是「<strong>疑似风险点</strong>」，是否真正可利用还需要结合可达性、约束条件人工确认。一个良好的工作流是：<strong>模式匹配先粗筛 → 数据流再精筛 → 人工终审</strong>。</p>
+          </div>
+<h4 id="案例一：检测危险函数调用（缓冲区溢出风险点）">案例一：检测危险函数调用（缓冲区溢出风险点）</h4>
+<p><code>strcpy</code> 不检查长度，是经典的缓冲区溢出源头。我们可以这样定位：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">joern&gt; cpg.call.name(<span class="hljs-string">"strcpy"</span>).map(c =&gt;<br>  (c.method.name, c.lineNumber, c.code, c.argument.code.l)<br>).l<br></code></pre></td></tr></tbody></table></figure>
+<p>输出示例：</p>
+<figure class="highlight lisp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lisp">List((<span class="hljs-name">copyString</span>, <span class="hljs-number">167</span>, strcpy(<span class="hljs-name">global_buf</span>, input), List(<span class="hljs-name">global_buf</span>, input)))<br></code></pre></td></tr></tbody></table></figure>
+<p>可以直接得出：<strong><code>copyString</code> 函数第 167 行调用了 <code>strcpy</code>，写入目标是 <code>global_buf</code>，数据来源是 <code>input</code> 参数</strong>——这就是一个潜在溢出点。</p>
+<h4 id="案例二：检测空指针解引用">案例二：检测空指针解引用</h4>
+<p>示例代码中存在典型空指针解引用（<code>*null_ptr = 'a'</code>），我们可以通过「<strong>赋值运算符的左侧为解引用操作</strong>」来定位：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">joern&gt; cpg.call.name(<span class="hljs-string">"&lt;operator&gt;.assignment"</span>)<br>       .<span class="hljs-built_in">where</span>(_.argument(1).isCall.name(<span class="hljs-string">"&lt;operator&gt;.indirection"</span>))<br>       .map(c =&gt; (c.method.name, c.lineNumber, c.code)).l<br></code></pre></td></tr></tbody></table></figure>
+<p>如果想进一步追溯 <code>null_ptr</code> 是否真的可能为 <code>NULL</code>，可以结合数据流分析（见下一节）。</p>
+<h4 id="案例三：检测未检查返回值的文件操作">案例三：检测未检查返回值的文件操作</h4>
+<p><code>file.open()</code> 失败后必须检查 <code>is_open()</code>，我们可以反向查找「<strong>调用了 open 但同函数内没有 is_open 判断</strong>」的位置：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">joern&gt; cpg.call.name(<span class="hljs-string">"open"</span>).whereNot(_.method.call.name(<span class="hljs-string">"is_open"</span>))<br>       .map(c =&gt; (c.method.name, c.lineNumber)).l<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="案例四：批量检测——使用-Joern-内置-Security-Profile">案例四：批量检测——使用 Joern 内置 Security Profile</h4>
+<p>Joern 自带一个开箱即用的安全分析器 <code>run.securityprofile</code>，会对当前 CPG 跑一遍内置规则集：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">joern&gt; run.securityprofile<br></code></pre></td></tr></tbody></table></figure>
+<p>跑完后通过 <code>cpg.finding.l</code> 查看所有发现项：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">joern&gt; cpg.finding.map(f =&gt; (f.kinds.headOption, f.file.name.headOption, f.lineNumber)).l<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="数据流分析（Source-→-Sink）">数据流分析（Source → Sink）</h3>
+<p>  数据流分析是 Joern 的核心能力之一，用于回答「<strong>污点数据能否从某处流到危险点</strong>」这种典型安全问题。</p>
+<div class="note note-info">
+            <p><strong>核心三要素（污点分析模型）</strong></p><ul><li><strong>Source（源）</strong>：不可信数据进入程序的位置，如 <code>argv</code>、<code>read()</code>、<code>recv()</code>、配置文件读取等</li><li><strong>Sink（汇）</strong>：危险操作发生的位置，如 <code>strcpy</code>、<code>system</code>、<code>sql.execute</code>、<code>free</code> 等</li><li><strong>Flow（流）</strong>：数据从 Source 到 Sink 的传播路径，包括赋值、传参、运算等</li></ul>
+          </div>
+<h4 id="一个完整的污点分析示例">一个完整的污点分析示例</h4>
+<p>针对示例代码，我们想知道：<strong><code>argv[1]</code>（外部输入）能否流到 <code>strcpy</code> 的第二个参数？</strong> 如果能，就构成了一条「命令行参数 → 缓冲区溢出」的攻击链。</p>
+<figure class="highlight scala"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-comment">// 1. 定义 source：所有 main 函数的 argv 取下标操作</span><br><span class="hljs-keyword">val</span> source = cpg.method.name(<span class="hljs-string">"main"</span>).ast.isCall<br>              .name(<span class="hljs-string">"&lt;operator&gt;.indirectIndexAccess"</span>)<br>              .where(_.argument(<span class="hljs-number">2</span>).code(<span class="hljs-string">"1"</span>))<br><br><span class="hljs-comment">// 2. 定义 sink：strcpy 的第二个参数</span><br><span class="hljs-keyword">val</span> sink = cpg.call.name(<span class="hljs-string">"strcpy"</span>).argument(<span class="hljs-number">2</span>)<br><br><span class="hljs-comment">// 3. 跑可达性分析</span><br>sink.reachableByFlows(source).p<br></code></pre></td></tr></tbody></table></figure>
+<p>输出会以路径列表的形式给出，每一步都标注所在文件、行号和代码片段：</p>
+<figure class="highlight gherkin"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">________________________________________________________________________________________<br>|<span class="hljs-string"> nodeType   </span>|<span class="hljs-string"> tracked </span>|<span class="hljs-string"> lineNumber </span>|<span class="hljs-string"> method      </span>|<span class="hljs-string"> file              </span>|<span class="hljs-string"> code                </span>|<br>|<span class="hljs-string">=======================================================================================</span>|<br>|<span class="hljs-string"> Call       </span>|<span class="hljs-string"> argv[1] </span>|<span class="hljs-string"> 179        </span>|<span class="hljs-string"> main        </span>|<span class="hljs-string"> test_1/test_1.cpp </span>|<span class="hljs-string"> argv[ 1 ]           </span>|<br>|<span class="hljs-string"> Call       </span>|<span class="hljs-string"> argv[1] </span>|<span class="hljs-string"> 179        </span>|<span class="hljs-string"> main        </span>|<span class="hljs-string"> test_1/test_1.cpp </span>|<span class="hljs-string"> copyString( argv[1] </span>|<br>|<span class="hljs-string"> MethodRef </span>|<span class="hljs-string"> input   </span>|<span class="hljs-string"> 164        </span>|<span class="hljs-string"> copyString </span>|<span class="hljs-string"> test_1/test_1.cpp </span>|<span class="hljs-string"> void copyString(...)</span>|<br>|<span class="hljs-string"> Call       </span>|<span class="hljs-string"> input   </span>|<span class="hljs-string"> 167        </span>|<span class="hljs-string"> copyString </span>|<span class="hljs-string"> test_1/test_1.cpp </span>|<span class="hljs-string"> strcpy(..., input)  </span>|<br></code></pre></td></tr></tbody></table></figure>
+<p>这就完整还原了「<code>main</code> 接收 <code>argv[1]</code> → 传给 <code>copyString</code> → 落入 <code>strcpy</code> 写入 <code>global_buf</code>」的危险路径。</p>
+<div class="note note-info">
+            <p><strong>关键 API 速查</strong></p><ul><li><code>reachableBy(source)</code> — 返回 bool，能否到达</li><li><code>reachableByFlows(source)</code> — 返回完整路径</li><li><code>.p</code> / <code>.p-lg</code> — pretty-print，前者精简后者详细</li><li><code>.l</code> — 转 List，方便后续 Scala 处理</li></ul>
+          </div>
+<h3 id="控制流与调用图分析">控制流与调用图分析</h3>
+<h4 id="调用图（Call-Graph）：谁调用了危险函数？">调用图（Call Graph）：谁调用了危险函数？</h4>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查找所有直接调用 strcpy 的 caller</span><br>joern&gt; cpg.method.name(<span class="hljs-string">"strcpy"</span>).caller.name.l<br><span class="hljs-comment"># 反过来：strcpy 调用了什么（库函数链）</span><br>joern&gt; cpg.method.name(<span class="hljs-string">"strcpy"</span>).callee.name.l<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="控制流：定位-if-while-的条件分支">控制流：定位 if/while 的条件分支</h4>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 列出所有 if 分支的条件表达式</span><br>joern&gt; cpg.controlStructure.isIf.condition.code.l<br></code></pre></td></tr></tbody></table></figure>
+<p>示例代码会返回 <code>argc &lt; 2</code>、<code>argc &gt;= 3</code>、<code>argc == 4</code> 三个判断——结合前面的空指针解引用可以发现：<code>*null_ptr = 'a'</code> 仅在 <code>argc == 4</code> 时执行，这有助于评估漏洞的可达性。</p>
+<h3 id="查询结果导出与脚本化">查询结果导出与脚本化</h3>
+<p>  交互式 REPL 适合探索，但实际工程中往往需要批量扫描、生成报告。Joern 提供了几种脚本化方式。</p>
+<div class="note note-success">
+            <p><strong>何时用哪种方式？</strong></p><ul><li><strong>REPL</strong>：探索阶段、临时调试、规则原型验证</li><li><strong><code>.sc</code> 脚本 + <code>joern --script</code></strong>：CI/CD 流水线、批量扫描多个项目</li><li><strong><code>joern-parse</code> + <code>joern-scan</code></strong>：复用官方规则库，做「一键体检」</li><li><strong><code>importCpg</code></strong>：CPG 已生成、需要多次查询的大项目（节省前端解析时间）</li></ul>
+          </div>
+<h4 id="方式一：将查询写入-sc-脚本，命令行批量执行">方式一：将查询写入 <code>.sc</code> 脚本，命令行批量执行</h4>
+<p>在 <code>joern-cli/</code> 目录下新建 <code>scan.sc</code>：</p>
+<figure class="highlight scala"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-comment">// scan.sc</span><br><span class="hljs-meta">@main</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">exec</span></span>(inputPath: <span class="hljs-type">String</span>) = {<br>  loadCpg(inputPath)<br>  <span class="hljs-keyword">val</span> dangerous = cpg.call.name(<span class="hljs-string">"strcpy|strcat|sprintf|gets|system|popen"</span>)<br>    .map(c =&gt; <span class="hljs-type">Map</span>(<br>      <span class="hljs-string">"func"</span>  -&gt; c.method.name.headOption.getOrElse(<span class="hljs-string">""</span>),<br>      <span class="hljs-string">"line"</span>  -&gt; c.lineNumber.getOrElse(<span class="hljs-number">-1</span>),<br>      <span class="hljs-string">"code"</span>  -&gt; c.code,<br>      <span class="hljs-string">"file"</span>  -&gt; c.file.name.headOption.getOrElse(<span class="hljs-string">""</span>)<br>    )).l<br><br>  <span class="hljs-keyword">import</span> java.io.<span class="hljs-type">PrintWriter</span><br>  <span class="hljs-keyword">new</span> <span class="hljs-type">PrintWriter</span>(<span class="hljs-string">"report.json"</span>) {<br>    write(ujson.write(dangerous, indent = <span class="hljs-number">2</span>))<br>    close()<br>  }<br>  println(<span class="hljs-string">s"[+] Found <span class="hljs-subst">${dangerous.size}</span> suspicious calls, saved to report.json"</span>)<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>命令行执行：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./joern --script scan.sc --param inputPath=/mnt/e/test-project/test_1/<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="方式二：使用-joern-parse-joern-scan">方式二：使用 <code>joern-parse</code> + <code>joern-scan</code></h4>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 仅生成 CPG（不进入 REPL）</span><br>./joern-parse /mnt/e/test-project/test_1/ --output cpg.bin<br><br><span class="hljs-comment"># 用官方规则库扫描</span><br>./joern-scan --cpg cpg.bin<br></code></pre></td></tr></tbody></table></figure>
+<p><code>joern-scan</code> 自带一个<strong>漏洞规则包</strong>（位于 <code>joern-cli/joern-cli/src/main/resources/bundles</code>），可以直接复用。</p>
+<h4 id="方式三：交互式会话保存结果">方式三：交互式会话保存结果</h4>
+<p>REPL 中可以直接用 Scala 写文件：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">joern&gt; import java.io._<br>joern&gt; val pw = new PrintWriter(<span class="hljs-string">"findings.txt"</span>)<br>joern&gt; cpg.call.name(<span class="hljs-string">"strcpy"</span>).foreach(c =&gt;<br>         pw.println(s<span class="hljs-string">"<span class="hljs-variable">${c.file.name.headOption}</span> : <span class="hljs-variable">${c.lineNumber}</span> : <span class="hljs-variable">${c.code}</span>"</span>))<br>joern&gt; pw.close()<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="完整案例：仿真实-CVE-的检测脚本">完整案例：仿真实 CVE 的检测脚本</h3>
+<p>  我们以「命令注入」为例，模拟一次真实漏洞挖掘。假设要找的漏洞模式是：<strong>外部输入流向 <code>system/popen/exec*</code> 等命令执行函数</strong>。我们可以写一段通用查询：</p>
+<figure class="highlight scala"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">val</span> sources = cpg.method.name(<span class="hljs-string">"main"</span>).ast.isCall<br>                .name(<span class="hljs-string">"&lt;operator&gt;.indirectIndexAccess"</span>)  <span class="hljs-comment">// argv[i]</span><br><span class="hljs-keyword">val</span> sinks   = cpg.call.name(<span class="hljs-string">"system|popen|execl.*|execv.*"</span>)<br><br><span class="hljs-keyword">val</span> flows = sinks.reachableByFlows(sources).l<br>println(<span class="hljs-string">s"[+] 命令注入路径数：<span class="hljs-subst">${flows.size}</span>"</span>)<br>flows.foreach(_.p)<br></code></pre></td></tr></tbody></table></figure>
+<p>把这段代码套到任意 C/C++ 项目上，就能快速筛出一批疑似命令注入的位置，再人工复核即可。</p>
+<div class="note note-primary">
+            <p><strong>举一反三：替换 Source/Sink 即可复用模板</strong></p><table><thead><tr><th>漏洞类型</th><th>Source 示例</th><th>Sink 示例</th></tr></thead><tbody><tr><td>命令注入</td><td><code>argv</code>、<code>getenv</code>、<code>fgets</code></td><td><code>system</code>、<code>popen</code>、<code>execl*</code></td></tr><tr><td>SQL 注入</td><td>HTTP 参数、表单字段</td><td><code>mysql_query</code>、<code>sqlite_exec</code></td></tr><tr><td>路径穿越</td><td>用户输入字符串</td><td><code>open</code>、<code>fopen</code>、<code>ifstream</code> 构造</td></tr><tr><td>释放后使用</td><td><code>free(p)</code> 的实参</td><td>对 <code>p</code> 的后续解引用</td></tr><tr><td>整数溢出</td><td><code>atoi</code>、<code>strtol</code></td><td>内存分配函数 <code>malloc</code>、<code>new[]</code></td></tr></tbody></table>
+          </div>
+<div class="note note-info">
+            <p><strong>Joern 官方维护的漏洞模式库（建议参考）</strong></p><ul><li><a target="_blank" rel="noopener" href="https://queries.joern.io/">Queries</a> — 在线漏洞查询库，覆盖 CWE-78/89/120/416 等常见类别</li><li><a target="_blank" rel="noopener" href="https://github.com/joernio/joern/tree/main/joern-cli/joern-cli/src/main/resources/bundles">joern-scan built-in bundles</a> — 可直接复用的规则脚本</li></ul>
+          </div>
+<h3 id="工作区与项目管理">工作区与项目管理</h3>
+<p>  Joern 用 workspace 管理多个项目，常用命令如下：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看当前 workspace 下所有已导入项目</span><br>joern&gt; workspace<br><br><span class="hljs-comment"># 切换激活的项目</span><br>joern&gt; open(<span class="hljs-string">"test_11"</span>)<br><br><span class="hljs-comment"># 关闭但不删除</span><br>joern&gt; close(<span class="hljs-string">"test_11"</span>)<br><br><span class="hljs-comment"># 关闭并从磁盘删除（谨慎使用）</span><br>joern&gt; delete(<span class="hljs-string">"test_11"</span>)<br><br><span class="hljs-comment"># 保存对 CPG 的修改（添加 overlay 后建议执行）</span><br>joern&gt; save<br></code></pre></td></tr></tbody></table></figure>
+<p>每次 <code>importCode</code> 都会在 <code>~/joern/joern-cli/workspace/&lt;projectName&gt;/</code> 下生成 <code>cpg.bin</code>，再次进入时无需重新解析。</p>
+<div class="note note-danger">
+            <p><strong><code>delete</code> 不可恢复！</strong><br><code>delete("xxx")</code> 会<strong>同时关闭项目并删除磁盘上的 CPG 文件</strong>，包括所有 overlay 和已保存的查询结果。生产环境请优先使用 <code>close</code>，确认无用再 <code>delete</code>。</p>
+          </div>
+<h3 id="常见问题与技巧">常见问题与技巧</h3>
+<div class="note note-warning">
+            <p><strong>踩坑速查表</strong></p><ol><li><strong>导入大项目 OOM</strong>：先用 <code>c2cpg.sh -J-Xmx8g ...</code> 单独生成 CPG，再用 <code>importCpg</code> 加载，避免 REPL 内存压力。</li><li><strong>路径含空格/中文</strong>：Scala 字符串中需要转义，或使用三重引号 <code>"""/mnt/e/my project/"""</code>。</li><li><strong>查询速度慢</strong>：先用 <code>.name(...)</code>、<code>.lineNumber(...)</code> 等高选择性条件缩窄范围，再做 <code>.reachableByFlows</code>。</li><li><strong>修改默认 JXmx</strong>：编辑 <code>joern</code>/<code>joern.bat</code> 启动脚本里的 <code>JAVA_OPTS</code>。</li><li><strong>多语言支持</strong>：<code>importCode</code> 会自动识别语言；若识别失败可显式指定，如 <code>importCode("path/to/py", "python")</code>。</li></ol>
+          </div>
 
                 
               </div>
@@ -442,7 +541,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>January 25, 2026</div>
+          <div>July 17, 2026</div>
         </div>
       
       

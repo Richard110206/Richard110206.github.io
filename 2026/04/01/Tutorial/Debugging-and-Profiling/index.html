@@ -19,15 +19,15 @@
   <meta name="author" content="Li Qinxuan">
   <meta name="keywords" content="">
   
-    <meta name="description" content="A golden rule in programming is that code does not do what you expect it to do, but what you tell it to do.  当我们遇到问题进行调试时，我们通常会采用两种方法:  在适当的地方添加打印语句 使用程序中的日志记录  能定向到其他输出位置 能设置不同的严重程度级别（如INFO、DEBUG、WA">
+    <meta name="description" content="A golden rule in programming is that code does not do what you expect it to do, but what you tell it to do.    程序出 bug 是日常，而调试和性能分析就是定位问题与优化程序的两种核心手段：前者解决&quot;程序为什么不对&quot;，后者解决&quot;程序为什么慢&#x2F;为什么吃内存&quot;。本篇参考 MIT Missin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Debugging and Profiling">
 <meta property="og:url" content="http://example.com/2026/04/01/Tutorial/Debugging-and-Profiling/index.html">
 <meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
-<meta property="og:description" content="A golden rule in programming is that code does not do what you expect it to do, but what you tell it to do.  当我们遇到问题进行调试时，我们通常会采用两种方法:  在适当的地方添加打印语句 使用程序中的日志记录  能定向到其他输出位置 能设置不同的严重程度级别（如INFO、DEBUG、WA">
+<meta property="og:description" content="A golden rule in programming is that code does not do what you expect it to do, but what you tell it to do.    程序出 bug 是日常，而调试和性能分析就是定位问题与优化程序的两种核心手段：前者解决&quot;程序为什么不对&quot;，后者解决&quot;程序为什么慢&#x2F;为什么吃内存&quot;。本篇参考 MIT Missin">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-04-01T14:10:12.000Z">
-<meta property="article:modified_time" content="2026-04-01T14:41:48.116Z">
+<meta property="article:modified_time" content="2026-07-17T15:14:38.432Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -300,7 +300,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          703 words
+          3.9k words
         
       </span>
     
@@ -311,7 +311,7 @@
         
         
         
-          6 mins
+          33 mins
         
       </span>
     
@@ -516,41 +516,57 @@
                 <blockquote>
 <p>A golden rule in programming is that code does not do what you expect it to do, but what you tell it to do.</p>
 </blockquote>
-<p>当我们遇到问题进行调试时，我们通常会采用两种方法:</p>
+<p>  程序出 bug 是日常，而<strong>调试</strong>和<strong>性能分析</strong>就是定位问题与优化程序的两种核心手段：前者解决"程序为什么不对"，后者解决"程序为什么慢/为什么吃内存"。本篇参考 <a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/2020/debugging/">MIT Missing Semester — Debugging and Profiling</a> 的脉络，整理从打印调试、调试器、专用工具到性能分析的完整工具链，以 C/C++ 在类 Unix 系统下的实践为主。</p>
+<div class="note note-info">
+            <p><strong>本篇组织</strong>：第一章是日志与打印调试 → 第二章是调试器 LLDB/GDB → 第三章是专用工具（系统调用追踪、网络抓包、Sanitizers、Core Dump、静态分析）→ 第四章是性能分析（CPU / 内存 / 火焰图）→ 第五章是资源监控。</p>
+          </div>
+<h2 id="一、调试的前置准备：日志与打印">一、调试的前置准备：日志与打印</h2>
+<p>  当我们遇到问题时，最朴素也最有效的两种手段是：</p>
 <ul>
-<li>在适当的地方添加打印语句</li>
-<li>使用程序中的日志记录
+<li>在适当的地方添加 <code>printf</code> / <code>cout</code> 打印语句</li>
+<li>使用程序中的日志记录（logging）</li>
+</ul>
+<p>  相较于裸打印，<strong>日志库</strong>的优势在于：</p>
 <ul>
-<li>能定向到其他输出位置</li>
-<li>能设置不同的严重程度级别（如INFO、DEBUG、WARN、ERROR）并允许你根据这些级别过滤输出</li>
-<li>支持对日志的数据进行结构化记录，方便日后轻松的提取这些数据</li>
+<li>能定向到不同的输出位置（控制台、文件、远程日志服务器）</li>
+<li>能设置严重程度级别（<code>INFO</code>、<code>DEBUG</code>、<code>WARN</code>、<code>ERROR</code>、<code>FATAL</code>），并按级别过滤输出</li>
+<li>支持对日志进行<strong>结构化记录</strong>（如 JSON），便于日后检索与统计</li>
+<li>可以通过配置文件动态开关，不需要重新编译</li>
 </ul>
-</li>
-</ul>
-<p>调试器（debugger）是允许你在程序执行时与之相互的程序：</p>
+<div class="note note-info">
+            <p>常见的 C++ 日志库：<code>spdlog</code>、<code>glog</code>、<code>log4cpp</code>；Python 中则使用内置 <code>logging</code> 模块。</p>
+          </div>
+<div class="note note-warning">
+            <p><strong>调试策略</strong>：日志只能告诉我们"程序做了什么"。当问题<strong>无法稳定复现</strong>（如只在生产环境偶发）时，优先在关键路径上加上 <code>DEBUG</code> 级别的日志，下次出现时才有线索可查——这是 Missing Semester 反复强调的做法。</p>
+          </div>
+<p>  但日志只能告诉我们"程序做了什么"，要观察"程序正在做什么"——尤其是定位崩溃位置、检查变量值、跟踪调用栈——就需要<strong>调试器（Debugger）</strong>。</p>
+<h2 id="二、调试器：LLDB-GDB">二、调试器：LLDB / GDB</h2>
+<p>  调试器允许我们在程序执行时与之交互，主要能力包括：</p>
 <ul>
-<li>在到达某一行时停止执行</li>
-<li>逐条执行单个指令</li>
-<li>检查变量的值</li>
-<li>满足条件时停止执行</li>
+<li>在到达某一行时停止执行（断点）</li>
+<li>逐条执行单个指令（单步）</li>
+<li>检查、修改变量的值</li>
+<li>查看调用栈（backtrace）</li>
+<li>满足条件时停止执行（条件断点）</li>
 </ul>
-<p>如果我们修改了源程序，我们必须退出RR/LLDB/GDB，重新编译一次程序在进行调试，因为原窗口运行的是原二进制文件，无法直接用于新版本的程序</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim debug.cpp<br>g++ -g -o account_debug debug.cpp<br>// 编译源文件，生成可执行文件（命名为account_debug）并增加调试信息（-g）<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="（一）编译时带调试信息">（一）编译时带调试信息</h3>
+<p>  如果我们修改了源程序，必须退出 LLDB/GDB，<strong>重新编译一次</strong>程序再进行调试——原窗口里运行的是旧的二进制文件，无法直接用于新版本的程序。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim debug.cpp<br>g++ -g -O0 -o account_debug debug.cpp<br></code></pre></td></tr></tbody></table></figure>
 <ul>
-<li>
-<p><code>-g</code>：<strong>核心调试参数</strong>，向编译后的可执行文件中嵌入调试信息（如行号、变量名、函数名），没有这个参数，lldb/gdb 无法定位代码位置；</p>
-</li>
-<li>
-<p><code>-o account_debug</code>：指定编译后生成的可执行文件名称为 <code>account_debug</code>（如果省略 <code>-o</code>，默认生成 <code>a.out</code>）；</p>
-</li>
-<li>
-<p><code>debug.cpp</code>：待编译的源文件名称（你的代码文件）。</p>
-</li>
+<li><code>-g</code>：<strong>核心调试参数</strong>，向可执行文件中嵌入调试信息（行号、变量名、函数名等）。没有它，LLDB/GDB 无法定位源码位置；</li>
+<li><code>-O0</code>：关闭优化。开启优化（<code>-O2</code>、<code>-O3</code>）后，变量可能被优化掉、语句顺序被打乱，调试时会出现"变量值不可用""单步乱跳"等现象；</li>
+<li><code>-o account_debug</code>：指定输出文件名（省略则默认 <code>a.out</code>）；</li>
+<li><code>debug.cpp</code>：待编译的源文件。</li>
 </ul>
+<div class="note note-warning">
+            <p>开启 <code>-O2</code> 及以上优化时，编译器可能：</p><ol><li>把变量直接放进寄存器，导致 <code>print</code> 显示 <code>&lt;optimized out&gt;</code>；</li><li>内联函数或重排指令，导致单步执行顺序与源码不一致。</li></ol><p>调试时建议始终使用 <code>-O0 -g</code>。</p>
+          </div>
+<h3 id="（二）启动调试器">（二）启动调试器</h3>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">lldb ./account_debug<br></code></pre></td></tr></tbody></table></figure>
-<p>由于我这里使用的是macOS系统，因此用其系统自带的调试器代替 GDB（大部分命令相差不大）</p>
+<p>  由于我使用的是 macOS，这里用系统自带的 <strong>LLDB</strong> 演示（Linux 下用 GDB，命令大致相同，文末附有对照表）。</p>
+<h3 id="（三）基础流程：运行、断点、继续">（三）基础流程：运行、断点、继续</h3>
 <ul>
-<li><code>run</code>（简写<code>r</code>）：从<code>main</code>函数开始重新启动程序
+<li><code>run</code>（简写 <code>r</code>）：从 <code>main</code> 函数开始重新启动程序
 <ul>
 <li>没有断点：完整运行到底</li>
 <li>有断点：运行到断点停止</li>
@@ -559,24 +575,412 @@
 </ul>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">(lldb) target create <span class="hljs-string">"./account_debug"</span><br>Current executable <span class="hljs-built_in">set</span> to <span class="hljs-string">'/Users/richard/test/account_debug'</span> (arm64).<br>(lldb) r<br>Process 8236 launched: <span class="hljs-string">'/Users/richard/test/account_debug'</span> (arm64)<br>ID: 1, Name: Alice, Balance: 1000.5<br>ID: 2, Name: Bob, Balance: 500.2<br>Process 8236 exited with status = 0 (0x00000000) <br></code></pre></td></tr></tbody></table></figure>
 <ul>
-<li><code>breakpoint set --file account.cpp --line 25</code>（简写 <code>b account.cpp:25</code>）</li>
-<li><code>continue</code>（简写<code>c</code>）：从暂停处 “一直运行”，直到遇到下一个暂停条件（<strong>断点</strong> / <strong>程序结束</strong> / <strong>崩溃</strong>）</li>
+<li><code>breakpoint set --file debug.cpp --line 25</code>（简写 <code>b debug.cpp:25</code>）：在指定文件的某行设断点</li>
+<li><code>continue</code>（简写 <code>c</code>）：从暂停处"一直运行"，直到遇到下一个暂停条件（<strong>断点 / 程序结束 / 崩溃</strong>）</li>
 </ul>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">(lldb) b debug.cpp:25<br>Breakpoint 1: <span class="hljs-built_in">where</span> = account_debug`main + 444 at debug.cpp:27:5, address = 0x00000001000006a4<br>(lldb) r<br>Process 42021 launched: <span class="hljs-string">'/Users/richard/test/account_debug'</span> (arm64)<br>ID: 1, Name: Alice, Balance: 1000.5<br>ID: 2, Name: Bob, Balance: 500.2<br>Process 42021 stopped<br>* thread <span class="hljs-comment">#1, queue = 'com.apple.main-thread', stop reason = breakpoint 1.1</span><br>    frame <span class="hljs-comment">#0: 0x00000001000006a4 account_debug`main at debug.cpp:27:5</span><br>Target 0: (account_debug) stopped.<br>(lldb) p accountList.size()<br>(std::vector&lt;Account&gt;::size_type) 2<br>(lldb) c<br>Process 42021 resuming<br>Process 42021 exited with status = 0 (0x00000000) <br></code></pre></td></tr></tbody></table></figure>
+<h3 id="（四）查看变量与表达式">（四）查看变量与表达式</h3>
 <ul>
-<li><code>frame variable</code>（简写<code>fr v</code>）：打印当前栈帧中<strong>所有可见变量</strong>的完整值</li>
+<li><code>frame variable</code>（简写 <code>fr v</code>）：打印当前栈帧中<strong>所有可见变量</strong>的完整值</li>
 </ul>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">(lldb) frame variable<br>(std::vector&lt;Account&gt;) accountList = size=2 {<br>  [0] = (accountId = 1, userName = <span class="hljs-string">"Alice"</span>, accountBalance = 1000.5)<br>  [1] = (accountId = 2, userName = <span class="hljs-string">"Bob"</span>, accountBalance = 500.19999999999999)<br>}<br></code></pre></td></tr></tbody></table></figure>
 <ul>
-<li><code>breakpoint list</code>（简写<code>br l</code>）：查看所有已设置的断点</li>
+<li><code>print &lt;expr&gt;</code>（简写 <code>p</code>）：打印单个表达式（可调用函数、做运算）</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">(lldb) p accountList[0].accountBalance<br>(double) 1000.5<br>(lldb) p accountList.size() + 1<br>(unsigned long) 3<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>expression &lt;expr&gt;</code>（简写 <code>expr</code> / <code>e</code>）：<strong>修改变量值</strong>，用于在不重启程序的前提下尝试不同的输入</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">(lldb) <span class="hljs-built_in">expr</span> accountList[0].accountBalance = 0.0<br>(double) <span class="hljs-variable">$0</span> = 0<br>(lldb) p accountList[0].accountBalance<br>(double) 0<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>修改内存中的值后无需重编译</strong>——这正是调试器最强大的地方。可以快速验证"如果把 balance 改成 0，程序会走哪个分支"。</p>
+          </div>
+<h3 id="（五）单步执行">（五）单步执行</h3>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>简写</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>step</code></td>
+<td><code>s</code></td>
+<td><strong>单步进入</strong>：执行一行，若是函数调用则进入函数体</td>
+</tr>
+<tr>
+<td><code>next</code></td>
+<td><code>n</code></td>
+<td><strong>单步跳过</strong>：执行一行，把函数调用整体当作一步</td>
+</tr>
+<tr>
+<td><code>finish</code></td>
+<td><code>f</code></td>
+<td><strong>单步跳出</strong>：执行到当前函数返回</td>
+</tr>
+<tr>
+<td><code>until &lt;line&gt;</code></td>
+<td><code>u</code></td>
+<td>执行到指定行（常用于跳出循环）</td>
+</tr>
+<tr>
+<td><code>stepi</code></td>
+<td><code>si</code></td>
+<td>单条机器指令（汇编级）</td>
+</tr>
+<tr>
+<td><code>nexti</code></td>
+<td><code>ni</code></td>
+<td>同上，但跳过 call 指令</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">(lldb) n<br>Process 42021 stopped<br>* thread <span class="hljs-comment">#1, stop reason = step over</span><br>    frame <span class="hljs-comment">#0: account_debug`main at debug.cpp:28:5</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>记忆口诀</strong>：<code>step</code> = 进入函数（深入）；<code>next</code> = 跳过函数（横向）；<code>finish</code> = 跳出函数（返回）。</p>
+          </div>
+<h3 id="（六）调用栈">（六）调用栈</h3>
+<ul>
+<li><code>thread backtrace</code>（简写 <code>bt</code>）：打印当前线程的调用栈，<strong>定位崩溃点必备</strong></li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">(lldb) bt<br>* thread <span class="hljs-comment">#1, queue = 'com.apple.main-thread', stop reason = breakpoint 1.1</span><br>  * frame <span class="hljs-comment">#0: 0x00000001000006a4 account_debug`main at debug.cpp:27:5</span><br>    frame <span class="hljs-comment">#1: 0x0000000183ef0273 dyld`start + 1807</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>frame select 2</code>（简写 <code>f 2</code>）：切换到第 2 号栈帧</li>
+<li><code>up</code> / <code>down</code>：向栈底 / 栈顶移动一帧</li>
+</ul>
+<h3 id="（七）断点管理">（七）断点管理</h3>
+<ul>
+<li><code>breakpoint list</code>（简写 <code>br l</code>）：查看所有已设置的断点</li>
 </ul>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">(lldb) br l<br>Current breakpoints:<br>1: file = <span class="hljs-string">'debug.cpp'</span>, line = 15, exact_match = 0, locations = 1<br>  1.1: <span class="hljs-built_in">where</span> = account_debug`main + 24 at debug.cpp:16:26, address = account_debug[0x0000000100000500], unresolved, hit count = 0 <br><br>2: file = <span class="hljs-string">'debug.cpp'</span>, line = 25, exact_match = 0, locations = 1<br>  2.1: <span class="hljs-built_in">where</span> = account_debug`main + 444 at debug.cpp:27:5, address = account_debug[0x00000001000006a4], unresolved, hit count = 0 <br></code></pre></td></tr></tbody></table></figure>
 <ul>
-<li><code>breakpoint delete 1</code>（简写<code>br del 1</code>）：移除编号为1的断点</li>
+<li><code>breakpoint delete 1</code>（简写 <code>br del 1</code>）：移除编号为 1 的断点</li>
 </ul>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">(lldb) br del 1<br>1 breakpoints deleted; 0 breakpoint locations disabled.<br></code></pre></td></tr></tbody></table></figure>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/368904941">https://zhuanlan.zhihu.com/p/368904941</a><br>
-<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/662950903">https://zhuanlan.zhihu.com/p/662950903</a></p>
+<ul>
+<li><code>breakpoint disable 1</code> / <code>breakpoint enable 1</code>：临时禁用 / 启用，不删除</li>
+</ul>
+<h4 id="条件断点">条件断点</h4>
+<p>  只在某个条件成立时才停下，对"循环到第 N 次出错""特定输入才崩溃"的场景极其有用：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">(lldb) b debug.cpp:27<br>Breakpoint 1: ...<br>(lldb) breakpoint modify --condition <span class="hljs-string">'i == 100'</span> 1<br><span class="hljs-comment"># 或一行写完：</span><br>(lldb) b debug.cpp:27 -c <span class="hljs-string">'i == 100'</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>条件断点的威力</strong>：在循环中第 100 万次迭代才出错时，没有条件断点意味着手动 <code>continue</code> 100 万次——而加上 <code>-c 'i == 1000000'</code>，一次到位。</p>
+          </div>
+<h4 id="函数断点">函数断点</h4>
+<p>  不指定文件行号，按<strong>符号名</strong>下断点（包括所有重载）：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">(lldb) b Account::deposit<br>(lldb) b foo                 <span class="hljs-comment"># 全局函数 foo</span><br>(lldb) rbreak ^Account::     <span class="hljs-comment"># 正则匹配所有以 Account:: 开头的函数</span><br></code></pre></td></tr></tbody></table></figure>
+<h4 id="观察点（Watchpoint）">观察点（Watchpoint）</h4>
+<p>  断点关注的是"<strong>执行流到达某点</strong>"，观察点关注的是"<strong>某个变量被修改</strong>"——排查"数据怎么被改坏了"时几乎是唯一手段：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">(lldb) watchpoint <span class="hljs-built_in">set</span> variable accountList[0].accountBalance<br>Watchpoint created: Watchpoint 1: addr = ... size = 8 ...<br>New value: 1000.5<br><br>(lldb) c<br>Process 42021 resuming<br>Process 42021 stopped<br>* thread <span class="hljs-comment">#1: stop reason = watchpoint 1</span><br>    old value: 1000.5<br>    new value: 0<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="（八）LLDB-↔-GDB-命令对照表">（八）LLDB ↔ GDB 命令对照表</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>LLDB</th>
+<th>GDB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>运行</td>
+<td><code>run</code> / <code>r</code></td>
+<td><code>run</code> / <code>r</code></td>
+</tr>
+<tr>
+<td>继续</td>
+<td><code>continue</code> / <code>c</code></td>
+<td><code>continue</code> / <code>c</code></td>
+</tr>
+<tr>
+<td>单步进入</td>
+<td><code>step</code> / <code>s</code></td>
+<td><code>step</code> / <code>s</code></td>
+</tr>
+<tr>
+<td>单步跳过</td>
+<td><code>next</code> / <code>n</code></td>
+<td><code>next</code> / <code>n</code></td>
+</tr>
+<tr>
+<td>单步跳出</td>
+<td><code>finish</code> / <code>f</code></td>
+<td><code>finish</code> / <code>fin</code></td>
+</tr>
+<tr>
+<td>打印变量</td>
+<td><code>frame variable</code> / <code>fr v</code></td>
+<td><code>info locals</code></td>
+</tr>
+<tr>
+<td>打印表达式</td>
+<td><code>print</code> / <code>p</code></td>
+<td><code>print</code> / <code>p</code></td>
+</tr>
+<tr>
+<td>修改变量</td>
+<td><code>expression</code> / <code>e</code></td>
+<td><code>set var</code></td>
+</tr>
+<tr>
+<td>调用栈</td>
+<td><code>thread backtrace</code> / <code>bt</code></td>
+<td><code>backtrace</code> / <code>bt</code></td>
+</tr>
+<tr>
+<td>设断点</td>
+<td><code>breakpoint set</code> / <code>b</code></td>
+<td><code>break</code> / <code>b</code></td>
+</tr>
+<tr>
+<td>列出断点</td>
+<td><code>breakpoint list</code> / <code>br l</code></td>
+<td><code>info breakpoints</code> / <code>i b</code></td>
+</tr>
+<tr>
+<td>条件断点</td>
+<td><code>b file:line -c 'cond'</code></td>
+<td><code>b file:line if cond</code></td>
+</tr>
+<tr>
+<td>观察点</td>
+<td><code>watchpoint set variable</code></td>
+<td><code>watch</code></td>
+</tr>
+<tr>
+<td>附着到进程</td>
+<td><code>process attach --pid PID</code></td>
+<td><code>attach PID</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="三、专用调试工具">三、专用调试工具</h2>
+<p>  调试器解决"逻辑错误"，但有些问题——<strong>内存越界、用后释放、竞态条件</strong>——光靠断点很难复现。下面是几类专门工具：</p>
+<h3 id="（一）系统调用追踪：strace-ltrace-dtrace">（一）系统调用追踪：strace / ltrace / dtrace</h3>
+<p>  当程序行为异常但又看不出哪儿错时，先看看它<strong>对系统做了什么</strong>——打开了哪些文件、连接了哪个地址、读了什么：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Linux：追踪系统调用</span><br>strace -f -e trace=openat,connect,<span class="hljs-built_in">read</span> ./account_debug<br><br><span class="hljs-comment"># 追踪库函数调用</span><br>ltrace ./account_debug<br><br><span class="hljs-comment"># macOS：使用 dtrace（需要 root）</span><br><span class="hljs-built_in">sudo</span> dtrace -n <span class="hljs-string">'syscall::open:entry { @[copyinstr(arg0)] = count() }'</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><code>strace</code> 的常用参数：</p><ul><li><code>-f</code>：追踪子进程</li><li><code>-e trace=...</code>：只看某类调用（<code>open</code>、<code>network</code>、<code>file</code> 等）</li><li><code>-p PID</code>：附着到正在运行的进程</li><li><code>-c</code>：统计每个调用的次数和耗时</li><li><code>-y</code>：把 fd 显示为对应文件路径</li></ul>
+          </div>
+<h3 id="（二）网络抓包：tcpdump-Wireshark">（二）网络抓包：tcpdump / Wireshark</h3>
+<p>  “为什么连不上服务器”“为什么对方收不到我的包”——这类问题最直接的办法是<strong>抓包</strong>：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 抓 80 端口的包并打印 ASCII</span><br><span class="hljs-built_in">sudo</span> tcpdump -i any -n -A <span class="hljs-string">'port 80'</span><br><br><span class="hljs-comment"># 抓到文件，再用 Wireshark 打开看</span><br><span class="hljs-built_in">sudo</span> tcpdump -i any -w out.pcap <span class="hljs-string">'host example.com and port 443'</span><br>wireshark out.pcap<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-warning">
+            <p><code>tcpdump</code> 不解析协议、不显示包内容；想看 HTTP / TLS 报文细节，把数据导成 <code>.pcap</code> 后用 <strong>Wireshark</strong> 打开。</p>
+          </div>
+<h3 id="（三）Valgrind：内存错误检测">（三）Valgrind：内存错误检测</h3>
+<p>  Valgrind 是 Linux 上的内存调试神器，能在<strong>不重编译</strong>程序的情况下检查：</p>
+<ul>
+<li>读写未初始化内存</li>
+<li>读写已释放内存（use-after-free）</li>
+<li>内存泄漏（definitely lost / indirectly lost）</li>
+<li>非法读写（heap buffer overflow）</li>
+</ul>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">valgrind --leak-check=full --show-leak-kinds=all ./account_debug<br></code></pre></td></tr></tbody></table></figure>
+<p>输出示例：</p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs routeros">==<span class="hljs-attribute">12345</span>== HEAP SUMMARY:<br>==<span class="hljs-attribute">12345</span>==     <span class="hljs-keyword">in</span> use at exit: 72 bytes <span class="hljs-keyword">in</span> 1 blocks<br>==<span class="hljs-attribute">12345</span>==   total heap usage: 5 allocs, 4 frees, 73,224 bytes allocated<br>==<span class="hljs-attribute">12345</span>== <br>==<span class="hljs-attribute">12345</span>== 72 bytes <span class="hljs-keyword">in</span> 1 blocks are definitely lost <span class="hljs-keyword">in</span> loss record 1 of 1<br>==<span class="hljs-attribute">12345</span>==    at 0x4848899: malloc (vg_replace_malloc.c:431)<br>==<span class="hljs-attribute">12345</span>==    by 0x401156: createAccount (debug.cpp:12)<br>==<span class="hljs-attribute">12345</span>==    by 0x4011D4: main (debug.cpp:30)<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-warning">
+            <p>Valgrind 会让程序慢 <strong>20~50 倍</strong>，不适合测试性能。要用它做性能分析，请用 <code>callgrind</code> 子工具，再用 <code>KCachegrind</code> 查看调用图。</p>
+          </div>
+<h3 id="（四）Sanitizers：编译期注入的轻量检查">（四）Sanitizers：编译期注入的轻量检查</h3>
+<p>  由 GCC/Clang 内置，比 Valgrind 快一个数量级（仅 2x 左右减速），是现代 C/C++ 项目的主流选择：</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>编译参数</th>
+<th>检测内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AddressSanitizer</td>
+<td><code>-fsanitize=address</code></td>
+<td>堆/栈/全局越界、use-after-free、double-free</td>
+</tr>
+<tr>
+<td>UndefinedBehaviorSanitizer</td>
+<td><code>-fsanitize=undefined</code></td>
+<td>整数溢出、空指针解引用、除零等</td>
+</tr>
+<tr>
+<td>ThreadSanitizer</td>
+<td><code>-fsanitize=thread</code></td>
+<td>数据竞争（data race）</td>
+</tr>
+<tr>
+<td>MemorySanitizer</td>
+<td><code>-fsanitize=memory</code></td>
+<td>读取未初始化内存</td>
+</tr>
+<tr>
+<td>LeakSanitizer</td>
+<td><code>-fsanitize=leak</code></td>
+<td>内存泄漏（通常随 ASan 一起启用）</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">g++ -g -O1 -fsanitize=address,undefined -fno-omit-frame-pointer \<br>    -o account_asan debug.cpp<br>./account_asan<br></code></pre></td></tr></tbody></table></figure>
+<p>崩溃时的报错非常直观：</p>
+<figure class="highlight mipsasm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">==<span class="hljs-number">12345</span>==ERROR: <span class="hljs-keyword">AddressSanitizer: </span>heap-<span class="hljs-keyword">buffer-overflow </span>on <span class="hljs-keyword">address </span><span class="hljs-number">0x603000000034</span><br>READ of size <span class="hljs-number">4</span> <span class="hljs-built_in">at</span> <span class="hljs-number">0x603000000034</span> thread <span class="hljs-built_in">T0</span><br>    <span class="hljs-comment">#0 0x4011a0 in main debug.cpp:28:15</span><br>    <span class="hljs-comment">#1 0x7f... in __libc_start_main ...</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p>建议在 CI / 单元测试中始终开启 <code>-fsanitize=address,undefined</code> 编译一份，跑完测试再回归到正常构建。</p>
+          </div>
+<h3 id="（五）Core-Dump：崩溃后的事后分析">（五）Core Dump：崩溃后的事后分析</h3>
+<p>  程序崩溃时，操作系统可以把当时的内存映像写到磁盘（<strong>core 文件</strong>），再用调试器加载分析：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 开启 core dump（Linux）</span><br><span class="hljs-built_in">ulimit</span> -c unlimited<br><br>./account_debug<br><span class="hljs-comment"># Segmentation fault (core dumped)</span><br><br>lldb ./account_debug -c core<br><span class="hljs-comment"># 或 gdb：gdb ./account_debug core</span><br>(lldb) bt   <span class="hljs-comment"># 直接看到崩溃栈</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>生产环境必备</strong>：守护进程崩溃后通常不会停在原地等待调试。开 core dump 后，每次崩溃都会留下"现场快照"，事后用 <code>bt</code> 一目了然。</p>
+          </div>
+<h3 id="（六）静态分析：在运行前就发现问题">（六）静态分析：在运行前就发现问题</h3>
+<p>  调试器是运行时工具，但<strong>很多 bug 不用跑就能发现</strong>——这是静态分析的舞台：</p>
+<table>
+<thead>
+<tr>
+<th>语言</th>
+<th>工具</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C / C++</td>
+<td><code>clang-tidy</code>、<code>cppcheck</code></td>
+<td>未初始化变量、内存泄漏、风格问题</td>
+</tr>
+<tr>
+<td>C / C++</td>
+<td><code>clang --analyze</code></td>
+<td>编译器级别的静态检查</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>pyflakes</code>、<code>pylint</code></td>
+<td>未使用变量、导入错误</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>mypy</code></td>
+<td>类型检查</td>
+</tr>
+<tr>
+<td>Shell</td>
+<td><code>shellcheck</code></td>
+<td>shell 脚本反模式</td>
+</tr>
+<tr>
+<td>Rust</td>
+<td><code>cargo clippy</code></td>
+<td>Rust 官方 lint</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># C++ 静态检查</span><br>clang-tidy debug.cpp -- -std=c++20<br><br><span class="hljs-comment"># Shell 脚本检查</span><br>shellcheck deploy.sh<br><br><span class="hljs-comment"># Python 类型检查</span><br>mypy server.py<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>Missing Semester 的建议</strong>：把静态分析集成进编辑器（保存即跑）和 CI（PR 检查），可以消灭一大类低级错误，调试器留给那些静态分析抓不到的逻辑问题。</p>
+          </div>
+<h2 id="四、性能分析-Profiling">四、性能分析 Profiling</h2>
+<p>  调试解决<strong>正确性</strong>问题，性能分析解决<strong>效率</strong>问题。Profiling 的核心目标是回答两个问题：</p>
+<ol>
+<li><strong>时间都花在哪了？</strong> → CPU profiling</li>
+<li><strong>内存都被谁占了？</strong> → Memory / heap profiling</li>
+</ol>
+<div class="note note-warning">
+            <p><strong>不要凭直觉优化</strong>：人类对程序性能的直觉非常差。先用 profiler 找出真正的热点，再动手——否则你大概率优化了一个无关紧要的地方。Missing Semester 给出的真实例子：程序员以为瓶颈是网络，profiler 一看，时间花在编译正则上。</p>
+          </div>
+<h3 id="（一）CPU-分析：perf（Linux）">（一）CPU 分析：perf（Linux）</h3>
+<p>  <code>perf</code> 是 Linux 上的瑞士军刀，基于硬件性能计数器（PMU），开销极小：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 统计程序整体开销（不采样具体函数）</span><br>perf <span class="hljs-built_in">stat</span> ./account_debug<br><br><span class="hljs-comment"># 采样 CPU 热点，记录到 perf.data</span><br>perf record -F 99 -g -- ./account_debug<br><br><span class="hljs-comment"># 查看报告（终端交互）</span><br>perf report<br><br><span class="hljs-comment"># 输出文本报告</span><br>perf report --stdio<br></code></pre></td></tr></tbody></table></figure>
+<p>输出示例（<code>perf report</code>）：</p>
+<figure class="highlight prolog"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs prolog"><span class="hljs-number">35.21</span><span class="hljs-comment">%  account_debug  account_debug  [.] Account::computeInterest</span><br><span class="hljs-number">18.40</span><span class="hljs-comment">%  libc-2.31.so   libc-2.31.so   [.] __printf_l</span><br><span class="hljs-number">12.05</span><span class="hljs-comment">%  account_debug  account_debug  [.] std::vector&lt;...&gt;::_M_emplace_back_aux</span><br> ...<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="火焰图（FlameGraph）">火焰图（FlameGraph）</h4>
+<p>  <code>perf report</code> 是文本，调用层级深时不好读。<strong>火焰图</strong>把采样结果画成一张横向柱状图：每行是一个栈，柱子越宽代表这个函数占用 CPU 越多。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 1. 采样</span><br>perf record -F 99 -g -- ./account_debug<br><span class="hljs-comment"># 2. 折叠调用栈</span><br>perf script | ~/FlameGraph/stackcollapse-perf.pl &gt; out.folded<br><span class="hljs-comment"># 3. 生成 SVG</span><br>~/FlameGraph/flamegraph.pl out.folded &gt; flame.svg<br></code></pre></td></tr></tbody></table></figure>
+<p>打开 <code>flame.svg</code>（浏览器即可），鼠标悬停能看到函数名 + 采样占比，点击可放大某一子树。</p>
+<div class="note note-info">
+            <p>macOS 上对应工具是 <strong>Instruments</strong>（Xcode 自带），其中的 <em>Time Profiler</em> 模板与 <code>perf record</code> 等价，并自带可视化调用树。</p>
+          </div>
+<h3 id="（二）时间分析：time-gprof">（二）时间分析：time / gprof</h3>
+<p>  最朴素的时间分析是 <code>time</code> 命令：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ /usr/bin/time -v ./account_debug<br>        Command being timed: <span class="hljs-string">"./account_debug"</span><br>        User <span class="hljs-keyword">time</span> (seconds): 12.34      <span class="hljs-comment"># 用户态 CPU 时间</span><br>        System <span class="hljs-keyword">time</span> (seconds): 0.45     <span class="hljs-comment"># 内核态 CPU 时间</span><br>        Elapsed (wall clock) <span class="hljs-keyword">time</span>: 13.2 <span class="hljs-comment"># 实际墙钟时间</span><br>        Maximum resident <span class="hljs-built_in">set</span> size (kbytes): 24576   <span class="hljs-comment"># 峰值内存</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>怎么读这三个时间</strong>：</p><ul><li><code>real</code> ≈ <code>user + sys</code>：CPU 是瓶颈；</li><li><code>real</code> &gt; <code>user + sys</code>：程序<strong>等待 I/O 或被阻塞</strong>（网络、磁盘、sleep）；</li><li><code>real</code> &lt; <code>user + sys</code>：程序跑在了<strong>多核</strong>上。</li></ul>
+          </div>
+<p>如果需要<strong>函数级</strong>的时间分布，可以用 <code>gprof</code>：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 1. 编译时插桩</span><br>g++ -pg -o account_pg debug.cpp<br><span class="hljs-comment"># 2. 运行（生成 gmon.out）</span><br>./account_pg<br><span class="hljs-comment"># 3. 查看报告</span><br>gprof account_pg gmon.out &gt; report.txt<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="（三）内存分析：Massif-jemalloc-heaptrack">（三）内存分析：Massif / jemalloc / heaptrack</h3>
+<p>  程序越来越占内存？需要追踪堆的<strong>增长曲线</strong>：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Valgrind 的 Massif 工具：采样堆使用情况</span><br>valgrind --tool=massif ./account_debug<br>ms_print massif.out.12345          <span class="hljs-comment"># 文本直方图</span><br><br><span class="hljs-comment"># Linux 上更轻量的现代替代</span><br>heaptrack ./account_debug<br>heaptrack_print heaptrack.account_debug.12345.gz &gt; report.txt<br></code></pre></td></tr></tbody></table></figure>
+<p><code>heaptrack</code> 会列出：</p>
+<ul>
+<li>分配最多字节函数的 top-N</li>
+<li>分配次数最多的函数的 top-N</li>
+<li>堆内存随时间的变化曲线</li>
+</ul>
+<h3 id="（四）性能分析的一般流程">（四）性能分析的一般流程</h3>
+<p>  拿到一份 profiling 数据后，建议遵循 <strong>Measure → Locate → Hypothesize → Fix → Re-measure</strong> 的循环：</p>
+<ol>
+<li><strong>先测，不要猜</strong>：用 <code>time</code> / <code>perf stat</code> 确认程序到底是 CPU-bound 还是 I/O-bound；</li>
+<li><strong>找热点</strong>：用 <code>perf record</code> 或火焰图找出占比 top-3 的函数；</li>
+<li><strong>形成假设</strong>：为什么这个函数慢？算法复杂度？缓存不友好？锁竞争？</li>
+<li><strong>改一处再测一处</strong>：每次只改一个变量，重新采样对比；</li>
+<li><strong>检查回归</strong>：优化后跑完整测试集，避免引入正确性问题。</li>
+</ol>
+<div class="note note-warning">
+            <p>两条常见反模式：</p><ul><li><strong>过早优化</strong>：在没测量之前凭直觉改代码，常常优化了无关紧要的地方；</li><li><strong>微优化</strong>：在 99% 时间都不在的函数里抠一行汇编，不如先重构数据结构。</li></ul>
+          </div>
+<h2 id="五、资源监控">五、资源监控</h2>
+<p>  调试和性能分析之外，日常还需要<strong>实时观察</strong>系统状态——CPU 占用、内存、磁盘 I/O、网络。Missing Semester 推荐这几个工具：</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>top</code> / <code>htop</code></td>
+<td>实时进程列表，按 CPU/内存排序（<code>htop</code> 彩色更直观）</td>
+</tr>
+<tr>
+<td><code>iotop</code></td>
+<td>哪个进程在读写磁盘</td>
+</tr>
+<tr>
+<td><code>iftop</code> / <code>nethogs</code></td>
+<td>网络流量按进程 / 按连接</td>
+</tr>
+<tr>
+<td><code>dstat</code> / <code>vmstat</code></td>
+<td>综合 CPU/磁盘/网络/内存</td>
+</tr>
+<tr>
+<td><code>glances</code></td>
+<td>一站式系统监控（curses + Web UI）</td>
+</tr>
+<tr>
+<td><code>netstat</code> / <code>ss</code></td>
+<td>当前网络连接、监听端口</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 找出占用 CPU 最高的进程</span><br>htop            <span class="hljs-comment"># 按 P 排 CPU、按 M 排内存</span><br><br><span class="hljs-comment"># 看哪个端口被监听</span><br>ss -tlnp        <span class="hljs-comment"># -t TCP、-l listening、-n 不解析端口名、-p 显示进程</span><br><br><span class="hljs-comment"># 综合监控</span><br>dstat -tcdnym   <span class="hljs-comment"># time + cpu + disk + net + mem 一起看</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>定位"线上卡顿"的标准动作</strong>：先 <code>htop</code> 看是不是某进程占满 CPU → 不行就 <code>iotop</code> 看是不是磁盘 I/O 撑满 → 再不行就 <code>ss</code> / <code>iftop</code> 看是不是网络阻塞。一套下来通常就能锁定瓶颈。</p>
+          </div>
+<h2 id="六、参考">六、参考</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/2020/debugging/">MIT Missing Semester — Debugging and Profiling</a></li>
+<li><a target="_blank" rel="noopener" href="https://lldb.llvm.org/use/tutorial.html">LLDB Tutorial — LLVM 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.sourceware.org/gdb/documentation/">GDB Documentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html">AddressSanitizer — GCC 手册</a></li>
+<li><a target="_blank" rel="noopener" href="https://perf.wiki.kernel.org/">perf Wiki — Linux 内核文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/brendangregg/FlameGraph">FlameGraph — Brendan Gregg</a></li>
+<li><a target="_blank" rel="noopener" href="https://valgrind.org/docs/manual/manual.html">Valgrind 用户手册</a></li>
+</ul>
 
                 
               </div>
@@ -634,7 +1038,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>April 1, 2026</div>
+          <div>July 17, 2026</div>
         </div>
       
       

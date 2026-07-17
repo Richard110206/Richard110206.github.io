@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/Ollama%20API.png?raw=true">
 <meta property="article:published_time" content="2025-10-18T01:01:10.000Z">
-<meta property="article:modified_time" content="2026-01-25T16:53:56.655Z">
+<meta property="article:modified_time" content="2026-07-17T15:35:16.342Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="updating">
 <meta property="article:tag" content="Python">
@@ -306,7 +306,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k words
+          4.6k words
         
       </span>
     
@@ -317,7 +317,7 @@
         
         
         
-          18 mins
+          39 mins
         
       </span>
     
@@ -474,10 +474,52 @@
             
               <div class="markdown-body">
                 
-                <p>本文将会记录我本地部署大模型并进行 API 接口开发的全流程！</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/Richard110206/LLM_API">项目Repo</a></p>
+                <p>本文将会记录我<strong>第一次本地部署大模型</strong>并基于它进行 API 接口开发的全流程！</p>
+<p>之所以想做这个项目，是因为之前调用 OpenAI、DeepSeek 等云端 API 时，总是会受到网络、API Key 额度、隐私数据等限制。而本地部署大模型恰好解决了这些问题——<strong>模型完全跑在自己的机器上，数据不会外泄，调用次数也没有限制</strong>。这对于学习、原型开发以及处理一些敏感数据的场景来说非常友好。</p>
+<div class="note note-info">
+            <p><strong>本地部署 vs 云端 API 的取舍</strong></p><table><thead><tr><th style="text-align:center">维度</th><th style="text-align:center">本地部署（Ollama）</th><th style="text-align:center">云端 API（OpenAI / DeepSeek）</th></tr></thead><tbody><tr><td style="text-align:center">隐私性</td><td style="text-align:center">✅ 数据不出本地</td><td style="text-align:center">❌ 数据需上传</td></tr><tr><td style="text-align:center">成本</td><td style="text-align:center">一次性硬件投入</td><td style="text-align:center">按 token 计费</td></tr><tr><td style="text-align:center">模型质量</td><td style="text-align:center">受限于本地显存</td><td style="text-align:center">顶级闭源模型</td></tr><tr><td style="text-align:center">部署难度</td><td style="text-align:center">需配置环境</td><td style="text-align:center">一个 API Key 即可</td></tr><tr><td style="text-align:center">响应速度</td><td style="text-align:center">取决于本地硬件</td><td style="text-align:center">通常更快更稳定</td></tr></tbody></table><p>简言之：<strong>学习 / 隐私敏感场景 → 本地部署；生产 / 商用场景 → 云端 API</strong>。</p>
+          </div>
+<p>本项目最终实现了一个基于 FastAPI 的轻量级 API 服务，具备：</p>
+<ul>
+<li>✅ <strong>API Key 鉴权</strong>：只有持有合法密钥的客户端才能调用</li>
+<li>✅ <strong>额度管理</strong>：每个 Key 拥有初始调用次数限制，防止滥用</li>
+<li>✅ <strong>本地推理</strong>：所有请求由本地 Ollama 模型处理，零外部依赖</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/Richard110206/LLM_API">项目 Repo</a></p>
+<h3 id="项目结构">项目结构</h3>
+<p>整个项目的文件非常精简，核心代码不到 30 行：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">LLM_API/<br>├── .<span class="hljs-built_in">env</span>               <span class="hljs-comment"># 存储 API_KEY（不进入 git）</span><br>├── .gitignore         <span class="hljs-comment"># 忽略 .env 等敏感文件</span><br>├── Modelfile          <span class="hljs-comment"># 自定义 Ollama 模型配置</span><br>├── main.py            <span class="hljs-comment"># FastAPI 应用主入口</span><br>├── test_api.py        <span class="hljs-comment"># 测试脚本</span><br>├── requirements.txt   <span class="hljs-comment"># Python 依赖列表</span><br>├── README.md          <span class="hljs-comment"># 项目英文文档</span><br>└── README_zh-CN.md    <span class="hljs-comment"># 项目中文文档</span><br></code></pre></td></tr></tbody></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">文件</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>main.py</code></td>
+<td style="text-align:left">整个 API 服务的核心，定义路由、鉴权、模型调用逻辑</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>Modelfile</code></td>
+<td style="text-align:left">类似于 Dockerfile，用于自定义 Ollama 模型行为</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>.env</code></td>
+<td style="text-align:left">通过 <code>python-dotenv</code> 加载，避免硬编码 API Key</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>test_api.py</code></td>
+<td style="text-align:left">使用 <code>requests</code> 库对 API 进行端到端测试</td>
+</tr>
+</tbody>
+</table>
 <h3 id="Reference">Reference</h3>
 <p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=UtSSMs6ObqY&amp;t=600s">Learn Ollama in 15 Minutes - Run LLM Models Locally for FREE</a></p>
+<div class="note note-info">
+            <h4 id="前置准备">前置准备</h4><ul><li><strong>Python 3.8+</strong>：FastAPI 要求 Python 版本不低于 3.8</li><li><strong>Ollama 客户端</strong>：从 <a target="_blank" rel="noopener" href="https://ollama.com/">官网</a> 下载对应平台的安装包即可，Mac 用户也可以用 Homebrew：</li></ul>
+          </div>
 <ol>
 <li>从官方网站下载安装 <a target="_blank" rel="noopener" href="https://ollama.com/">Ollama</a>，mac用户可以使用命令行进行安装：</li>
 </ol>
@@ -487,14 +529,25 @@
 </ol>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ollama run mistral<br></code></pre></td></tr></tbody></table></figure>
 <p>看到<code>&lt;&lt;</code>的标志说明部署成功，可以与本地大模型进行对话了！</p>
-<p>我们也可以根据自己的需求对大模型进行自定义，编写<code>Modelfile</code>文件，定义大模型的参数：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs Modelfile">FROM mistral<br><br>PARAMETER temperature 1<br><br>SYSTEM """<br>You are a student from Nanjing No.13 senior high school,and is fully prepared for Gaokao.<br>"""<br></code></pre></td></tr></tbody></table></figure>
 <div class="note note-info">
-            <ul><li><p><code>FROM &lt;模型名&gt;</code>：指定基础模型（<strong>预训练模型</strong>或<strong>微调后的模型</strong>）（<code>.gguf</code>格式）</p><ul><li><code>FROM llama2-7b</code>（基于 Llama 2 的 70 亿参数模型）</li><li><code>FROM ./my_finetuned_model.gguf</code>（本地微调后的模型文件）</li></ul></li></ul><div class="note note-info">            <p><code>.gguf</code>是一种开源的大语言模型的文件格式</p>          </div><ul><li><code>PARAMETER &lt;参数名&gt; &lt;参数值&gt;</code>：指定模型参数</li></ul><table><thead><tr><th style="text-align:center">参数名</th><th style="text-align:center">作用</th><th style="text-align:center">常见取值范围 / 示例</th></tr></thead><tbody><tr><td style="text-align:center"><code>temperature</code></td><td style="text-align:center">控制输出随机性（值越高越随机，越低越确定）</td><td style="text-align:center">0~2（例如：0.3（严谨）、1.5（发散））</td></tr><tr><td style="text-align:center"><code>top_k</code></td><td style="text-align:center">生成时仅从概率最高的k个词中选择（限制候选词范围）</td><td style="text-align:center">1~100（例如：50、10（更集中））</td></tr><tr><td style="text-align:center"><code>top_p</code>（核采样）</td><td style="text-align:center">从累计概率超过p的词中随机选择（动态调整候选词数量）</td><td style="text-align:center">0~1（例如：0.9（常用）、0.5（更严格））</td></tr><tr><td style="text-align:center"><code>max_tokens</code></td><td style="text-align:center">限制生成的最大 token 数（避免输出过长）</td><td style="text-align:center">整数（例如：512、1024）</td></tr><tr><td style="text-align:center"><code>stop</code></td><td style="text-align:center">定义终止符（遇到该字符时停止生成）</td><td style="text-align:center">字符串（例如：stop: “###”、stop: “\n”）</td></tr><tr><td style="text-align:center"><code>repeat_penalty</code></td><td style="text-align:center">惩罚重复内容（值越高，越避免重复）</td><td style="text-align:center">1~2（例如：1.2（轻微惩罚）、1.8（严格））</td></tr><tr><td style="text-align:center"><code>presence_penalty</code></td><td style="text-align:center">惩罚已出现过的主题（鼓励新内容）</td><td style="text-align:center">-2~2（例如：0.5、-0.5（允许重复））</td></tr><tr><td style="text-align:center"><code>frequency_penalty</code></td><td style="text-align:center">惩罚高频出现的词（减少冗余词汇）</td><td style="text-align:center">-2~2（例如：0.3）</td></tr></tbody></table><ul><li><code>SYSTEM "&lt;提示词&gt;"</code>：定义模型的角色、行为规则或背景信息（引导模型生成符合设定的回复）。</li></ul>
+            <p><code>ollama run &lt;model&gt;</code> 第一次执行时会自动从 Ollama Registry 拉取模型文件（通常 4GB 左右），下载完成后直接进入交互对话模式。退出对话使用 <code>/bye</code> 或 <code>Ctrl + D</code>。</p><p>常用模型命令：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">ollama list       <span class="hljs-comment"># 查看本地所有模型</span><br>ollama ps         <span class="hljs-comment"># 查看当前运行的模型</span><br>ollama <span class="hljs-built_in">rm</span> &lt;model&gt; <span class="hljs-comment"># 删除某个模型</span><br>ollama show &lt;model&gt; <span class="hljs-comment"># 显示模型详细信息</span><br></code></pre></td></tr></tbody></table></figure>
+          </div>
+<h3 id="自定义模型：Modelfile">自定义模型：Modelfile</h3>
+<p>我们也可以根据自己的需求对大模型进行自定义，编写<code>Modelfile</code>文件，定义大模型的参数。本项目用到的<code>Modelfile</code>如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs Modelfile">FROM mistral<br><br>PARAMETER temperature 0.7<br>PARAMETER top_p 0.9<br>PARAMETER repeat_penalty 1.1<br><br>SYSTEM """<br>You are RichardGPT, a Multi-Agent Systems expert with deep, hands-on expertise in designing and deploying collaborative LLM agent architectures. You have spent years building production-grade multi-agent pipelines — from role-specialized crews to fully autonomous agent societies — and you understand both the research frontier (ReAct, AutoGen, MetaGPT, CAMEL) and the engineering reality (token cost, failure modes, observability).<br><br># Core Expertise<br>- Multi-Agent Architecture: proficient with AutoGen, CrewAI, LangGraph, MetaGPT, and OpenAI Swarm — skilled at role assignment, message routing, conversation memory, and tool-use protocols between agents<br>- Agent Foundations: deep understanding of ReAct, Reflexion, ToolFormer, and Plan-and-Execute patterns; knows when to use a single-agent-with-tools vs a true multi-agent swarm<br>- LLM Stack: solid grasp of Transformer / MoE architectures, the training pipeline (pre-training → SFT → RLHF / DPO), and inference engines (vLLM, Ollama, llama.cpp, SGLang)<br>- RAG &amp; Tooling: production experience with retrieval-augmented generation, vector databases (Qdrant, Chroma, Milvus), and framework stacks (LangChain, LlamaIndex, HuggingFace Transformers, PyTorch)<br>- Adjacent Domains: prompt engineering, agent evaluation, AI safety / alignment, and cost-aware deployment<br><br># Communication Style<br>- Respond like a senior staff engineer pair-programming with a colleague: precise, opinionated, and grounded in real-world trade-offs<br>- When the user describes a problem, first diagnose whether it actually needs multi-agent — many tasks are better solved by a single well-prompted LLM with tools. Say so honestly<br>- Lead with the most practical solution first, then explain the underlying principle — code before theory<br>- Cite relevant papers (ReAct, AutoGen, MetaGPT, CAMEL, ToolFormer, etc.) when introducing a non-trivial concept<br>- When comparing frameworks, present a clear recommendation with concrete trade-offs (latency / token cost / debuggability / lock-in)<br>- Never fabricate. If a library API or benchmark number is uncertain, say so explicitly and suggest where to verify<br>- Default to Python 3.10+ idioms; prefer type hints and minimal, runnable code snippets<br><br># What You Help With<br>Typical tasks include: deciding whether a problem warrants multi-agent at all, designing agent roles and communication topologies, choosing between CrewAI / AutoGen / LangGraph, debugging agent loops, reducing token cost, and evaluating agent system outputs.<br>"""<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <h4 id="SYSTEM-提示词的写作技巧">SYSTEM 提示词的写作技巧</h4><p>上面这段 SYSTEM 看起来很长，但其实遵循了一个非常实用的模板——<strong>「身份 + 专长 + 风格 + 适用场景」四段式</strong>：</p><table><thead><tr><th style="text-align:left">段落</th><th style="text-align:left">作用</th><th style="text-align:left">关键写法</th></tr></thead><tbody><tr><td style="text-align:left"><strong>身份（Identity）</strong></td><td style="text-align:left">锚定模型的人设与立场</td><td style="text-align:left"><strong>用「专家」而非「学生」</strong> —— 模型会模仿人设的笃定程度，专家身份能换来更自信、更深入的回答</td></tr><tr><td style="text-align:left"><strong>专长（Expertise）</strong></td><td style="text-align:left">圈定知识范围，避免乱答</td><td style="text-align:left">列出关键技术栈、框架、相邻领域，相当于给模型划「能力边界」</td></tr><tr><td style="text-align:left"><strong>沟通风格（Style）</strong></td><td style="text-align:left">控制语气、格式、详略</td><td style="text-align:left">例如「先给代码再讲原理」「不确定时承认不知道」</td></tr><tr><td style="text-align:left"><strong>适用场景（Scope）</strong></td><td style="text-align:left">让回答更贴近使用者真实需求</td><td style="text-align:left">写明典型任务类型，模型会自动带入相关例子</td></tr></tbody></table><p>写作时几个小经验：</p><ul><li><strong>用「专家 / expert」给人设打标签</strong>：让回答更笃定、信息密度更高</li><li><strong>用具体名词代替形容词</strong>：「熟悉 Python」不如「主力语言 Python，熟悉 PyTorch、FastAPI」</li><li><strong>明确禁止行为</strong>：写上「Never fabricate」「不知道就说不知道」，能显著降低幻觉（hallucination）</li><li><strong>结构化排版</strong>：用 Markdown 标题 / 列表分隔段落，开源模型对小段落的「注意力」更集中</li><li><strong>写英文效果通常比中文好</strong>：Mistral、Llama 等模型预训练语料以英文为主，中文 prompt 容易触发翻译腔或简短回答</li></ul>
+          </div>
+<div class="note note-info">
+            <ul><li><p><code>FROM &lt;模型名&gt;</code>：指定基础模型（<strong>预训练模型</strong>或<strong>微调后的模型</strong>）（<code>.gguf</code>格式）</p><ul><li><code>FROM llama2-7b</code>（基于 Llama 2 的 70 亿参数模型）</li><li><code>FROM ./my_finetuned_model.gguf</code>（本地微调后的模型文件）</li></ul></li></ul><div class="note note-info">            <p><code>.gguf</code>是一种开源的大语言模型的文件格式</p>          </div><ul><li><code>PARAMETER &lt;参数名&gt; &lt;参数值&gt;</code>：指定模型参数</li></ul><table><thead><tr><th style="text-align:center">参数名</th><th style="text-align:center">作用</th><th style="text-align:center">常见取值范围 / 示例</th></tr></thead><tbody><tr><td style="text-align:center"><code>temperature</code></td><td style="text-align:center">控制输出随机性（值越高越随机，越低越确定）</td><td style="text-align:center">0~2（例如：0.3（严谨）、1.5（发散））</td></tr><tr><td style="text-align:center"><code>top_k</code></td><td style="text-align:center">生成时仅从概率最高的k个词中选择（限制候选词范围）</td><td style="text-align:center">1~100（例如：50、10（更集中））</td></tr><tr><td style="text-align:center"><code>top_p</code>（核采样）</td><td style="text-align:center">从累计概率超过p的词中随机选择（动态调整候选词数量）</td><td style="text-align:center">0~1（例如：0.9（常用）、0.5（更严格））</td></tr><tr><td style="text-align:center"><code>max_tokens</code></td><td style="text-align:center">限制生成的最大 token 数（避免输出过长）</td><td style="text-align:center">整数（例如：512、1024）</td></tr><tr><td style="text-align:center"><code>stop</code></td><td style="text-align:center">定义终止符（遇到该字符时停止生成）</td><td style="text-align:center">字符串（例如：stop: “###”、stop: “\n”）</td></tr><tr><td style="text-align:center"><code>repeat_penalty</code></td><td style="text-align:center">惩罚重复内容（值越高，越避免重复）</td><td style="text-align:center">1~2（例如：1.2（轻微惩罚）、1.8（严格））</td></tr><tr><td style="text-align:center"><code>presence_penalty</code></td><td style="text-align:center">惩罚已出现过的主题（鼓励新内容）</td><td style="text-align:center">-2~2（例如：0.5、-0.5（允许重复））</td></tr><tr><td style="text-align:center"><code>frequency_penalty</code></td><td style="text-align:center">惩罚高频出现的词（减少冗余词汇）</td><td style="text-align:center">-2~2（例如：0.3）</td></tr></tbody></table><div class="note note-info">            <p>本项目的 <code>Modelfile</code> 同时设置了 <code>temperature 0.7</code> + <code>top_p 0.9</code> + <code>repeat_penalty 1.1</code>：中等创造性 + 略高多样性的组合，适合技术问答类场景——既能给出稳定的代码和解释，又不会每次都输出一字不差的样板答案。</p>          </div><ul><li><code>SYSTEM "&lt;提示词&gt;"</code>：定义模型的角色、行为规则或背景信息（引导模型生成符合设定的回复）。</li></ul>
           </div>
 <p>根据自己需求修改好<code>Modelfile</code>文件后，就可以创建自定义模型了：</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ollama create student -f ./Modelfile<br></code></pre></td></tr></tbody></table></figure>
-<p><code>ollama create &lt;模型名&gt; -f &lt;配置文件名&gt;</code>：根据模型名运行</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ollama create cumt-cs-bot -f ./Modelfile<br></code></pre></td></tr></tbody></table></figure>
+<p><code>ollama create &lt;模型名&gt; -f &lt;配置文件名&gt;</code>：根据模型名创建。创建成功后，用 <code>ollama run cumt-cs-bot</code> 即可与自定义人设的模型对话。</p>
+<div class="note note-info">
+            <h4 id="Modelfile-vs-OpenAI-System-Prompt">Modelfile vs OpenAI System Prompt</h4><p>如果你用过 OpenAI 的 API，会发现两者都能设定模型的「人设」。区别在于：</p><ul><li><strong>Modelfile</strong>：在模型层面固化，<strong>每次调用都生效</strong>，适合稳定的角色设定（如本项目把模型固定为「Multi-Agent 系统专家」）</li><li><strong>System Prompt</strong>：在每次请求的 <code>messages</code> 里传入，<strong>灵活但容易遗漏</strong></li></ul><p>实际项目中，可以把稳定的身份/语气交给 Modelfile，把具体任务指令放在请求的 system 消息里，二者配合使用。</p>
+          </div>
+<h3 id="构建-API-服务">构建 API 服务</h3>
 <h4 id="Reference-v2">Reference</h4>
 <p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=cy6EAp4iNN4">How To Build an API with Python (LLM Integration, FastAPI, Ollama &amp; More)</a></p>
 <p>完成项目依赖文档<code>requirements.txt</code>，并完成必要库的安装：</p>
@@ -512,6 +565,67 @@
           </div>
 <div class="note note-info">
             <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@app.post(<span class="hljs-params"><span class="hljs-string">"/generate"</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">generate</span>(<span class="hljs-params">prompt: <span class="hljs-built_in">str</span>, x_api_key: <span class="hljs-built_in">str</span> = Depends(<span class="hljs-params">verify_api_key</span>)</span>):<br>    API_KEY_CREDITS[x_api_key] -= <span class="hljs-number">1</span><br>    response = ollama.chat(<br>        model=<span class="hljs-string">"mistral"</span>,<br>        messages=[{<span class="hljs-string">"role"</span>: <span class="hljs-string">"user"</span>, <span class="hljs-string">"content"</span>: prompt}]<br>    )<br>    <span class="hljs-keyword">return</span> {<span class="hljs-string">"response"</span>: response[<span class="hljs-string">"message"</span>][<span class="hljs-string">"content"</span>]}<br></code></pre></td></tr></tbody></table></figure><ul><li><code>@app.post("/generate")</code>：这是 FastAPI 的路由装饰器<ul><li><code>.post("/generate")</code> ：当客户端以 POST 方法访问 <code>/generate</code> 路径时，会执行下面的 <code>generate</code> 函数。</li><li><code>Depends(verify_api_key)</code>：表示在执行 <code>generate</code> 函数前，先执行 <code>verify_api_key</code> 函数（之前定义的密钥验证函数），并将其返回值传给 <code>x_api_key</code>，如果 <code>verify_api_key</code> 验证失败（抛出 401 错误），<code>generate</code> 函数不会执行，直接返回错误给客户端。</li></ul></li><li><code>ollama.chat(model,messages)</code>：用于与 AI 模型进行对话交互<ul><li><code>model="mistral"</code>：指定使用的 AI 模型是 “mistral”。</li><li><code>messages=[{"role": "user", "content": prompt}]</code>：这是一个消息列表，包含一个用户消息。<ul><li><code>"role": "user"</code>：表示这是一个用户消息。</li><li><code>"content": prompt</code>：用户消息的内容是 <code>prompt</code> 变量的值。</li></ul></li></ul></li></ul><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">messages=[<br>    {<span class="hljs-string">"role"</span>: <span class="hljs-string">"system"</span>, <span class="hljs-string">"content"</span>: <span class="hljs-string">"who are you?"</span>},<br>    {<span class="hljs-string">"role"</span>: <span class="hljs-string">"user"</span>, <span class="hljs-string">"content"</span>: <span class="hljs-string">"tell me what's LLM?"</span>},<br>]<br></code></pre></td></tr></tbody></table></figure>
+          </div>
+<div class="note note-info">
+            <h4 id="HTTP-请求处理流程">HTTP 请求处理流程</h4><p>把上面三段代码（鉴权 / 路由 / 模型调用）串起来，一个完整的请求生命周期是这样的：</p><figure class="highlight verilog"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs verilog">Client POST /<span class="hljs-keyword">generate</span>?prompt=hi<br>  Headers: x-api-key: abc123<br>        │<br>        ▼<br>┌─────────────────────────────────────┐<br>│ FastAPI 路由匹配 @app<span class="hljs-variable">.post</span>(<span class="hljs-string">"/generate"</span>) │<br>└─────────────────────────────────────┘<br>        │<br>        ▼ Depends(verify_api_key)<br>┌─────────────────────────────────────┐<br>│ 从 Header 取 x-api-key                  │<br>│ 查 API_KEY_CREDITS 字典                 │<br>│  ├─ 无效 / 额度耗尽 → 抛 <span class="hljs-number">401</span>           │<br>│  └─ 通过 → 返回 x_api_key              │<br>└─────────────────────────────────────┘<br>        │<br>        ▼<br>┌─────────────────────────────────────┐<br>│ 扣减额度（credits -= <span class="hljs-number">1</span>）              │<br>│ 调用 ollama<span class="hljs-variable">.chat</span>(...)                  │<br>│ 返回 {<span class="hljs-string">"response"</span>: <span class="hljs-string">"..."</span>}              │<br>└─────────────────────────────────────┘<br></code></pre></td></tr></tbody></table></figure>
+          </div>
+<h3 id="启动-API-服务">启动 API 服务</h3>
+<p>代码写好后，用 <code>uvicorn</code>（一个基于 ASGI 的轻量级 Web 服务器）把 FastAPI 应用跑起来：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">uvicorn main:app --reload<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>main:app</code>：<code>main</code> 是 Python 文件名（<code>main.py</code>），<code>app</code> 是文件中创建的 <code>FastAPI()</code> 实例</li>
+<li><code>--reload</code>：开发模式热重载，源码修改后自动重启服务，生产环境请去掉</li>
+</ul>
+<p>启动成功后控制台会输出：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)<br>INFO:     Started reloader process [12340]<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <h4 id="常见启动错误排查">常见启动错误排查</h4><table><thead><tr><th style="text-align:left">报错</th><th style="text-align:left">原因</th><th style="text-align:left">解决方法</th></tr></thead><tbody><tr><td style="text-align:left"><code>ModuleNotFoundError: No module named 'fastapi'</code></td><td style="text-align:left">依赖未安装</td><td style="text-align:left"><code>pip install -r requirements.txt</code></td></tr><tr><td style="text-align:left"><code>ConnectionRefusedError: [Errno 111]</code>（调用 <code>/generate</code> 时）</td><td style="text-align:left">Ollama 服务未启动</td><td style="text-align:left">新开终端运行 <code>ollama serve</code></td></tr><tr><td style="text-align:left"><code>ollama.ResponseError: model 'mistral' not found</code></td><td style="text-align:left">本地未拉取该模型</td><td style="text-align:left"><code>ollama pull mistral</code></td></tr><tr><td style="text-align:left"><code>IndexError: list index out of range</code>（<code>.env</code> 引发）</td><td style="text-align:left"><code>API_KEY</code> 为空导致字典 key 为 <code>None</code></td><td style="text-align:left">检查 <code>.env</code> 文件已正确填写</td></tr></tbody></table>
+          </div>
+<h3 id="测试-API-接口">测试 API 接口</h3>
+<h4 id="方法一：内置测试脚本">方法一：内置测试脚本</h4>
+<p>项目自带的 <code>test_api.py</code> 通过 <code>requests</code> 库模拟客户端调用：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># test_api.py</span><br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">from</span> dotenv <span class="hljs-keyword">import</span> load_dotenv<br><span class="hljs-keyword">import</span> os<br><br>load_dotenv()<br><br>url = <span class="hljs-string">"http://127.0.0.1:8000/generate?prompt=tell me what's LLM?"</span><br>headers = {<span class="hljs-string">"x-api-key"</span>: os.getenv(<span class="hljs-string">"API_KEY"</span>), <span class="hljs-string">"Content-Type"</span>: <span class="hljs-string">"application/json"</span>}<br><br>response = requests.post(url, headers=headers)<br><span class="hljs-built_in">print</span>(response.json())<br></code></pre></td></tr></tbody></table></figure>
+<p>直接运行：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">python test_api.py<br><span class="hljs-comment"># {'response': 'LLM stands for Large Language Model...'}</span><br></code></pre></td></tr></tbody></table></figure>
+<h4 id="方法二：cURL-命令行">方法二：cURL 命令行</h4>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -X POST <span class="hljs-string">"http://127.0.0.1:8000/generate?prompt=hello"</span> \<br>     -H <span class="hljs-string">"x-api-key: YOUR_API_KEY"</span> \<br>     -H <span class="hljs-string">"Content-Type: application/json"</span><br></code></pre></td></tr></tbody></table></figure>
+<h4 id="方法三：Postman-Apifox">方法三：Postman / Apifox</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">字段</th>
+<th style="text-align:left">值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Method</td>
+<td style="text-align:left"><code>POST</code></td>
+</tr>
+<tr>
+<td style="text-align:left">URL</td>
+<td style="text-align:left"><code>http://127.0.0.1:8000/generate?prompt=your_prompt</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Header</td>
+<td style="text-align:left"><code>x-api-key: &lt;你的密钥&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Header</td>
+<td style="text-align:left"><code>Content-Type: application/json</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="FastAPI-自带的交互式文档">FastAPI 自带的交互式文档</h3>
+<p>FastAPI 最让人惊喜的特性之一：<strong>只要写好类型注解，文档自动生成</strong>。</p>
+<p>服务启动后，浏览器访问：</p>
+<ul>
+<li><strong>Swagger UI</strong>：<a target="_blank" rel="noopener" href="http://127.0.0.1:8000/docs">http://127.0.0.1:8000/docs</a> — 可视化测试每个接口</li>
+<li><strong>ReDoc</strong>：<a target="_blank" rel="noopener" href="http://127.0.0.1:8000/redoc">http://127.0.0.1:8000/redoc</a> —更适合阅读的文档样式</li>
+<li><strong>OpenAPI JSON</strong>：<a target="_blank" rel="noopener" href="http://127.0.0.1:8000/openapi.json">http://127.0.0.1:8000/openapi.json</a> —标准 OpenAPI 3.x 规范</li>
+</ul>
+<div class="note note-info">
+            <p>在 Swagger UI 中，点击右上角的 <strong>Authorize</strong> 按钮填入 <code>x-api-key</code>，就可以直接在网页里点 <strong>Try it out</strong> 发请求调试，<strong>完全不需要 Postman</strong>。对个人开发者来说非常省事。</p>
           </div>
 <h3 id="在代码中调用大模型API">在代码中调用大模型API</h3>
 <p>在老版本的<code>openai</code>库中的调用方式：</p>
@@ -555,6 +669,24 @@
 <li>进行流式调用：</li>
 </ul>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openai <span class="hljs-keyword">import</span> OpenAI<br><br>client=OpenAI(<br>    api_key=<span class="hljs-string">"YOUR_OPENAI_API_KEY"</span>,<br>    base_url=<span class="hljs-string">"https://api.deepseek.com/v1"</span><br>)<br><br>response=client.chat.completions.create(<br>    model=<span class="hljs-string">"deepseek-chat"</span>,<br>    messages=[<br>        {<span class="hljs-string">"role"</span>:<span class="hljs-string">"system"</span>,<span class="hljs-string">"content"</span>:<span class="hljs-string">"你是一名经验丰富的程序员"</span>},<br>        {<span class="hljs-string">"role"</span>:<span class="hljs-string">"user"</span>,<span class="hljs-string">"content"</span>:<span class="hljs-string">"如何调用大模型api接口"</span>},<br>        {<span class="hljs-string">"role"</span>:<span class="hljs-string">"assistant"</span>,<span class="hljs-string">"content"</span>:<span class="hljs-string">"API的使用方法"</span>}<br>    ],<br>    stream=<span class="hljs-literal">True</span><br>)<br><br><span class="hljs-keyword">for</span> chunk <span class="hljs-keyword">in</span> response:<br>    <span class="hljs-built_in">print</span>(chunk.choices[<span class="hljs-number">0</span>].delta.content,<br>          end=<span class="hljs-string">""</span>,<br>          flush=<span class="hljs-literal">True</span><br>          )<br><span class="hljs-comment"># print(response.choices[0].message.content)</span><br></code></pre></td></tr></tbody></table></figure>
+<h4 id="Ollama-的流式调用">Ollama 的流式调用</h4>
+<p>回到本项目，<code>ollama</code> 库同样支持流式输出（streaming），只需在 <code>chat</code> 中加上 <code>stream=True</code>，返回值会变成一个可迭代的 chunk 流：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> ollama<br><br>stream = ollama.chat(<br>    model=<span class="hljs-string">"mistral"</span>,<br>    messages=[{<span class="hljs-string">"role"</span>: <span class="hljs-string">"user"</span>, <span class="hljs-string">"content"</span>: <span class="hljs-string">"用 200 字介绍一下南京"</span>}],<br>    stream=<span class="hljs-literal">True</span>,<br>)<br><br><span class="hljs-keyword">for</span> chunk <span class="hljs-keyword">in</span> stream:<br>    <span class="hljs-comment"># 每个 chunk 只包含增量内容</span><br>    <span class="hljs-built_in">print</span>(chunk[<span class="hljs-string">"message"</span>][<span class="hljs-string">"content"</span>], end=<span class="hljs-string">""</span>, flush=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <h4 id="为什么要用流式？">为什么要用流式？</h4><ul><li><strong>用户体验</strong>：边生成边显示，首字延迟从「等 10 秒看一坨」变成「立刻看到字一个一个蹦出来」，体感快得多</li><li><strong>可中途打断</strong>：在前端发现回答跑偏时可以随时取消请求，省 token</li><li><strong>长文本场景</strong>：写小说、代码、长报告时，非流式需要等几十秒才一次性返回，体验差</li></ul><p>把流式接到 FastAPI 里时，路由函数需要声明为 <code>async def</code> 并使用 <code>StreamingResponse</code> 把 chunk 逐个 yield 给客户端。本项目为保持入门难度使用的是非流式，留作进阶练习。</p>
+          </div>
+<h3 id="总结">总结</h3>
+<p>完成这个项目的过程中，我把自己当成「既是模型提供方、又是 API 开发者、还是调用方」三种角色走了一遍，对大模型应用的整条链路有了非常直观的认识。简单复盘下学到的东西：</p>
+<ol>
+<li><strong>本地大模型并不神秘</strong>——<code>ollama run</code> 一条命令就能跑起来，原理和 Docker 拉镜像类似</li>
+<li><strong>API Key + 额度管理</strong>——这是几乎所有 LLM 服务（OpenAI / Anthropic / DeepSeek）的标配鉴权模式，本项目用 20 行代码就复刻了核心思路</li>
+<li><strong>FastAPI 真的很省心</strong>——类型注解既当文档又当校验，<code>/docs</code> 自动生成，开发体验远好于 Flask</li>
+<li><strong><code>.env</code> + <code>Depends</code></strong> 是 Python Web 项目里两个值得养成习惯的小工具——前者保护密钥，后者让鉴权逻辑干净复用</li>
+</ol>
+<div class="note note-info">
+            <h4 id="下一步可以做什么">下一步可以做什么</h4><ul><li>把额度字典换成 SQLite / Redis，让服务重启后额度不丢</li><li>加上 <code>/chat</code> 接口支持多轮对话（保留 messages 上下文）</li><li>接入 RAG（参见下一篇 <a href="./RAG-Python-App">RAG Python App</a>），让模型回答自己的笔记 / 文档</li><li>用 Docker 打包，部署到家里的小主机或 NAS 上，做成私人 LLM 服务</li></ul>
+          </div>
+<p>希望这篇文章能帮你少踩一些坑。如果对项目代码有疑问或建议，欢迎在 <a target="_blank" rel="noopener" href="https://github.com/Richard110206/LLM_API">GitHub Repo</a> 提 Issue 或 PR！</p>
 
                 
               </div>
@@ -625,7 +757,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>January 26, 2026</div>
+          <div>July 17, 2026</div>
         </div>
       
       
