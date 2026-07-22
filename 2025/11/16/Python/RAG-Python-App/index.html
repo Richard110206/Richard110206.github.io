@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/RAG%20Python%20App.png?raw=true">
 <meta property="article:published_time" content="2025-11-16T04:57:21.000Z">
-<meta property="article:modified_time" content="2026-04-06T07:50:45.569Z">
+<meta property="article:modified_time" content="2026-07-18T05:09:45.385Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="updating">
 <meta property="article:tag" content="Python">
@@ -305,7 +305,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k words
+          11k words
         
       </span>
     
@@ -316,7 +316,7 @@
         
         
         
-          16 mins
+          89 mins
         
       </span>
     
@@ -375,7 +375,7 @@
         aria-expanded="true"
       >
         Python
-        <span class="list-group-count">(7)</span>
+        <span class="list-group-count">(8)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -393,6 +393,15 @@
            class="list-group-item list-group-item-action
            ">
           <span class="category-post">Basic Python Tutorial</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2026/07/18/Python/Django/" title="Django"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Django</span>
         </a>
       
     
@@ -473,64 +482,852 @@
             
               <div class="markdown-body">
                 
-                <p>项目代码参考了<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=AUQJ9eeP-Ls&amp;t=4425s">Tech with Tim ProductionRAGPythonApp</a>，并对其源代码进行了一定修改，如更换 OpenAI 的嵌入模型和大语言模型等，并开源在 github 上： <a target="_blank" rel="noopener" href="https://github.com/Richard110206/ProductionRAGPythonApp">ProductionRAGPythonApp</a>，但对我来说更重要的是能够通过代码学习整个 RAG 的思想及 API 调用的方法等，欢迎 PR!</p>
-<p>项目的环境配置和运行方法请参考项目的 README 文件，这里我主要对 RAG 学习过程中遇到的问题、库进行梳理工作，让我们开始吧！</p>
-<p>首先，我们使用 uv 创建一个项目</p>
+                <h2 id="项目背景">项目背景</h2>
+<p>项目代码参考了 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=AUQJ9eeP-Ls&amp;t=4425s">Tech with Tim 的 Production-Grade RAG 教程</a>，并在原版基础上做了一些本地化改造：</p>
+<ul>
+<li>把 OpenAI 的嵌入模型换成 <a target="_blank" rel="noopener" href="https://siliconflow.cn">SiliconFlow</a> 上的 <code>BAAI/bge-m3</code>（国内可直连、免费额度充足）</li>
+<li>把 OpenAI 的 LLM 换成 <a target="_blank" rel="noopener" href="https://www.deepseek.com/">DeepSeek</a> 的 <code>deepseek-chat</code></li>
+<li>配套调整了向量维度（1024）、prompt 模板等</li>
+</ul>
+<p>改造后的代码已开源在 GitHub：<a target="_blank" rel="noopener" href="https://github.com/Richard110206/ProductionRAGPythonApp">ProductionRAGPythonApp</a>，欢迎 PR！</p>
+<p>但对我个人来说，<strong>跑起来只是起点，更重要的是借助这份代码完整搞懂 RAG 的核心思想</strong>——从 PDF 怎么变成向量、向量怎么存进数据库、检索出来的内容怎么拼成 LLM 的提示词，到最终怎么打包成可交互的 Web 应用。这篇博客就是我整理出来的学习笔记。</p>
+<p>项目的环境配置与启动方法请直接参考仓库 README，本篇主要聚焦<strong>为什么这样写</strong>和<strong>每个库在干什么</strong>。</p>
+<h2 id="环境配置：用-uv-管理-Python-项目">环境配置：用 uv 管理 Python 项目</h2>
+<h3 id="1-安装-uv">(1) 安装 uv</h3>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install uv<br></code></pre></td></tr></tbody></table></figure>
-<p>对项目进行初始化：</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air RAGProductionApp % uv init .<br>Initialized project `ragproductionapp` at `/Users/richard/CUMT-ChatBot/RAGProductionApp`<br></code></pre></td></tr></tbody></table></figure>
-<p>给项目添加相关依赖：</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air RAGProductionApp % uv add fastapi llama-index-core llama-index-readers-file python-dotenv qdrant-client unicorn streamlit openai<br></code></pre></td></tr></tbody></table></figure>
+<p>也可以用官方推荐的安装方式（无需先有 Python）：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># macOS / Linux</span><br>curl -LsSf https://astral.sh/uv/install.sh | sh<br><br><span class="hljs-comment"># Windows (PowerShell)</span><br>powershell -ExecutionPolicy ByPass -c <span class="hljs-string">"irm https://astral.sh/uv/install.ps1 | iex"</span><br></code></pre></td></tr></tbody></table></figure>
+<h3 id="2-uv-是什么？为什么要用它？">(2) uv 是什么？为什么要用它？</h3>
 <div class="note note-info">
-            <p><strong>什么是 uv？</strong><br>uv 是一个高性能的 Python 项目管理工具，主要用于依赖管理、虚拟环境管理以及项目构建。</p><ul><li>项目初始化<code>uv init &lt;my_project&gt;</code>（生成文件夹<code>&lt;my_project&gt;</code>）后自动生成相关文件，结构如下：</li></ul><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) richard@RicharddeMacBook-Air uv-learning % tree<br>.<br>├── main.py<br>├── .gitignore<br>├── pyproject.toml<br>├── python-version<br>└── README.md<br></code></pre></td></tr></tbody></table></figure><p>我们逐个拆解一下每个文件的作用：</p><ul><li><code>.gitignore</code>中贴心的包含了原本需要我们自己写的项目</li><li><code>pyproject.toml</code>：<ul><li>声明项目核心信息，包括名称、版本、描述等</li><li>规定项目依赖的 Python 版本和第三方包，用于包管理工具（如 uv、pip）识别依赖</li><li>关联项目说明文档（<a target="_blank" rel="noopener" href="http://README.md">README.md</a>），方便用户和工具查看项目详情</li></ul></li></ul><figure class="highlight ini"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[project]</span><br><span class="hljs-attr">name</span> = <span class="hljs-string">"python-uv"</span><br><span class="hljs-attr">version</span> = <span class="hljs-string">"0.1.0"</span><br><span class="hljs-attr">description</span> = <span class="hljs-string">"Add your description here"</span><br><span class="hljs-attr">readme</span> = <span class="hljs-string">"README.md"</span><br><span class="hljs-attr">requires-python</span> = <span class="hljs-string">"&gt;=3.12"</span><br><span class="hljs-attr">dependencies</span> = []<br></code></pre></td></tr></tbody></table></figure><p>当使用 <code>uv add &lt;denpendencies&gt;</code> 命令添加依赖时，uv 会自动更新 <code>pyproject.toml</code> 的 <code>dependencies</code> 列表；复现环境时，执行 <code>uv pip install . </code>即可根据 <code>pyproject.toml</code> 安装所有依赖，就像是这样：</p><figure class="highlight ini"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[project]</span><br><span class="hljs-attr">name</span> = <span class="hljs-string">"ragproductionapp"</span><br><span class="hljs-attr">version</span> = <span class="hljs-string">"0.1.0"</span><br><span class="hljs-attr">description</span> = <span class="hljs-string">"Add your description here"</span><br><span class="hljs-attr">readme</span> = <span class="hljs-string">"README.md"</span><br><span class="hljs-attr">requires-python</span> = <span class="hljs-string">"&gt;=3.13"</span><br><span class="hljs-attr">dependencies</span> = [<br>    <span class="hljs-string">"fastapi&gt;=0.116.1"</span>,<br>    <span class="hljs-string">"inngest&gt;=0.5.6"</span>,<br>    <span class="hljs-string">"llama-index-core&gt;=0.14.0"</span>,<br>    <span class="hljs-string">"llama-index-readers-file&gt;=0.5.4"</span>,<br>    <span class="hljs-string">"openai&gt;=1.107.0"</span>,<br>    <span class="hljs-string">"python-dotenv&gt;=1.1.1"</span>,<br>    <span class="hljs-string">"qdrant-client&gt;=1.15.1"</span>,<br>    <span class="hljs-string">"streamlit&gt;=1.49.1"</span>,<br>    <span class="hljs-string">"uvicorn&gt;=0.35.0"</span>,<br>]<br></code></pre></td></tr></tbody></table></figure><p>uv 也提供创建虚拟环境的方式：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv <span class="hljs-built_in">sync</span><br></code></pre></td></tr></tbody></table></figure><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv venv       <span class="hljs-comment"># 创建 .venv 虚拟环境</span><br><span class="hljs-built_in">source</span> .venv/bin/activate  <span class="hljs-comment"># 激活 Linux/Mac</span><br>.venv\Scripts\activate  <span class="hljs-comment"># 激活 Windows</span><br>uv pip install .           <span class="hljs-comment"># 在虚拟环境中安装依赖</span><br></code></pre></td></tr></tbody></table></figure>
+            <p><strong>uv 是什么？</strong></p><p><a target="_blank" rel="noopener" href="https://github.com/astral-sh/uv">uv</a> 是 Rust 写的下一代 Python 包管理器，由 <a target="_blank" rel="noopener" href="https://github.com/astral-sh/ruff">Ruff</a> 同一团队出品。它可以理解为 <strong>pip + virtualenv + pyenv + poetry 的"全家桶"替代品</strong>，目标是把上面这一堆工具的所有功能用一个二进制实现，并且快上一个数量级（10~100 倍）。</p><p>简单来说：装它一个，你就不用再纠结"该用 pip 还是 poetry 还是 conda"了。</p>
           </div>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">(hexo-rag) richard@RicharddeMacBook-Air RAGProductionApp % uv run uvicorn main:app<br>INFO:     Started server process [20305]<br>INFO:     Waiting <span class="hljs-keyword">for</span> application startup.<br>INFO:     Application startup complete.<br>INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)<br></code></pre></td></tr></tbody></table></figure>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">(hexo-rag) richard@RicharddeMacBook-Air RAGProductionApp % npx inngest-cli@latest dev -u  http://127.0.0.1:8000/api/inngest --no-discovery <br>Need to install the following packages:<br>inngest-cli@1.13.4<br>Ok to proceed? (y) y<br><br>[09:03:30.568] INF starting executor grpc server svc=executor addr=:50053<br>[09:03:30.569] INF service starting <span class="hljs-built_in">caller</span>=executor service=executor<br>[09:03:30.569] INF service starting <span class="hljs-built_in">caller</span>=devserver service=devserver<br>[09:03:30.569] INF starting event stream backend=redis<br>[09:03:30.569] INF service starting <span class="hljs-built_in">caller</span>=runner service=runner<br>[09:03:30.569] INF subscribing to <span class="hljs-keyword">function</span> queue<br>[09:03:30.569] INF service starting <span class="hljs-built_in">caller</span>=api service=api<br>[09:03:30.569] INF starting server <span class="hljs-built_in">caller</span>=api addr=0.0.0.0:8288<br>[09:03:30.569] INF service starting <span class="hljs-built_in">caller</span>=connect-gateway service=connect-gateway<br>[09:03:30.570] INF starting connect gateway grpc server <span class="hljs-built_in">caller</span>=connect-gateway addr=:50052<br>[09:03:30.571] INF subscribing to events topic=events<br><br><br>        Inngest Dev Server online at 0.0.0.0:8288, visible at the following URLs:<br><br>         - http://127.0.0.1:8288 (http://localhost:8288)<br>         - http://10.6.227.126:8288<br></code></pre></td></tr></tbody></table></figure>
-<p>在浏览器中输入<code>http://localhost:8288/runs</code>进入控制台界面</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">(hexo-rag) richard@RicharddeMacBook-Air RAGProductionApp % docker run -d --name qdrantRagDb -p 6333:6333 -v <span class="hljs-string">"./qdrant_storage:/qdrant/storage"</span> qdrant/qdrant<br>Unable to find image <span class="hljs-string">'qdrant/qdrant:latest'</span> locally<br>latest: Pulling from qdrant/qdrant<br>4f4fb700ef54: Pull complete <br>e363695fcb93: Pull complete <br>8867fa9eb8c4: Pull complete <br>93617c057df8: Pull complete <br>3638f8fe1dda: Pull complete <br>f907b10db73d: Pull complete <br>efc2301f4369: Pull complete <br>c3a47fd98373: Pull complete <br>Digest: sha256:0fb8897412abc81d1c0430a899b9a81eb8328aa634e7242d1bc804c1fe8fe863<br>Status: Downloaded newer image <span class="hljs-keyword">for</span> qdrant/qdrant:latest<br>d0b630ffc2e6845ab104c2545da801a1b44af02d8d810f162ff57d2fecc50ee2<br></code></pre></td></tr></tbody></table></figure>
-<p>如果是<code>windows</code>用户路径需要修改使用<code>"$(pwd)/qdrant_storage:/qdrant/storage" </code></p>
-<p>注意要先启动<code>docker desktop</code></p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv run streamlit run .\streamlit_app.py<br></code></pre></td></tr></tbody></table></figure>
-<h2 id="RAG">RAG</h2>
-<p>在学习代码之前，我们先了解一下 <strong>RAG</strong> 的基本原理，全称是 <strong>Retrieval-Augmented Generation</strong>，即“<strong>检索增强生成</strong>”，是构建个人知识库的关键技术。当前风靡全球的大模型如chatgpt、Gemini、Deepseek多为通用型，<strong>无法对高度个性化的问题给出精确解答</strong>。例如，若我想知道“学校南门每晚几点关门”或“矿大宿舍的报修电话是多少”，通用模型显然无法提供准确信息。</p>
-<p>这正是RAG的价值所在：通过事先为模型提供特定的知识库，使模型能够基于这些定制化信息进行回答，从而实现大模型的个性化应用。</p>
+<p>来看下主流工具的对比：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">工具</th>
+<th style="text-align:center">速度</th>
+<th style="text-align:center">依赖解析</th>
+<th style="text-align:center">锁文件</th>
+<th style="text-align:center">虚拟环境</th>
+<th style="text-align:center">Python 版本管理</th>
+<th style="text-align:center">项目管理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>pip</code></td>
+<td style="text-align:center">慢</td>
+<td style="text-align:center">弱（无完整解析）</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>pip-tools</code></td>
+<td style="text-align:center">慢</td>
+<td style="text-align:center">强</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">❌</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>poetry</code></td>
+<td style="text-align:center">中</td>
+<td style="text-align:center">强</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>conda</code></td>
+<td style="text-align:center">慢</td>
+<td style="text-align:center">中</td>
+<td style="text-align:center">部分</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">部分</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>uv</code></strong></td>
+<td style="text-align:center"><strong>极快</strong></td>
+<td style="text-align:center"><strong>强</strong></td>
+<td style="text-align:center"><strong>✅</strong></td>
+<td style="text-align:center"><strong>✅</strong></td>
+<td style="text-align:center"><strong>✅</strong></td>
+<td style="text-align:center"><strong>✅</strong></td>
+</tr>
+</tbody>
+</table>
+<p>uv 的核心优势：</p>
+<ol>
+<li><strong>快得离谱</strong>：得益于 Rust + 全局缓存，第一次安装本项目的依赖大约 10 秒，之后几乎瞬时</li>
+<li><strong>自带 Python 版本管理</strong>：不再需要 <code>pyenv install 3.12</code>，<code>uv</code> 会按需自动下载</li>
+<li><strong>一份 <code>pyproject.toml</code> + <code>uv.lock</code> 走天下</strong>：跨机器、跨平台复现一致的环境</li>
+</ol>
+<h3 id="3-用-uv-初始化项目">(3) 用 uv 初始化项目</h3>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 在空目录下初始化（注意末尾的 "." 表示当前目录）</span><br>uv init .<br></code></pre></td></tr></tbody></table></figure>
+<p>执行后会在当前目录生成以下文件：</p>
+<figure class="highlight jboss-cli"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">.<br>├── main.py            <span class="hljs-comment"># 入口脚本（一个 hello world 示例）</span><br>├── <span class="hljs-string">.gitignore</span>         <span class="hljs-comment"># 自动生成的 Python 项目忽略规则</span><br>├── pyproject.toml     <span class="hljs-comment"># 项目元信息 + 依赖声明（核心文件）</span><br>├── <span class="hljs-string">.python-version</span>    <span class="hljs-comment"># 锁定项目使用的 Python 版本</span><br>└── README.md          <span class="hljs-comment"># 项目说明</span><br></code></pre></td></tr></tbody></table></figure>
+<p>逐个看一下它们的职责：</p>
+<ul>
+<li><strong><code>pyproject.toml</code></strong>：项目的"身份证 + 货物清单"。声明项目名称、版本、Python 版本要求、第三方依赖。<code>uv add</code>、<code>uv sync</code>、甚至 <code>pip install .</code> 都会读这个文件</li>
+<li><strong><code>.python-version</code></strong>：仅一行内容（如 <code>3.13</code>）。<code>uv</code> 进入目录时会自动切换到这个版本，相当于隐式的 <code>pyenv local</code></li>
+<li><strong><code>.gitignore</code></strong>：自动忽略 <code>.venv/</code>、<code>__pycache__/</code>、<code>.env</code> 等，省得手写</li>
+<li><strong><code>uv.lock</code></strong>（首次 <code>uv sync</code> 后生成）：精确锁住<strong>每个依赖（包括间接依赖）的具体版本和文件 hash</strong>，是跨机器复现的"定海神针"</li>
+</ul>
+<div class="note note-warning">
+            <p><strong><code>pyproject.toml</code> vs <code>uv.lock</code> 的区别（容易混淆）</strong></p><ul><li><code>pyproject.toml</code>：你写的"愿望清单"，比如 <code>fastapi&gt;=0.116.1</code>（“我要 0.116.1 或更新的”）</li><li><code>uv.lock</code>：uv 实际安装的"购物小票"，比如 <code>fastapi==0.116.3</code>（“我这台机器上最终装的是 0.116.3”）</li></ul><p><code>pyproject.toml</code> 是给人看的、可宽可窄；<code>uv.lock</code> 是给机器看的、必须精确。<strong>两个文件都应该提交进 git</strong>——前者告诉协作者"项目需要什么"，后者保证"我们装的东西完全一样"。</p>
+          </div>
+<h3 id="4-用-uv-添加依赖">(4) 用 uv 添加依赖</h3>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv add fastapi llama-index-core llama-index-readers-file \<br>       python-dotenv qdrant-client uvicorn streamlit openai inngest<br></code></pre></td></tr></tbody></table></figure>
+<p><code>uv add</code> 会做三件事：</p>
+<ol>
+<li>把这些包<strong>追加到 <code>pyproject.toml</code> 的 <code>dependencies</code> 列表</strong></li>
+<li>解析依赖树、下载并安装到 <code>.venv/</code>（如果还没有虚拟环境就自动创建一个）</li>
+<li>更新 <code>uv.lock</code>，记录精确版本</li>
+</ol>
+<p>最终的 <code>pyproject.toml</code> 看起来像这样：</p>
+<figure class="highlight toml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-section">[project]</span><br><span class="hljs-attr">name</span> = <span class="hljs-string">"ragproductionapp"</span><br><span class="hljs-attr">version</span> = <span class="hljs-string">"0.1.0"</span><br><span class="hljs-attr">description</span> = <span class="hljs-string">"Add your description here"</span><br><span class="hljs-attr">readme</span> = <span class="hljs-string">"README.md"</span><br><span class="hljs-attr">requires-python</span> = <span class="hljs-string">"&gt;=3.13"</span><br><span class="hljs-attr">dependencies</span> = [<br>    <span class="hljs-string">"fastapi&gt;=0.116.1"</span>,<br>    <span class="hljs-string">"inngest&gt;=0.5.6"</span>,<br>    <span class="hljs-string">"llama-index-core&gt;=0.14.0"</span>,<br>    <span class="hljs-string">"llama-index-readers-file&gt;=0.5.4"</span>,<br>    <span class="hljs-string">"openai&gt;=1.107.0"</span>,<br>    <span class="hljs-string">"python-dotenv&gt;=1.1.1"</span>,<br>    <span class="hljs-string">"qdrant-client&gt;=1.15.1"</span>,<br>    <span class="hljs-string">"streamlit&gt;=1.49.1"</span>,<br>    <span class="hljs-string">"uvicorn&gt;=0.35.0"</span>,<br>]<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="5-uv-的虚拟环境管理">(5) uv 的虚拟环境管理</h3>
+<p>虚拟环境（virtual environment）是 Python 的"项目级沙盒"——每个项目有独立的 <code>site-packages</code>，A 项目用 <code>numpy 1.x</code>、B 项目用 <code>numpy 2.x</code> 互不干扰。这是 Python 工程化的基本盘。</p>
+<p>uv 创建和管理虚拟环境的几种方式：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 方式 1：sync（推荐）</span><br><span class="hljs-comment"># 读取 pyproject.toml + uv.lock，自动创建 .venv 并安装全部依赖</span><br><span class="hljs-comment"># 这是从 github 克隆项目后的"第一步"</span><br>uv <span class="hljs-built_in">sync</span><br><br><span class="hljs-comment"># 方式 2：手动创建虚拟环境</span><br>uv venv                  <span class="hljs-comment"># 创建 .venv/（默认在当前目录）</span><br>uv venv --python 3.12    <span class="hljs-comment"># 指定 Python 版本（uv 会自动下载 3.12）</span><br><br><span class="hljs-comment"># 激活虚拟环境（激活后 python/pip 都指向 .venv）</span><br><span class="hljs-built_in">source</span> .venv/bin/activate    <span class="hljs-comment"># Linux / macOS</span><br>.venv\Scripts\activate       <span class="hljs-comment"># Windows (Git Bash / PowerShell)</span><br><span class="hljs-comment"># 退出：deactivate</span><br></code></pre></td></tr></tbody></table></figure>
 
     <div class="fold">
-      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-03a42691" role="button" aria-expanded="false" aria-controls="collapse-03a42691">
-        <div class="fold-arrow">▶</div>RAG相较于直接使用大模型上传文件的优势？
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-fc071fc4" role="button" aria-expanded="false" aria-controls="collapse-fc071fc4">
+        <div class="fold-arrow">▶</div>`uv run` 和 激活虚拟环境 该用哪个？
       </div>
-      <div class="fold-collapse collapse" id="collapse-03a42691">
+      <div class="fold-collapse collapse" id="collapse-fc071fc4">
         <div class="fold-content">
-          <ol><li>身份的转变：从“使用者”变为“创造者”，根据需求定制自己的AI应用</li><li>解决“幻觉”问题：通过提供精准的上下文并要求引用来源，能构建出值得信赖的AI应用，这对于企业级场景是刚需。</li><li>应对复杂场景：当您的知识库包含成千上万个文档时，简单的文件上传功能会显得力不从心，而RAG架构是为处理这种海量、复杂的检索任务而生的。</li><li>技术集成的核心：RAG不仅仅是一个独立技术，它更是将向量数据库、嵌入模型、大语言模型等现代AI核心组件串联起来的“胶水”。通过学习RAG，可以系统地学习了当前AI应用开发的核心技术栈。</li></ol>
+          <p>两种方式都能让命令在虚拟环境内执行，但有微妙差别：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 方式 A：先激活，再直接跑命令</span><br><span class="hljs-built_in">source</span> .venv/bin/activate<br>python main.py              <span class="hljs-comment"># 此时 python 是 .venv 里的</span><br>streamlit run app.py<br><br><span class="hljs-comment"># 方式 B：用 uv run 一次性触发（不用先激活）</span><br>uv run python main.py<br>uv run streamlit run app.py<br></code></pre></td></tr></tbody></table></figure><p><strong>推荐用方式 B</strong>，原因：</p><ol><li><strong>不需要记得 activate</strong>：少一个心智负担</li><li><strong>强制环境一致</strong>：<code>uv run</code> 会先检查 <code>.venv</code> 是否和 <code>uv.lock</code> 同步，不同步会自动 <code>uv sync</code></li><li><strong>CI / 部署友好</strong>：脚本里直接写 <code>uv run xxx</code>，跨机器行为一致</li></ol><p>激活虚拟环境更适合需要"长时间泡在 shell 里调试"的场景，比如反复 <code>python -i</code> 交互。</p>
         </div>
       </div>
     </div>
-<h3 id="i-索引">(i) 索引</h3>
-<p>在用户提问之前我们需要将文档做成一个方便快速查找的索引：</p>
+<h3 id="6-常用-uv-命令速查">(6) 常用 uv 命令速查</h3>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv init .                  <span class="hljs-comment"># 在当前目录初始化项目</span><br>uv add &lt;pkg&gt;               <span class="hljs-comment"># 添加依赖（自动写入 pyproject.toml + 安装）</span><br>uv add --dev &lt;pkg&gt;         <span class="hljs-comment"># 添加开发依赖（pytest、ruff 等）</span><br>uv remove &lt;pkg&gt;            <span class="hljs-comment"># 移除依赖</span><br>uv <span class="hljs-built_in">sync</span>                    <span class="hljs-comment"># 根据 pyproject.toml + uv.lock 同步环境</span><br>uv lock                    <span class="hljs-comment"># 只更新 lock 文件，不实际安装</span><br>uv run &lt;cmd&gt;               <span class="hljs-comment"># 在项目虚拟环境中执行命令（推荐方式）</span><br>uv venv                    <span class="hljs-comment"># 创建 .venv 虚拟环境</span><br>uv pip list                <span class="hljs-comment"># 兼容 pip 风格：列出已安装的包</span><br>uv tree                    <span class="hljs-comment"># 可视化依赖树</span><br>uv python install 3.12     <span class="hljs-comment"># 安装指定 Python 版本</span><br>uv python list             <span class="hljs-comment"># 列出可用 Python 版本</span><br></code></pre></td></tr></tbody></table></figure>
+<h2 id="启动项目所需的服务">启动项目所需的服务</h2>
+<p>本项目依赖 <strong>4 个独立运行的服务</strong>，启动顺序很重要（后面的服务依赖前面的）：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">服务</th>
+<th style="text-align:left">端口</th>
+<th style="text-align:left">作用</th>
+<th style="text-align:left">启动方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Qdrant</strong></td>
+<td style="text-align:left">6333</td>
+<td style="text-align:left">向量数据库，存 chunk 的向量</td>
+<td style="text-align:left">Docker</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>FastAPI</strong></td>
+<td style="text-align:left">8000</td>
+<td style="text-align:left">后端 API + 挂载 Inngest 函数</td>
+<td style="text-align:left"><code>uv run uvicorn main:app</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Inngest</strong></td>
+<td style="text-align:left">8288</td>
+<td style="text-align:left">工作流引擎，调度异步任务</td>
+<td style="text-align:left"><code>npx inngest-cli</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Streamlit</strong></td>
+<td style="text-align:left">8501</td>
+<td style="text-align:left">前端 UI，用户交互界面</td>
+<td style="text-align:left"><code>uv run streamlit run</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-启动-Qdrant-向量数据库">(1) 启动 Qdrant 向量数据库</h3>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># macOS / Linux</span><br>docker run -d --name qdrantRagDb \<br>  -p 6333:6333 \<br>  -v <span class="hljs-string">"./qdrant_storage:/qdrant/storage"</span> \<br>  qdrant/qdrant<br><br><span class="hljs-comment"># Windows (PowerShell / Git Bash) 必须用 $(pwd)</span><br>docker run -d --name qdrantRagDb \<br>  -p 6333:6333 \<br>  -v <span class="hljs-string">"<span class="hljs-subst">$(pwd)</span>/qdrant_storage:/qdrant/storage"</span> \<br>  qdrant/qdrant<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-warning">
+            <p><strong>Windows 用户注意</strong>：路径必须用 <code>"$(pwd)/qdrant_storage"</code>，不能用 <code>"./qdrant_storage"</code>。Docker Desktop 在 Windows 上对相对路径的解析和 Linux 不同，<code>$(pwd)</code> 会展开成当前目录的绝对路径，避免歧义。</p><p>启动前请先打开 <strong>Docker Desktop</strong>（从开始菜单启动，等右下角图标变绿即可）。</p>
+          </div>
+<h3 id="2-启动-FastAPI-后端">(2) 启动 FastAPI 后端</h3>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv run uvicorn main:app<br></code></pre></td></tr></tbody></table></figure>
+<p>成功启动会看到：</p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">INFO</span>:     Started <span class="hljs-keyword">server</span> process [<span class="hljs-number">20305</span>]<br><span class="hljs-keyword">INFO</span>:     Waiting <span class="hljs-keyword">for</span> application startup.<br><span class="hljs-keyword">INFO</span>:     Application startup complete.<br><span class="hljs-keyword">INFO</span>:     Uvicorn running <span class="hljs-keyword">on</span> http://<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">8000</span> (Press CTRL+C <span class="hljs-keyword">to</span> quit)<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>main:app</code> 的含义：从 <code>main.py</code> 文件中读取名为 <code>app</code> 的对象（即 <code>FastAPI()</code> 实例）</li>
+<li>开发时建议加 <code>--reload</code>：<code>uv run uvicorn main:app --reload</code>，修改代码自动重启</li>
+</ul>
+<h3 id="3-启动-Inngest-dev-server">(3) 启动 Inngest dev server</h3>
+<p>Inngest 负责调度"长任务"（PDF 入库、问答生成），需要单独起一个 dev server：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npx inngest-cli@latest dev -u http://127.0.0.1:8000/api/inngest --no-discovery<br></code></pre></td></tr></tbody></table></figure>
+<p>参数解释：</p>
+<ul>
+<li><code>npx</code>：临时下载并执行 npm 包，不用全局安装</li>
+<li><code>-u http://127.0.0.1:8000/api/inngest</code>：告诉 Inngest 去这个地址"拉取"我们注册的函数（就是 FastAPI 的端点）</li>
+<li><code>--no-discovery</code>：跳过自动发现，只用我们显式指定的 URL</li>
+</ul>
+<p>启动后控制台会显示：</p>
+<figure class="highlight livecodeserver"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">Inngest Dev Server online <span class="hljs-keyword">at</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>:<span class="hljs-number">8288</span>, visible <span class="hljs-keyword">at</span> <span class="hljs-keyword">the</span> following URLs:<br> - <span class="hljs-keyword">http</span>://<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">8288</span> (<span class="hljs-keyword">http</span>://localhost:<span class="hljs-number">8288</span>)<br></code></pre></td></tr></tbody></table></figure>
+<p>浏览器打开 <code>http://localhost:8288/runs</code> 就是 Inngest 的可视化控制台——每次 PDF 入库或问答的执行记录都在这里，<strong>这是排查问题的第一现场</strong>。</p>
+<h3 id="4-启动-Streamlit-前端">(4) 启动 Streamlit 前端</h3>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">uv run streamlit run streamlit_app.py<br></code></pre></td></tr></tbody></table></figure>
+<p>浏览器会自动打开 <code>http://localhost:8501</code>，这就是我们和 RAG 系统对话的入口。</p>
+<h2 id="RAG-基本原理">RAG 基本原理</h2>
+<p>在学习代码之前，我们先建立对 <strong>RAG</strong> 的整体认知。RAG 全称 <strong>Retrieval-Augmented Generation</strong>，即"<strong>检索增强生成</strong>"，是构建个人/企业知识库问答系统的核心技术。</p>
+<h3 id="为什么需要-RAG？">为什么需要 RAG？</h3>
+<p>当前主流大模型（ChatGPT、Gemini、DeepSeek、Claude 等）都是<strong>通用型</strong>的——它们在海量公开语料上预训练，但<strong>对你的私有数据一无所知</strong>。比如：</p>
+<ul>
+<li>“学校南门每晚几点关门？”</li>
+<li>“矿大宿舍的报修电话是多少？”</li>
+<li>“公司今年的 Q3 销售目标完成率？”</li>
+</ul>
+<p>通用模型要么胡编（幻觉），要么直接说"不知道"。</p>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-1760278a" role="button" aria-expanded="false" aria-controls="collapse-1760278a">
+        <div class="fold-arrow">▶</div>RAG 相较于"直接把文件传给大模型"的优势？
+      </div>
+      <div class="fold-collapse collapse" id="collapse-1760278a">
+        <div class="fold-content">
+          <p>ChatGPT、Kimi、DeepSeek 现在都支持上传文件直接问答，看起来 RAG 似乎"多余"。但实际上，RAG 在以下场景更有优势：</p><ol><li><strong>身份的转变</strong>：从"使用者"变为"创造者"。你可以把 RAG 嵌入自己的产品，做成面向特定人群的 AI 助手</li><li><strong>解决幻觉问题</strong>：通过精准控制检索结果 + 要求引用来源，可以构建可信的 AI 应用，这是企业级场景的刚需</li><li><strong>应对海量文档</strong>：当知识库包含<strong>成千上万</strong>份文档时（远超模型上下文窗口），文件上传功能根本无法工作，必须靠 RAG 的"先检索再生成"模式</li><li><strong>数据隐私</strong>：敏感数据可以保留在本地向量库，每次只把相关 chunk 喂给模型，而不是整份文档上传</li><li><strong>成本控制</strong>：RAG 每次只发送 Top-K 个 chunk（几千 token），而上传整份 PDF 可能是几十万 token——长期使用成本天差地别</li><li><strong>技术集成的核心</strong>：RAG 是把向量数据库、嵌入模型、LLM 这些 AI 核心组件串联起来的"胶水"。学懂 RAG，等于打通了现代 AI 应用开发的核心技术栈。</li></ol>
+        </div>
+      </div>
+    </div>
+<h3 id="i-索引阶段（Ingestion）">(i) 索引阶段（Ingestion）</h3>
+<p>在用户提问<strong>之前</strong>，需要先把文档处理成"方便快速查找"的形式：</p>
 <ol>
-<li><strong>加载数据</strong>：收集所有可能用到的文档，格式可以是 PDF、Word、TXT、网页 HTML、数据库记录等。</li>
-<li><strong>分割</strong>文本：由于长文本会包含很多无关信息，不利于精准检索，因此需要将长文档切分成更小的、语义完整的文本块（Chunks）。</li>
-<li><strong>向量化</strong>：使用一个“嵌入模型”将每个文本块转换成一串数字，即向量。这个向量可以理解为文本在数学空间中的“坐标”，语义相近的文本，其向量在空间中的距离也更近。</li>
-<li><strong>存储向量</strong>：将这些向量及其对应的原始文本存储到一个专门的数据库中，这个数据库被称为<strong>向量数据库</strong>。这个过程就像是给所有复习资料做了一个详细的目录索引。</li>
+<li><strong>加载数据</strong>：读取 PDF、Word、TXT、HTML、数据库记录等格式的文档</li>
+<li><strong>分块（Chunking）</strong>：把长文档切成更小、语义完整的"文本块"。切太大检索精度差，切太小上下文丢失</li>
+<li><strong>向量化（Embedding）</strong>：用嵌入模型把每个文本块转换成一串数字（向量）。<strong>语义相近的文本，向量在数学空间中距离也更近</strong>——这是 RAG 的数学基础</li>
+<li><strong>入库（Upsert）</strong>：把向量 + 原文 + 元数据（文件名等）一起写入向量数据库</li>
 </ol>
-<h3 id="ii-检索">(ii) 检索</h3>
-<p>当用户提出一个问题（即查询）时，RAG 系统开始在存储的数据库中查找:</p>
+<h3 id="ii-检索阶段（Retrieval）">(ii) 检索阶段（Retrieval）</h3>
+<p>用户提问时，系统需要从数据库中找出<strong>最相关的 K 个 chunk</strong>：</p>
 <ol>
-<li><strong>查询向量化</strong>：使用与第一阶段相同的嵌入模型，将用户的问题也转换成一个查询向量。</li>
-<li><strong>相似性搜索</strong>：在向量数据库中，寻找与“查询向量”最相似的几个文本块向量。相似性通常通过计算向量间的距离（如余弦相似度）来衡量，距离越近，代表语义越相关。</li>
-<li><strong>获取参考文本</strong>：系统检索出最相关的 K 个文本块（例如，Top-3 或 Top-5），作为回答问题的参考依据。</li>
+<li><strong>查询向量化</strong>：用<strong>与索引阶段相同的</strong>嵌入模型，把用户问题也变成向量（注意：必须用同一个模型，否则两个向量不在同一个空间）</li>
+<li><strong>相似度搜索</strong>：在向量数据库中，计算查询向量与所有 chunk 向量的距离（通常用余弦相似度），找出最近的几个</li>
+<li><strong>返回 Top-K</strong>：取出最相关的 K 个 chunk（K 一般取 3~5），作为回答的依据</li>
 </ol>
-<h3 id="iii-生成">(iii) 生成</h3>
-<p>现在通过前面的检索过程，我们已经获取到了与用户问题最相关的文本块，接下来我们需要将这些文本块与用户的问题一起输入到大模型中，让模型根据这些信息生成一个准确的回答。</p>
+<h3 id="iii-生成阶段（Generation）">(iii) 生成阶段（Generation）</h3>
+<p>把检索到的 chunk 拼进 prompt，让 LLM 基于这些"开卷资料"生成回答：</p>
 <ol>
-<li><strong>组合提示</strong>：系统会构建一个精心设计的提示</li>
-<li><strong>增强生成</strong>：将组合好的提示发送给大语言模型。LLM 会基于这个“被增强了的”上下文信息来生成回答。</li>
-<li><strong>输出最终答案</strong>：LLM 产生的最终答案会返回给用户。这个答案不仅利用了模型自身的通用知识，更关键的是融入了从私有数据中检索到的最新、最相关的信息。</li>
+<li><strong>拼接提示词</strong>：把检索到的 chunks 按固定模板拼成 context，加上 system 指令（“只基于 context 回答”）和用户问题</li>
+<li><strong>调用 LLM</strong>：把整个 prompt 发给大模型，让它"开卷答题"</li>
+<li><strong>返回答案</strong>：LLM 的回答返回给用户，同时附上引用的源文件（sources）</li>
 </ol>
-<h3 id="主函数">主函数</h3>
-<h3 id="文本嵌入生成data-loader-py">文本嵌入生成<code>data_loader.py</code></h3>
-<h3 id="向量存储vector-db-py">向量存储<code>vector_db.py</code></h3>
-<h3 id="前端交互streamlit-app-py">前端交互<code>streamlit_app.py</code></h3>
+<p>理解了这个三阶段框架，下面看代码就会清晰很多——<strong>每个 .py 文件都对应其中一部分</strong>。</p>
+<h2 id="代码详解">代码详解</h2>
+<h3 id="custom-types-py：项目数据类型"><code>custom_types.py</code>：项目数据类型</h3>
+<p>先看最小的文件，它定义了贯穿整个项目的几个 Pydantic 数据模型：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pydantic<br><br><span class="hljs-comment"># 入库步骤之间传递：分块后的文本 + 源文件标识</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">RAGChunkAndSrc</span>(pydantic.BaseModel):<br>    chunks: <span class="hljs-built_in">list</span>[<span class="hljs-built_in">str</span>]<br>    source_id: <span class="hljs-built_in">str</span> = <span class="hljs-literal">None</span><br><br><span class="hljs-comment"># 入库完成后的返回：实际写入了多少条向量</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">RAGUpsertResult</span>(pydantic.BaseModel):<br>    ingested: <span class="hljs-built_in">int</span><br><br><span class="hljs-comment"># 检索步骤的返回：找到的上下文 + 涉及的文件列表</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">RAGSearchResult</span>(pydantic.BaseModel):<br>    contexts: <span class="hljs-built_in">list</span>[<span class="hljs-built_in">str</span>]<br>    sources: <span class="hljs-built_in">list</span>[<span class="hljs-built_in">str</span>]<br><br><span class="hljs-comment"># 最终返回给用户的完整结果</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">RAQQueryResult</span>(pydantic.BaseModel):<br>    answer: <span class="hljs-built_in">str</span><br>    sources: <span class="hljs-built_in">list</span>[<span class="hljs-built_in">str</span>]<br>    num_contexts: <span class="hljs-built_in">int</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>为什么用 Pydantic 而不是普通 <code>dataclass</code> 或 <code>dict</code>？</strong></p><p><a target="_blank" rel="noopener" href="https://docs.pydantic.dev/">Pydantic</a> 是 Python 生态最流行的数据验证库，相对于原生 <code>dataclass</code> 有几个优势：</p><ul><li><strong>运行时类型校验</strong>：传错类型（比如把字符串塞进 <code>list[str]</code>）会立刻报错，而不是等到运行一半才崩</li><li><strong>自动序列化</strong>：<code>.model_dump()</code> 转 dict、<code>.model_dump_json()</code> 转 JSON，对接 API 极方便</li><li><strong>Inngest 集成</strong>：本项目里 <code>PydanticSerializer()</code> 让 Inngest 步骤之间可以传递这些对象</li></ul>
+          </div>
+<hr>
+<h3 id="main-py：工作流编排中心"><code>main.py</code>：工作流编排中心</h3>
+<p><code>main.py</code> 是整个 RAG 应用的"指挥中心"——它把 FastAPI（Web 框架）与 <a target="_blank" rel="noopener" href="https://www.inngest.com/">Inngest</a>（无服务器工作流引擎）结合，把 <strong>PDF 入库</strong>与<strong>问答检索</strong>这两个耗时任务封装为可观测、可重试、可限流的异步函数。</p>
+<div class="note note-info">
+            <p><strong>为什么需要 Inngest？</strong></p><p>PDF 解析、分块、向量化、写库是一个<strong>可能耗时几十秒甚至几分钟</strong>的长任务。如果直接放在 HTTP 请求里同步处理：</p><ul><li>前端 HTTP 客户端会先超时</li><li>一旦中途失败（比如网络抖动），整个流程要重来</li><li>多用户同时上传时无法排队</li></ul><p>Inngest 通过"<strong>事件触发 + 步骤函数</strong>"的模型解决了这些问题：</p><ul><li><strong>事件驱动</strong>：业务代码只 <code>send</code> 一个事件，Inngest 负责调度</li><li><strong>步骤化（step）</strong>：每个步骤独立持久化，失败时<strong>只重试失败的那一步</strong></li><li><strong>可观测</strong>：在 <code>localhost:8288/runs</code> 控制台可以看到每一步的状态和输出</li><li><strong>限流</strong>：<code>throttle</code> + <code>rate_limit</code> 防止恶意刷接口</li></ul>
+          </div>
+<h4 id="1-导入与全局初始化">(1) 导入与全局初始化</h4>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> logging<br><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI<br><span class="hljs-keyword">import</span> inngest<br><span class="hljs-keyword">import</span> inngest.fast_api<br><span class="hljs-keyword">from</span> inngest.experimental <span class="hljs-keyword">import</span> ai<br><span class="hljs-keyword">from</span> dotenv <span class="hljs-keyword">import</span> load_dotenv<br><span class="hljs-keyword">import</span> uuid<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> datetime<br><br><span class="hljs-comment"># 从同目录的其他文件导入业务函数和数据类型</span><br><span class="hljs-keyword">from</span> data_loader <span class="hljs-keyword">import</span> load_and_chunk_pdf, embed_texts<br><span class="hljs-keyword">from</span> vector_db <span class="hljs-keyword">import</span> QdrantStorage<br><span class="hljs-keyword">from</span> custom_types <span class="hljs-keyword">import</span> RAQQueryResult, RAGSearchResult, RAGUpsertResult, RAGChunkAndSrc<br><br><span class="hljs-comment"># 加载 .env 文件中的环境变量（API Key、Base URL 等）</span><br>load_dotenv()<br><br><span class="hljs-comment"># 创建 Inngest 客户端，这是与 Inngest dev server 通信的"信使"</span><br>inngest_client = inngest.Inngest(<br>    app_id=<span class="hljs-string">"rag_app"</span>,                                          <span class="hljs-comment"># 应用唯一标识，前端必须用同样的 ID</span><br>    logger=logging.getLogger(<span class="hljs-string">"uvicorn"</span>),                       <span class="hljs-comment"># 复用 uvicorn 的日志器</span><br>    is_production=<span class="hljs-literal">False</span>,                                       <span class="hljs-comment"># 开发模式，连接本地 dev server</span><br>    api_base_url=<span class="hljs-string">"http://localhost:8288"</span>,                      <span class="hljs-comment"># Inngest dev server 地址</span><br>    serializer=inngest.PydanticSerializer()                    <span class="hljs-comment"># 让步骤之间可以传递 Pydantic 模型</span><br>)<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="2-PDF-入库函数rag-ingest-pdf">(2) PDF 入库函数<code>rag_ingest_pdf</code></h4>
+<p>这个函数订阅 <code>rag/ingest_pdf</code> 事件，由前端上传 PDF 后触发：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@inngest_client.create_function(<span class="hljs-params"></span></span><br><span class="hljs-params"><span class="hljs-meta">    fn_id=<span class="hljs-string">"RAG: Ingest PDF"</span>,                                   <span class="hljs-comment"># 函数唯一 ID（控制台里显示用）</span></span></span><br><span class="hljs-params"><span class="hljs-meta">    trigger=inngest.TriggerEvent(<span class="hljs-params">event=<span class="hljs-string">"rag/ingest_pdf"</span></span>),      <span class="hljs-comment"># 监听这个事件名</span></span></span><br><span class="hljs-params"><span class="hljs-meta">    <span class="hljs-comment"># 双重限流，下面详述</span></span></span><br><span class="hljs-params"><span class="hljs-meta">    throttle=inngest.Throttle(<span class="hljs-params"></span></span></span><br><span class="hljs-params"><span class="hljs-params"><span class="hljs-meta">        limit=<span class="hljs-number">2</span>,</span></span></span><br><span class="hljs-params"><span class="hljs-params"><span class="hljs-meta">        period=datetime.timedelta(<span class="hljs-params">minutes=<span class="hljs-number">1</span></span>)</span></span></span><br><span class="hljs-params"><span class="hljs-params"><span class="hljs-meta">    </span>),</span></span><br><span class="hljs-params"><span class="hljs-meta">    rate_limit=inngest.RateLimit(<span class="hljs-params"></span></span></span><br><span class="hljs-params"><span class="hljs-params"><span class="hljs-meta">        limit=<span class="hljs-number">1</span>,</span></span></span><br><span class="hljs-params"><span class="hljs-params"><span class="hljs-meta">        period=datetime.timedelta(<span class="hljs-params">hours=<span class="hljs-number">4</span></span>),</span></span></span><br><span class="hljs-params"><span class="hljs-params"><span class="hljs-meta">        key=<span class="hljs-string">"event.data.source_id"</span>,                            <span class="hljs-comment"># 按"文件名"维度限流</span></span></span></span><br><span class="hljs-params"><span class="hljs-params"><span class="hljs-meta">    </span>),</span></span><br><span class="hljs-params"><span class="hljs-meta"></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">def</span> <span class="hljs-title function_">rag_ingest_pdf</span>(<span class="hljs-params">ctx: inngest.Context</span>):<br>    <span class="hljs-comment"># —— 步骤 1：读取 PDF 并分块 ——</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_load</span>(<span class="hljs-params">ctx</span>):<br>        pdf_path = ctx.event.data[<span class="hljs-string">"pdf_path"</span>]                  <span class="hljs-comment"># 从事件 payload 取 PDF 路径</span><br>        source_id = ctx.event.data.get(<span class="hljs-string">"source_id"</span>, pdf_path)  <span class="hljs-comment"># 默认用文件路径作为 source_id</span><br>        chunks = load_and_chunk_pdf(pdf_path)                  <span class="hljs-comment"># 调用 data_loader 解析 + 分块</span><br>        <span class="hljs-keyword">return</span> RAGChunkAndSrc(chunks=chunks, source_id=source_id)<br><br>    <span class="hljs-comment"># —— 步骤 2：向量化 + 写入 Qdrant ——</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_upsert</span>(<span class="hljs-params">chunks_and_src</span>):<br>        chunks = chunks_and_src.chunks<br>        source_id = chunks_and_src.source_id<br>        vecs = embed_texts(chunks)                             <span class="hljs-comment"># 批量 embedding（一次 API 调用）</span><br><br>        <span class="hljs-comment"># 用 uuid5 生成"确定性 ID"：相同 source_id + 相同索引 → 相同 UUID</span><br>        <span class="hljs-comment"># 这样重复入库时是"覆盖"而不是"重复插入"</span><br>        ids = [<span class="hljs-built_in">str</span>(uuid.uuid5(uuid.NAMESPACE_URL, <span class="hljs-string">f"<span class="hljs-subst">{source_id}</span>:<span class="hljs-subst">{i}</span>"</span>))<br>               <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(chunks))]<br><br>        <span class="hljs-comment"># 每个 chunk 的元数据：source 是文件名，text 是原文（检索时要取出来给 LLM）</span><br>        payloads = [{<span class="hljs-string">"source"</span>: source_id, <span class="hljs-string">"text"</span>: chunks[i]}<br>                    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(chunks))]<br><br>        QdrantStorage().upsert(ids, vecs, payloads)            <span class="hljs-comment"># 写入向量数据库</span><br>        <span class="hljs-keyword">return</span> RAGUpsertResult(ingested=<span class="hljs-built_in">len</span>(chunks))<br><br>    <span class="hljs-comment"># 用 ctx.step.run 把上面两个函数注册成"Inngest 步骤"</span><br>    <span class="hljs-comment"># 失败时只重试当前步骤，不会重做前面的步骤</span><br>    chunks_and_src = <span class="hljs-keyword">await</span> ctx.step.run(<br>        <span class="hljs-string">"load-and-chunk"</span>,<br>        <span class="hljs-keyword">lambda</span>: _load(ctx),<br>        output_type=RAGChunkAndSrc                             <span class="hljs-comment"># 声明输出类型，便于序列化</span><br>    )<br>    ingested = <span class="hljs-keyword">await</span> ctx.step.run(<br>        <span class="hljs-string">"embed-and-upsert"</span>,<br>        <span class="hljs-keyword">lambda</span>: _upsert(chunks_and_src),<br>        output_type=RAGUpsertResult<br>    )<br>    <span class="hljs-keyword">return</span> ingested.model_dump()                               <span class="hljs-comment"># 返回 dict 给调用方</span><br></code></pre></td></tr></tbody></table></figure>
+<p>两个限流策略协同工作：</p>
+<ul>
+<li><strong><code>throttle</code></strong>：全局维度，<strong>每分钟最多触发 2 次</strong>（防止短时间刷量）</li>
+<li><strong><code>rate_limit</code></strong>：按 <code>source_id</code>（即文件名）维度，<strong>每 4 小时同一文件最多入库 1 次</strong>（避免重复 embedding 烧 API 额度）</li>
+</ul>
+<div class="note note-warning">
+            <p><strong>关于 ID 生成的细节</strong></p><p>这里用了 <code>uuid5</code>（基于命名空间 + 字符串的<strong>确定性</strong> UUID），而不是 <code>uuid4</code>（随机）：</p><ul><li><code>uuid4()</code>：每次调用都生成新的随机 ID，重复入库会<strong>产生重复向量</strong></li><li><code>uuid5(NAMESPACE, "report.pdf:0")</code>：相同输入永远得到相同 ID，触发 Qdrant 的<strong>幂等 upsert</strong>（同 ID 覆盖）</li></ul><p>这个细节在生产环境非常重要——没有它，用户重传同一份文件会让数据库膨胀好几倍。</p>
+          </div>
+<h4 id="3-问答检索函数rag-query-pdf-ai">(3) 问答检索函数<code>rag_query_pdf_ai</code></h4>
+<p>这个函数订阅 <code>rag/query_pdf_ai</code> 事件，完成"检索 + 生成"两件事：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@inngest_client.create_function(<span class="hljs-params"></span></span><br><span class="hljs-params"><span class="hljs-meta">    fn_id=<span class="hljs-string">"RAG: Query PDF"</span>,</span></span><br><span class="hljs-params"><span class="hljs-meta">    trigger=inngest.TriggerEvent(<span class="hljs-params">event=<span class="hljs-string">"rag/query_pdf_ai"</span></span>)</span></span><br><span class="hljs-params"><span class="hljs-meta"></span>)</span><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">def</span> <span class="hljs-title function_">rag_query_pdf_ai</span>(<span class="hljs-params">ctx: inngest.Context</span>):<br>    <span class="hljs-comment"># —— 步骤 1：检索相关 chunk ——</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_search</span>(<span class="hljs-params">question, top_k=<span class="hljs-number">5</span></span>):<br>        <span class="hljs-comment"># 用同一个 embedding 模型把问题变成向量</span><br>        query_vec = embed_texts([question])[<span class="hljs-number">0</span>]<br>        store = QdrantStorage()<br>        found = store.search(query_vec, top_k)                 <span class="hljs-comment"># 返回 {"contexts": [...], "sources": [...]}</span><br>        <span class="hljs-keyword">return</span> RAGSearchResult(contexts=found[<span class="hljs-string">"contexts"</span>], sources=found[<span class="hljs-string">"sources"</span>])<br><br>    <span class="hljs-comment"># 从事件 payload 取出问题与 top_k 参数</span><br>    question = ctx.event.data[<span class="hljs-string">"question"</span>]<br>    top_k = <span class="hljs-built_in">int</span>(ctx.event.data.get(<span class="hljs-string">"top_k"</span>, <span class="hljs-number">5</span>))<br><br>    found = <span class="hljs-keyword">await</span> ctx.step.run(<br>        <span class="hljs-string">"embed-and-search"</span>,<br>        <span class="hljs-keyword">lambda</span>: _search(question, top_k),<br>        output_type=RAGSearchResult<br>    )<br><br>    <span class="hljs-comment"># —— 步骤 2：拼接 Prompt ——</span><br>    <span class="hljs-comment"># 把检索到的 chunks 拼成项目符号列表，方便 LLM 阅读引用</span><br>    context_block = <span class="hljs-string">"\n\n"</span>.join(<span class="hljs-string">f"- <span class="hljs-subst">{c}</span>"</span> <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> found.contexts)<br>    user_content = (<br>        <span class="hljs-string">"Use the following context to answer the question.\n\n"</span><br>        <span class="hljs-string">f"Context:\n<span class="hljs-subst">{context_block}</span>\n\n"</span><br>        <span class="hljs-string">f"Question: <span class="hljs-subst">{question}</span>\n"</span><br>        <span class="hljs-string">"Answer concisely using the context above."</span>            <span class="hljs-comment"># 明确要求"只用 context 回答"</span><br>    )<br><br>    <span class="hljs-comment"># —— 步骤 3：调用 LLM 生成答案 ——</span><br>    <span class="hljs-comment"># 用 OpenAI 兼容 adapter，可以无缝接入 DeepSeek、Moonshot 等国内服务</span><br>    adapter = ai.openai.Adapter(<br>        auth_key=os.getenv(<span class="hljs-string">"LLM_API_KEY"</span>),<br>        base_url=os.getenv(<span class="hljs-string">"LLM_BASE_URL"</span>),                    <span class="hljs-comment"># 例如 https://api.deepseek.com/v1</span><br>        model=os.getenv(<span class="hljs-string">"LLM_MODEL"</span>)                           <span class="hljs-comment"># 例如 deepseek-chat</span><br>    )<br><br>    res = <span class="hljs-keyword">await</span> ctx.step.ai.infer(                             <span class="hljs-comment"># Inngest 内置的 LLM 调用步骤</span><br>        <span class="hljs-string">"llm-answer"</span>,<br>        adapter=adapter,<br>        body={<br>            <span class="hljs-string">"max_tokens"</span>: <span class="hljs-number">1024</span>,                                <span class="hljs-comment"># 限制回答长度，省钱</span><br>            <span class="hljs-string">"temperature"</span>: <span class="hljs-number">0.2</span>,                                <span class="hljs-comment"># 低温 → 回答更"贴合上下文"，少自由发挥</span><br>            <span class="hljs-string">"messages"</span>: [<br>                {<span class="hljs-string">"role"</span>: <span class="hljs-string">"system"</span>,<br>                 <span class="hljs-string">"content"</span>: <span class="hljs-string">"You answer questions using only the provided context."</span>},<br>                {<span class="hljs-string">"role"</span>: <span class="hljs-string">"user"</span>, <span class="hljs-string">"content"</span>: user_content}<br>            ]<br>        }<br>    )<br><br>    <span class="hljs-comment"># 从 OpenAI 格式的响应里取出文本（choices[0].message.content 是固定结构）</span><br>    answer = res[<span class="hljs-string">"choices"</span>][<span class="hljs-number">0</span>][<span class="hljs-string">"message"</span>][<span class="hljs-string">"content"</span>].strip()<br>    <span class="hljs-keyword">return</span> {<span class="hljs-string">"answer"</span>: answer, <span class="hljs-string">"sources"</span>: found.sources, <span class="hljs-string">"num_contexts"</span>: <span class="hljs-built_in">len</span>(found.contexts)}<br></code></pre></td></tr></tbody></table></figure>
+<p>这段代码里几个比较关键的工程细节：</p>
+<ol>
+<li><strong>Prompt 模板</strong>：用 <code>"\n\n".join(f"- {c}" ...)</code> 把 chunks 拼成项目符号列表，并明确要求"Answer concisely using the context above"——这是抑制 LLM 幻觉的关键</li>
+<li><strong><code>temperature=0.2</code></strong>：低温采样让回答更"贴合上下文"，减少自由发挥（写诗、创作才需要 <code>temperature &gt; 0.7</code>）</li>
+<li><strong><code>ctx.step.ai.infer</code></strong>：Inngest 内置的 LLM 调用步骤，可以像普通 step 一样被追踪、重试、查看 token 用量</li>
+<li><strong><code>ai.openai.Adapter</code></strong>：通过兼容 OpenAI 协议的 adapter，可以无缝接入 DeepSeek、SiliconFlow、Moonshot 等国内服务，<strong>业务代码零改动</strong></li>
+</ol>
+<h4 id="4-FastAPI-挂载">(4) FastAPI 挂载</h4>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">app = FastAPI()<br><br><span class="hljs-comment"># 把 Inngest 函数注册到 FastAPI 的 /api/inngest 端点</span><br><span class="hljs-comment"># Inngest dev server 会主动轮询这个端点，拉取待执行的任务</span><br>inngest.fast_api.serve(app, inngest_client, [rag_ingest_pdf, rag_query_pdf_ai])<br></code></pre></td></tr></tbody></table></figure>
+<p>这两行就把两个 Inngest 函数挂载到了 FastAPI 的 <code>/api/inngest</code> 路由，整个后端的"骨架"就立起来了。</p>
+<hr>
+<h3 id="data-loader-py：把-PDF-变成向量"><code>data_loader.py</code>：把 PDF 变成向量</h3>
+<p><code>data_loader.py</code> 负责 RAG 流水线中最"脏"的部分——<strong>把 PDF 变成模型能消化的向量</strong>。它由两个核心函数组成：<code>load_and_chunk_pdf</code>（加载分块）和 <code>embed_texts</code>（向量化）。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> openai <span class="hljs-keyword">import</span> OpenAI                                       <span class="hljs-comment"># 官方 openai 库（兼容国内服务）</span><br><span class="hljs-keyword">from</span> llama_index.readers.file <span class="hljs-keyword">import</span> PDFReader                  <span class="hljs-comment"># PDF 解析器</span><br><span class="hljs-keyword">from</span> llama_index.core.node_parser <span class="hljs-keyword">import</span> SentenceSplitter       <span class="hljs-comment"># 文本分块器</span><br><span class="hljs-keyword">from</span> dotenv <span class="hljs-keyword">import</span> load_dotenv<br><span class="hljs-keyword">import</span> os<br><br><span class="hljs-comment"># 把 .env 文件里的变量加载到 os.environ</span><br>load_dotenv()<br><br><span class="hljs-comment"># 初始化 OpenAI 兼容客户端（这里实际指向 SiliconFlow）</span><br>client = OpenAI(<br>    base_url=os.getenv(<span class="hljs-string">"EMBEDDING_BASE_URL"</span>),                   <span class="hljs-comment"># 例如 https://api.siliconflow.cn/v1</span><br>    api_key=os.getenv(<span class="hljs-string">"EMBEDDING_API_KEY"</span>)<br>)<br><br>EMBED_MODEL = os.getenv(<span class="hljs-string">"EMBED_MODEL"</span>)                          <span class="hljs-comment"># 例如 BAAI/bge-m3</span><br>EMBED_DIM = <span class="hljs-number">1024</span>                                                <span class="hljs-comment"># 必须与所选模型输出维度一致</span><br><br><span class="hljs-comment"># 创建分块器：每块约 1000 token，相邻块重叠 200 token</span><br>splitter = SentenceSplitter(chunk_size=<span class="hljs-number">1000</span>, chunk_overlap=<span class="hljs-number">200</span>)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">load_and_chunk_pdf</span>(<span class="hljs-params">path: <span class="hljs-built_in">str</span></span>):<br>    <span class="hljs-string">"""读取 PDF 并切分成文本块"""</span><br>    <span class="hljs-comment"># PDFReader 把每页解析成 Document 对象（.text 属性是页面文本）</span><br>    docs = PDFReader().load_data(file=path)<br>    <span class="hljs-comment"># 过滤掉空文本页（避免空 chunk 浪费 embedding 配额）</span><br>    texts = [d.text <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> docs <span class="hljs-keyword">if</span> <span class="hljs-built_in">getattr</span>(d, <span class="hljs-string">"text"</span>, <span class="hljs-literal">None</span>)]<br><br>    <span class="hljs-comment"># 对每一页的文本调用 splitter 切分，汇总所有 chunk</span><br>    chunks = []<br>    <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> texts:<br>        chunks.extend(splitter.split_text(t))<br>    <span class="hljs-keyword">return</span> chunks<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">embed_texts</span>(<span class="hljs-params">texts: <span class="hljs-built_in">list</span>[<span class="hljs-built_in">str</span>]</span>) -&gt; <span class="hljs-built_in">list</span>[<span class="hljs-built_in">list</span>[<span class="hljs-built_in">float</span>]]:<br>    <span class="hljs-string">"""把一批文本批量转成向量"""</span><br>    response = client.embeddings.create(<br>        model=EMBED_MODEL,<br>        <span class="hljs-built_in">input</span>=texts,                                           <span class="hljs-comment"># 一次性传入整个 list（关键优化）</span><br>    )<br>    <span class="hljs-comment"># response.data 是按 input 顺序对应的 Embedding 对象列表</span><br>    <span class="hljs-keyword">return</span> [item.embedding <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> response.data]<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="1-OpenAI-客户端的-伪-OpenAI-用法">(1) OpenAI 客户端的"伪 OpenAI"用法</h4>
+<p>注意这里用的是官方 <code>openai</code> 库，但传入的是 SiliconFlow 的 <code>base_url</code> 和 key——这是因为 <strong>SiliconFlow 兼容了 OpenAI 的接口规范</strong>，所以代码可以零改动迁移。同理，DeepSeek、Moonshot、智谱、零一万物等国内主流服务也都兼容此协议。</p>
+<p>这意味着：<strong>学会一套 OpenAI SDK 用法，等于学会了所有国内主流大模型 API</strong>。</p>
+<h4 id="2-SentenceSplitter-的两个关键参数">(2) <code>SentenceSplitter</code> 的两个关键参数</h4>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">SentenceSplitter(chunk_size=<span class="hljs-number">1000</span>, chunk_overlap=<span class="hljs-number">200</span>)<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><strong><code>chunk_size=1000</code></strong>：每个文本块约 1000 个 token（≈ 750 个英文单词 / ≈ 1500 个汉字）。这是经过实践验证的"甜点值"——太短会让语义碎片化，太长会引入无关噪声、检索精度下降</li>
+<li><strong><code>chunk_overlap=200</code></strong>：相邻块之间<strong>重叠 200 token</strong>，避免关键信息被切到块边界而丢失上下文</li>
+</ul>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-c3b3237c" role="button" aria-expanded="false" aria-controls="collapse-c3b3237c">
+        <div class="fold-arrow">▶</div>为什么不直接按字符切分？
+      </div>
+      <div class="fold-collapse collapse" id="collapse-c3b3237c">
+        <div class="fold-content">
+          <p>按字符（比如每 1000 字一刀）会有两个致命问题：</p><ol><li><strong>语义断裂</strong>：一句话可能从中间被截断，检索出来的 chunk 上下文不完整，LLM 看不懂</li><li><strong>指代丢失</strong>：例如 “它” “该方案” 这类代词的指代对象可能在另一个 chunk 里，单独看一个 chunk 等于没看</li></ol><p><code>SentenceSplitter</code> 的策略是：</p><ul><li>优先<strong>按句子边界</strong>切分（找 <code>.</code>、<code>。</code>、<code>!</code>、<code>?</code> 等终结符）</li><li>再在 token 数上聚合到接近 <code>chunk_size</code></li><li>最后通过 <code>chunk_overlap</code> 把每块的尾部"借"给下一块的头部</li></ul><p>这样最大程度保留了语义完整性。</p>
+        </div>
+      </div>
+    </div>
+<h4 id="3-EMBED-DIM-1024-的含义">(3) <code>EMBED_DIM = 1024</code> 的含义</h4>
+<p>这个值必须和你选用的 embedding 模型<strong>严格匹配</strong>。本项目使用 <code>BAAI/bge-m3</code>，输出维度就是 1024。</p>
+<div class="note note-warning">
+            <p><strong>新手最容易踩的坑</strong>：换 embedding 模型时只改了 <code>EMBED_MODEL</code> 没改 <code>EMBED_DIM</code>。</p><ul><li>如果换成 OpenAI 的 <code>text-embedding-3-small</code>（1536 维），却忘了改这里的 <code>1024</code></li><li>Qdrant 在创建 collection 时虽然不会立即报错（它不知道实际向量多长）</li><li>但第一次写入向量时会因为<strong>维度不匹配</strong>直接报错</li></ul><p>更麻烦的是：<strong>一旦 collection 创建成功，维度就锁死了</strong>。要换维度必须删掉 collection 重建。</p><p>常用模型的维度速查：</p><table><thead><tr><th style="text-align:left">模型</th><th style="text-align:center">维度</th></tr></thead><tbody><tr><td style="text-align:left">BAAI/bge-m3</td><td style="text-align:center">1024</td></tr><tr><td style="text-align:left">BAAI/bge-large-zh-v1.5</td><td style="text-align:center">1024</td></tr><tr><td style="text-align:left">OpenAI text-embedding-3-small</td><td style="text-align:center">1536</td></tr><tr><td style="text-align:left">OpenAI text-embedding-3-large</td><td style="text-align:center">3072</td></tr><tr><td style="text-align:left">Cohere embed-multilingual-v3</td><td style="text-align:center">1024</td></tr></tbody></table>
+          </div>
+<h4 id="4-embed-texts-的批量调用">(4) <code>embed_texts</code> 的批量调用</h4>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">response = client.embeddings.create(<br>    model=EMBED_MODEL,<br>    <span class="hljs-built_in">input</span>=texts,           <span class="hljs-comment"># 一次传入整个 list</span><br>)<br></code></pre></td></tr></tbody></table></figure>
+<p>这里<strong>一次性传入整个 list</strong>，比循环调用 <code>embed_texts(chunk)</code> 快得多——前者只走一次网络往返，后者要 N 次。对于 100 页的 PDF（约 200 个 chunk），这个差异可能是 <strong>30 秒 vs 3 分钟</strong>。</p>
+<p>不过要注意：API 对单次请求的 token 数有上限（SiliconFlow 一般是 500K tokens/请求），超大文档需要自己分批。</p>
+<hr>
+<h3 id="vector-db-py：与向量数据库打交道"><code>vector_db.py</code>：与向量数据库打交道</h3>
+<p><code>vector_db.py</code> 封装了与 <a target="_blank" rel="noopener" href="https://qdrant.tech/">Qdrant</a> 向量数据库的交互，是一个极简的 DAO（Data Access Object）层，只暴露两个方法：<code>upsert</code>（写入）和 <code>search</code>（检索）。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> qdrant_client <span class="hljs-keyword">import</span> QdrantClient<br><span class="hljs-keyword">from</span> qdrant_client.models <span class="hljs-keyword">import</span> VectorParams, Distance, PointStruct<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">QdrantStorage</span>:<br>    <span class="hljs-string">"""Qdrant 向量数据库的简易封装"""</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, url=<span class="hljs-string">"http://localhost:6333"</span>, collection=<span class="hljs-string">"docs"</span>, dim=<span class="hljs-number">1024</span></span>):<br>        <span class="hljs-comment"># 连接到 Qdrant 服务（我们用 Docker 跑在本机 6333 端口）</span><br>        <span class="hljs-variable language_">self</span>.client = QdrantClient(url=url, timeout=<span class="hljs-number">30</span>)<br>        <span class="hljs-variable language_">self</span>.collection = collection<br><br>        <span class="hljs-comment"># 懒加载：首次使用时检查 collection 是否存在，不存在就创建</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-variable language_">self</span>.client.collection_exists(<span class="hljs-variable language_">self</span>.collection):<br>            <span class="hljs-variable language_">self</span>.client.create_collection(<br>                collection_name=<span class="hljs-variable language_">self</span>.collection,<br>                vectors_config=VectorParams(<br>                    size=dim,                                <span class="hljs-comment"># 向量维度（必须与 embedding 模型一致）</span><br>                    distance=Distance.COSINE                 <span class="hljs-comment"># 距离度量（详见下文）</span><br>                ),<br>            )<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">upsert</span>(<span class="hljs-params">self, ids, vectors, payloads</span>):<br>        <span class="hljs-string">"""批量写入向量"""</span><br>        <span class="hljs-comment"># 把三个并行 list 组装成 Qdrant 的 PointStruct 对象</span><br>        points = [<br>            PointStruct(<span class="hljs-built_in">id</span>=ids[i], vector=vectors[i], payload=payloads[i])<br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(ids))<br>        ]<br>        <span class="hljs-comment"># upsert = update + insert：ID 存在就更新，不存在就插入</span><br>        <span class="hljs-variable language_">self</span>.client.upsert(<span class="hljs-variable language_">self</span>.collection, points=points)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">search</span>(<span class="hljs-params">self, query_vector, top_k: <span class="hljs-built_in">int</span> = <span class="hljs-number">5</span></span>):<br>        <span class="hljs-string">"""相似度检索"""</span><br>        results = <span class="hljs-variable language_">self</span>.client.search(<br>            collection_name=<span class="hljs-variable language_">self</span>.collection,<br>            query_vector=query_vector,                        <span class="hljs-comment"># 查询向量（已经 embedding 过的问题）</span><br>            with_payload=<span class="hljs-literal">True</span>,                                <span class="hljs-comment"># 同时返回 payload（含原文）</span><br>            limit=top_k                                       <span class="hljs-comment"># 只取前 top_k 个最相似的</span><br>        )<br>        contexts = []                                         <span class="hljs-comment"># 收集原文（要拼到 prompt 里）</span><br>        sources = <span class="hljs-built_in">set</span>()                                       <span class="hljs-comment"># 收集文件名（用 set 自动去重）</span><br><br>        <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> results:<br>            payload = <span class="hljs-built_in">getattr</span>(r, <span class="hljs-string">"payload"</span>, <span class="hljs-literal">None</span>) <span class="hljs-keyword">or</span> {}<br>            text = payload.get(<span class="hljs-string">"text"</span>, <span class="hljs-string">""</span>)<br>            source = payload.get(<span class="hljs-string">"source"</span>, <span class="hljs-string">""</span>)<br>            <span class="hljs-keyword">if</span> text:<br>                contexts.append(text)<br>                sources.add(source)<br><br>        <span class="hljs-keyword">return</span> {<span class="hljs-string">"contexts"</span>: contexts, <span class="hljs-string">"sources"</span>: <span class="hljs-built_in">list</span>(sources)}<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="1-Qdrant-的数据组织：类比关系数据库">(1) Qdrant 的数据组织：类比关系数据库</h4>
+<p>Qdrant 的数据组织层级是 <code>Collection → Point → Vector + Payload</code>，可以类比关系数据库：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Qdrant 概念</th>
+<th style="text-align:left">关系数据库类比</th>
+<th style="text-align:left">本项目里是什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Collection</strong></td>
+<td style="text-align:left">表（Table）</td>
+<td style="text-align:left"><code>docs</code>（所有 PDF 的 chunk 都存这一张"表"）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Point</strong></td>
+<td style="text-align:left">行（Row）</td>
+<td style="text-align:left">一个文本块</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Vector</strong></td>
+<td style="text-align:left">一个特殊的高维列</td>
+<td style="text-align:left">1024 维浮点数</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Payload</strong></td>
+<td style="text-align:left">其他字段</td>
+<td style="text-align:left"><code>{"source": "report.pdf", "text": "..."}</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>ID</strong></td>
+<td style="text-align:left">主键</td>
+<td style="text-align:left"><code>uuid5</code> 生成的确定性 UUID</td>
+</tr>
+</tbody>
+</table>
+<p><code>__init__</code> 中的 <code>collection_exists</code> 检查 + <code>create_collection</code> 是典型的<strong>懒加载初始化</strong>——首次写入时自动建表，避免手动 DDL 操作。</p>
+<h4 id="2-距离度量：为什么选-Distance-COSINE">(2) 距离度量：为什么选 <code>Distance.COSINE</code></h4>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">VectorParams(size=dim, distance=Distance.COSINE)<br></code></pre></td></tr></tbody></table></figure>
+<p>Qdrant 支持三种距离度量：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">度量</th>
+<th style="text-align:left">公式</th>
+<th style="text-align:left">含义</th>
+<th style="text-align:left">适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>COSINE</code></td>
+<td style="text-align:left">1 - (a·b) / (|a|·|b|)</td>
+<td style="text-align:left">余弦相似度（<strong>忽略向量长度</strong>）</td>
+<td style="text-align:left"><strong>文本语义检索（首选）</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>DOT</code></td>
+<td style="text-align:left">-a·b</td>
+<td style="text-align:left">负点积（受向量长度影响）</td>
+<td style="text-align:left">已归一化的向量</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>EUCLID</code></td>
+<td style="text-align:left">‖a-b‖</td>
+<td style="text-align:left">欧氏距离（几何距离）</td>
+<td style="text-align:left">图像特征、声纹</td>
+</tr>
+</tbody>
+</table>
+<p>文本向量化后，我们关心的是"<strong>方向是否一致</strong>"（语义相似），而不是"<strong>模长是否接近</strong>"（向量长度往往受文本长度影响，无关语义）。所以余弦距离是文本检索的事实标准。</p>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-3a3bf54a" role="button" aria-expanded="false" aria-controls="collapse-3a3bf54a">
+        <div class="fold-arrow">▶</div>三种距离的本质区别（数学直觉）
+      </div>
+      <div class="fold-collapse collapse" id="collapse-3a3bf54a">
+        <div class="fold-content">
+          <p>假设有两个向量：</p><ul><li>A = [1, 0]（“猫”）</li><li>B = [2, 0]（“猫猫猫”，重复三次但语义没变）</li><li>C = [0, 1]（“狗”）</li></ul><p>直觉上：A 和 B 应该"非常相似"（都讲猫），A 和 C 应该"不相似"（猫 vs 狗）。</p><ul><li><strong>余弦距离</strong>：A vs B = 0（完全重合），A vs C = 1（正交）✅ 符合直觉</li><li><strong>欧氏距离</strong>：A vs B = 1，A vs C = √2 ≈ 1.41 ❌ B 因为"长度更长"被推远了</li><li><strong>点积</strong>：A·B = 2，A·C = 0 ❌ 同样受长度干扰</li></ul><p>文本场景下，"猫"和"猫猫猫"应该被认为语义相同——所以余弦距离胜出。</p>
+        </div>
+      </div>
+    </div>
+<h4 id="3-search-中的去重技巧">(3) <code>search</code> 中的去重技巧</h4>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">sources = <span class="hljs-built_in">set</span>()<br><span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> results:<br>    ...<br>    sources.add(source)<br></code></pre></td></tr></tbody></table></figure>
+<p>Top-K 检索返回的 K 个 chunk 可能<strong>全部来自同一个文件</strong>（比如只上传了一份 PDF 时）。用 <code>set()</code> 对 <code>source</code> 去重，最终只返回涉及的<strong>文件列表</strong>——这就是为什么前端能展示"答案引用自哪些 PDF"。</p>
+<h4 id="4-为什么不用-llama-index-的高层封装？">(4) 为什么不用 llama-index 的高层封装？</h4>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-ecddfce8" role="button" aria-expanded="false" aria-controls="collapse-ecddfce8">
+        <div class="fold-arrow">▶</div>为什么不用 llama-index 的 VectorStoreIndex 一行搞定？
+      </div>
+      <div class="fold-collapse collapse" id="collapse-ecddfce8">
+        <div class="fold-content">
+          <p>直接用 <code>llama_index.VectorStoreIndex</code> 当然更"省事"：</p><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 用高层封装的"魔法版" RAG</span><br>index = VectorStoreIndex.from_documents(documents)<br>query_engine = index.as_query_engine()<br>answer = query_engine.query(<span class="hljs-string">"宿舍报修电话是多少？"</span>)<br></code></pre></td></tr></tbody></table></figure><p>三行代码就能跑。但本项目故意选择<strong>手写底层的 Qdrant 调用</strong>，目的是让学习者清楚地看到：</p><ol><li>每个 chunk 的 ID、向量、payload 是如何对应的</li><li><code>top_k</code>、<code>distance</code> 等参数对检索结果的实际影响</li><li>哪些字段最终被拼进 LLM 的 prompt</li></ol><p>理解了这一层，再用上层框架时才不会被"魔法"困住——出了问题知道从哪查。这就是"先学原理、再用工具"的思路。</p>
+        </div>
+      </div>
+    </div>
+<hr>
+<h3 id="streamlit-app-py：用户交互界面"><code>streamlit_app.py</code>：用户交互界面</h3>
+<p><a target="_blank" rel="noopener" href="https://streamlit.io/">Streamlit</a> 是 Python 的"Web UI 速成框架"，<strong>几十行代码就能搭出可交互的 Web 界面</strong>，完全不用写 HTML/CSS/JS。本项目用它实现了 PDF 上传和问答两个核心交互。</p>
+<p>整个文件分为四个模块：Inngest 客户端、PDF 上传、提交问题、轮询结果。</p>
+<h4 id="1-初始化与-Inngest-客户端">(1) 初始化与 Inngest 客户端</h4>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> asyncio<br><span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path<br><span class="hljs-keyword">import</span> time<br><br><span class="hljs-keyword">import</span> streamlit <span class="hljs-keyword">as</span> st<br><span class="hljs-keyword">import</span> inngest<br><span class="hljs-keyword">from</span> dotenv <span class="hljs-keyword">import</span> load_dotenv<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> json<br><br>load_dotenv()<br><br><span class="hljs-comment"># 配置 Streamlit 页面（标题、图标、布局）</span><br>st.set_page_config(page_title=<span class="hljs-string">"RAG Ingest PDF"</span>, page_icon=<span class="hljs-string">"📄"</span>, layout=<span class="hljs-string">"centered"</span>)<br><br><br><span class="hljs-comment"># @st.cache_resource 让这个对象"只创建一次"并缓存</span><br><span class="hljs-comment"># 避免每次 Streamlit 重跑（每次交互都会重跑整个脚本）都重建 Inngest 客户端</span><br><span class="hljs-meta">@st.cache_resource</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_inngest_client</span>() -&gt; inngest.Inngest:<br>    <span class="hljs-keyword">return</span> inngest.Inngest(app_id=<span class="hljs-string">"rag_app"</span>, is_production=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>Streamlit 的执行模型（重要）</strong></p><p>Streamlit 的脚本有个反直觉的特性：<strong>每次用户交互（点按钮、输入文字、上传文件）都会从头到尾重跑一遍整个脚本</strong>。</p><p>这就是为什么 <code>@st.cache_resource</code> 这么重要——它让 Inngest 客户端、数据库连接等"昂贵对象"只创建一次，后续重跑直接复用缓存。不加的话，每点一次按钮就重建一次连接，很快就会资源耗尽。</p>
+          </div>
+<h4 id="2-PDF-上传与事件触发">(2) PDF 上传与事件触发</h4>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">save_uploaded_pdf</span>(<span class="hljs-params">file</span>) -&gt; Path:<br>    <span class="hljs-string">"""把 Streamlit 上传的文件保存到本地 uploads/ 目录"""</span><br>    uploads_dir = Path(<span class="hljs-string">"uploads"</span>)<br>    uploads_dir.mkdir(parents=<span class="hljs-literal">True</span>, exist_ok=<span class="hljs-literal">True</span>)             <span class="hljs-comment"># 目录不存在就创建</span><br>    file_path = uploads_dir / file.name<br>    file_bytes = file.getbuffer()                              <span class="hljs-comment"># 取出文件的二进制内容</span><br>    file_path.write_bytes(file_bytes)<br>    <span class="hljs-keyword">return</span> file_path<br><br><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">def</span> <span class="hljs-title function_">send_rag_ingest_event</span>(<span class="hljs-params">pdf_path: Path</span>) -&gt; <span class="hljs-literal">None</span>:<br>    <span class="hljs-string">"""发送 rag/ingest_pdf 事件给 Inngest"""</span><br>    client = get_inngest_client()<br>    <span class="hljs-keyword">await</span> client.send(<br>        inngest.Event(<br>            name=<span class="hljs-string">"rag/ingest_pdf"</span>,<br>            data={<br>                <span class="hljs-string">"pdf_path"</span>: <span class="hljs-built_in">str</span>(pdf_path.resolve()),          <span class="hljs-comment"># 传绝对路径</span><br>                <span class="hljs-string">"source_id"</span>: pdf_path.name,                   <span class="hljs-comment"># 文件名作为唯一标识</span><br>            },<br>        )<br>    )<br><br><br><span class="hljs-comment"># —— UI 部分 ——</span><br>st.title(<span class="hljs-string">"Upload a PDF to Ingest"</span>)<br>uploaded = st.file_uploader(<span class="hljs-string">"Choose a PDF"</span>, <span class="hljs-built_in">type</span>=[<span class="hljs-string">"pdf"</span>], accept_multiple_files=<span class="hljs-literal">False</span>)<br><br><span class="hljs-keyword">if</span> uploaded <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>    <span class="hljs-keyword">with</span> st.spinner(<span class="hljs-string">"Uploading and triggering ingestion..."</span>):<br>        path = save_uploaded_pdf(uploaded)                     <span class="hljs-comment"># 1. 存到本地</span><br>        asyncio.run(send_rag_ingest_event(path))              <span class="hljs-comment"># 2. 发事件通知后端</span><br>        time.sleep(<span class="hljs-number">0.3</span>)                                       <span class="hljs-comment"># 3. 给点反馈时间</span><br>    st.success(<span class="hljs-string">f"Triggered ingestion for: <span class="hljs-subst">{path.name}</span>"</span>)<br></code></pre></td></tr></tbody></table></figure>
+<p>这里有一个<strong>关键设计</strong>：Streamlit 把 PDF 保存到本地 <code>uploads/</code> 目录，<strong>然后只把"文件路径"作为事件 data 发给 Inngest</strong>，而不是把整个 PDF 字节流塞进事件。这样做的好处：</p>
+<ul>
+<li><strong>事件 payload 不会过大</strong>（PDF 可能几十 MB，事件系统不适合扛这种负载）</li>
+<li>后端函数可以<strong>按需重新读取</strong>文件（重试时也不用重新传）</li>
+<li>多个 worker 可以<strong>共享访问</strong>同一份文件</li>
+</ul>
+<h4 id="3-提交问题与异步等待">(3) 提交问题与异步等待</h4>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">async</span> <span class="hljs-keyword">def</span> <span class="hljs-title function_">send_rag_query_event</span>(<span class="hljs-params">question: <span class="hljs-built_in">str</span>, top_k: <span class="hljs-built_in">int</span></span>):<br>    <span class="hljs-string">"""发送问答事件，返回 event_id（后续轮询用）"""</span><br>    client = get_inngest_client()<br>    result = <span class="hljs-keyword">await</span> client.send(<br>        inngest.Event(<br>            name=<span class="hljs-string">"rag/query_pdf_ai"</span>,<br>            data={<span class="hljs-string">"question"</span>: question, <span class="hljs-string">"top_k"</span>: top_k},<br>        )<br>    )<br>    <span class="hljs-comment"># client.send 返回的是列表，result[0] 就是这次事件的 ID</span><br>    <span class="hljs-keyword">return</span> result[<span class="hljs-number">0</span>]<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">_inngest_api_base</span>() -&gt; <span class="hljs-built_in">str</span>:<br>    <span class="hljs-string">"""Inngest dev server 的基础 URL（可通过环境变量配置）"""</span><br>    <span class="hljs-keyword">return</span> os.getenv(<span class="hljs-string">"INNGEST_API_BASE"</span>, <span class="hljs-string">"http://127.0.0.1:8288"</span>)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">fetch_runs</span>(<span class="hljs-params">event_id: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">list</span>[<span class="hljs-built_in">dict</span>]:<br>    <span class="hljs-string">"""查询某个事件触发的所有函数运行"""</span><br>    url = <span class="hljs-string">f"<span class="hljs-subst">{_inngest_api_base()}</span>/v1/events/<span class="hljs-subst">{event_id}</span>/runs"</span><br>    resp = requests.get(url)<br>    <span class="hljs-keyword">if</span> resp.status_code != <span class="hljs-number">200</span>:<br>        st.error(<span class="hljs-string">f"API request failed with status code: <span class="hljs-subst">{resp.status_code}</span>"</span>)<br>        <span class="hljs-keyword">return</span> []<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> resp.text:<br>        st.error(<span class="hljs-string">"API returned empty response"</span>)<br>        <span class="hljs-keyword">return</span> []<br>    <span class="hljs-keyword">try</span>:<br>        data = resp.json()<br>        <span class="hljs-keyword">return</span> data.get(<span class="hljs-string">"data"</span>, [])<br>    <span class="hljs-keyword">except</span> json.JSONDecodeError <span class="hljs-keyword">as</span> e:<br>        st.error(<span class="hljs-string">f"Failed to parse JSON response: <span class="hljs-subst">{e}</span>"</span>)<br>        <span class="hljs-keyword">return</span> []<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="4-轮询-Inngest-API-获取结果">(4) 轮询 Inngest API 获取结果</h4>
+<p>Inngest 是<strong>异步</strong>的：发送事件后，函数不会立即返回结果。前端需要<strong>轮询</strong> <code>/v1/events/{event_id}/runs</code> 接口，直到状态变成 Completed：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">wait_for_run_output</span>(<span class="hljs-params">event_id, timeout_s=<span class="hljs-number">120.0</span>, poll_interval_s=<span class="hljs-number">0.5</span></span>):<br>    <span class="hljs-string">"""阻塞等待函数执行完成，返回 output"""</span><br>    start = time.time()<br>    last_status = <span class="hljs-literal">None</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        runs = fetch_runs(event_id)<br>        <span class="hljs-keyword">if</span> runs:<br>            run = runs[<span class="hljs-number">0</span>]<br>            status = run.get(<span class="hljs-string">"status"</span>)<br>            last_status = status <span class="hljs-keyword">or</span> last_status<br><br>            <span class="hljs-comment"># 完成态：返回结果</span><br>            <span class="hljs-keyword">if</span> status <span class="hljs-keyword">in</span> (<span class="hljs-string">"Completed"</span>, <span class="hljs-string">"Succeeded"</span>, <span class="hljs-string">"Success"</span>, <span class="hljs-string">"Finished"</span>):<br>                <span class="hljs-keyword">return</span> run.get(<span class="hljs-string">"output"</span>) <span class="hljs-keyword">or</span> {}<br><br>            <span class="hljs-comment"># 失败态：抛异常</span><br>            <span class="hljs-keyword">if</span> status <span class="hljs-keyword">in</span> (<span class="hljs-string">"Failed"</span>, <span class="hljs-string">"Cancelled"</span>):<br>                <span class="hljs-keyword">raise</span> RuntimeError(<span class="hljs-string">f"Function run <span class="hljs-subst">{status}</span>"</span>)<br><br>        <span class="hljs-comment"># 超时保护：避免无限等待</span><br>        <span class="hljs-keyword">if</span> time.time() - start &gt; timeout_s:<br>            <span class="hljs-keyword">raise</span> TimeoutError(<span class="hljs-string">f"Timed out (last status: <span class="hljs-subst">{last_status}</span>)"</span>)<br><br>        time.sleep(poll_interval_s)                            <span class="hljs-comment"># 0.5 秒后再查</span><br></code></pre></td></tr></tbody></table></figure>
+<p>这段代码体现了<strong>长任务异步化的标准模式</strong>：</p>
+<ol>
+<li><strong>超时保护</strong>（<code>timeout_s=120</code>）：避免网络抖动时前端无限卡死</li>
+<li><strong>轮询间隔</strong>（<code>poll_interval_s=0.5</code>）：高频但不过载，平衡响应速度与 API 压力</li>
+<li><strong>显式处理终止态</strong>：Completed / Failed / Cancelled 都要明确响应</li>
+</ol>
+<h4 id="5-Streamlit-表单-UI">(5) Streamlit 表单 UI</h4>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python">st.divider()<br>st.title(<span class="hljs-string">"Ask a question about your PDFs"</span>)<br><br><span class="hljs-comment"># st.form 让多个输入控件"一次性提交"，避免每输入一个字符就触发重跑</span><br><span class="hljs-keyword">with</span> st.form(<span class="hljs-string">"rag_query_form"</span>):<br>    question = st.text_input(<span class="hljs-string">"Your question"</span>)<br>    top_k = st.number_input(<br>        <span class="hljs-string">"How many chunks to retrieve"</span>,<br>        min_value=<span class="hljs-number">1</span>, max_value=<span class="hljs-number">20</span>, value=<span class="hljs-number">5</span>, step=<span class="hljs-number">1</span><br>    )<br>    submitted = st.form_submit_button(<span class="hljs-string">"Ask"</span>)<br><br>    <span class="hljs-keyword">if</span> submitted <span class="hljs-keyword">and</span> question.strip():<br>        <span class="hljs-keyword">with</span> st.spinner(<span class="hljs-string">"Sending event and generating answer..."</span>):<br>            <span class="hljs-comment"># 1. 发送事件，拿到 event_id</span><br>            event_id = asyncio.run(send_rag_query_event(question.strip(), <span class="hljs-built_in">int</span>(top_k)))<br>            <span class="hljs-comment"># 2. 阻塞等待结果（最长 120 秒）</span><br>            <span class="hljs-keyword">try</span>:<br>                output = wait_for_run_output(event_id)<br>                answer = output.get(<span class="hljs-string">"answer"</span>, <span class="hljs-string">""</span>)<br>                sources = output.get(<span class="hljs-string">"sources"</span>, [])<br><br>                st.subheader(<span class="hljs-string">"Answer"</span>)<br>                st.write(answer <span class="hljs-keyword">or</span> <span class="hljs-string">"(No answer)"</span>)<br>            <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>                st.error(<span class="hljs-string">f"Error occurred while waiting for response: <span class="hljs-subst">{<span class="hljs-built_in">str</span>(e)}</span>"</span>)<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong><code>top_k</code> 的取值建议</strong></p><p><code>top_k</code> 决定从向量数据库<strong>检索多少个 chunk 喂给 LLM</strong>：</p><ul><li><code>top_k=3~5</code>：适合<strong>事实型问答</strong>（“X 的定义是什么？”），context 干扰少、token 省钱</li><li><code>top_k=10+</code>：适合<strong>对比型 / 综述型问答</strong>（“A、B、C 三种方案的差异？”），需要更多上下文综合</li></ul><p>但要注意：<code>top_k</code> 越大，prompt 越长，<strong>信息淹没</strong>和<strong>token 成本</strong>都会上升，并不总是越准。新手建议从 5 开始试。</p>
+          </div>
+<h2 id="完整调用链回顾">完整调用链回顾</h2>
+<p>至此，整个 RAG 应用的数据流就完全串起来了。<strong>入库</strong>与<strong>问答</strong>是两条独立的链路：</p>
+<h3 id="入库链路（PDF-→-向量数据库）">入库链路（PDF → 向量数据库）</h3>
+<ol>
+<li>用户在 Streamlit 上传一份 PDF</li>
+<li><code>save_uploaded_pdf()</code> 把文件保存到本地 <code>uploads/</code> 目录（实际文件落地）</li>
+<li><code>send_rag_ingest_event()</code> 发送 <code>rag/ingest_pdf</code> 事件给 Inngest（事件只带文件路径，不带字节）</li>
+<li>Inngest 调度 <code>main.rag_ingest_pdf</code> 函数，分两步执行：
+<ul>
+<li><strong>Step 1 load-and-chunk</strong>：<code>data_loader.load_and_chunk_pdf()</code> 用 <code>PDFReader</code> 解析 + <code>SentenceSplitter</code> 切块</li>
+<li><strong>Step 2 embed-and-upsert</strong>：<code>data_loader.embed_texts()</code> 把每个 chunk 转成 1024 维向量，<code>QdrantStorage().upsert()</code> 写入 Qdrant</li>
+</ul>
+</li>
+</ol>
+<h3 id="问答链路（问题-→-答案）">问答链路（问题 → 答案）</h3>
+<ol>
+<li>用户在 Streamlit 输入问题 + <code>top_k</code></li>
+<li><code>send_rag_query_event()</code> 发送 <code>rag/query_pdf_ai</code> 事件给 Inngest，返回 <code>event_id</code></li>
+<li>Inngest 调度 <code>main.rag_query_pdf_ai</code> 函数，分两步执行：
+<ul>
+<li><strong>Step 1 embed-and-search</strong>：<code>embed_texts([问题])</code> 把问题转成查询向量，<code>QdrantStorage.search()</code> 取回 Top-K 个 chunks</li>
+<li><strong>Step 2 llm-answer</strong>：拼接 System + Context + Question，通过 OpenAI 兼容 adapter 调用 DeepSeek，返回 <code>answer + sources</code></li>
+</ul>
+</li>
+<li>Streamlit 轮询 <code>/v1/events/{id}/runs</code>，等 <code>status == Completed</code> 后取出 output，展示 <code>answer + sources</code></li>
+</ol>
+<h3 id="五个文件职责一览">五个文件职责一览</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">文件</th>
+<th style="text-align:left">职责</th>
+<th style="text-align:left">关键技术</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>main.py</code></td>
+<td style="text-align:left">工作流编排</td>
+<td style="text-align:left">FastAPI + Inngest + Pydantic</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>data_loader.py</code></td>
+<td style="text-align:left">PDF → 向量</td>
+<td style="text-align:left">llama-index + OpenAI SDK</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>vector_db.py</code></td>
+<td style="text-align:left">向量存取</td>
+<td style="text-align:left">Qdrant + 余弦相似度</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>streamlit_app.py</code></td>
+<td style="text-align:left">用户交互</td>
+<td style="text-align:left">Streamlit + 异步轮询</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>custom_types.py</code></td>
+<td style="text-align:left">类型定义</td>
+<td style="text-align:left">Pydantic BaseModel</td>
+</tr>
+</tbody>
+</table>
+<p>写到这里，整个项目从 PDF 上传到问答输出的全流程就梳理完了。在这之后可以尝试替换 embedding 模型、加入 rerank（重排序）、改造为多模态 RAG、或者把 Inngest 换成 Celery——这些都建立在对当前架构的理解之上。</p>
+<p>如果遇到看不懂的代码，<strong>直接去 Inngest 控制台（<code>localhost:8288/runs</code>）看实际运行日志</strong>，里面的 step 输入输出都很清晰，比反复读代码更直接。</p>
+<h2 id="进阶：如何评估与提升-RAG-效果">进阶：如何评估与提升 RAG 效果</h2>
+<p>项目跑起来只是起点。一个常见的困惑是——<strong>怎么知道我的 RAG 系统答得好不好？</strong> 改了一个参数（比如 <code>chunk_size</code>、<code>top_k</code>、换了个 embedding 模型），到底是变好了还是变差了？没有量化指标就只能靠感觉调参，而感觉往往是错的。</p>
+<p>这一节聊聊 RAG 的评估指标体系，以及最关键的指标——<strong>召回率（Recall）</strong>——怎么提升。</p>
+<h3 id="1-RAG-的核心评估指标：RAG-三元组">(1) RAG 的核心评估指标：RAG 三元组</h3>
+<p>业界主流框架是 TruLens 提出的 <strong>RAG Triad（RAG 三元组）</strong>，从三个维度评估：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">指标</th>
+<th style="text-align:left">评估什么</th>
+<th style="text-align:left">关注环节</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Context Recall</strong>（上下文召回率）</td>
+<td style="text-align:left">该检索到的相关内容有没有漏掉</td>
+<td style="text-align:left">检索阶段</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Context Precision</strong>（上下文精确率）</td>
+<td style="text-align:left">检索出来的内容有多少是真正相关的</td>
+<td style="text-align:left">检索阶段</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Faithfulness</strong>（忠实度）</td>
+<td style="text-align:left">答案是不是真的基于检索到的内容（防幻觉）</td>
+<td style="text-align:left">生成阶段</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Answer Relevancy</strong>（答案相关性）</td>
+<td style="text-align:left">答案有没有真正回答用户的问题</td>
+<td style="text-align:left">生成阶段</td>
+</tr>
+</tbody>
+</table>
+<p>四个指标对应 RAG 的两大环节（检索 + 生成），覆盖了"找得全、找得准、答得真、答得对"四个维度。</p>
+<h3 id="2-召回率（Recall）：最致命的指标">(2) 召回率（Recall）：最致命的指标</h3>
+<h4 id="直观理解">直观理解</h4>
+<p><strong>召回率 = 找回来的相关内容 / 应该被找回来的全部相关内容</strong></p>
+<p>举个例子：</p>
+<figure class="highlight tap"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs tap">用户问："宿舍报修电话是多少？"<br>假设知识库里有<span class="hljs-number"> 10 </span>个 chunk 都和这个问题相关<br><br>系统检索 Top-5，结果：<br>  ✓ chunk_42   相关<br>  ✓ chunk_187  相关<br>  ✓ chunk_203  相关<br>  ✓ chunk_88   相关<br>  ✗ chunk_555  无关（噪声）<br><br>→ Context Recall    =<span class="hljs-number"> 4 </span>/<span class="hljs-number"> 10 </span>= 40%   （10 个相关 chunk 漏了<span class="hljs-number"> 6 </span>个）<br>→ Context Precision =<span class="hljs-number"> 4 </span>/<span class="hljs-number"> 5 </span> = 80%   （5 个检索结果里<span class="hljs-number"> 4 </span>个有用）<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="为什么-Recall-比-Precision-更关键">为什么 Recall 比 Precision 更关键</h4>
+<p>RAG 场景下，<strong>召回率往往比精确率更要命</strong>：</p>
+<ul>
+<li><strong>Recall 低</strong> → LLM 根本看不到关键信息 → <strong>答错或不知道</strong>（用户直接感知）</li>
+<li><strong>Precision 低</strong> → 检索结果混入无关内容 → LLM 大多能自行忽略 → <strong>答案还是对的</strong></li>
+</ul>
+<p>一句话总结：<strong>Recall 决定下限，Precision 影响上限</strong>。所以优化 RAG 通常先攻 Recall。</p>
+
+    <div class="fold">
+      <div class="fold-title fold-into collapsed" data-toggle="collapse" href="#collapse-b2735c94" role="button" aria-expanded="false" aria-controls="collapse-b2735c94">
+        <div class="fold-arrow">▶</div>Recall 和 Precision 的数学定义
+      </div>
+      <div class="fold-collapse collapse" id="collapse-b2735c94">
+        <div class="fold-content">
+          <p>$$<br>\text{Recall} = \frac{|{\text{相关 chunk}} \cap {\text{检索 chunk}}|}{|{\text{相关 chunk}}|}<br>$$</p><p>$$<br>\text{Precision} = \frac{|{\text{相关 chunk}} \cap {\text{检索 chunk}}|}{|{\text{检索 chunk}}|}<br>$$</p><p>分子相同（都是"找对的部分"），分母不同：</p><ul><li>Recall 的分母是"应该找到的总量"——衡量<strong>覆盖率</strong></li><li>Precision 的分母是"实际返回的总量"——衡量<strong>准确率</strong></li></ul>
+        </div>
+      </div>
+    </div>
+<h3 id="3-如何评估：用-Ragas-框架">(3) 如何评估：用 Ragas 框架</h3>
+<h4 id="Step-1：准备评估数据集（最关键）">Step 1：准备评估数据集（最关键）</h4>
+<p>需要一份 <strong>Golden Dataset（金标准数据集）</strong>，每条样本包含：</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"question"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"宿舍报修电话是多少？"</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"ground_truth"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"宿舍报修电话是 0516-XXXXXXX"</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"ground_truth_contexts"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">"chunk_42"</span><span class="hljs-punctuation">,</span> <span class="hljs-string">"chunk_187"</span><span class="hljs-punctuation">,</span> <span class="hljs-string">"chunk_203"</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">}</span><br></code></pre></td></tr></tbody></table></figure>
+<p>获取途径有三种：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法</th>
+<th style="text-align:center">质量</th>
+<th style="text-align:left">成本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">人工标注（自己读 PDF 写问答对）</td>
+<td style="text-align:center">高</td>
+<td style="text-align:left">慢</td>
+</tr>
+<tr>
+<td style="text-align:left">LLM 自动生成（让 DeepSeek 读 chunk 反向出题）</td>
+<td style="text-align:center">中</td>
+<td style="text-align:left">快</td>
+</tr>
+<tr>
+<td style="text-align:left">真实用户日志抽样</td>
+<td style="text-align:center">高</td>
+<td style="text-align:left">取决于是否有线上流量</td>
+</tr>
+</tbody>
+</table>
+<div class="note note-info">
+            <p><strong>LLM 反向出题的小技巧</strong></p><p>把每个 chunk 喂给 DeepSeek，让它"扮演出题人"，根据这段内容出 2~3 个问题和答案。这样 200 个 chunk 就能批量生成 400~600 条评估样本，性价比极高。</p><p>注意要抽查质量——LLM 出的题偶尔会过于简单或脱离 chunk 重点。</p>
+          </div>
+<h4 id="Step-2：主流评估框架对比">Step 2：主流评估框架对比</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">框架</th>
+<th style="text-align:left">特点</th>
+<th style="text-align:left">安装</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong><a target="_blank" rel="noopener" href="https://github.com/explodinggradients/ragas">Ragas</a></strong></td>
+<td style="text-align:left">最主流，社区大</td>
+<td style="text-align:left"><code>pip install ragas</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><a target="_blank" rel="noopener" href="https://github.com/confident-ai/deepeval">DeepEval</a></strong></td>
+<td style="text-align:left">类 pytest 风格，CI 友好</td>
+<td style="text-align:left"><code>pip install deepeval</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><a target="_blank" rel="noopener" href="https://www.trulens.org/">TruLens</a></strong></td>
+<td style="text-align:left">三元组提出者，可视化好</td>
+<td style="text-align:left"><code>pip install trulens</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="Step-3：Ragas-评估代码示例">Step 3：Ragas 评估代码示例</h4>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datasets <span class="hljs-keyword">import</span> Dataset<br><span class="hljs-keyword">from</span> ragas <span class="hljs-keyword">import</span> evaluate<br><span class="hljs-keyword">from</span> ragas.metrics <span class="hljs-keyword">import</span> (<br>    context_precision,<br>    context_recall,<br>    faithfulness,<br>    answer_relevancy,<br>)<br><br><span class="hljs-comment"># 你的 RAG 系统跑完后，把四个字段凑成数据集</span><br><span class="hljs-comment"># question / ground_truth 来自金标准</span><br><span class="hljs-comment"># answer / contexts 来自你的 RAG 系统</span><br>eval_data = Dataset.from_dict({<br>    <span class="hljs-string">"question"</span>:              [<span class="hljs-string">"宿舍报修电话是多少？"</span>],<br>    <span class="hljs-string">"answer"</span>:                [<span class="hljs-string">"报修电话是 0516-XXXX"</span>],          <span class="hljs-comment"># 你的 RAG 给出的答案</span><br>    <span class="hljs-string">"contexts"</span>:              [[<span class="hljs-string">"...检索到的 chunk 原文..."</span>]],   <span class="hljs-comment"># 你的 RAG 检索到的内容</span><br>    <span class="hljs-string">"ground_truth"</span>:          [<span class="hljs-string">"0516-XXXXXXX"</span>],                 <span class="hljs-comment"># 金标准答案</span><br>    <span class="hljs-string">"ground_truth_contexts"</span>: [[<span class="hljs-string">"...标准相关 chunk..."</span>]]         <span class="hljs-comment"># 金标准相关 chunk</span><br>})<br><br><span class="hljs-comment"># 一行跑评估</span><br>results = evaluate(<br>    eval_data,<br>    metrics=[context_precision, context_recall, faithfulness, answer_relevancy]<br>)<br><span class="hljs-built_in">print</span>(results)<br><span class="hljs-comment"># {'context_precision': 0.85,</span><br><span class="hljs-comment">#  'context_recall':    0.80,</span><br><span class="hljs-comment">#  'faithfulness':      0.92,</span><br><span class="hljs-comment">#  'answer_relevancy':  0.88}</span><br></code></pre></td></tr></tbody></table></figure>
+<p>Ragas 本质上是 <strong>LLM-as-a-Judge（用大模型当裁判）</strong>——让一个强模型（如 GPT-4）来判断你的 RAG 答得好不好。所以评估本身也要花 API 钱。</p>
+<h3 id="4-指标达到多少算-好">(4) 指标达到多少算"好"</h3>
+<p>根据 Ragas 官方和生产实践：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">指标</th>
+<th style="text-align:center">及格</th>
+<th style="text-align:center">不错</th>
+<th style="text-align:center">优秀</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Context Recall</strong></td>
+<td style="text-align:center">0.7</td>
+<td style="text-align:center">0.8+</td>
+<td style="text-align:center">0.9+</td>
+<td style="text-align:left">最关键，太低就查检索</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Context Precision</strong></td>
+<td style="text-align:center">0.6</td>
+<td style="text-align:center">0.75+</td>
+<td style="text-align:center">0.85+</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Faithfulness</strong></td>
+<td style="text-align:center">0.7</td>
+<td style="text-align:center">0.85+</td>
+<td style="text-align:center">0.95+</td>
+<td style="text-align:left">医疗/法律必须 &gt; 0.95</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Answer Relevancy</strong></td>
+<td style="text-align:center">0.7</td>
+<td style="text-align:center">0.8+</td>
+<td style="text-align:center">0.9+</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<div class="note note-warning">
+            <p><strong>不要硬比较绝对值</strong></p><p>评估结果强依赖"裁判 LLM"和金标准数据集的质量。同样的 RAG 系统，用 GPT-4 和用 DeepSeek 当裁判，分数可能差 0.1 以上。</p><p><strong>正确用法是看相对变化</strong>：基线版本跑一次，改完代码再跑一次，对比分数升降。</p>
+          </div>
+<h3 id="5-提升召回率的-9-种方法">(5) 提升召回率的 9 种方法</h3>
+<p>按性价比从高到低排序：</p>
+<h4 id="①-重排序（Rerank）⭐⭐⭐⭐⭐-最立竿见影">① 重排序（Rerank）⭐⭐⭐⭐⭐ 最立竿见影</h4>
+<p>两阶段检索：<strong>阶段 1</strong> 用向量检索召回 Top-50（高召回、低精度），<strong>阶段 2</strong> 用 Cross-Encoder 精排取 Top-5（高精度），最后拼 prompt 给 LLM。</p>
+<p><strong>为什么有效</strong>：</p>
+<ul>
+<li>向量检索用的是 <strong>Bi-Encoder</strong>（问题和文档分别编码再算相似度），快但精度有限</li>
+<li>Cross-Encoder 把问题和文档<strong>拼在一起</strong>送模型，精度高但慢</li>
+<li>两阶段组合 = <strong>又快又准</strong></li>
+</ul>
+<p>主流 Rerank 模型：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">模型</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>BAAI/bge-reranker-v2-m3</strong></td>
+<td style="text-align:left">开源</td>
+<td style="text-align:left">多语言、推荐</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Cohere Rerank</strong></td>
+<td style="text-align:left">商业 API</td>
+<td style="text-align:left">效果稳，按调用收费</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Jina Reranker</strong></td>
+<td style="text-align:left">开源</td>
+<td style="text-align:left">也不错</td>
+</tr>
+</tbody>
+</table>
+<h4 id="②-混合检索（BM25-向量）⭐⭐⭐⭐⭐">② 混合检索（BM25 + 向量）⭐⭐⭐⭐⭐</h4>
+<p>用户问题同时走两路检索——<strong>向量检索</strong>抓语义相似、<strong>BM25</strong> 抓关键词精确匹配，然后用 <strong>RRF（Reciprocal Rank Fusion）</strong> 算法融合两路结果。</p>
+<p>两者互补：</p>
+<ul>
+<li><strong>向量检索</strong>：擅长语义相似（“小猫” → 能匹配"猫咪"）</li>
+<li><strong>BM25</strong>：擅长关键词精确匹配（产品代号 <code>SKU-12345</code>、人名、专有名词）</li>
+</ul>
+<p>融合算法常用 <strong>RRF（Reciprocal Rank Fusion）</strong>。生产环境通常能提升 Recall 10~30%。</p>
+<h4 id="③-查询改写（Query-Rewriting）⭐⭐⭐⭐">③ 查询改写（Query Rewriting）⭐⭐⭐⭐</h4>
+<p>用户的问题往往表达模糊、太短、缺关键词。三种主流方法：</p>
+<p><strong>Multi-Query（多查询改写）</strong></p>
+<p>让 LLM 把一个问题改写成多个等价问题，分别检索后合并：</p>
+<figure class="highlight mipsasm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">原问题：<span class="hljs-string">"怎么报修？"</span><br>   ↓ <span class="hljs-keyword">LLM </span>改写<br>- <span class="hljs-string">"宿舍设施坏了怎么联系后勤？"</span><br>- <span class="hljs-string">"学生公寓维修申请流程"</span><br>- <span class="hljs-string">"报修电话号码"</span><br>   ↓ 三路检索 + 去重<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>HyDE（Hypothetical Document Embeddings）</strong> ⭐ 强推</p>
+<p>让 LLM 先<strong>编一个"假答案"</strong>，再用假答案去检索：</p>
+<figure class="highlight mipsasm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">用户问题：<span class="hljs-string">"宿舍报修电话"</span><br>   ↓ <span class="hljs-keyword">LLM </span>生成假答案<br><span class="hljs-string">"宿舍报修电话是 0516-XXXX，工作时间 8:00-20:00..."</span><br>   ↓ 用假答案做 embedding 去检索<br>（假答案和真 chunk 在向量空间更接近，比短问题直接检索效果好）<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>Step-back Prompting</strong></p>
+<p>把具体问题改成更抽象的高阶问题：</p>
+<figure class="highlight applescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs applescript">原问题：<span class="hljs-string">"2024 年 Q3 苹果手机销量？"</span><br>Step-<span class="hljs-keyword">back</span>：<span class="hljs-string">"苹果手机近年销量趋势？"</span><br></code></pre></td></tr></tbody></table></figure>
+<h4 id="④-优化分块策略-⭐⭐⭐⭐">④ 优化分块策略 ⭐⭐⭐⭐</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">策略</th>
+<th style="text-align:left">适用场景</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>语义分块（Semantic Chunking）</strong></td>
+<td style="text-align:left">通用</td>
+<td style="text-align:left">按句子相似度切，避免语义断裂</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>父子分块（Small-to-Big）</strong></td>
+<td style="text-align:left">长文档</td>
+<td style="text-align:left">用小 chunk 检索，返回大 chunk 给 LLM</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>递归分块（Recursive）</strong></td>
+<td style="text-align:left">结构化文档</td>
+<td style="text-align:left">段落 → 句子 → 字符层层降级</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>按结构分块</strong></td>
+<td style="text-align:left">Markdown/PDF</td>
+<td style="text-align:left">按标题/章节切，保留层级</td>
+</tr>
+</tbody>
+</table>
+<p>调参经验：</p>
+<ul>
+<li><code>chunk_size</code>：500~1500 token 之间试</li>
+<li><code>chunk_overlap</code>：<code>chunk_size</code> 的 10~20%</li>
+</ul>
+<h4 id="⑤-换更强的嵌入模型-⭐⭐⭐">⑤ 换更强的嵌入模型 ⭐⭐⭐</h4>
+<p>中文场景主流模型（MTEB 排行榜）：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">模型</th>
+<th style="text-align:center">维度</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">BAAI/bge-m3</td>
+<td style="text-align:center">1024</td>
+<td style="text-align:left">本项目在用，多语言强</td>
+</tr>
+<tr>
+<td style="text-align:left">BAAI/bge-large-zh-v1.5</td>
+<td style="text-align:center">1024</td>
+<td style="text-align:left">中文专精</td>
+</tr>
+<tr>
+<td style="text-align:left">Aliyun/gte-Qwen2</td>
+<td style="text-align:center">多种</td>
+<td style="text-align:left">阿里出品</td>
+</tr>
+<tr>
+<td style="text-align:left">OpenAI text-embedding-3-large</td>
+<td style="text-align:center">3072</td>
+<td style="text-align:left">闭源，效果稳</td>
+</tr>
+</tbody>
+</table>
+<div class="note note-warning">
+            <p><strong>换模型要重建整个向量库</strong></p><p>不同 embedding 模型的向量空间不兼容。换模型意味着：</p><ol><li>修改 <code>EMBED_MODEL</code> 和 <code>EMBED_DIM</code></li><li><strong>删除 Qdrant 的 collection 重建</strong>（维度变了）</li><li>重新跑所有 PDF 的入库流程</li></ol>
+          </div>
+<h4 id="⑥-调整-top-k-⭐⭐⭐">⑥ 调整 top_k ⭐⭐⭐</h4>
+<ul>
+<li>太小（k=3）：召回率低，漏相关 chunk</li>
+<li>太大（k=50）：噪声多、prompt 长、token 贵</li>
+<li><strong>推荐搭配</strong>：<code>top_k=20</code> 召回 + rerank 取 <code>top_5</code></li>
+</ul>
+<h4 id="⑦-元数据过滤-⭐⭐⭐">⑦ 元数据过滤 ⭐⭐⭐</h4>
+<p>先按元数据粗筛，再做向量检索：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 只在 2024 年的 PDF 里检索</span><br>results = store.search(<br>    query_vec,<br>    top_k=<span class="hljs-number">10</span>,<br>    <span class="hljs-built_in">filter</span>={<span class="hljs-string">"source"</span>: {<span class="hljs-string">"$contains"</span>: <span class="hljs-string">"2024"</span>}}<br>)<br></code></pre></td></tr></tbody></table></figure>
+<p>避免无关文档污染检索结果。</p>
+<h4 id="⑧-Multi-Vector-Index-⭐⭐">⑧ Multi-Vector Index ⭐⭐</h4>
+<p>每个 chunk 存多个向量：</p>
+<ul>
+<li>原文向量（细节匹配）</li>
+<li>摘要向量（LLM 生成的摘要，做大意匹配）</li>
+<li>假设问题向量（LLM 反向生成"这个 chunk 能回答什么问题"）</li>
+</ul>
+<p>检索时多路并行，代表方案是 LangChain 的 <strong>Multi-Vector Retriever</strong>。</p>
+<h4 id="⑨-数据清洗-⭐⭐">⑨ 数据清洗 ⭐⭐</h4>
+<p>垃圾进、垃圾出。常见清理项：</p>
+<ul>
+<li>去 HTML 标签、页眉页脚</li>
+<li>修复 OCR 错误（PDF 扫描件）</li>
+<li>去除重复段落</li>
+<li>表格转 Markdown（PDF 表格直接当文本会乱）</li>
+</ul>
+<h3 id="6-给本项目的优化建议">(6) 给本项目的优化建议</h3>
+<p>按现有架构改造，<strong>性价比最高的两个升级</strong>：</p>
+<h4 id="升级-A：加-Rerank（半天工作量）">升级 A：加 Rerank（半天工作量）</h4>
+<p>在 <code>main.py</code> 的 <code>rag_query_pdf_ai</code> 里，把 <code>top_k</code> 从 5 调到 20，然后在 <code>vector_db.search</code> 之后加一个 rerank 步骤：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># main.py 改造伪代码</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">_search_and_rerank</span>(<span class="hljs-params">question, top_k=<span class="hljs-number">5</span></span>):<br>    query_vec = embed_texts([question])[<span class="hljs-number">0</span>]<br><br>    <span class="hljs-comment"># 阶段 1：先召回 top_20（高召回）</span><br>    store = QdrantStorage()<br>    candidates = store.search(query_vec, top_k=<span class="hljs-number">20</span>)<br><br>    <span class="hljs-comment"># 阶段 2：用 bge-reranker 精排，取 top_5</span><br>    reranker_client = OpenAI(<br>        base_url=os.getenv(<span class="hljs-string">"EMBEDDING_BASE_URL"</span>),<br>        api_key=os.getenv(<span class="hljs-string">"EMBEDDING_API_KEY"</span>)<br>    )<br>    <span class="hljs-comment"># 调用 rerank API（SiliconFlow 兼容）</span><br>    pairs = [[question, c] <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> candidates[<span class="hljs-string">"contexts"</span>]]<br>    scores = reranker_client.embeddings.create(<br>        model=<span class="hljs-string">"BAAI/bge-reranker-v2-m3"</span>,<br>        <span class="hljs-built_in">input</span>=pairs<br>    ).data<br>    <span class="hljs-comment"># 按 score 排序，取前 top_k 个</span><br>    ranked = <span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">zip</span>(candidates[<span class="hljs-string">"contexts"</span>], scores),<br>                    key=<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-number">1</span>].embedding[<span class="hljs-number">0</span>], reverse=<span class="hljs-literal">True</span>)[:top_k]<br><br>    <span class="hljs-keyword">return</span> RAGSearchResult(<br>        contexts=[c <span class="hljs-keyword">for</span> c, _ <span class="hljs-keyword">in</span> ranked],<br>        sources=candidates[<span class="hljs-string">"sources"</span>]<br>    )<br></code></pre></td></tr></tbody></table></figure>
+<p>预期 Recall 提升 15~25%。</p>
+<h4 id="升级-B：加-Multi-Query（一天工作量）">升级 B：加 Multi-Query（一天工作量）</h4>
+<p>让 DeepSeek 把用户问题改写成 3 个版本，三路检索合并去重：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">_expand_query</span>(<span class="hljs-params">question: <span class="hljs-built_in">str</span>, n: <span class="hljs-built_in">int</span> = <span class="hljs-number">3</span></span>) -&gt; <span class="hljs-built_in">list</span>[<span class="hljs-built_in">str</span>]:<br>    <span class="hljs-string">"""让 LLM 把一个问题改写成 n 个等价问题"""</span><br>    client = OpenAI(base_url=os.getenv(<span class="hljs-string">"LLM_BASE_URL"</span>),<br>                    api_key=os.getenv(<span class="hljs-string">"LLM_API_KEY"</span>))<br>    resp = client.chat.completions.create(<br>        model=os.getenv(<span class="hljs-string">"LLM_MODEL"</span>),<br>        messages=[<br>            {<span class="hljs-string">"role"</span>: <span class="hljs-string">"system"</span>,<br>             <span class="hljs-string">"content"</span>: <span class="hljs-string">f"把用户问题改写成 <span class="hljs-subst">{n}</span> 个语义等价、表达不同的版本，每行一个。"</span>},<br>            {<span class="hljs-string">"role"</span>: <span class="hljs-string">"user"</span>, <span class="hljs-string">"content"</span>: question}<br>        ]<br>    )<br>    <span class="hljs-keyword">return</span> resp.choices[<span class="hljs-number">0</span>].message.content.strip().split(<span class="hljs-string">"\n"</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">_multi_query_search</span>(<span class="hljs-params">question, top_k=<span class="hljs-number">5</span></span>):<br>    <span class="hljs-comment"># 三路检索</span><br>    all_chunks = []<br>    <span class="hljs-keyword">for</span> q <span class="hljs-keyword">in</span> _expand_query(question):<br>        vec = embed_texts([q])[<span class="hljs-number">0</span>]<br>        result = QdrantStorage().search(vec, top_k=top_k)<br>        all_chunks.extend(result[<span class="hljs-string">"contexts"</span>])<br><br>    <span class="hljs-comment"># 简单去重（实际可基于内容 hash）</span><br>    unique = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">dict</span>.fromkeys(all_chunks))<br>    <span class="hljs-keyword">return</span> unique[:top_k]<br></code></pre></td></tr></tbody></table></figure>
+<p>预期 Recall 提升 10~20%。</p>
+<p>这两个改造加上后，再集成 Ragas 跑一下评估集，每次改完对比分数，调参时心里就有数了。</p>
 
                 
               </div>
@@ -599,7 +1396,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>April 6, 2026</div>
+          <div>July 18, 2026</div>
         </div>
       
       

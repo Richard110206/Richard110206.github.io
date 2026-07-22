@@ -1,0 +1,2409 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="写在前面：操作系统的设计哲学 操作系统本质上是一门&quot;资源调度&quot;的工程学 —— 在有限的硬件资源上，让多个程序看似独占、互相隔离、且公平共享。 理解下面三个设计原则，OSLab 中所有机制的设计动机就清晰了：              原则一：特权级隔离x86 CPU 把运行状态分为用户态（Ring 3）和内核态（Ring 0）。用户程序运行在用户态，不能直接执行特权指令、不能直接访问硬件。任何特权">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OSLab">
+<meta property="og:url" content="http://example.com/2026/07/18/Review/OSLab/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="写在前面：操作系统的设计哲学 操作系统本质上是一门&quot;资源调度&quot;的工程学 —— 在有限的硬件资源上，让多个程序看似独占、互相隔离、且公平共享。 理解下面三个设计原则，OSLab 中所有机制的设计动机就清晰了：              原则一：特权级隔离x86 CPU 把运行状态分为用户态（Ring 3）和内核态（Ring 0）。用户程序运行在用户态，不能直接执行特权指令、不能直接访问硬件。任何特权">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-07-18T05:36:04.000Z">
+<meta property="article:modified_time" content="2026-07-18T09:21:19.781Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>OSLab - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LQX&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/other/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>Else</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/other/life-musings/" target="_self">
+                    
+                    <span>精进日记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/08/13/other/Casual-Chronicles/" target="_self">
+                    
+                    <span>生活杂谈</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/banner_img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="OSLab"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-07-18 13:36" pubdate>
+          July 18, 2026 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          21k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          175 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">OSLab</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="写在前面：操作系统的设计哲学">写在前面：操作系统的设计哲学</h2>
+<p>操作系统本质上是一门"资源调度"的工程学 —— 在有限的硬件资源上，让多个程序<strong>看似独占、互相隔离、且公平共享</strong>。</p>
+<p>理解下面三个设计原则，OSLab 中所有机制的设计动机就清晰了：</p>
+<div class="note note-primary">
+            <p><strong>原则一：特权级隔离</strong></p><p>x86 CPU 把运行状态分为<strong>用户态（Ring 3）<strong>和</strong>内核态（Ring 0）</strong>。用户程序运行在用户态，不能直接执行特权指令、不能直接访问硬件。任何特权操作（I/O、进程管理、内存分配）都必须通过<strong>系统调用</strong>陷入内核，由内核代为执行。</p><p>这是隔离错误和恶意代码的第一道防线 —— 单个程序的崩溃或越权，不会带垮整个系统。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>原则二：抽象即间接</strong></p><p>操作系统用三层抽象隐藏硬件细节：</p><ul><li><strong>进程抽象</strong> —— 每个进程"感觉"自己独占 CPU，实际是分时复用</li><li><strong>虚拟内存</strong> —— 每个进程"感觉"自己有完整 4GB 地址空间，实际通过页表映射到物理内存</li><li><strong>统一文件接口</strong> —— 所有 I/O 资源（普通文件、设备、管道、socket）都通过 <code>open/read/write/close</code> 操作</li></ul><p>抽象的代价是性能，收益是上层代码的简洁与可移植。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>原则三：中断驱动</strong></p><p>CPU 平时执行用户代码，"事件"发生时跳去处理，处理完返回。事件来源有三类：</p><ul><li><strong>硬件中断</strong> —— 键盘、硬盘、定时器等硬件主动通知 CPU</li><li><strong>软件中断</strong> —— 程序主动触发（如 <code>int $0x80</code> 触发系统调用）</li><li><strong>异常</strong> —— CPU 执行时遇到问题（除零、缺页、非法指令）</li></ul><p>整个系统的运转可以抽象为「用户代码 + 中断处理 + 调度」的无限循环。</p>
+          </div>
+<h3 id="20-个实验的全景">20 个实验的全景</h3>
+<div class="note note-info">
+            <p>带着这张表往下读，每个实验都能定位它在解决什么问题：</p><table><thead><tr><th>模块</th><th>涉及实验</th><th>核心问题</th></tr></thead><tbody><tr><td>命令解释</td><td>Lab3</td><td>Shell 脚本设计与 Unix 哲学</td></tr><tr><td>系统调用机制</td><td>Lab4, 10, 12, 19</td><td>用户态 / 内核态的受控通信</td></tr><tr><td>进程管理</td><td>Lab5, 6, 7/8</td><td>创建、加载、调度、状态追踪</td></tr><tr><td>同步互斥</td><td>Lab9, 13</td><td>多进程协作与资源竞争</td></tr><tr><td>物理内存</td><td>Lab10, 11, 12</td><td>物理页分配与地址映射</td></tr><tr><td>虚拟内存</td><td>Lab11, 13</td><td>地址翻译与共享内存</td></tr><tr><td>内存换页</td><td>Lab14</td><td>物理内存不足时的置换策略</td></tr><tr><td>动态分配</td><td>Lab15, 16</td><td><code>malloc</code> 底层数据结构</td></tr><tr><td>设备驱动</td><td>Lab17, 18</td><td>中断驱动的字符设备</td></tr><tr><td>文件系统</td><td>Lab19, 20</td><td>数据的持久化组织</td></tr></tbody></table>
+          </div>
+<h3 id="阅读说明">阅读说明</h3>
+<p>每个 Lab 按统一结构组织：</p>
+<ul>
+<li><strong>实验目标</strong> —— 这个实验要做什么、解决什么问题</li>
+<li><strong>机制详解</strong> —— 核心原理与代码解析</li>
+<li><strong>进阶话题</strong> —— 源码层面的深度内容（可选）</li>
+<li><strong>一句话带走</strong> —— 用 note 标签包裹的精炼总结</li>
+</ul>
+<p>只想快速过一遍的读者，看每个 Lab 开头和结尾的 note 标签即可。</p>
+<hr>
+<h4 id="Lab3-Shell-程序设计">Lab3 Shell 程序设计</h4>
+<p>Shell（外壳）这个名字本身就说明它是包在内核外的一层 —— 早期只是命令解释器，后来演变成 <strong>命令语言 + 命令解释器 + 程序设计语言</strong> 三合一的工具。</p>
+<p>它最核心的特点：<strong>解释型执行</strong>，逐行读取并执行。这跟 C 语言"编译—链接—执行"完全不同 —— shell 脚本不需要编译，跑一行是一行，所以脚本里语法错误可能要等运行到那一行才报错。</p>
+<div class="note note-primary">
+            <p><strong>Shell 的设计哲学</strong></p><p>Shell 把每条命令看作一个"值"：每条命令都有两个产物 —— <strong>stdout</strong>（可被反引号 / <code>$()</code> 捕获塞回变量）和<strong>退出码</strong>（可被 <code>$?</code>、<code>if</code>、<code>&amp;&amp;</code>、<code>||</code> 判断真假）。</p><p>Shell 的所有语法特性（<code>$</code>、<code>` `</code>、<code>[ ]</code>、<code>&amp;&amp;</code>、<code>||</code>、<code>return</code>）都是这两个产物的派生。理解这一点，写脚本就是组合这些"命令值"。</p>
+          </div>
+<h5 id="1-echo-与命令替换">1. echo 与命令替换</h5>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># shell1.sh</span><br><span class="hljs-built_in">echo</span> hello world<br><span class="hljs-built_in">echo</span> `<span class="hljs-built_in">echo</span> <span class="hljs-built_in">command</span>`<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>echo</code> 是回显语句，往标准输出打印</li>
+<li>反引号 <code>`cmd`</code> 是 <strong>命令替换（Command Substitution）</strong>：先执行反引号里的命令，再把 stdout 塞回当前位置。这里嵌套了一层 echo，最终输出 <code>command</code></li>
+<li>现代写法推荐 <code>$(cmd)</code>，可读性更好，且支持嵌套：<code>$(echo $(date))</code></li>
+</ul>
+<h5 id="2-变量系统-——-shell-最反直觉的设计">2. 变量系统 —— shell 最反直觉的设计</h5>
+<div class="note note-warning">
+            <p><strong>shell 变量的两个核心坑</strong></p><ol><li><strong>所有变量本质上都是字符串</strong> —— 即使 <code>a=1</code>，存储的也是字符 <code>'1'</code>，需要做算术时（如 <code>let</code>）才临时转成数字</li><li><strong>赋值时 <code>=</code> 两边不能有空格</strong> —— <code>a = 1</code> 会被 shell 解析成"运行命令 a，传参 <code>=</code> 和 <code>1</code>"，而不是赋值。这是新手最常见的报错来源</li></ol>
+          </div>
+<p>shell 变量分三类：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>示例</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户自定义</td>
+<td><code>a=1</code>、<code>b="hello world"</code></td>
+<td>自己起名，引用时加 <code>$</code></td>
+</tr>
+<tr>
+<td>位置变量</td>
+<td><code>$0</code> <code>$1</code> … <code>$9</code></td>
+<td><code>$0</code> 是脚本文件名本身，<code>$1</code>~<code>$9</code> 是命令行参数</td>
+</tr>
+<tr>
+<td>特殊变量</td>
+<td><code>$#</code> <code>$?</code> <code>$$</code> <code>$!</code> <code>$*</code> <code>$-</code></td>
+<td>Shell 预定义，用户不能改</td>
+</tr>
+</tbody>
+</table>
+<p>特殊变量里最关键的两个：</p>
+<ul>
+<li><strong><code>$#</code></strong>：传给脚本的参数个数（不计脚本名 <code>$0</code>）</li>
+<li><strong><code>$?</code></strong>：<strong>上一条命令的退出码（exit status）</strong>。0 表示成功，非 0 表示失败</li>
+</ul>
+<p><code>$?</code> 这个机制把"命令执行结果"和"控制流判断"绑在了一起。函数返回值、错误处理、<code>&amp;&amp;</code>/<code>||</code> 短路、<code>if</code> 条件……全部依赖退出码。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># shell5.sh</span><br><span class="hljs-built_in">echo</span>  <span class="hljs-variable">$#</span><br><span class="hljs-built_in">echo</span>  $?<br></code></pre></td></tr></tbody></table></figure>
+<h5 id="3-let-与算术运算">3. let 与算术运算</h5>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># shell2.sh</span><br><span class="hljs-built_in">let</span> k=<span class="hljs-variable">$1</span>+<span class="hljs-variable">$2</span><br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$k</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>let</code> 强制把变量当整数运算：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">let</span> k=<span class="hljs-variable">$1</span>+<span class="hljs-variable">$2</span>     <span class="hljs-comment"># 算术：./s.sh 3 4 → k=7</span><br>k=<span class="hljs-variable">$1</span>+<span class="hljs-variable">$2</span>         <span class="hljs-comment"># 字符串：./s.sh 3 4 → k="3+4"</span><br></code></pre></td></tr></tbody></table></figure>
+<p>不加 <code>let</code> 时 shell 只会做字符串拼接。除了 <code>let</code>，还有 <code>$((...))</code>、<code>expr</code>、<code>declare -i</code> 等几种算术写法。</p>
+<h5 id="4-测试语句-——-它其实是个命令">4. 测试语句 <code>[ ]</code> —— 它其实是个命令</h5>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">if</span> [ -f <span class="hljs-variable">$1</span> ]; <span class="hljs-keyword">then</span> ... <span class="hljs-keyword">fi</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong><code>[ ]</code> 不是语法关键字，而是一个命令</strong></p><p>中括号等价于 <code>test</code> 命令，它的退出码就是测试结果。所以中括号<strong>两边必须有空格</strong> —— 因为 <code>[</code> 是命令名，<code>-f</code>、<code>$1</code>、<code>]</code> 是它的参数，参数之间需要空格分隔。</p><p>这个设计是 shell 一切皆命令哲学的体现：连条件判断都是命令。</p>
+          </div>
+<p>常见的测试符：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>操作符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文件测试</td>
+<td><code>-f</code>（普通文件）、<code>-d</code>（目录）、<code>-e</code>（存在）、<code>-r</code>/<code>-w</code>/<code>-x</code>（权限）</td>
+</tr>
+<tr>
+<td>数值比较</td>
+<td><code>-lt</code>、<code>-gt</code>、<code>-eq</code>、<code>-ne</code>、<code>-le</code>、<code>-ge</code></td>
+</tr>
+<tr>
+<td>字符串</td>
+<td><code>=</code>、<code>!=</code>、<code>-z</code>（空）、<code>-n</code>（非空）</td>
+</tr>
+</tbody>
+</table>
+<p>注意 <strong>数值比较不能用 <code>&lt;</code> <code>&gt;</code></strong> —— 那会被解释成 IO 重定向。</p>
+<h5 id="5-控制流">5. 控制流</h5>
+<p><strong>条件 if</strong>：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># shell6.sh —— 判断文件是否存在</span><br><span class="hljs-keyword">if</span> [ -f <span class="hljs-variable">$1</span> ]<br><span class="hljs-keyword">then</span> <span class="hljs-built_in">echo</span> File exist.<br><span class="hljs-keyword">else</span> <span class="hljs-built_in">echo</span> Can not find file.<br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>fi</code> 是 <code>if</code> 反过来写 —— shell 用"反向关键字"标记块结束：<code>if...fi</code>、<code>case...esac</code>、<code>do...done</code>。</p>
+<p><strong>开关 case</strong>：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># shell7.sh —— 判断参数个数</span><br><span class="hljs-keyword">case</span> <span class="hljs-variable">$#</span> <span class="hljs-keyword">in</span><br>0)  <span class="hljs-built_in">echo</span> 0 argument ;;<br>1)  <span class="hljs-built_in">echo</span> 1 argument ;;<br>2)  <span class="hljs-built_in">echo</span> 2 arguments ;;<br>*)  <span class="hljs-built_in">echo</span> more than 2 arguments ;;<br><span class="hljs-keyword">esac</span><br></code></pre></td></tr></tbody></table></figure>
+<p>每个分支以 <code>)</code> 结尾，命令表以 <code>;;</code> 结束（类似 C 的 break），<code>*</code> 是通配符兜底。</p>
+<p><strong>循环 while / for / until</strong>：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># shell8.sh —— while</span><br>i=0<br><span class="hljs-keyword">while</span> [ <span class="hljs-variable">$i</span> -lt 6 ]; <span class="hljs-keyword">do</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$i</span><br>    <span class="hljs-built_in">let</span> i=<span class="hljs-variable">$i</span>+1<br><span class="hljs-keyword">done</span><br><br><span class="hljs-comment"># shell9.sh —— for</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> 0 1 2 3 4 5; <span class="hljs-keyword">do</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$i</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>while</code> 是条件真时循环，<code>until</code> 是条件假时循环（语义反过来）。<code>for</code> 遍历值表。</p>
+<h5 id="6-函数与返回值-——-另一个反直觉">6. 函数与返回值 —— 另一个反直觉</h5>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># shell11.sh</span><br><span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">Mul</span></span>() {<br>    <span class="hljs-built_in">let</span> i=<span class="hljs-variable">$1</span>*<span class="hljs-variable">$2</span><br>    <span class="hljs-built_in">return</span> <span class="hljs-variable">$i</span><br>}<br>Mul  <span class="hljs-variable">$1</span>  <span class="hljs-variable">$2</span><br>a=$?<br><span class="hljs-built_in">echo</span>  <span class="hljs-variable">$a</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-warning">
+            <p><strong>shell 函数返回值的核心规则</strong></p><p><code>return</code> 返回的是<strong>退出码</strong>（0~255 的整数），<strong>不是函数值</strong>。它只能通过 <code>$?</code> 读取，且 <code>$?</code> 会被下一条命令立即覆盖。</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">a=Mul 2 3      <span class="hljs-comment"># ❌ 把字符串 "Mul 2 3" 赋给 a，不是函数返回值</span><br>Mul 2 3<br>a=$?           <span class="hljs-comment"># ✅ 必须调用后立即取</span><br></code></pre></td></tr></tbody></table></figure><p>想"返回字符串或任意值"，标准做法是用<strong>命令替换捕获 stdout</strong>：</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-function"><span class="hljs-title">get_name</span></span>() { <span class="hljs-built_in">echo</span> <span class="hljs-string">"alice"</span>; }<br>name=$(get_name)    <span class="hljs-comment"># name="alice"</span><br></code></pre></td></tr></tbody></table></figure><p>这就是为什么 shell 里 <code>echo</code> 既是给用户看的输出，又是函数返回值载体 —— 一物两用，全靠反引号 / <code>$()</code> 区分。</p>
+          </div>
+<h5 id="7-read-——-从标准输入读">7. read —— 从标准输入读</h5>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># shell10.sh</span><br><span class="hljs-built_in">echo</span> please input data<br><span class="hljs-built_in">read</span> a<br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>read</code> 从 stdin 读一行赋值给变量。这是 shell 脚本和用户交互最简单的方式，也是管道里"接收上一条命令输出"的常用工具。</p>
+<h5 id="综合：双重循环打印三角形">综合：双重循环打印三角形</h5>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># shell12.sh</span><br>i=1<br><span class="hljs-keyword">while</span> [ <span class="hljs-variable">$i</span> -lt 6 ]; <span class="hljs-keyword">do</span><br>    j=0<br>    str=<span class="hljs-string">""</span><br>    <span class="hljs-keyword">while</span> [ <span class="hljs-variable">$j</span> -lt <span class="hljs-variable">$i</span> ]; <span class="hljs-keyword">do</span><br>        str=<span class="hljs-string">"<span class="hljs-variable">$str</span> `echo a`"</span>      <span class="hljs-comment"># 字符串拼接：原 str + 反引号输出</span><br>        <span class="hljs-built_in">let</span> j=<span class="hljs-variable">$j</span>+1<br>    <span class="hljs-keyword">done</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$str</span><br>    <span class="hljs-built_in">let</span> i=<span class="hljs-variable">$i</span>+1<br><span class="hljs-keyword">done</span><br></code></pre></td></tr></tbody></table></figure>
+<p>外层控制行数，内层控制每行字符数。<code>str="$str ..."</code> 是 shell 里典型的字符串累加写法 —— 双引号里 <code>$str</code> 会展开，效果就是 <code>str = 旧str + 新字符</code>。</p>
+<p>输出：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">a<br>a a<br>a a a<br>a a a a<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>Shell 是包在内核外的命令解释器，把人类命令翻译成系统调用。其设计核心是 <strong>“命令即值”</strong> —— 每条命令产出 stdout（可捕获）和退出码（可判断），shell 所有语法都是这两个产物的派生。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab4-系统调用">Lab4 系统调用</h4>
+<p>系统调用（System Call）是用户态程序请求内核服务的<strong>唯一受控通道</strong>。用户程序运行在用户态（Ring 3），不能直接执行特权指令；任何需要 I/O、进程管理、内存分配的操作，都必须通过 <code>int $0x80</code> 软中断陷入内核态（Ring 0），由内核代为执行。</p>
+<div class="note note-primary">
+            <p><strong>系统调用的本质</strong></p><p>是用户态 / 内核态之间的一道"受控检查站" —— 内核借此审计每一次特权操作，限制单个程序的能力边界，保证错误或恶意代码不会带垮整个系统。</p>
+          </div>
+<p>Linux 0.11 用 <code>int $0x80</code> 这条指令触发一个软中断。</p>
+<ul>
+<li><strong>硬中断</strong>：硬件发来的信号</li>
+<li><strong>软中断</strong>：<strong>程序自己故意触发的中断</strong></li>
+</ul>
+<p>x86 CPU 有一张表叫 <strong>IDT（中断描述符表）</strong>，共 <strong>256 项（0~255）</strong>，每一项对应一个中断 / 异常的处理地址。</p>
+<div class="note note-info">
+            <p><strong>Linux 对 IDT 256 项的分配约定</strong></p><table><thead><tr><th>编号范围</th><th>用途</th></tr></thead><tbody><tr><td>0~31</td><td>CPU 异常（除零、缺页、调试等）</td></tr><tr><td>32~47</td><td>硬件中断（键盘、硬盘、网卡）</td></tr><tr><td><strong>128 (0x80)</strong></td><td><strong>留给系统调用专用</strong></td></tr></tbody></table>
+          </div>
+<p>CPU 收到中断后的处理链路：</p>
+<ol>
+<li>从用户态切换到内核态</li>
+<li>根据中断描述符表（IDT）找到 0x80 对应的处理函数 —— 就是 <code>_system_call</code></li>
+<li><code>_system_call</code> 根据调用号（放在 EAX 寄存器中）查表跳转到对应的内核函数</li>
+<li>内核函数执行完毕后，通过 <code>iret</code> 指令返回用户态</li>
+</ol>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asm">; 假设用户调用 max(100, 200)<br>movl $87, %eax        ; EAX = 系统调用号 __NR_max = 87<br>movl $100, %ebx       ; EBX = 第一个参数<br>movl $200, %ecx       ; ECX = 第二个参数<br>int $0x80             ; 触发软中断，进入内核态<br>; 返回值在 EAX 中<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-primary">
+            <p><strong>EAX 寄存器一职两用</strong></p><p>调用前 EAX 装系统调用号（“我要哪个服务”），调用后装返回值（“服务结果”）。这是 32 位 x86 Linux 的固定约定 —— 一寄存器两用，省了一个传参槽位。</p>
+          </div>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>改了什么</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>include/unistd.h:164</td>
+<td>#define __NR_max 87</td>
+<td>分配系统调用号，用户程序和内核都需要它</td>
+</tr>
+<tr>
+<td>kernel/system_call.s:72</td>
+<td>nr_system_calls = 88</td>
+<td>增加系统调用总数，用于越界检查</td>
+</tr>
+<tr>
+<td>include/linux/sys.h:90,180</td>
+<td>声明 sys_max()，并在 sys_call_table[] 末尾添加 sys_max</td>
+<td>建立调用号到函数的映射</td>
+</tr>
+<tr>
+<td>kernel/sys.c:354</td>
+<td>实现 sys_max() 函数</td>
+<td>真正执行的系统调用逻辑</td>
+</tr>
+</tbody>
+</table>
+<p>这 5 处改动里藏着系统调用的整个生命周期 —— <strong>分配身份（调用号）→ 设边界（总数）→ 建表（函数指针表）→ 实现（内核函数）→ 包装（用户接口）</strong>。</p>
+<div class="note note-info">
+            <p><strong>可扩展性的设计根本</strong></p><p>新增系统调用不需要改 <code>_system_call</code> 一行代码，只在 <code>sys_call_table</code> 末尾追加函数指针即可 —— 这就是 Linux 系统调用机制能从最初的几十个扩展到今天数百个的根本原因。</p>
+          </div>
+<p>下面把两个最关键的环节展开讲。</p>
+<h5 id="syscall2-宏-——-用户态的-系统调用生成器"><code>_syscall2</code> 宏 —— 用户态的"系统调用生成器"</h5>
+<p><code>include/unistd.h</code> 里定义了 <code>_syscall0</code> / <code>_syscall1</code> / <code>_syscall2</code> / <code>_syscall3</code> 四个宏，分别对应 0~3 个参数的系统调用。它们的作用是：<strong>用宏批量生成"用户态调用函数"</strong>，让你在 C 里像调普通函数一样 <code>max(100, 200)</code>，实际编译后是一段嵌入汇编。</p>
+<p><code>_syscall2(int, max, int, a, int, b)</code> 展开后大致长这样：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">max</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> {<br>    <span class="hljs-type">long</span> __res;<br>    __asm__ <span class="hljs-title function_">volatile</span> <span class="hljs-params">(<span class="hljs-string">"int $0x80"</span></span><br><span class="hljs-params">        : <span class="hljs-string">"=a"</span> (__res)                              <span class="hljs-comment">// 输出：用 EAX 接返回值</span></span><br><span class="hljs-params">        : <span class="hljs-string">"0"</span>  (__NR_max),                          <span class="hljs-comment">// 输入：复用 EAX，存调用号 87</span></span><br><span class="hljs-params">          <span class="hljs-string">"b"</span>  ((<span class="hljs-type">long</span>)(a)),                         <span class="hljs-comment">// 输入：EBX ← 参数 1</span></span><br><span class="hljs-params">          <span class="hljs-string">"c"</span>  ((<span class="hljs-type">long</span>)(b)))</span>;                        <span class="hljs-comment">// 输入：ECX ← 参数 2</span><br>    <span class="hljs-keyword">if</span> (__res &gt;= <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span> (<span class="hljs-type">int</span>) __res;<br>    errno = -__res;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>GCC 内联汇编语法</strong>拆解：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">__asm__ <span class="hljs-title function_">volatile</span> <span class="hljs-params">(</span><br><span class="hljs-params">    <span class="hljs-string">"汇编指令模板"</span></span><br><span class="hljs-params">    : 输出操作数约束     <span class="hljs-comment">// 模板里的 %0、%1...</span></span><br><span class="hljs-params">    : 输入操作数约束     <span class="hljs-comment">// 复用输出位用 "0"</span></span><br><span class="hljs-params">    : clobber 列表       <span class="hljs-comment">// 告诉 GCC 哪些寄存器被改了</span></span><br><span class="hljs-params">)</span>;<br></code></pre></td></tr></tbody></table></figure>
+<p>约束字母是 GCC 约定的"寄存器别名"：</p>
+<table>
+<thead>
+<tr>
+<th>约束</th>
+<th>寄存器</th>
+<th>在系统调用里的角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"a"</code></td>
+<td>EAX</td>
+<td>调用号（输入）+ 返回值（输出）</td>
+</tr>
+<tr>
+<td><code>"b"</code></td>
+<td>EBX</td>
+<td>第 1 个参数</td>
+</tr>
+<tr>
+<td><code>"c"</code></td>
+<td>ECX</td>
+<td>第 2 个参数</td>
+</tr>
+<tr>
+<td><code>"d"</code></td>
+<td>EDX</td>
+<td>第 3 个参数</td>
+</tr>
+<tr>
+<td><code>"S"</code></td>
+<td>ESI</td>
+<td>第 4 个参数（Linux 0.11 没用）</td>
+</tr>
+<tr>
+<td><code>"D"</code></td>
+<td>EDI</td>
+<td>第 5 个参数（Linux 0.11 没用）</td>
+</tr>
+</tbody>
+</table>
+<p><code>"0" (__NR_max)</code> 里的 <code>"0"</code> 表示<strong>复用第 0 个输出操作数</strong>的寄存器（也就是 EAX）。所以 EAX 在 <code>int $0x80</code> 之前装调用号，之后装返回值 —— 一寄存器两用。</p>
+<p><code>__NR_##name</code> 里的 <code>##</code> 是 <strong>C 预处理 token 拼接符</strong>，<code>_syscall2(int, max, ...)</code> 会把 <code>max</code> 拼成 <code>__NR_max</code>，正好对应 <code>unistd.h</code> 第 164 行的 <code>#define __NR_max 87</code>。</p>
+<p><strong>返回值处理的小细节</strong>：返回值 <code>&lt; 0</code> 表示内核返回了<strong>负的错误码</strong>（比如 <code>-EINVAL</code>），宏会把它取反存入 <code>errno</code>，再返回 <code>-1</code>。这是 POSIX 系统调用的统一约定 —— 调用者看返回值是不是 <code>-1</code> 决定要不要查 <code>errno</code>。</p>
+<h5 id="system-call-——-内核态总入口的-5-个阶段"><code>_system_call</code> —— 内核态总入口的 5 个阶段</h5>
+<p>用户一执行 <code>int $0x80</code>，CPU 切到内核态，跳到 IDT[0x80] 指向的 <code>_system_call</code>（在 <code>kernel/system_call.s:102</code>）。这段汇编是所有系统调用的<strong>唯一入口</strong>，可以拆成 5 个阶段：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs asm">_system_call:<br>    cmpl $nr_system_calls-1,%eax       # ① 越界检查<br>    ja bad_sys_call<br>    push %ds; push %es; push %fs       # ② 现场保护<br>    pushl %edx; pushl %ecx; pushl %ebx<br>    movl $0x10,%edx; mov %dx,%ds       #    切到内核数据段<br>    mov %dx,%es<br>    movl $0x17,%edx; mov %dx,%fs       #    fs 指向用户数据段<br>    call *_sys_call_table(,%eax,4)     # ③ 跳转到具体内核函数<br>    pushl %eax                         # ④ 保存返回值，准备调度<br>    movl _current,%eax<br>    cmpl $0,state(%eax); jne reschedule<br>    cmpl $0,counter(%eax); je reschedule<br>ret_from_sys_call:                     # ⑤ 信号处理 + 恢复现场<br>    ... do_signal ...<br>    popl %eax; popl %ebx; popl %ecx; popl %edx<br>    pop %fs; pop %es; pop %ds<br>    iret<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>① 越界检查 —— 防御性编程</strong></p>
+<p><code>cmpl $nr_system_calls-1,%eax</code> 确保调用号在 <code>[0, 87]</code> 范围内。如果用户传个 <code>999</code> 进来，<code>call *_sys_call_table(,%eax,4)</code> 就会跳到表外读野指针，内核直接崩。所以<strong>第一步永远是校验</strong>，超出范围就跳 <code>bad_sys_call</code> 返回 <code>-ENOSYS</code>。</p>
+<p><strong>② 现场保护 —— 切段寄存器是关键</strong></p>
+<p>压栈顺序很有讲究：</p>
+<figure class="highlight x86asm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs x86asm">段寄存器: <span class="hljs-built_in">ds</span> <span class="hljs-built_in">es</span> <span class="hljs-built_in">fs</span>           ← 用户态的段<br>通用寄存器: <span class="hljs-built_in">edx</span> <span class="hljs-built_in">ecx</span> <span class="hljs-built_in">ebx</span>      ← 用户传来的参数<br></code></pre></td></tr></tbody></table></figure>
+<p>为什么压这两组？</p>
+<ul>
+<li><strong>段寄存器</strong>：用户态 <code>ds/es</code> 指向用户数据段（RPL=3），内核要用 <code>ds/es</code> 访问内核数据，必须先换。<code>movl $0x10, %edx; mov %dx, %ds</code> 把 <code>ds</code> 设成 <code>0x10</code> —— 这是 GDT 中<strong>内核数据段</strong>的选择子。</li>
+<li><strong><code>fs = 0x17</code> 是 Linux 0.11 的特色</strong>：内核数据段在 <code>0x10</code>，用户数据段在 <code>0x17</code>（LDT 中）。内核想读用户传来的指针（比如 <code>read(fd, buf, n)</code> 的 <code>buf</code>），必须用 <code>fs</code> 段跨越特权级访问 —— 因为 <code>ds/es</code> 已经指向内核了，用户空间的地址用 <code>ds</code> 是读不到的。</li>
+<li><strong>通用寄存器</strong>：因为马上要 <code>call</code> C 函数 <code>sys_max(int, int)</code>，C 函数按调用约定从栈上取参数，所以必须把 EBX、ECX、EDX 中的参数压栈。压栈顺序 <code>edx → ecx → ebx</code> 对应 C 的"参数从右到左入栈"约定（<code>sys_max(max1, max2)</code> 中 <code>max2</code> 在高地址、<code>max1</code> 在低地址）。</li>
+</ul>
+<p><strong>③ 间接跳转 —— <code>call *_sys_call_table(,%eax,4)</code></strong></p>
+<p>这是 AT&amp;T 汇编的<strong>基址+变址寻址</strong>语法，等价于 Intel 语法的 <code>call [sys_call_table + eax*4]</code>。展开看就是：</p>
+<figure class="highlight fix"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs fix"><span class="hljs-attr">跳转目标地址 </span>=<span class="hljs-string"> sys_call_table 起始地址 + EAX × 4</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>× 4</code> 因为每个函数指针是 4 字节（32 位）。EAX = 87（<code>__NR_max</code>），所以跳到 <code>sys_call_table[87]</code>，那里存的就是 <code>sys_max</code> 的地址 —— 这就是<strong>调用号到函数的映射</strong>。</p>
+<p>这种设计的好处是：<strong>新增系统调用不需要改 <code>_system_call</code> 一行代码</strong>，只在 <code>sys_call_table</code> 末尾追加函数指针即可。这就是为什么 Lab4 的 5 处改动里，3 处都是"加一行"，不动核心逻辑。</p>
+<p><strong>④ ⑤ 调度与信号 —— 顺便做家务</strong></p>
+<p>跳回来后并不立即返回，而是检查：</p>
+<ul>
+<li><strong>是否需要重新调度</strong>：如果当前进程 <code>state != 0</code>（被阻塞了）或者时间片 <code>counter == 0</code> 用完了，就跳 <code>reschedule</code> → <code>_schedule</code> 让出 CPU。系统调用是进入内核的"自然时机"，顺手做调度，避免额外中断开销。</li>
+<li><strong>信号处理</strong>：检查 <code>current-&gt;signal</code> 位图，如果有信号待处理（比如子进程发来的 SIGCHLD），调用 <code>do_signal()</code>。Linux 把信号投递时机也定在系统调用返回前 —— 所以 <code>read()</code> 卡住时被信号打断会返回 <code>-EINTR</code>。</li>
+<li><strong>恢复现场</strong>：按入栈的反顺序弹出寄存器，最后 <code>iret</code> 把 CPU 状态、CS、EIP、EFLAGS、SS、ESP 全部恢复到用户态，把 EAX 里的返回值留给用户程序。</li>
+</ul>
+<h5 id="一个反直觉点：为什么用寄存器传参而不是栈？">一个反直觉点：为什么用寄存器传参而不是栈？</h5>
+<p>C 函数调用约定是<strong>参数从右到左压栈</strong>，但系统调用却<strong>用寄存器传参</strong>（EBX/ECX/EDX）。</p>
+<div class="note note-warning">
+            <p><strong>为什么不能用栈传参</strong></p><p><code>int $0x80</code> 切到内核态时，CPU <strong>自动切换到内核栈</strong>（从 TSS 读取 <code>esp0</code>）。<strong>用户栈和内核栈是两段隔离的内存</strong>，用户栈上的参数内核根本访问不到。</p><p>只有<strong>寄存器</strong>是"跨特权级能保留"的载体 —— 它们是 CPU 内部的物理资源，不属于任何地址空间，特权级切换时值不丢。</p><p>所以 Linux 0.11 系统调用最多 6 个参数（EAX 装调用号，剩 EBX/ECX/EDX/ESI/EDI/EBP），<strong>这是 x86 通用寄存器数量的硬限制</strong>。</p>
+          </div>
+<p>寄存器与栈的对比（一张表看清两者区别）：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>CPU 寄存器</th>
+<th>栈（内存）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>物理位置</td>
+<td>CPU 片内</td>
+<td>外部内存 DDR</td>
+</tr>
+<tr>
+<td>容量</td>
+<td>极小，单寄存器 64 位，总共几百位</td>
+<td>极大，进程栈通常 8MB 起步</td>
+</tr>
+<tr>
+<td>寻址方式</td>
+<td>硬件直接命名寻址，无地址</td>
+<td>虚拟内存地址 + MMU 地址翻译</td>
+</tr>
+<tr>
+<td>特权隔离</td>
+<td>不属于用户 / 内核任何地址空间，特权切换数据保留</td>
+<td>分用户栈、内核栈，MMU 做权限隔离，跨特权不能直接访问</td>
+</tr>
+<tr>
+<td>访问速度</td>
+<td>纳秒级，最快</td>
+<td>比寄存器慢几十～上百倍</td>
+</tr>
+<tr>
+<td>硬件保护</td>
+<td>无内存越界保护，只能靠软件规范</td>
+<td>有保护页、页权限、越界触发异常</td>
+</tr>
+</tbody>
+</table>
+<p><strong>fd（文件描述符）</strong>：Linux 下一切皆文件 —— 普通文件、socket、终端、管道都是。每个进程打开的文件都分配一个整数 ID（0=stdin、1=stdout、2=stderr、3+ 是程序自己打开的）。这就是为什么 <code>read(0, ...)</code> 读键盘、<code>write(1, ...)</code> 写屏幕都用同一个 <code>read/write</code> 系统调用。</p>
+<div class="note note-info">
+            <p><strong>调试技巧：条件断点</strong></p><p>直接在 <code>_system_call</code> 设断点会立刻被命中 —— Linux 启动时 <code>init/main.c</code> 自己就调了大量系统调用（<code>fork()</code>、<code>write()</code>、<code>execve()</code> 全是 <code>int $0x80</code>）。</p><p><strong>通用解法</strong>：把断点改为条件断点 <code>$eax==87</code>，只有 EAX = 87（<code>__NR_max</code>）时才中断。换其他调用号即可定位任意系统调用。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>系统调用 = 用户程序通过 <code>int $0x80</code> 主动陷入内核请求服务。<strong>调用号在 EAX，参数在 EBX/ECX/EDX，结果回 EAX</strong>。整个机制是"特权级切换 + 寄存器传参 + sys_call_table 跳转"的精密组合。</p></blockquote>
+          </div>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FsS2u10yMcGHcA8_QG-p0A">【Linux系统调用】</a></p>
+<hr>
+<h4 id="Lab5-调用-fork-函数创建子进程">Lab5 调用 fork 函数创建子进程</h4>
+<p>fork 是 Unix/Linux 最天才的设计之一：<strong>一次调用，两次返回</strong>。父进程调用一次 fork，进入内核态，出来时变成了两个几乎一模一样的进程 —— 父进程拿到子进程的 PID（&gt;0），子进程拿到 0。</p>
+<div class="note note-primary">
+            <p><strong>fork 的本质</strong></p><p>不是"创建一个空进程"，而是<strong>把当前进程整个复制一份</strong> —— 代码、内存、打开的文件、当前执行位置全都一样。这就是为什么子进程能从 <code>fork()</code> 调用处"继续"执行 —— 它的指令指针 EIP 和父进程返回时一模一样。</p><p>这是 Linux 实现并发的最基本原语。</p>
+          </div>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/wait.h&gt;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> {<br>    <span class="hljs-type">int</span> pid;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"PID:%d parent process start.\n"</span>, getpid());<br><br>    pid = fork();<br>    <span class="hljs-keyword">if</span> (pid == <span class="hljs-number">-1</span>) { perror(<span class="hljs-string">"fork error"</span>); <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>; }<br><br>    <span class="hljs-keyword">if</span> (pid != <span class="hljs-number">0</span>) {<br>        <span class="hljs-comment">// 父进程分支：pid 是子进程 PID</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"PID:%d parent process continue.\n"</span>, getpid());<br>    } <span class="hljs-keyword">else</span> {<br>        <span class="hljs-comment">// 子进程分支：pid == 0</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"PID:%d child process start.\n"</span>, getpid());<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    }<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"PID:%d parent process exit.\n"</span>, getpid());<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>这两条分支后续会执行完全不同的代码 —— 这是 Linux 实现并发的最基本原语。</p>
+<h5 id="fork-不-创建-子进程，而是-复制-父进程">fork 不"创建"子进程，而是"复制"父进程</h5>
+<p>这是理解 fork 的关键。看 <code>kernel/fork.c</code> 的 <code>copy_process</code> 函数第 103 行：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">*p = *current;     <span class="hljs-comment">// 一行代码把父进程的整个 PCB 复制给子进程</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>*current</code> 是父进程的 <code>task_struct</code>（进程控制块），里面有 PID、寄存器、打开的文件、信号处理、当前目录、优先级……<strong>所有进程上下文</strong>。一行赋值就全过去了。</p>
+<p>所以 fork 后子进程：</p>
+<ul>
+<li>继承父进程的优先级、tty、打开的文件描述符</li>
+<li>继承父进程的当前工作目录、环境变量</li>
+<li>寄存器值、栈内容、PC（EIP）都和父进程<strong>完全一样</strong></li>
+</ul>
+<p>这就是为什么子进程"从 fork 调用处继续执行" —— 它的 EIP 和父进程返回时一模一样，看起来就像 fork 这个 C 函数刚刚返回了一样。</p>
+<h5 id="子进程-fork-返回-0-的真正原因">子进程 fork 返回 0 的真正原因</h5>
+<p>父子进程返回到同一个 EIP、同样的栈帧，<strong>为什么一个拿到 PID 一个拿到 0</strong>？秘密在 <code>copy_process</code> 第 125 行：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">p-&gt;tss.eax = <span class="hljs-number">0</span>;     <span class="hljs-comment">// 子进程的 EAX 寄存器被强制设为 0</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>p-&gt;tss.eax</code> 是子进程 TSS（任务状态段）里保存的 EAX 值。等子进程被调度上 CPU 时，硬件会从 TSS 加载寄存器，EAX 就是 0。</p>
+<p>而父进程的 EAX 是 fork 系统调用的返回值 —— <code>copy_process</code> 返回 <code>last_pid</code>（子进程 PID），<code>_system_call</code> 把它塞进父进程的 EAX。所以 C 代码里 <code>pid</code> 看到的值就是 EAX 的值。</p>
+<figure class="highlight x86asm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs x86asm">父进程:  fork → 内核 → copy_process 返回 last_pid → <span class="hljs-built_in">EAX</span> = last_pid → C 看到 pid &gt; <span class="hljs-number">0</span><br>子进程:  诞生时 <span class="hljs-built_in">EAX</span> 被设为 <span class="hljs-number">0</span>                       → 被调度上 <span class="hljs-meta">CPU</span> → C 看到 pid == <span class="hljs-number">0</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-primary">
+            <p><strong>"两次返回"的全部秘密</strong></p><p>同一个返回点，不同的 EAX —— 这就是 fork 看似神奇、实则朴素的实现：<strong>父进程 EAX 装子进程 PID，子进程 EAX 被强制设为 0</strong>。C 代码看到的"返回值"实际就是 EAX 寄存器的值。</p>
+          </div>
+<h5 id="copy-process-的-6-个工作">copy_process 的 6 个工作</h5>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>代码</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①</td>
+<td><code>get_free_page()</code></td>
+<td>申请 4KB 物理页作为子进程 PCB + 内核栈</td>
+</tr>
+<tr>
+<td>②</td>
+<td><code>*p = *current;</code></td>
+<td>复制父进程整个 task_struct</td>
+</tr>
+<tr>
+<td>③</td>
+<td><code>p-&gt;pid = last_pid;</code> 等</td>
+<td>改子进程独有字段（pid、father、时间）</td>
+</tr>
+<tr>
+<td>④</td>
+<td><code>p-&gt;tss.eax = 0;</code> 一组 TSS 设置</td>
+<td>把栈上保存的寄存器值塞进 TSS</td>
+</tr>
+<tr>
+<td>⑤</td>
+<td><code>copy_mem(nr, p)</code></td>
+<td>设置 LDT + 复制页表（COW）</td>
+</tr>
+<tr>
+<td>⑥</td>
+<td><code>set_tss_desc / set_ldt_desc</code></td>
+<td>在 GDT 中登记新进程的 TSS、LDT 描述符</td>
+</tr>
+</tbody>
+</table>
+<p>第 ② 步是"复制父进程"，第 ③④ 步是"修改成子进程"，第 ⑤⑥ 步是"安装到内核数据结构"。</p>
+<h5 id="每个进程-64MB-线性地址空间-——-Linux-0-11-的段式隔离">每个进程 64MB 线性地址空间 —— Linux 0.11 的段式隔离</h5>
+<p><code>copy_mem</code> 里有一行很关键的代码：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">new_data_base = new_code_base = nr * <span class="hljs-number">0x4000000</span>;     <span class="hljs-comment">// nr × 64MB</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>0x4000000 = 64MB</code>。<strong>Linux 0.11 把整个 4GB 线性地址空间切成 64 个 64MB 的槽位</strong>，每个进程占一格：</p>
+<table>
+<thead>
+<tr>
+<th>任务号</th>
+<th>线性地址范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0 ~ 64MB</td>
+</tr>
+<tr>
+<td>1</td>
+<td>64MB ~ 128MB</td>
+</tr>
+<tr>
+<td>2</td>
+<td>128MB ~ 192MB</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr>
+<td>63</td>
+<td>4032MB ~ 4096MB</td>
+</tr>
+</tbody>
+</table>
+<p>进程之间通过 <strong>LDT（局部描述符表）</strong> 隔离 —— 每个进程有自己的 LDT，把"线性地址 0 开始的 64MB"映射到自己的物理页。这是 Linux 0.11 <strong>段式内存管理</strong>的特点，现代 Linux（2.6 之后）改成纯页式了，段基址全设为 0。</p>
+<h5 id="写时复制（COW）——-fork-不真正复制内存">写时复制（COW）—— fork 不真正复制内存</h5>
+<p><code>copy_mem</code> 调用 <code>copy_page_tables</code> 复制父进程的页表，但<strong>不复制物理页</strong>。新页表项和旧页表项指向同一物理页，且都被标记为<strong>只读</strong>。</p>
+<ul>
+<li>父子进程都只读这页 → 没事，共享就共享</li>
+<li>任一方写 → MMU 触发缺页异常 → 内核分配新页、复制内容、把两个页表项都改成可写</li>
+</ul>
+<div class="note note-info">
+            <p><strong>Copy-on-Write 的工程价值</strong></p><p>COW 是 fork 之所以能"几乎瞬间完成"的关键 —— fork 后子进程通常马上 <code>execve</code> 加载新程序，根本不会写大多数页，真正复制的只有少数。</p><p>这种"<strong>乐观策略</strong>"在系统设计中很常见：先假设不会冲突，冲突了再补救。代价是写时多一次缺页异常，收益是 fork 速度提升几个数量级。</p>
+          </div>
+<h5 id="TSS（任务状态段）——-硬件上下文切换">TSS（任务状态段）—— 硬件上下文切换</h5>
+<p><code>p-&gt;tss.eip</code>、<code>p-&gt;tss.esp</code>、<code>p-&gt;tss.eax</code>… 这些字段构成 x86 的 <strong>TSS 数据结构</strong>。Linux 0.11 用 <strong>硬件任务切换</strong>：</p>
+<ul>
+<li><code>ltr</code> 指令加载某个 TSS 选择子到 TR 寄存器</li>
+<li>CPU 切换任务时<strong>自动</strong>从新 TSS 加载所有寄存器，<strong>自动</strong>把当前寄存器存回旧 TSS</li>
+<li>内核要做的就是 <code>jmp TSS选择子:0</code>，剩下硬件处理</li>
+</ul>
+<p>这是 80386 设计的任务切换机制。现代 Linux 改用<strong>软件切换</strong>（保存/恢复寄存器到内核栈），因为硬件切换在流水线 CPU 上反而更慢，且 TSS 切换不能像软件切换那样细粒度优化。</p>
+<h5 id="子进程诞生时的状态：先锁定，再就绪">子进程诞生时的状态：先锁定，再就绪</h5>
+<p>注意这两行（第 104 行和第 166 行）：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">p-&gt;state = TASK_UNINTERRUPTIBLE;     <span class="hljs-comment">// 刚出生：不可中断等待</span><br>...<br>p-&gt;state = TASK_RUNNING;             <span class="hljs-comment">// 全部初始化完：就绪</span><br></code></pre></td></tr></tbody></table></figure>
+<p>为什么先 UNINTERRUPTIBLE？因为初始化过程中如果有人尝试给子进程发信号或者调度它，会读到半成品 PCB，发生竞争条件。所以<strong>先把状态锁死，全部安装好再切到 RUNNING</strong>。这种"先锁定再开放"是并发编程的标准模式。</p>
+<h5 id="wait-NULL-——-父进程阻塞等子进程退出">wait(NULL) —— 父进程阻塞等子进程退出</h5>
+<p>不加 wait：父子进程并发跑，输出顺序随机：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">PID:18 parent process start.<br>PID:18 parent process continue.       ← 父先跑完<br>PID:18 parent process exit.<br>PID:19 child process start.            ← 子后跑（也可能插队）<br>PID:19 child process exit.<br></code></pre></td></tr></tbody></table></figure>
+<p>加 <code>wait(NULL)</code> 后：父进程调用 wait 时<strong>阻塞</strong>，让出 CPU，等子进程退出收到 SIGCHLD 才被唤醒。所以子进程先跑完，父进程再继续。</p>
+<p><code>wait</code> 的本质：</p>
+<ul>
+<li>把当前进程状态改成 <code>TASK_INTERRUPTIBLE</code></li>
+<li>调用 <code>schedule()</code> 让出 CPU</li>
+<li>子进程退出时内核 <code>wake_up</code> 父进程</li>
+</ul>
+<p><strong>它解决了"僵尸进程"问题</strong> —— 子进程退出后 PCB 不会立即释放，要等父进程 <code>wait</code> 来收尸。父进程不 wait，子进程就一直是 ZOMBIE 状态，PID 和 task_struct 永久占用。所以 wait 不只是"等"，更是"收尸"。</p>
+<h5 id="fork-不立即触发调度">fork 不立即触发调度</h5>
+<p>报告里观察到：“从 fork 系统调用返回之前，并没有执行进程调度 reschedule 函数，所以父进程会继续运行。”</p>
+<p>这是 Linux 0.11 的策略：fork 后<strong>不强制切换</strong>到子进程，父进程继续在时间片里跑，子进程进就绪队列等下次调度。其他 Unix 变体（比如 BSD）的做法相反 —— fork 后立刻调度子进程先跑，因为子进程通常马上 <code>execve</code>，可以提前释放共享页。</p>
+<h5 id="进程状态机">进程状态机</h5>
+<p>Lab5 里出现的几种状态可以串成一张图：</p>
+<figure class="highlight awk"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs awk">┌──────────┐ schedule    ┌──────────┐<br>│ RUNNING  │ ──────────&gt; │ READY    │<br>│ (运行)   │ &lt;────────── │ (就绪)   │<br>└──────────┘             └──────────┘<br>     │ sleep_on/wake_up       ▲<br>     ▼                        │<br>┌────────────────────┐        │<br>│ INTERRUPTIBLE      │ wake_up│<br>│ UNINTERRUPTIBLE    │ ───────┘<br>│ (阻塞)             │<br>└────────────────────┘<br>     │ <span class="hljs-keyword">exit</span><br>     ▼<br>┌──────────┐<br>│ ZOMBIE   │  ← 等 wait() 收尸<br>└──────────┘<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>schedule</code>：就绪 ↔ 运行（被选中 / 被换下）</li>
+<li><code>sleep_on</code>：运行 → 阻塞（主动让出 CPU）</li>
+<li><code>wake_up</code>：阻塞 → 就绪（被唤醒）</li>
+<li><code>exit</code>：运行 → 僵死（等父进程收尸）</li>
+</ul>
+<h5 id="fork-炸弹-——-滥用-fork-的极端例子">fork 炸弹 —— 滥用 fork 的极端例子</h5>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-function"><span class="hljs-title">fork_bomb</span></span>() {<br>    fork_bomb | fork_bomb &amp;<br>}; fork_bomb<br></code></pre></td></tr></tbody></table></figure>
+<p>shell 函数递归 + 管道 + 后台运行 = <strong>指数级进程增长</strong>：1 → 2 → 4 → 8 → 16…</p>
+<div class="note note-danger">
+            <p><strong>fork 炸弹的危害与防护</strong></p><p>瞬间耗尽进程表（NR_TASKS 限制）、物理内存、PID 空间，系统卡死只能强制重启。</p><p>现代 Linux 的防护：在 <code>fork</code> 系统调用里检查 <code>current-&gt;rlim[RLIMIT_NPROC].rlim_cur</code>，超出用户配额就直接返回 <code>-EAGAIN</code>，从源头掐断。<code>/etc/security/limits.conf</code> 里的 <code>nproc</code> 就是这个配额的设置入口。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p><code>fork()</code> 把当前进程<strong>整个复制</strong>成两个，父进程返回子进程 PID（&gt;0），子进程返回 0。秘密在 <code>p-&gt;tss.eax = 0</code> —— 子进程诞生时 EAX 被强制设为 0，C 代码看到的"返回值"就是它。配合 COW，fork 几乎瞬间完成。</p></blockquote>
+          </div>
+<hr>
+<h5 id="附录：实验用到的命令">附录：实验用到的命令</h5>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">gcc main.c -o app     <span class="hljs-comment"># 编译</span><br><span class="hljs-built_in">chmod</span> +x app          <span class="hljs-comment"># 添加可执行权限</span><br><span class="hljs-built_in">sync</span>                  <span class="hljs-comment"># 把缓存里的脏数据写回硬盘（Bochs 里编辑文件后必做，否则关机丢失）</span><br>./app                 <span class="hljs-comment"># 运行</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>space</code> 是 Bochs 里的删除键（不是 Backspace）。</p>
+<p>vi 编辑器在<strong>命令模式（默认）</strong>：按 <code>x</code> 删字符、<code>dd</code> 删整行、<code>dw</code> 删单词；</p>
+<hr>
+<h4 id="Lab6-调用-execve-函数加载执行一个新程序">Lab6 调用 execve 函数加载执行一个新程序</h4>
+<p>fork 和 execve 是 Unix 进程模型的"双胞胎" —— 一个负责<strong>复制执行流</strong>，一个负责<strong>替换程序内容</strong>。看下面两个小程序就明白：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// new.c —— 被加载的程序</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> {<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"PID:%d new process.\n"</span>, getpid());<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br><br><span class="hljs-comment">// old.c —— 调用 execve 的程序</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> {<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"PID:%d old process start.\n"</span>, getpid());<br>    execve(<span class="hljs-string">"new"</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"PID:%d old process exit.\n"</span>, getpid());   <span class="hljs-comment">// ← 永远不会执行</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>运行 <code>./old</code> 的输出：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">PID:18 old process start.<br>PID:18 new process.        ← 同一个 PID！<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-primary">
+            <p><strong>execve 的本质</strong></p><p><strong>不创建新进程，只换程序的"灵魂"</strong> —— PID 不变、task_struct 还是同一个、文件描述符还在，但代码段被新程序覆盖，CPU 从新程序入口开始执行。</p><p>两个反直觉观察：(1) PID 没变（不是新进程）；(2) “old process exit” 没打印（旧代码已不存在）。</p>
+          </div>
+<h5 id="fork-vs-execve：分工明确的-双步设计">fork vs execve：分工明确的"双步设计"</h5>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>fork</th>
+<th>execve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>做什么</td>
+<td>复制当前进程</td>
+<td>替换当前进程的程序</td>
+</tr>
+<tr>
+<td>PID</td>
+<td><strong>新分配</strong></td>
+<td><strong>保持不变</strong></td>
+</tr>
+<tr>
+<td>地址空间</td>
+<td>复制父进程（COW）</td>
+<td><strong>丢弃</strong>，加载新程序</td>
+</tr>
+<tr>
+<td>task_struct</td>
+<td>整个复制</td>
+<td>大部分保留，少数字段改</td>
+</tr>
+<tr>
+<td>返回</td>
+<td><strong>两次</strong>（父&gt;0，子=0）</td>
+<td><strong>零次成功 / 一次失败</strong></td>
+</tr>
+<tr>
+<td>文件描述符</td>
+<td>继承</td>
+<td>保留（除 close_on_exec 标记的）</td>
+</tr>
+</tbody>
+</table>
+<p>为什么要拆成两步？因为<strong>这俩功能组合起来威力巨大</strong>：</p>
+<ul>
+<li>shell 想执行 <code>ls | grep foo</code>，先 <code>fork</code>，子进程里把 stdout 重定向到管道，再 <code>execve("ls")</code></li>
+<li>fork 之后、execve 之前这段"窗口期"可以任意修改进程属性（fd、信号、环境变量）</li>
+<li>这些修改会被 execve 保留下来，成为新程序的"启动配置"</li>
+</ul>
+<p>这就是 shell 实现管道、重定向、环境变量传递的根本机制 —— 称为 <strong>fork-execve 模式</strong>。</p>
+<h5 id="execve-的-一次调用，零次返回">execve 的"一次调用，零次返回"</h5>
+<p>fork 是"两次返回"（父子各一次），execve 正好相反 —— <strong>成功时不返回</strong>：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">execve(<span class="hljs-string">"new"</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);<br><span class="hljs-comment">// 如果 new 加载成功，下面这行永远到不了</span><br><span class="hljs-built_in">printf</span>(<span class="hljs-string">"never reached"</span>);<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-warning">
+            <p><strong>execve 的非对称语义</strong></p><ul><li><strong>失败</strong> → 返回 -1，程序继续往下跑</li><li><strong>成功</strong> → <strong>永不返回</strong>，因为旧代码段已被新代码覆盖，CPU 已跳到新程序入口</li></ul><p>所以 execve 后面写什么代码都白搭 —— 只有失败时才会执行到。这是 POSIX 系统调用里唯一"成功不返回"的特殊设计。</p>
+          </div>
+<h5 id="do-execve-的-8-个步骤">do_execve 的 8 个步骤</h5>
+<p><code>fs/exec.c:285</code> 的 <code>do_execve</code> 是 execve 系统调用的核心实现，可以拆成 8 步：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>关键代码</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①</td>
+<td><code>inode = namei(filename)</code></td>
+<td>通过路径名拿到文件的 inode</td>
+</tr>
+<tr>
+<td>②</td>
+<td><code>S_ISREG(inode-&gt;i_mode)</code> + 权限检查</td>
+<td>必须是普通文件且有执行权限</td>
+</tr>
+<tr>
+<td>③</td>
+<td><code>ex = *((struct exec *) bh-&gt;b_data)</code></td>
+<td>读文件头，判断 magic number 是 ZMAGIC</td>
+</tr>
+<tr>
+<td>④</td>
+<td><code>copy_strings(envc, envp, page, ...)</code></td>
+<td>把 argv、envp 字符串拷到参数页</td>
+</tr>
+<tr>
+<td>⑤</td>
+<td><code>free_page_tables(...)</code></td>
+<td><strong>彻底释放原程序的页表</strong></td>
+</tr>
+<tr>
+<td>⑥</td>
+<td><code>change_ldt(ex.a_text, page)</code></td>
+<td>改 LDT：新代码段/数据段基址、限长</td>
+</tr>
+<tr>
+<td>⑦</td>
+<td><code>create_tables(p, argc, envc)</code></td>
+<td>在新栈上建立 argv、envp 指针表</td>
+</tr>
+<tr>
+<td>⑧</td>
+<td><code>eip[0] = ex.a_entry</code></td>
+<td><strong>把返回用户态的 EIP 改成新程序入口</strong></td>
+</tr>
+</tbody>
+</table>
+<p>第 ⑤ 步是关键 —— <code>free_page_tables</code> 把原程序的所有用户页释放掉，<strong>这就是为什么"old process exit" 永远执行不到</strong>：那些 printf 指令所在的物理页已经被释放，CPU 根本读不到了。</p>
+<h5 id="“point-of-no-return”-——-无返回点">“point of no return” —— 无返回点</h5>
+<p>源码里有句非常直白的注释：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* OK, This is the point of no return */</span><br><span class="hljs-keyword">if</span> (current-&gt;executable)<br>    iput(current-&gt;executable);<br>current-&gt;executable = inode;<br></code></pre></td></tr></tbody></table></figure>
+<p>注释下面的代码释放原页表、清空信号处理、改 LDT —— <strong>一旦执行到这里就回不去了</strong>。</p>
+<p>这是软件设计中"提交点"（commit point）的经典例子：</p>
+<ul>
+<li>提交点之前：所有错误都能撤销，回到 execve 调用方返回 <code>-Exxx</code></li>
+<li>提交点之后：成功路径，任何"错误"都只能让进程自己退出，不能撤销</li>
+</ul>
+<p>为什么必须有无返回点？因为内核要做大量破坏性操作（释放原页表），这些操作不可逆。把它集中在一处，前面做"可逆检查"，后面做"不可逆提交"，是处理复杂状态变更的标准模式。</p>
+<h5 id="eip-0-ex-a-entry-——-魔法-的实现"><code>eip[0] = ex.a_entry</code> —— "魔法"的实现</h5>
+<p>最精彩的是这一句：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">eip[<span class="hljs-number">0</span>] = ex.a_entry;     <span class="hljs-comment">/* eip, magic happens :-) */</span><br>eip[<span class="hljs-number">3</span>] = p;              <span class="hljs-comment">/* stack pointer */</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>eip</code> 是 <code>do_execve</code> 的参数，实际上指向 <strong><code>_system_call</code> 栈帧上保存的 EIP</strong>（中断进入内核时硬件自动压栈的）。修改它意味着：等系统调用结束 <code>iret</code> 返回用户态时，CPU 跳到 <code>ex.a_entry</code>（新程序入口）而不是原程序的"execve 调用之后那条指令"。</p>
+<p>同样 <code>eip[3] = p</code> 改的是保存的 ESP，让用户态栈指向新程序的栈顶（上面摆好了 argv 和 envp）。</p>
+<p>所以"魔法"是这样发生的：</p>
+<ol>
+<li>用户态调用 <code>execve</code> → <code>int $0x80</code> 进内核</li>
+<li>CPU 把用户态 EIP、CS、EFLAGS、ESP、SS 压到内核栈</li>
+<li><code>do_execve</code> 修改这些压栈值（EIP、ESP）</li>
+<li><code>iret</code> 弹栈 → CPU 自动跳到新的 EIP、加载新的 ESP</li>
+<li>用户态从新程序入口开始执行，<strong>完全不知道自己是被 execve 过来的</strong></li>
+</ol>
+<p>整个过程中 PID 没变、task_struct 还是同一个、文件描述符还在 —— 所以新程序看起来像是"继承了壳，换了灵魂"。</p>
+<h5 id="脚本解释器机制"><code>#!</code> 脚本解释器机制</h5>
+<p><code>do_execve</code> 检查文件头前两个字节：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> ((bh-&gt;b_data[<span class="hljs-number">0</span>] == <span class="hljs-string">'#'</span>) &amp;&amp; (bh-&gt;b_data[<span class="hljs-number">1</span>] == <span class="hljs-string">'!'</span>) &amp;&amp; (!sh_bang)) {<br>    <span class="hljs-comment">// 这是脚本文件，解析解释器路径</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>这就是为什么 Linux 脚本能"直接执行"：</p>
+<ul>
+<li><code>./script.sh</code> 第一行是 <code>#!/bin/sh</code></li>
+<li>内核发现 <code>#!</code> 后，<strong>不直接执行这个文件</strong>，而是改成执行 <code>/bin/sh</code>，把 <code>script.sh</code> 作为参数传给它</li>
+<li>等价于自动帮你执行 <code>/bin/sh script.sh</code></li>
+</ul>
+<p>所以脚本的"可执行"是内核帮你做的"重写"，<strong>不需要脚本本身有可执行格式</strong>。Python、Bash、Perl、Node 脚本能直接跑，全靠这俩字节。</p>
+<h5 id="change-ldt-——-新的内存布局">change_ldt —— 新的内存布局</h5>
+<p><code>change_ldt</code> 把进程的 LDT 改成新程序的内存布局：</p>
+<figure class="highlight scss"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs scss">进程的 <span class="hljs-number">64</span>MB 线性地址空间（Lab5 讲过）：<br>┌────────────────────────────────────────┐<br>│ 代码段 (a_text)                        │ ← LDT<span class="hljs-selector-attr">[1]</span> 代码段描述符<br>├────────────────────────────────────────┤<br>│ 数据段 (a_data)                        │<br>├────────────────────────────────────────┤<br>│ BSS 段 (a_bss，未初始化全局变量)        │ ← LDT<span class="hljs-selector-attr">[2]</span> 数据段描述符<br>├────────────────────────────────────────┤<br>│ 参数和环境页（argv、envp）              │<br>├────────────────────────────────────────┤<br>│ 堆栈（向低地址生长）                    │ ← create_tables 后 ESP 指向这里<br>└────────────────────────────────────────┘<br></code></pre></td></tr></tbody></table></figure>
+<p>a.out 格式（Linux 0.11 用的可执行文件格式）的 4 个核心字段：<code>a_text</code>（代码段长度）、<code>a_data</code>（数据段长度）、<code>a_bss</code>（BSS 段长度）、<code>a_entry</code>（程序入口地址）。<code>do_execve</code> 根据 these 字段重新构建进程的地址空间。</p>
+<h5 id="调试技巧：用文件大小做条件断点">调试技巧：用文件大小做条件断点</h5>
+<p>报告里给出的条件断点：</p>
+<figure class="highlight xl"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xl">$<span class="hljs-function"><span class="hljs-title">eax</span>==11 &amp;&amp; current!=0 &amp;&amp; current-&gt;</span><span class="hljs-function"><span class="hljs-title">executable</span>-&gt;</span>i_size==文件大小<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>$eax==11</code>：调用号 11 = <code>__NR_execve</code></li>
+<li><code>current-&gt;executable-&gt;i_size==文件大小</code>：当前进程正在执行的程序文件大小</li>
+</ul>
+<div class="note note-info">
+            <p><strong>多条件断点的通用模式</strong></p><p>为什么需要第三个条件？因为 Linux 0.11 启动时 <code>init/main.c</code> 自己也调 <code>execve</code> 加载 <code>/bin/sh</code> 等。靠调用号过滤不够，<strong>还要看是哪个程序触发的</strong>。文件大小是个简单粗暴但有效的过滤条件。</p><p>这是调试内核系统调用的通用技巧 —— <strong>调用号 + 进程上下文 + 资源信息</strong>，组合起来才能精确锁定你想跟踪的那一次调用。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p><code>execve()</code> 把当前进程的程序内容<strong>整个替换</strong>成新程序 —— PID 不变，但代码、数据、栈全换。成功永不返回（旧代码已不存在）。配合 fork 形成 <strong>fork-execve 模式</strong>，是 shell 实现管道、重定向、环境变量传递的基础。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab7-8-修改-Linux-内核、应用程序任务">Lab7/8 修改 Linux 内核、应用程序任务</h4>
+<p>这两个任务合起来做一件事：<strong>给 Linux 0.11 加进程状态日志系统</strong>，把进程从"创建到结束"全过程的状态转换记录到 <code>process.log</code>，然后量化分析调度算法。</p>
+<div class="note note-primary">
+            <p><strong>实验的核心价值</strong></p><p>把"看不见的调度"变成"可读的日志" —— 通过追踪进程在就绪 / 运行 / 阻塞 / 结束之间的状态转换，直观理解调度算法如何决定谁先跑、谁后跑。</p><p>工具是 <code>RECORD_TASK_STATE</code> 宏 + 一个内核态能用的"printf" —— <code>fprintk</code>。</p>
+          </div>
+<h5 id="反直觉点-1：内核里不能直接-write">反直觉点 1：内核里不能直接 <code>write()</code></h5>
+<p><code>printf</code> 是用户态的库函数，最终走 <code>write()</code> 系统调用进内核。但<strong>内核自己不能调 <code>write()</code></strong>。</p>
+<div class="note note-warning">
+            <p><strong>两个根本原因</strong></p><ol><li><strong>递归地狱</strong> —— <code>write()</code> 自己就是系统调用，触发 <code>int $0x80</code> 进内核。如果内核在执行系统调用时再触发系统调用，会破坏 <code>_system_call</code> 的栈帧和现场保护逻辑</li><li><strong>用户态约定</strong> —— <code>write()</code> 默认操作的是当前进程的 <code>filp[]</code> 数组、当前进程的用户态缓冲区。内核态下"当前进程"的概念模糊，参数传递约定也不一样</li></ol>
+          </div>
+<p>所以必须自己写一个 <code>fprintk</code> —— <strong>绕过系统调用入口，直接调用 <code>_sys_write</code> 或 <code>_file_write</code> 这个 C 函数本身</strong>。</p>
+<h5 id="反直觉点-2：就绪-≠-运行">反直觉点 2：就绪 ≠ 运行</h5>
+<div class="note note-danger">
+            <p><strong>最容易混淆的概念</strong></p><p>PCB 里 <code>state == TASK_RUNNING</code> 这个值，<strong>同时表示"就绪"和"运行"两个概念</strong>。任意时刻只有一个进程在 CPU 上跑（<code>current</code> 指针指向的那个），其他 <code>TASK_RUNNING</code> 状态的都在就绪队列里。</p><p>"运行态"是由 <code>current</code> 指针<strong>隐式表示</strong>的，没有专门的 state 值。</p><p>为什么这么设计？<strong>性能</strong> —— 加一个 <code>TASK_READY</code> 状态，每次调度都要改两次 state（旧进程 RUNNING→READY，新进程 READY→RUNNING），cache line 频繁失效。</p><p>代价：日志记录需要靠<strong>位置语义</strong>区分就绪和运行 —— 唤醒点记 <code>TS_READY</code>，被 schedule 选中点才记 <code>TS_RUNNING</code>。</p>
+          </div>
+<h5 id="15-处插入点-——-状态机的全部边">15 处插入点 —— 状态机的全部边</h5>
+<p>要在内核代码 15 个特定位置插入 <code>RECORD_TASK_STATE</code>，对应进程状态机的每一条"边"：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>触发位置</th>
+<th>状态转换</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fork.c</code></td>
+<td><code>copy_process</code> 主体内</td>
+<td>→ CREATE</td>
+</tr>
+<tr>
+<td><code>fork.c</code></td>
+<td><code>copy_process</code> 末尾</td>
+<td>CREATE → READY</td>
+</tr>
+<tr>
+<td><code>sched.c</code> × 多处</td>
+<td><code>sleep_on</code>、<code>interruptible_sleep_on</code></td>
+<td>RUNNING → WAIT</td>
+</tr>
+<tr>
+<td><code>sched.c</code> × 多处</td>
+<td><code>wake_up</code></td>
+<td>WAIT → READY</td>
+</tr>
+<tr>
+<td><code>sched.c</code></td>
+<td><code>schedule</code> 末尾选中 next 时</td>
+<td>READY → <strong>RUNNING</strong></td>
+</tr>
+<tr>
+<td><code>exit.c</code></td>
+<td><code>do_exit</code></td>
+<td>RUNNING → STOPPED</td>
+</tr>
+<tr>
+<td><code>exit.c</code></td>
+<td><code>sys_waitpid</code> 阻塞时</td>
+<td>RUNNING → WAIT</td>
+</tr>
+</tbody>
+</table>
+<div class="note note-info">
+            <p><strong>最关键的规则</strong></p><p>唤醒（<code>wake_up</code>）只是改状态为 <code>TASK_RUNNING</code> 并加入就绪队列，<strong>不等于立即运行</strong>。真正记 <code>TS_RUNNING</code> 的只有一处 —— <code>schedule()</code> 函数末尾被选中的那个 <code>next</code> 进程。</p>
+          </div>
+<h5 id="Linux-0-11-调度算法-——-counter-反馈机制">Linux 0.11 调度算法 —— counter 反馈机制</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// schedule 核心循环</span><br><span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) {<br>    c = <span class="hljs-number">-1</span>; next = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (p = &amp;LAST_TASK; p &gt; &amp;FIRST_TASK; --p)<br>        <span class="hljs-keyword">if</span> (*p &amp;&amp; (*p)-&gt;state == TASK_RUNNING &amp;&amp; (*p)-&gt;counter &gt; c)<br>            c = (*p)-&gt;counter, next = p - FIRST_TASK;<br>    <span class="hljs-keyword">if</span> (c) <span class="hljs-keyword">break</span>;<br>    <span class="hljs-comment">// 所有就绪进程的 counter 都是 0，重新计算</span><br>    <span class="hljs-keyword">for</span> (p = &amp;LAST_TASK; p &gt; &amp;FIRST_TASK; --p)<br>        <span class="hljs-keyword">if</span> (*p) (*p)-&gt;counter = ((*p)-&gt;counter &gt;&gt; <span class="hljs-number">1</span>) + (*p)-&gt;priority;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-primary">
+            <p><strong><code>counter &gt;&gt; 1</code> 的精妙设计</strong></p><p>阻塞进程的 counter 没被消耗（一直在累积），重新计算时 <code>counter/2</code> 保留了之前没用完的时间片。</p><p><strong>结果</strong>：IO 密集型进程（经常阻塞）counter 会越积越多，优先级变高；CPU 密集型进程（一直跑）counter 用得快，优先级变低。</p><p>这是一种<strong>自动适应的反馈机制</strong> —— 不需要手动设置优先级，进程的行为模式自己决定调度倾向。IO 密集型优先，因为它们用 CPU 时间短、需要快速响应（如键盘输入）。</p>
+          </div>
+<h5 id="时钟中断驱动调度">时钟中断驱动调度</h5>
+<p><code>do_timer</code> 第 550 行：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> ((--current-&gt;counter) &gt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;     <span class="hljs-comment">// 时间片没用完</span><br>current-&gt;counter = <span class="hljs-number">0</span>;<br>schedule();                               <span class="hljs-comment">// 用完了，调度</span><br></code></pre></td></tr></tbody></table></figure>
+<p>每 10ms 一次时钟中断（jiffies +1），当前进程 counter -1，减到 0 触发 <code>schedule()</code> 让出 CPU。<strong>counter 的单位是"10ms 时钟节拍"</strong>。</p>
+<h5 id="量化分析的-KPI">量化分析的 KPI</h5>
+<figure class="highlight abnf"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abnf">平均周转时间 <span class="hljs-operator">=</span> Σ(完成时间 - 到达时间) / 进程数<br>平均等待时间 <span class="hljs-operator">=</span> Σ(周转时间 - 实际运行时间) / 进程数<br>吞吐率       <span class="hljs-operator">=</span> 进程数 / 总时间<br></code></pre></td></tr></tbody></table></figure>
+<p>通过修改 priority 和时间片大小可以观察：</p>
+<ul>
+<li>时间片太短 → 频繁调度，上下文切换开销大，吞吐率下降</li>
+<li>时间片太长 → 响应延迟，交互体验差</li>
+<li>优先级差大 → 高优先级饿死低优先级</li>
+</ul>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>Lab7/8 给内核装"日志系统"，把进程状态变化记录到文件。两个核心坑：(1) 内核不能调 <code>write()</code>，必须自己写 <code>fprintk</code>；(2) PCB 里就绪和运行是同一个状态值，区分靠"是否被 schedule 选中"。调度算法用 <code>counter</code> 反馈机制自动偏向 IO 密集型进程。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab9-信号量与生产者—消费者问题">Lab9 信号量与生产者—消费者问题</h4>
+<p>Dijkstra 在 1965 年提出信号量（Semaphore），用一个<strong>整型变量 + 一个等待队列</strong>解决进程同步/互斥问题。Lab9 给 Linux 0.11 加 4 个系统调用（<code>sem_open / sem_wait / sem_post / sem_unlink</code>），用它们解决经典的生产者—消费者问题。</p>
+<div class="note note-primary">
+            <p><strong>信号量的本质</strong></p><p>一个整数 <code>value</code> + 一个等待队列。<code>value &gt;= 0</code> 表示可用资源数；<code>value &lt; 0</code> 时，<code>|value|</code> 表示有多少进程在等待。</p><p>整个机制就建立在"value 这个整数的符号语义"上。</p>
+          </div>
+<h5 id="P-V-操作-——-Dijkstra-的荷兰语命名">P/V 操作 —— Dijkstra 的荷兰语命名</h5>
+<p><code>sem_wait</code> 是 <strong>P 操作</strong>（proberen，荷兰语"测试"），<code>sem_post</code> 是 <strong>V 操作</strong>（verhogen，“增加”）：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">sys_sem_wait</span><span class="hljs-params">(<span class="hljs-type">sem_t</span>* sem)</span> {<br>    cli();                          <span class="hljs-comment">// ① 关中断（原子性保证）</span><br>    sem-&gt;value--;                   <span class="hljs-comment">// ② 资源 -1</span><br>    <span class="hljs-keyword">if</span> (sem-&gt;value &lt; <span class="hljs-number">0</span>) {           <span class="hljs-comment">// ③ 没资源了</span><br>        wait_task(current, sem);    <span class="hljs-comment">//    加入等待队列</span><br>        current-&gt;state = TASK_UNINTERRUPTIBLE;<br>        schedule();                 <span class="hljs-comment">//    让出 CPU</span><br>    }<br>    sti();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">sys_sem_post</span><span class="hljs-params">(<span class="hljs-type">sem_t</span>* sem)</span> {<br>    cli();<br>    sem-&gt;value++;<br>    <span class="hljs-keyword">if</span> (sem-&gt;value &lt;= <span class="hljs-number">0</span> &amp;&amp; sem-&gt;wait != <span class="hljs-literal">NULL</span>) {   <span class="hljs-comment">// 还有进程在等</span><br>        first = sem-&gt;wait;<br>        p = first-&gt;task;<br>        p-&gt;state = TASK_RUNNING;    <span class="hljs-comment">// 唤醒队首进程</span><br>        sem-&gt;wait = first-&gt;next;<br>        <span class="hljs-built_in">free</span>(first);<br>    }<br>    sti();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>P 操作的优雅</strong></p><p>P 操作里 <code>value--</code> <strong>不管结果怎样都先减</strong>。减完看符号：≥0 说明拿到资源继续跑，&lt;0 说明没资源要排队。一个操作两个含义。</p><p>V 操作里 <code>value &lt;= 0</code> 才唤醒：如果 <code>value &gt; 0</code> 说明根本没人在等，加完资源直接返回就行。<code>value &lt;= 0</code> 说明有进程在排队（之前 P 把 value 减成负数了），必须唤醒一个。</p>
+          </div>
+<h5 id="cli-sti-——-单核时代的原子性保证"><code>cli/sti</code> —— 单核时代的原子性保证</h5>
+<p><code>cli</code> = clear interrupt flags（关中断），<code>sti</code> = set interrupt flags（开中断）。</p>
+<div class="note note-warning">
+            <p><strong>为什么 P/V 必须关中断</strong></p><p><code>sem-&gt;value--</code> 在 C 层面不是原子的，编译后是多条汇编：</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asm">movl sem-&gt;value, %eax    ; 读<br>decl %eax                ; 减<br>movl %eax, sem-&gt;value    ; 写<br></code></pre></td></tr></tbody></table></figure><p>如果中间发生时钟中断 → schedule → 另一个进程也来 P 操作 → <strong>两个进程都通过了 <code>value--</code>，但 value 只减了 1</strong>。这就是经典的竞态条件。</p><p>Linux 0.11 是单核系统，<strong>关中断</strong>就能保证这段代码不被打断，等价于"原子操作"。但<strong>多核系统下关中断没用</strong>（另一个核照样跑），必须用 <code>lock</code> 前缀、CAS、自旋锁。</p>
+          </div>
+<h5 id="三个信号量协同-——-empty-full-mutex">三个信号量协同 —— empty/full/mutex</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">sem_t</span>* empty  = sem_open(<span class="hljs-string">"empty"</span>,  BUFFER_SIZE);   <span class="hljs-comment">// 空槽位数</span><br><span class="hljs-type">sem_t</span>* full   = sem_open(<span class="hljs-string">"full"</span>,   <span class="hljs-number">0</span>);              <span class="hljs-comment">// 满槽位数</span><br><span class="hljs-type">sem_t</span>* mutex  = sem_open(<span class="hljs-string">"mutex"</span>,  <span class="hljs-number">1</span>);              <span class="hljs-comment">// 缓冲区互斥锁</span><br></code></pre></td></tr></tbody></table></figure>
+<p><strong>生产者</strong>：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">sem_wait(empty);        <span class="hljs-comment">// ① 申请空位（满了就等）</span><br>sem_wait(mutex);        <span class="hljs-comment">// ② 申请缓冲区互斥锁</span><br><span class="hljs-comment">// ... 写缓冲区 ...</span><br>sem_post(mutex);        <span class="hljs-comment">// ③ 释放锁</span><br>sem_post(full);         <span class="hljs-comment">// ④ 通知消费者有新产品</span><br></code></pre></td></tr></tbody></table></figure>
+<h5 id="反直觉点：顺序绝对不能换">反直觉点：顺序绝对不能换</h5>
+<div class="note note-danger">
+            <p><strong>死锁的诞生</strong></p><p>如果把生产者代码改成 <code>sem_wait(mutex); sem_wait(empty);</code>，假设缓冲区满了：</p><figure class="highlight abnf"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-number">1</span>. 生产者 P(mutex) → mutex <span class="hljs-operator">=</span> <span class="hljs-number">0</span> ✓（拿到锁）<br><span class="hljs-number">2</span>. 生产者 P(empty) → empty <span class="hljs-operator">=</span> -<span class="hljs-number">1</span> ✗（阻塞，等消费者拿产品）<br><span class="hljs-number">3</span>. 消费者 P(full)  → full <span class="hljs-operator">=</span> N-<span class="hljs-number">1</span> ✓<br><span class="hljs-number">4</span>. 消费者 P(mutex) → mutex <span class="hljs-operator">=</span> -<span class="hljs-number">1</span> ✗（阻塞，等生产者放锁）<br></code></pre></td></tr></tbody></table></figure><p><strong>生产者拿 mutex 等 empty，消费者拿不到 mutex 等 mutex —— 经典死锁</strong>。</p><p>正确顺序必须<strong>先 P 同步信号量（empty/full），再 P 互斥信号量（mutex）</strong>。这样阻塞的时候不会占着 mutex，别人还能进缓冲区。</p><p>这破坏了死锁四条件中的"持有并等待"。</p>
+          </div>
+<h5 id="get-fs-byte-——-跨用户-内核空间读字符串"><code>get_fs_byte</code> —— 跨用户/内核空间读字符串</h5>
+<p><code>sys_sem_open</code> 拿到用户传来的字符串指针 <code>name</code>，但<strong>不能直接 <code>*name</code></strong> —— 用户空间的指针在内核态访问范围之外。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span>* <span class="hljs-title function_">get_name</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* user_name)</span> {<br>    <span class="hljs-type">static</span> <span class="hljs-type">char</span> kernel_name[<span class="hljs-number">16</span>];<br>    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;<br>    <span class="hljs-type">char</span> temp;<br>    <span class="hljs-keyword">while</span> ((temp = get_fs_byte(user_name + i)) != <span class="hljs-string">'\0'</span>) {<br>        kernel_name[i] = temp;     <span class="hljs-comment">// 逐字节从用户空间拷到内核空间</span><br>        i++;<br>    }<br>    <span class="hljs-keyword">return</span> kernel_name;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>fs 段前缀访问</strong></p><p>这就是 Lab4 讲的"<code>fs = 0x17</code> 是 Linux 0.11 的特色"的具体应用 —— 内核通过 fs 段寄存器读用户数据。<code>get_fs_byte</code> 内部用 <code>fs:</code> 段前缀访问地址。</p><p>返回 <code>static char kernel_name[16]</code> 是因为局部变量会被回收 —— <code>static</code> 让它的生命周期变成整个程序。代价是<strong>函数不可重入</strong>，但在关中断保护下用是安全的。</p>
+          </div>
+<h5 id="共享内存-vs-其他-IPC-对比">共享内存 vs 其他 IPC 对比</h5>
+<table>
+<thead>
+<tr>
+<th>IPC 方式</th>
+<th>速度</th>
+<th>容量</th>
+<th>同步需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文件</td>
+<td>慢</td>
+<td>大</td>
+<td>需信号量/锁</td>
+</tr>
+<tr>
+<td>管道（pipe）</td>
+<td>中</td>
+<td>小</td>
+<td>内核自动阻塞</td>
+</tr>
+<tr>
+<td>信号</td>
+<td>快</td>
+<td>极小</td>
+<td>不传数据，只通知</td>
+</tr>
+<tr>
+<td>信号量</td>
+<td>快</td>
+<td>无</td>
+<td>自身就是同步</td>
+</tr>
+<tr>
+<td>共享内存</td>
+<td><strong>最快</strong></td>
+<td>大</td>
+<td><strong>必须配信号量</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>信号量 = 整数 value + 等待队列。P 操作 <code>value--</code>（&lt; 0 就排队），V 操作 <code>value++</code>（&lt;= 0 就唤醒一个）。生产者—消费者三件套：<code>empty</code>（空位数）、<code>full</code>（满位数）、<code>mutex</code>（互斥锁）—— <strong>顺序绝不能换</strong>，否则死锁。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab10-分配和释放物理页">Lab10 分配和释放物理页</h4>
+<p>物理内存管理的核心数据结构是 <code>mm/memory.c:188</code> 的一个<strong>字节数组</strong>：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> mem_map[ PAGING_PAGES ] = {<span class="hljs-number">0</span>,};<br></code></pre></td></tr></tbody></table></figure>
+<p>每个字节代表一个物理页（4KB），值是<strong>引用计数</strong>：0 表示空闲，&gt;0 表示被引用的次数。</p>
+<div class="note note-primary">
+            <p><strong>mem_map 的本质</strong></p><p>不是布尔型的"占用 / 空闲"标志，而是<strong>引用计数</strong> —— 支持多个进程共享同一物理页（COW、共享内存、文件缓存页全靠它）。</p>
+          </div>
+<h5 id="物理内存的三层划分">物理内存的三层划分</h5>
+<figure class="highlight scss"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-number">0</span> ─────────────── LOW_MEM (<span class="hljs-number">1</span>MB) ───── HIGH_MEMORY ────── <span class="hljs-number">16</span>MB+<br>│   内核 + BIOS        │   分页管理区        │  不可用<br>│   不参与 mem_map     │   mem_map<span class="hljs-selector-attr">[]</span> 覆盖    │<br>└─────────────────────┴────────────────────┴──────────<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><strong>0 ~ 1MB</strong>：留给内核代码、BIOS 数据，<strong>不参与分页管理</strong>，物理地址 = 线性地址</li>
+<li><strong>1MB ~ HIGH_MEMORY</strong>：主内存区，所有进程的物理页从这里分</li>
+<li><strong>HIGH_MEMORY 以上</strong>：硬件限制（早期 PC 最多 16MB）</li>
+</ul>
+<h5 id="get-free-page-——-反向扫描的智慧"><code>get_free_page</code> —— 反向扫描的智慧</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> <span class="hljs-title function_">get_free_page</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> {<br>    __asm__(<br>        <span class="hljs-string">"std ; repne ; scasb\n\t"</span>        <span class="hljs-comment">// 反向扫描</span><br>        <span class="hljs-string">"jne 1f\n\t"</span>                     <span class="hljs-comment">// 全部非0，没空闲页</span><br>        <span class="hljs-string">"movb $1, 1(%%edi)\n\t"</span>          <span class="hljs-comment">// mem_map[该位置] = 1</span><br>        ...<br>        :<span class="hljs-string">"=a"</span> (__res)<br>        :<span class="hljs-string">"0"</span> (<span class="hljs-number">0</span>), <span class="hljs-string">"i"</span> (LOW_MEM), <span class="hljs-string">"c"</span> (PAGING_PAGES), <span class="hljs-string">"D"</span> (mem_map+PAGING_PAGES<span class="hljs-number">-1</span>)<br>    );<br>    <span class="hljs-keyword">return</span> __res;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>为什么反向扫描？</strong></p><p><code>%4</code> 操作数 <code>"D" (mem_map+PAGING_PAGES-1)</code> 把 EDI 指向 <code>mem_map</code> 的<strong>最后一个字节</strong>。<code>std</code> 设置方向标志让 <code>scasb</code> 后 EDI 自动递减，扫描方向是<strong>从尾到头</strong>。</p><p><strong>反碎片策略</strong>：高地址页先被消耗，低地址页尽量留空。当需要连续多个物理页时，低地址区域更可能保留连续的大块。</p><p><code>get_free_page</code> 第一次被调用时返回的是<strong>物理页框号最大的那个</strong> —— 报告里调试时观察到这个现象，原因就是反向扫描。</p>
+          </div>
+<h5 id="free-page-——-引用计数减-1，不是置-0"><code>free_page</code> —— 引用计数减 1，不是置 0</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">free_page</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> addr)</span> {<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> page_num = MAP_NR(addr);<br>    <span class="hljs-keyword">if</span> (mem_map[page_num] &gt; <span class="hljs-number">0</span>) {<br>        mem_map[page_num]--;        <span class="hljs-comment">// ← 不是 =0，是 --</span><br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>为什么不直接置 0？因为<strong>多个进程可能共享同一物理页</strong> —— 这就是 Lab5 讲的 COW 机制：</p>
+<ul>
+<li>fork 后父子进程共享页，<code>mem_map</code> 引用计数 = 2</li>
+<li>父进程写 → 触发缺页 → 内核新分配一页 → 父进程 <code>mem_map</code> 减 1 → 引用计数 = 1</li>
+<li>子进程退出 → <code>free_page</code> → 引用计数 = 0 → 页真正回归空闲池</li>
+</ul>
+<h5 id="x86-字符串指令-——-rep-scasb-stosl-硬件加速">x86 字符串指令 —— <code>rep / scasb / stosl</code> 硬件加速</h5>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>std</code></td>
+<td>DF = 1（方向标志置位），EDI 自动递减</td>
+</tr>
+<tr>
+<td><code>repne scasb</code></td>
+<td>循环比较 AL 与 <code>[EDI]</code>，不等就继续（每次 EDI ±= 1）</td>
+</tr>
+<tr>
+<td><code>rep stosl</code></td>
+<td>循环把 EAX 写入 <code>[EDI]</code>（每次 EDI ±= 4）</td>
+</tr>
+</tbody>
+</table>
+<p>这相当于 C 里的 <code>for</code> 循环，但<strong>完全在 CPU 微码里执行</strong>，比手写循环快得多。Linux 0.11 大量用这种字符串指令做内存操作。</p>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>物理内存管理的核心是 <code>mem_map[]</code> 字节数组 —— 每字节代表一个 4KB 物理页，值是<strong>引用计数</strong>（不是布尔标志）。<code>get_free_page</code> 反向扫描找空闲页（反碎片），<code>free_page</code> 引用计数减 1（支持 COW 共享）。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab11-跟踪逻辑地址、线性地址、物理地址的映射">Lab11 跟踪逻辑地址、线性地址、物理地址的映射</h4>
+<p>这是整个 OS 实验里最核心的章节之一 —— Linux 0.11 内存管理的全部精华。从一段简单的死循环程序开始：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> {<br>    <span class="hljs-keyword">while</span>(i != <span class="hljs-number">0</span>) { }     <span class="hljs-comment">// 死循环</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>变量 <code>i</code> 在编译后落在某个内存地址。从源代码到 CPU 真正访问那块物理内存，<strong>要经过两次地址翻译</strong>：段机制 + 页机制。</p>
+<div class="note note-primary">
+            <p><strong>三种地址 —— 别再混淆</strong></p><table><thead><tr><th>地址</th><th>形式</th><th>谁产生的</th></tr></thead><tbody><tr><td>逻辑地址</td><td><code>段选择符:段内偏移</code></td><td>程序里写的、汇编里看到的</td></tr><tr><td>线性地址</td><td>32 位无符号整数</td><td>段机制翻译逻辑地址后得到</td></tr><tr><td>物理地址</td><td>32 位硬件地址</td><td>页机制翻译线性地址后得到</td></tr></tbody></table><p>现代 Linux 几乎不用段机制（段基址全设为 0），所以线性地址 = 逻辑地址的偏移部分。但 <strong>Linux 0.11 充分利用段机制做进程隔离</strong>，必须老老实实走完两层翻译。</p>
+          </div>
+<h5 id="段选择符-——-16-位的-路标">段选择符 —— 16 位的"路标"</h5>
+<p><code>DS</code> 寄存器存的是段选择符（16 位）：</p>
+<figure class="highlight delphi"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs delphi">┌─────────────────┬─────┬───────┐<br>│   <span class="hljs-keyword">Index</span> (<span class="hljs-number">13</span>位)  │ TI  │  RPL  │<br>└─────────────────┴─────┴───────┘<br></code></pre></td></tr></tbody></table></figure>
+<p><code>DS = 0x0017</code> 二进制是 <code>0000000000010111</code>：</p>
+<ul>
+<li><strong>Index = 2</strong>：在 LDT（TI=1）里找第 3 个段描述符</li>
+<li><strong>TI = 1</strong>：用 LDT（不是 GDT）。每个进程有自己的 LDT</li>
+<li><strong>RPL = 3</strong>：请求特权级 3（用户态），CPU 据此做权限检查</li>
+</ul>
+<h5 id="段描述符-——-8-字节的-段说明书">段描述符 —— 8 字节的"段说明书"</h5>
+<p>GDT/LDT 是<strong>段描述符的数组</strong>，每项 8 字节。LDT[2]（数据段描述符）的内容是 <code>0x00003fff 0x10c0f300</code>，按位拼出<strong>段基址 = 0x10000000</strong>。</p>
+<p>这就是为什么 ds:0x3004 的线性地址 = <code>0x10000000 + 0x3004 = 0x10003004</code>。</p>
+<h5 id="LDT-怎么找到-——-套娃式查表">LDT 怎么找到 —— 套娃式查表</h5>
+<figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">LDTR</span> 寄存器(<span class="hljs-number">0</span>x68)  →  GDT[<span class="hljs-number">13</span>]  →  LDT 物理基址 <span class="hljs-number">0</span>x00f9d2d0  →  LDT[<span class="hljs-number">2</span>]  →  段基址 <span class="hljs-number">0</span>x10000000<br></code></pre></td></tr></tbody></table></figure>
+<p>x86 设计要求 LDT 自己也要"被一个段描述符描述"，<strong>LDTR 寄存器本质是 GDT 中的一个选择子</strong>。</p>
+<h5 id="二级页表-——-32-位拆三段">二级页表 —— 32 位拆三段</h5>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs">┌──────────┬──────────┬─────────────┐<br>│ 高10位    │ 中10位    │ 低12位       │<br>│ 页目录号  │ 页表号    │ 页内偏移     │<br>└──────────┴──────────┴─────────────┘<br></code></pre></td></tr></tbody></table></figure>
+<p><code>0x10003004</code> = <code>0001 0000 0000 0000 0011 0000 0000 0100</code>：</p>
+<figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">0001000000 </span>= <span class="hljs-number">64</span>      ← 页目录号<br><span class="hljs-symbol">0000001100 </span>= <span class="hljs-number">3</span>        ← 页表号<br><span class="hljs-symbol">000000000100 </span>= <span class="hljs-number">4</span>     ← 页内偏移<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>二级页表的精妙</strong></p><ul><li><strong>12 位偏移</strong>：页大小 4KB = 2^12</li><li><strong>10 位页表索引</strong>：一张页表 1024 项 = 2^10</li><li><strong>10 位目录索引</strong>：一个页目录 1024 项 = 2^10</li><li>总寻址：2^10 × 2^10 × 2^12 = 4GB ✓</li></ul><p><strong>节省内存</strong>：不用的页表项不需要存在内存里。一级页表要 4MB / 进程，二级只用 68KB（1 个页目录 + 16 个页表，对 64MB 进程）。</p>
+          </div>
+<h5 id="翻译流程-——-三次内存访问">翻译流程 —— 三次内存访问</h5>
+<figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">1</span>. CR3 寄存器 = 页目录物理地址（这里是 <span class="hljs-number">0</span>）<br><span class="hljs-attribute">2</span>. 读 页目录[<span class="hljs-number">64</span>]      → 得到页表物理地址 <span class="hljs-number">0</span>x00faa000<br><span class="hljs-attribute">3</span>. 读 页表[<span class="hljs-number">3</span>]         → 得到物理页地址 <span class="hljs-number">0</span>x00fa7000<br><span class="hljs-attribute">4</span>. 物理地址 = <span class="hljs-number">0</span>x00fa7000 + <span class="hljs-number">4</span> = <span class="hljs-number">0</span>x00fa7004<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>每次访存实际上 CPU 要访问 3 次内存</strong>。为加速，x86 引入了 <strong>TLB（Translation Lookaside Buffer）</strong> —— 缓存"线性地址 → 物理地址"的映射。</p>
+<h5 id="分段隔离-共享物理页">分段隔离 + 共享物理页</h5>
+<p>fork 出子进程后观察：</p>
+<table>
+<thead>
+<tr>
+<th>进程</th>
+<th>逻辑地址（i）</th>
+<th>段基址</th>
+<th>线性地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>父进程 PID 6</td>
+<td><code>ds:0x3004</code></td>
+<td>0x10000000</td>
+<td>0x10003004</td>
+</tr>
+<tr>
+<td>子进程 PID 7</td>
+<td><code>ds:0x3004</code></td>
+<td>0x14000000</td>
+<td>0x14003004</td>
+</tr>
+</tbody>
+</table>
+<p><strong>父子进程逻辑地址相同</strong>（源代码一样），但 fork 时 <code>copy_mem</code> 给子进程分配了新段基址 <code>nr * 0x4000000</code>，所以段机制完成了<strong>进程隔离</strong>。</p>
+<p>但<strong>物理地址相同</strong>！因为 fork 时 <code>copy_page_tables</code> 只复制页表项，两份页表项指向同一个物理页 —— 这就是 COW 在二级页表层面的具体表现。</p>
+<div class="note note-primary">
+            <p><strong>内核的恒等映射</strong></p><p><code>boot/head.s</code> 启动时把全部 16MB 物理内存映射到<strong>线性地址相同的物理地址</strong>（identity mapping）：</p><figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">线性地址 0x0 → 物理地址 0x0<br>线性地址 0x1000 → 物理地址 0x1000<br></code></pre></td></tr></tbody></table></figure><p>内核代码这样设置后，自己访问任何物理地址都直接用线性地址，省去翻译成本。内核段基址 = 0，所以内核态的逻辑地址偏移 == 线性地址 == 物理地址。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>三种地址：逻辑（段选择符:偏移）→ 线性（段机制翻译后）→ 物理（页机制翻译后）。段机制用 GDT/LDT 做进程隔离，页机制用二级页表（10+10+12 位）做虚拟内存映射。Linux 0.11 同时用两种机制，现代 Linux 段基址全设 0，只用页机制。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab12-输出应用程序进程的页目录和页表">Lab12 输出应用程序进程的页目录和页表</h4>
+<p>Lab11 是从外部观察地址翻译，Lab12 是<strong>自己写代码遍历二级页表</strong>，把页目录和页表的内容打印出来。核心就是一个系统调用 <code>sys_table_mapping</code>，写双重循环遍历整个页表结构。</p>
+<div class="note note-primary">
+            <p><strong>实验的工程价值</strong></p><p>把隐藏的数据结构可视化 —— Lab11 是用 Bochs 调试器手动一个个查（痛苦），Lab12 是写代码自动遍历整个页表（高效）。</p><p>这是系统调试的标准模式 —— <strong>当你看不清一个数据结构时，写个工具打印它</strong>。Linux 后来发明的 <code>/proc</code> 文件系统就是这个思路的极致版本。</p>
+          </div>
+<h5 id="双重循环-——-二级页表的标准遍历">双重循环 —— 二级页表的标准遍历</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">sys_table_mapping</span><span class="hljs-params">()</span> {<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> index_of_dir, index_of_table;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> entry;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> page_table_base;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> page_dir_base = <span class="hljs-number">0</span>;          <span class="hljs-comment">// CR3 = 0，页目录在物理地址 0</span><br><br>    <span class="hljs-keyword">for</span> (index_of_dir = <span class="hljs-number">0</span>; index_of_dir &lt; <span class="hljs-number">1024</span>; index_of_dir++) {<br>        entry = ((<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> *)page_dir_base)[index_of_dir];<br>        <span class="hljs-keyword">if</span> (!(entry &amp; <span class="hljs-number">1</span>)) <span class="hljs-keyword">continue</span>;           <span class="hljs-comment">// 跳过无效的 PDE（P 位 = 0）</span><br><br>        page_table_base = <span class="hljs-number">0xFFFFF000</span> &amp; entry; <span class="hljs-comment">// 取页表物理地址（清低 12 位属性）</span><br><br>        <span class="hljs-keyword">for</span> (index_of_table = <span class="hljs-number">0</span>; index_of_table &lt; <span class="hljs-number">1024</span>; index_of_table++) {<br>            entry = ((<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> *)page_table_base)[index_of_table];<br>            <span class="hljs-keyword">if</span> (!(entry &amp; <span class="hljs-number">1</span>)) <span class="hljs-keyword">continue</span>;       <span class="hljs-comment">// 跳过无效的 PTE</span><br>            <span class="hljs-comment">// 打印 ...</span><br>        }<br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>外层 1024 次循环遍历<strong>页目录项（PDE）</strong>，每个有效的 PDE 指向一张页表。内层 1024 次循环遍历那张页表的所有<strong>页表项（PTE）</strong>。</p>
+<h5 id="P-位-——-在内存中-标志">P 位 —— "在内存中"标志</h5>
+<div class="note note-info">
+            <p><strong>PDE/PTE 的最低位（bit 0）</strong></p><p>是 P（Present）标志：</p><ul><li>P = 1：该页/页表在物理内存中，可以访问</li><li>P = 0：不在内存中（被换出到 swap、或未分配）→ 访问会触发缺页异常</li></ul><p>P 位是<strong>按需调页</strong>（demand paging）的基础 —— 操作系统可以把暂时不用的页换出，PTE 的 P 位置 0，访问时触发异常由内核处理。</p>
+          </div>
+<h5 id="物理地址直接当指针用-——-内核恒等映射的便利">物理地址直接当指针用 —— 内核恒等映射的便利</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">entry = ((<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> *)page_table_base)[index_of_table];<br></code></pre></td></tr></tbody></table></figure>
+<p><code>page_table_base</code> 是<strong>页表的物理地址</strong>，但代码直接把它当 C 指针解引用。这在用户态会崩溃，在 Linux 0.11 内核态却可以：</p>
+<div class="note note-primary">
+            <p><strong>内核段基址 = 0 + 内核恒等映射</strong></p><p>→ 物理地址 = 线性地址 = 逻辑地址偏移</p><p>所以内核代码里的指针既可以是"逻辑地址"（编译器视角），又可以直接拿物理地址来用。这个特性是 Lab11 讲的恒等映射的具体应用。</p><p>用户态没有这个特权 —— 用户段基址 = <code>nr * 0x4000000</code>，且没有恒等映射。</p>
+          </div>
+<h5 id="PDE-高-20-位-页表物理地址">PDE 高 20 位 = 页表物理地址</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">page_table_base = <span class="hljs-number">0xFFFFF000</span> &amp; entry;<br></code></pre></td></tr></tbody></table></figure>
+<p>PDE 是 32 位，<strong>低 12 位是属性位</strong>（P、R/W、U/S、A、D 等），高 20 位才是页表地址。因为页表必须页对齐（4KB 边界），低 12 位总是 0，可以腾出来存属性。</p>
+<p><code>0xFFFFF000</code> 的二进制是 20 个 1 后跟 12 个 0 —— 用 AND 把低 12 位清零，保留高 20 位地址。</p>
+<h5 id="线性地址反向计算">线性地址反向计算</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">LA = (index_of_dir &lt;&lt; <span class="hljs-number">22</span>) | (index_of_table &lt;&lt; <span class="hljs-number">12</span>)<br></code></pre></td></tr></tbody></table></figure>
+<p>Lab11 讲的"线性地址三段拆分"的反向操作：</p>
+<figure class="highlight inform7"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs inform7">线性地址 32 位 = <span class="hljs-comment">[页目录号:10]</span><span class="hljs-comment">[页表号:10]</span><span class="hljs-comment">[页内偏移:12]</span><br>                  ↓             ↓           ↓<br>                  index_of_dir  index_of_table  0（页起始）<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>Lab12 = 给内核加一个系统调用遍历二级页表。核心模式：双重循环 + <code>P 位</code>过滤无效项 + <code>0xFFFFF000 &amp; entry</code> 取物理地址（清属性位）+ 内核恒等映射让物理地址可直接当指针用。等价于手写一个简版的 <code>/proc/pid/pagemap</code>。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab13-共享内存解决生产者—消费者问题">Lab13 共享内存解决生产者—消费者问题</h4>
+<p>Lab9 用文件做共享缓冲区（多消费者通过 <code>filebuffer.txt</code> 通信），慢且繁琐。Lab13 用<strong>共享物理页</strong>重写这个方案 —— 生产者和消费者把<strong>同一个物理页</strong>映射到各自的线性地址空间，通过指针直接读写，速度比文件 I/O 快几个数量级。</p>
+<div class="note note-primary">
+            <p><strong>共享内存的本质</strong></p><p>多个进程的页表项指向同一个物理页框 —— Lab11 讲的"两个线性地址映射到同一物理页"的工程实现。靠 <code>mem_map</code> 维护引用计数。</p>
+          </div>
+<h5 id="shmget-——-共享页的-分配或复用"><code>shmget</code> —— 共享页的"分配或复用"</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-built_in">vector</span>[<span class="hljs-number">20</span>] = {<span class="hljs-number">0</span>};          <span class="hljs-comment">// 全局映射表：key → 物理页地址</span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">sys_shmget</span><span class="hljs-params">(<span class="hljs-type">int</span> key, <span class="hljs-type">int</span> size)</span> {<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">vector</span>[key] != <span class="hljs-number">0</span>)      <span class="hljs-comment">// 已存在</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">vector</span>[key];<br><br>    <span class="hljs-keyword">if</span> (size &gt; <span class="hljs-number">4096</span>) <span class="hljs-keyword">return</span> -EINVAL;<br><br>    <span class="hljs-type">int</span> <span class="hljs-built_in">free</span> = get_free_page();<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">free</span>) <span class="hljs-keyword">return</span> -ENOMEM;<br><br>    <span class="hljs-built_in">vector</span>[key] = <span class="hljs-built_in">free</span>;        <span class="hljs-comment">// 记录 key → 物理页地址</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">vector</span>[key];<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>第一次调用 <code>shmget(5, 4096)</code>：分配新页。第二次调用 <code>shmget(5, 4096)</code>（来自另一个进程）：发现 <code>vector[5]</code> 已存在，<strong>直接返回已有地址</strong> —— 这就是"共享"的来源。</p>
+<h5 id="shmat-——-把物理页-贴-到当前进程的地址空间"><code>shmat</code> —— 把物理页"贴"到当前进程的地址空间</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span>* <span class="hljs-title function_">sys_shmat</span><span class="hljs-params">(<span class="hljs-type">int</span> shmid, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *shmaddr)</span> {<br>    <span class="hljs-keyword">if</span> (!shmid) <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>    put_page(shmid, current-&gt;start_code + current-&gt;brk);<br>    <span class="hljs-keyword">return</span> (<span class="hljs-type">void</span>*)current-&gt;brk;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p><code>put_page(物理地址, 线性地址)</code> 修改当前进程的页表，把那个物理页映射到指定的线性地址。</p>
+<div class="note note-info">
+            <p><strong>关键设计：返回的是"线性地址"，不是物理地址</strong></p><ul><li>进程 A 调用 <code>shmat</code> 拿到指针 <code>0x10003000</code></li><li>进程 B 调用 <code>shmat</code> 拿到指针 <code>0x14003000</code>（不同的线性地址）</li><li>但两个指针指向<strong>同一个物理页</strong></li></ul><p>共享内存的本质就是多个进程的页表项指向同一个物理页框。</p>
+          </div>
+<h5 id="Bug-修复-——-“trying-to-free-free-page”">Bug 修复 —— “trying to free free page”</h5>
+<p>报告里提到一个真实 bug：程序运行到最后会报错 <code>trying to free free page</code>。</p>
+<div class="note note-danger">
+            <p><strong>引用计数没维护的死锁场景</strong></p><ol><li>生产者 <code>shmget(5, 4096)</code> → 分配物理页 P，<code>mem_map[P] = 1</code></li><li>消费者 <code>shmget(5, 4096)</code> → <code>vector[5]</code> 已存在，<strong>直接返回 P，但 <code>mem_map[P]</code> 没动</strong>（还是 1）</li><li>生产者退出 → <code>free_page(P)</code> → <code>mem_map[P] = 0</code> → 页回归空闲池</li><li>消费者退出 → <code>free_page(P)</code> → <code>mem_map[P]</code> 已经是 0 → panic！</li></ol><p><strong>修复</strong>：在 <code>shmget</code> 复用已有页时，<code>mem_map[page]++</code>：</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> (<span class="hljs-built_in">vector</span>[key] != <span class="hljs-number">0</span>) {<br>    mem_map[(<span class="hljs-built_in">vector</span>[key] - LOW_MEM) &gt;&gt; <span class="hljs-number">12</span>]++;   <span class="hljs-comment">// ← 引用计数 +1</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">vector</span>[key];<br>}<br></code></pre></td></tr></tbody></table></figure><p>这个 bug 揭示了<strong>共享资源管理的核心原则</strong>：分配一次，引用计数 +1；释放时 -1，归零才真正回收。</p>
+          </div>
+<h5 id="IPC-方式速度对比">IPC 方式速度对比</h5>
+<table>
+<thead>
+<tr>
+<th>IPC 方式</th>
+<th>速度</th>
+<th>容量</th>
+<th>同步需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文件</td>
+<td>慢</td>
+<td>大</td>
+<td>需信号量/锁</td>
+</tr>
+<tr>
+<td>管道（pipe）</td>
+<td>中</td>
+<td>小</td>
+<td>内核自动阻塞</td>
+</tr>
+<tr>
+<td>信号</td>
+<td>快</td>
+<td>极小</td>
+<td>不传数据，只通知</td>
+</tr>
+<tr>
+<td>信号量</td>
+<td>快</td>
+<td>无</td>
+<td>自身就是同步</td>
+</tr>
+<tr>
+<td>共享内存</td>
+<td><strong>最快</strong></td>
+<td>大</td>
+<td><strong>必须配信号量</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="note note-warning">
+            <p><strong>共享内存是最快的 IPC，但也是最危险的</strong></p><p>没有内核同步保护，多个进程并发读写共享内存会数据竞争。Lab13 必须配 Lab9 的信号量（empty/full/mutex）才能正确工作，<strong>共享内存 + 信号量</strong>是经典组合。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>共享内存 = 多个进程的页表项指向同一物理页。<code>shmget</code> 分配/复用，<code>shmat</code> 映射到当前进程。<strong>核心坑</strong>：复用时必须 <code>mem_map[page]++</code> 维护引用计数，否则释放时报"trying to free free page"。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab14-页面置换算法">Lab14 页面置换算法</h4>
+<p>物理内存有限，进程访问的虚拟页远多于物理页时，内核必须把暂时不用的页换出（swap out）到硬盘 —— 这就是<strong>页面置换</strong>。Lab14 用 Windows 控制台程序模拟这个算法，重点对比 OPT、FIFO、LRU、LFU、CLOCK 五种策略。</p>
+<h5 id="五种算法的本质对比">五种算法的本质对比</h5>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>决策依据</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OPT</td>
+<td>未来最远才用</td>
+<td><strong>理论最优</strong></td>
+<td>无法预知未来，仅作基准</td>
+</tr>
+<tr>
+<td>FIFO</td>
+<td>进入内存的顺序</td>
+<td>实现最简单</td>
+<td>Belady 异常，性能差</td>
+</tr>
+<tr>
+<td>LRU</td>
+<td>过去最久未访问</td>
+<td>接近 OPT</td>
+<td>实现开销大（时间戳或链表）</td>
+</tr>
+<tr>
+<td>LFU</td>
+<td>过去访问次数少</td>
+<td>适合热点数据</td>
+<td>历史包袱（旧热点清不掉）</td>
+</tr>
+<tr>
+<td>CLOCK</td>
+<td>引用位近似 LRU</td>
+<td>硬件友好，快</td>
+<td>LRU 的粗糙近似</td>
+</tr>
+</tbody>
+</table>
+<h5 id="OPT-——-淘汰-未来最远才用-的页">OPT —— 淘汰"未来最远才用"的页</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">DistanceOpt</span><span class="hljs-params">(<span class="hljs-type">int</span> *BlockofMemory, <span class="hljs-type">int</span> *PageNumofRef, <span class="hljs-type">int</span> j, <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> PageNumRefCount)</span> {<br>    <span class="hljs-type">int</span> k;<br>    <span class="hljs-keyword">for</span> (k = i + <span class="hljs-number">1</span>; k &lt; PageNumRefCount; k++)<br>        <span class="hljs-keyword">if</span> (BlockofMemory[j] == PageNumofRef[k])<br>            <span class="hljs-keyword">return</span> k;                  <span class="hljs-comment">// 找到下次访问的位置</span><br>    <span class="hljs-keyword">return</span> PageNumRefCount;            <span class="hljs-comment">// 永远不再访问，距离最大</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-warning">
+            <p><strong>OPT 无法实现</strong></p><p>因为操作系统不可能知道未来访问序列。它的价值是作为<strong>理论上限</strong> —— 评估其他算法时，用 OPT 的缺页率作为基准，看你的算法离最优还差多少。</p>
+          </div>
+<h5 id="FIFO-——-最简单但有-Belady-异常">FIFO —— 最简单但有 Belady 异常</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">ReplacePage = BlockofMemory[ReplaceIndex];<br>BlockofMemory[ReplaceIndex] = PageNumofRef[i];<br>ReplaceIndex = (ReplaceIndex + <span class="hljs-number">1</span>) % BlockCount;     <span class="hljs-comment">// 循环递增</span><br></code></pre></td></tr></tbody></table></figure>
+<p>FIFO 就一个指针 <code>ReplaceIndex</code>，每次缺页换出<strong>最早进来的页</strong>。</p>
+<div class="note note-danger">
+            <p><strong>Belady 异常</strong></p><p>FIFO 算法有个反直觉现象 —— <strong>增加物理块数反而可能让缺页率上升</strong>。比如引用串 <code>1,2,3,4,1,2,5,1,2,3,4,5</code>：</p><ul><li>3 个物理块：缺页 9 次</li><li>4 个物理块：缺页 <strong>10 次</strong>（更多！）</li></ul><p>这是因为 FIFO 没考虑局部性 —— 最早进来的页可能正是马上要用的。LRU 和 OPT 不会有 Belady 异常（它们属于"栈算法"）。</p>
+          </div>
+<h5 id="LRU-——-看过去，淘汰最久未访问">LRU —— 看过去，淘汰最久未访问</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> *last_use = (<span class="hljs-type">int</span>*)<span class="hljs-built_in">malloc</span>(BlockCount * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));<br><br><span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; PageNumRefCount; i++) {<br>    <span class="hljs-type">int</span> cur = PageNumofRef[i];<br>    <span class="hljs-keyword">if</span> (!PageInBlockofMemory(cur, BlockofMemory, BlockCount)) {<br>        <span class="hljs-comment">// 缺页：找 last_use 最小的（最久未访问）</span><br>        <span class="hljs-type">int</span> min_time = last_use[<span class="hljs-number">0</span>], del_idx = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (j = <span class="hljs-number">1</span>; j &lt; BlockCount; j++) {<br>            <span class="hljs-keyword">if</span> (last_use[j] &lt; min_time) {<br>                min_time = last_use[j];<br>                del_idx = j;<br>            }<br>        }<br>        BlockofMemory[del_idx] = cur;<br>        last_use[del_idx] = i;<br>    } <span class="hljs-keyword">else</span> {<br>        <span class="hljs-comment">// 命中：更新该页的最后访问时间</span><br>        <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; BlockCount; j++)<br>            <span class="hljs-keyword">if</span> (BlockofMemory[j] == cur) {<br>                last_use[j] = i;<br>                <span class="hljs-keyword">break</span>;<br>            }<br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>局部性原理 —— LRU 有效的基础</strong></p><ul><li><strong>时间局部性</strong>：刚访问过的数据，短期内很可能再次访问（循环、计数器）</li><li><strong>空间局部性</strong>：访问某地址后，很可能访问其邻近地址（数组、指令顺序执行）</li></ul><p>LRU 利用了时间局部性 —— 保留最近访问的页，淘汰老的。这就是为什么 LRU 的实际表现接近 OPT。</p>
+          </div>
+<h5 id="CLOCK-——-LRU-的硬件友好近似">CLOCK —— LRU 的硬件友好近似</h5>
+<p>CLOCK 算法（也叫"第二次机会"）：</p>
+<ol>
+<li>所有页组织成<strong>循环链表</strong>，指针指向"下一个候选淘汰页"</li>
+<li>每页有 <strong>1 位引用位（R）</strong>，硬件在页被访问时自动置 1</li>
+<li>缺页时，从指针位置开始扫描：
+<ul>
+<li>R = 1：清零 R，给"第二次机会"，指针前进</li>
+<li>R = 0：淘汰这一页</li>
+</ul>
+</li>
+</ol>
+<div class="note note-primary">
+            <p><strong>CLOCK 的工程价值</strong></p><p><strong>只用 1 位就近似实现了 LRU</strong>，硬件成本极低 —— x86 页表项的 A 位（Accessed）就是给这个用的。</p><p>Linux 内核不用精确 LRU，而是用 <strong>Active/Inactive 链表 + 第二次机会（类似 CLOCK）</strong>，因为它<strong>够好且开销低</strong>。</p>
+          </div>
+<h5 id="同引用串下的缺页率对比">同引用串下的缺页率对比</h5>
+<p>实验引用串 <code>{7,0,1,2,0,3,0,4,2,3,0,1,1,7,0,1,0,3}</code>，结果大致：</p>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>缺页次数</th>
+<th>缺页率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OPT</td>
+<td>7</td>
+<td>0.389</td>
+</tr>
+<tr>
+<td>LRU</td>
+<td>8</td>
+<td>0.444</td>
+</tr>
+<tr>
+<td>FIFO</td>
+<td>10</td>
+<td>0.556</td>
+</tr>
+</tbody>
+</table>
+<p><strong>OPT &lt; LRU &lt; FIFO</strong> —— LRU 只比 OPT 多 1 次缺页，证明局部性原理在实战中确实有效。</p>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>页面置换 = 物理内存不够时，按某种策略把页换到硬盘。<strong>OPT 是理论上限</strong>（无法实现），<strong>LRU 是工程最优</strong>（基于局部性），<strong>CLOCK 是硬件友好的 LRU 近似</strong>。FIFO 有 Belady 异常（加内存反而更糟），生产环境不用。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab15-动态内存分配——边界标识法">Lab15 动态内存分配——边界标识法</h4>
+<p>边界标识法（Boundary Tag）是 C 的 <code>malloc</code> / <code>free</code> 怎么实现的一种方案 —— 每个内存块在头部和尾部都加边界标识，让 O(1) 时间找到邻居块、合并空闲块。</p>
+<div class="note note-primary">
+            <p><strong>核心数据结构</strong></p><p>一个字节数组 <code>mem_map[]</code> 管物理页（Lab10），但 <code>malloc</code> 要管<strong>任意大小</strong>的字节块。边界标识法是字节级内存管理的基础方案。</p>
+          </div>
+<h5 id="内存块的结构-——-头部-尾部双重标识">内存块的结构 —— 头部 + 尾部双重标识</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Bound</span> {</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Bound</span> * <span class="hljs-title">preLink</span>;</span>     <span class="hljs-comment">// 头部前驱指针（双向链表）</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Bound</span> * <span class="hljs-title">upLink</span>;</span>      <span class="hljs-comment">// 尾部 → 头部指针（定位块首）</span><br>    <span class="hljs-type">int</span> tag;                    <span class="hljs-comment">// 0=空闲，1=占用</span><br>    <span class="hljs-type">int</span> size;                   <span class="hljs-comment">// 可用空间大小（不含头尾）</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Bound</span> * <span class="hljs-title">nextLink</span>;</span>    <span class="hljs-comment">// 头部后继指针</span><br>} *Space;<br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FOOT_LOC(p) ((p) + (p-&gt;size) - 1)   <span class="hljs-comment">// 给定头指针算尾指针</span></span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>为什么要"双重标识"？</strong></p><ul><li>头部的 <code>preLink/nextLink</code> 让空闲块组成<strong>双向链表</strong>，O(1) 删除任意节点</li><li>尾部的 <code>upLink</code> 让给一个块的尾部，O(1) 找到它的头部 —— 这是回收时检查"左邻居"的关键</li><li>头尾都有 <code>tag</code> —— 给一个块的任意一端，O(1) 判断它和邻居是不是空闲</li></ul>
+          </div>
+<h5 id="分配算法-——-首次适应">分配算法 —— 首次适应</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c">Space <span class="hljs-title function_">allocBoundTag</span><span class="hljs-params">(Space *pav, <span class="hljs-type">int</span> size)</span> {<br>    Space p = *pav;<br>    <span class="hljs-keyword">for</span> (; p != <span class="hljs-literal">NULL</span> &amp;&amp; p-&gt;size &lt; size &amp;&amp; p-&gt;nextLink != *pav; p = p-&gt;nextLink) ;<br>    <span class="hljs-keyword">if</span> (p == <span class="hljs-literal">NULL</span> || p-&gt;size &lt; size) <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br><br>    *pav = p-&gt;nextLink;<br>    <span class="hljs-keyword">if</span> (p-&gt;size - size &gt; ALLOC_MIN_SIZE) {<br>        p-&gt;size -= size;<br>        Space foot = FOOT_LOC(p);<br>        foot-&gt;upLink = p;  foot-&gt;tag = <span class="hljs-number">0</span>;<br>        p = foot + <span class="hljs-number">1</span>;<br>        p-&gt;size = size;<br>        foot = FOOT_LOC(p);<br>        p-&gt;tag = foot-&gt;tag = <span class="hljs-number">1</span>;<br>    }<br>    <span class="hljs-keyword">return</span> p;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h5 id="三种分配策略对比">三种分配策略对比</h5>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>找块规则</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>首次适应</strong></td>
+<td>第一个够大的</td>
+<td>速度快</td>
+<td>低地址容易聚集小碎片</td>
+</tr>
+<tr>
+<td><strong>循环首次适应</strong></td>
+<td>从上次位置继续找（绕一圈）</td>
+<td>分配均匀，速度快</td>
+<td>可能缺少大块连续空间</td>
+</tr>
+<tr>
+<td><strong>最佳适应</strong></td>
+<td>找<strong>最小的且够大</strong>的</td>
+<td>大块保留完整</td>
+<td>慢（要遍历完），小碎片多</td>
+</tr>
+</tbody>
+</table>
+<h5 id="回收算法-——-四种合并情况">回收算法 —— 四种合并情况</h5>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs">情况 1：左右都占用 → 直接插入空闲链表<br>情况 2：左空右占用 → 和左邻居合并<br>情况 3：左占用右空 → 和右邻居合并<br>情况 4：左右都空   → 三块合一<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>怎么找左右邻居？</strong></p><ul><li><strong>右邻居的头</strong>：<code>FOOT_LOC(p) + 1</code>（当前块尾部的下一字节就是右邻居的头）</li><li><strong>左邻居的尾</strong>：<code>p - 1</code>（当前块头部的前一字节就是左邻居的尾）</li><li>知道左邻居的尾，通过 <code>upLink</code> 找到左邻居的头</li></ul><p>这就是边界标识法的威力 —— <strong>O(1) 时间定位邻居，O(1) 时间合并</strong>。</p>
+          </div>
+<div class="note note-danger">
+            <p><strong>合并右块的常见 bug</strong></p><ol><li><strong>漏算头部</strong>：合并时只算 <code>p-&gt;size + right-&gt;size</code>，忘了右块还有头部和尾部的开销（共 +2 个 struct Bound），导致后续访问越界</li><li><strong>顺序错误</strong>：先合并指针，再摘除链表节点，导致链表节点指向已经被覆盖的内存</li></ol><p>边界标识法的代码看起来直观，但每一步指针操作都涉及多个字段，<strong>很容易漏一个</strong>。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>边界标识法 = 每个内存块头尾都有标识符，构成双向链表。分配用首次适应，回收检查左右邻居的 tag 决定合并策略（4 种情况）。O(1) 找邻居，O(1) 合并 —— 这是现代 <code>malloc</code> 的基础思想。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab16-动态内存分配——伙伴系统">Lab16 动态内存分配——伙伴系统</h4>
+<p>边界标识法用双向链表管任意大小的块，灵活但容易碎片。<strong>伙伴系统换思路：所有块大小必须是 2 的幂</strong>，用规则化结构换取高效合并。</p>
+<div class="note note-primary">
+            <p><strong>伙伴系统的天才设计</strong></p><p>通过限制块大小为 2 的幂（1, 2, 4, 8, 16, … 字节），用<strong>异或运算</strong> O(1) 找到伙伴地址 —— 不需要边界标识，靠地址本身的数学结构。</p>
+          </div>
+<h5 id="核心数据结构-——-FreeList-数组">核心数据结构 —— FreeList 数组</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">Node</span> {</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">Node</span> *<span class="hljs-title">llink</span>;</span><br>    <span class="hljs-type">int</span> bflag;          <span class="hljs-comment">// 0=空闲，1=占用</span><br>    <span class="hljs-type">int</span> bsize;          <span class="hljs-comment">// 块大小（2 的幂次 k）</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">Node</span> *<span class="hljs-title">rlink</span>;</span><br>} Node;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">HeadNode</span> {</span><br>    <span class="hljs-type">int</span> nodesize;       <span class="hljs-comment">// 该链表里块的大小（2^k）</span><br>    Node *first;        <span class="hljs-comment">// 链表头指针</span><br>} FreeList[M+<span class="hljs-number">1</span>];        <span class="hljs-comment">// 数组：每个槽对应一个大小</span><br></code></pre></td></tr></tbody></table></figure>
+<p><code>FreeList</code> 是 <strong>M+1 个链表的数组</strong>，第 k 个链表专门装大小为 <code>2^k</code> 的空闲块。</p>
+<h5 id="伙伴的概念-——-用异或算地址">伙伴的概念 —— 用异或算地址</h5>
+<figure class="highlight mipsasm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">buddy_addr </span>= <span class="hljs-keyword">block_addr </span><span class="hljs-keyword">XOR </span><span class="hljs-keyword">block_size</span><br></code></pre></td></tr></tbody></table></figure>
+<p>为什么？因为伙伴是父块对半切出来的，<strong>两者的地址只在第 k 位不同</strong>（k = log2(size)）。</p>
+<figure class="highlight mipsasm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">父块地址 <span class="hljs-number">0x1000</span>，大小 <span class="hljs-number">256</span>（<span class="hljs-number">2</span>^<span class="hljs-number">8</span>）<br>切两半：<br>  伙伴 A：<span class="hljs-number">0x1000</span> ~ <span class="hljs-number">0x10FF</span>（第 <span class="hljs-number">8</span> 位 = <span class="hljs-number">0</span>）<br>  伙伴 <span class="hljs-keyword">B：0x1100 </span>~ <span class="hljs-number">0x11FF</span>（第 <span class="hljs-number">8</span> 位 = <span class="hljs-number">1</span>）<br><br>A 的伙伴 = <span class="hljs-number">0x1000</span> <span class="hljs-keyword">XOR </span><span class="hljs-number">0x100</span> = <span class="hljs-number">0x1100</span>  ✓<br><span class="hljs-keyword">B </span>的伙伴 = <span class="hljs-number">0x1100</span> <span class="hljs-keyword">XOR </span><span class="hljs-number">0x100</span> = <span class="hljs-number">0x1000</span>  ✓<br></code></pre></td></tr></tbody></table></figure>
+<h5 id="回收算法-——-递归合并到不能合并">回收算法 —— 递归合并到不能合并</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">Reclaim</span><span class="hljs-params">(FreeList *pav, Node* *p)</span> {<br>    Node* b = buddy(*p);                  <span class="hljs-comment">// 算出伙伴地址</span><br>    <span class="hljs-keyword">if</span> (b 在对应大小的空闲链表中) {<br>        从链表里删掉 b;<br>        *p = min(b, *p);<br>        (*p)-&gt;bsize++;<br>        Reclaim(pav, p);                  <span class="hljs-comment">// 递归：再检查新块的伙伴</span><br>    } <span class="hljs-keyword">else</span> {<br>        把 *p 插入 avail[(*p)-&gt;bsize];<br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>伙伴系统的优势</strong></p><p>只要伙伴是空闲的就一路合并，所以<strong>永远不会产生外部碎片</strong> —— 释放后能合并的都合并了。</p>
+          </div>
+<h5 id="内部碎片-——-伙伴系统的代价">内部碎片 —— 伙伴系统的代价</h5>
+<table>
+<thead>
+<tr>
+<th>请求</th>
+<th>分配</th>
+<th>浪费</th>
+<th>利用率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1B</td>
+<td>2B</td>
+<td>1B</td>
+<td>50%</td>
+</tr>
+<tr>
+<td>5B</td>
+<td>8B</td>
+<td>3B</td>
+<td>62.5%</td>
+</tr>
+<tr>
+<td>17B</td>
+<td>32B</td>
+<td>15B</td>
+<td>53%</td>
+</tr>
+<tr>
+<td>65B</td>
+<td>128B</td>
+<td>63B</td>
+<td>51%</td>
+</tr>
+</tbody>
+</table>
+<div class="note note-warning">
+            <p><strong>伙伴系统的代价</strong></p><p>最坏情况：请求 <code>2^k + 1</code> 字节，分配 <code>2^(k+1)</code> 字节，<strong>利用率不到 50%</strong>。</p><p>伙伴系统用<strong>最多 50% 的内部碎片</strong>换<strong>零外部碎片 + 快速合并</strong>。对内核级别的页分配这是划算的，对小对象（几十字节）的 malloc 就不划算。</p>
+          </div>
+<h5 id="Linux-内核至今仍是主力">Linux 内核至今仍是主力</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// include/linux/mmzone.h</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">free_area</span> {</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">list_head</span> <span class="hljs-title">free_list</span>[<span class="hljs-title">MIGRATE_TYPES</span>];</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> nr_free;<br>};<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">zone</span> {</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">free_area</span> <span class="hljs-title">free_area</span>[<span class="hljs-title">MAX_ORDER</span>];</span>       <span class="hljs-comment">// 11 个 order（0~10）</span><br>};<br></code></pre></td></tr></tbody></table></figure>
+<p><code>MAX_ORDER = 11</code>，意味着一个 zone 内最大支持 <code>2^10 = 1024</code> 页 = 4MB 的连续分配。</p>
+<div class="note note-primary">
+            <p><strong>Linux 坚持用伙伴系统的原因</strong></p><ol><li><strong>物理页本来就是 4KB 整数倍</strong>，2 的幂大小天然契合</li><li><strong>能快速分配大块连续物理内存</strong>（DMA、网络缓冲需要）</li><li><strong>合并算法 O(1) + 简单</strong>，是热路径性能保证</li></ol><p>现代 glibc 的 <code>malloc</code> 用分层策略：小对象用 fastbin，大对象用边界标识法，超大对象用 mmap。<strong>内核用伙伴系统，用户态 malloc 在伙伴系统之上</strong> —— 没有一刀切的银弹。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>伙伴系统 = 所有块大小必须是 2 的幂。伙伴地址用 <code>addr XOR size</code> 直接算出（不需要边界标识）。释放时递归合并到不能合并，<strong>零外部碎片</strong>，代价是最多 50% 内部碎片。Linux 内核至今用它管物理页。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab17-字符显示的控制">Lab17 字符显示的控制</h4>
+<p>按 A 键屏幕上显示 “a” —— 看起来天经地义，背后其实经过了 <strong>键盘硬件 → 中断 → 内核队列 → 显存</strong> 一整条流水线。Lab17 就是把这个流水线彻底拆开。</p>
+<h5 id="tty-的三队列架构-——-字符流的三个驿站">tty 的三队列架构 —— 字符流的三个驿站</h5>
+<figure class="highlight applescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs applescript">   键盘中断<br>      │<br>      ▼<br>┌──────────┐<br>│  read_q   │  ← 原始扫描码（按下的物理键）<br>└──────────┘<br>      │ copy_to_cooked<br>      │ (处理退格、回车、Ctrl 等编辑键)<br>      ▼<br>┌──────────┐<br>│ secondary │  ← 处理过的字符（cooked，给应用读）<br>└──────────┘<br>      │ <span class="hljs-built_in">read</span> 系统调用<br>      │ (Shell 进程被唤醒)<br>      ▼<br>┌──────────┐<br>│ write_q   │  ← 要输出的字符（应用 <span class="hljs-built_in">write</span>）<br>└──────────┘<br>      │ con_write<br>      ▼<br>  显存 <span class="hljs-number">0xB8000</span><br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>为什么分三个队列？</strong></p><p>因为生产者和消费者速度不一样 —— 键盘输入可能瞬间多个键，应用还没读；应用 write 也可能比屏幕刷新快。三队列分层缓冲，中间还能做字符处理（行编辑、Ctrl 组合）。</p>
+          </div>
+<h5 id="键盘中断处理-——-从硬件到-ASCII-的完整旅程">键盘中断处理 —— 从硬件到 ASCII 的完整旅程</h5>
+<figure class="highlight dockerfile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile">按 A 键<br>   ↓ 键盘控制器发 IRQ <span class="hljs-number">1</span><br>   ↓ CPU 跳到 IDT[<span class="hljs-number">33</span>] → keyboard_interrupt<br>   ↓<br>   读 <span class="hljs-number">0</span>x60 端口拿到扫描码 <span class="hljs-number">0</span>x1E    ← A 键的物理编号<br>   ↓<br>   查 key_map[<span class="hljs-number">0</span>x1E] = <span class="hljs-number">0</span>x61         ← <span class="hljs-string">'a'</span> 的 ASCII<br>   ↓<br>   put_queue 把 <span class="hljs-number">0</span>x61 放进 read_q<br>   ↓<br>   调 do_tty_interrupt → copy_to_cooked<br>   ↓<br>   从 read_q 读 <span class="hljs-number">0</span>x61 → 放进 secondary<br>   ↓<br>   wake_up 唤醒阻塞在 secondary 上的 <span class="hljs-keyword">Shell</span><span class="language-bash"> 进程</span><br>   ↓ iret<br>   ↓<br>   <span class="hljs-keyword">Shell</span><span class="language-bash"> 进程恢复执行</span><br>   ↓ <span class="hljs-keyword">Shell</span><span class="language-bash"> 调 <span class="hljs-built_in">read</span>(0, buf, n)</span><br>   ↓<br>   从 secondary 取字符到用户缓冲区<br>   ↓ <span class="hljs-keyword">Shell</span><span class="language-bash"> 调 write(1, buf, n) 把它打印出来</span><br>   ↓<br>   字符放进 write_q<br>   ↓ con_write<br>   ↓<br>   写入显存 <span class="hljs-number">0</span>xB8000 → 屏幕显示 <span class="hljs-string">'a'</span><br></code></pre></td></tr></tbody></table></figure>
+<h5 id="扫描码-vs-ASCII-——-硬件和软件的分层">扫描码 vs ASCII —— 硬件和软件的分层</h5>
+<figure class="highlight abnf"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abnf">扫描码（scancode）   <span class="hljs-operator">=</span> 键盘硬件对每个物理键的编号<br>ASCII（ascii）       <span class="hljs-operator">=</span> 字符编码<br>key_map[<span class="hljs-number">128</span>]         <span class="hljs-operator">=</span> 扫描码 → ASCII 的映射表<br></code></pre></td></tr></tbody></table></figure>
+<p>A 键的扫描码是 0x1E，但 ASCII ‘a’ 是 0x61。<strong>键盘不知道你按的是大写还是小写</strong> —— 它只报告"按下了 0x1E 这个键"，大小写转换由内核做（看 Shift 状态、CapsLock 状态）。</p>
+<h5 id="显存-——-字符显示的最终归宿">显存 —— 字符显示的最终归宿</h5>
+<p>VGA 文本模式下，<strong>显存从 0xB8000 开始</strong>，每个字符占 2 字节：</p>
+<figure class="highlight lasso"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs lasso"><span class="hljs-number">0xB8000</span>:  ┌────────┬────────┬────────┬────────┬ <span class="hljs-params">...</span><br>          │  <span class="hljs-string">'H'</span>   │ <span class="hljs-number">0x07</span>   │  <span class="hljs-string">'i'</span>   │ <span class="hljs-number">0x07</span>   │<br>          └────────┴────────┴────────┴────────┴ <span class="hljs-params">...</span><br>           字符     属性      字符     属性<br></code></pre></td></tr></tbody></table></figure>
+<p>属性字节低 4 位是前景色，高 4 位是背景色 + 闪烁位。<code>0x07</code> = 黑底白字。</p>
+<div class="note note-primary">
+            <p><strong>终端文字"瞬间出现"的真相</strong></p><p><code>con_write</code> 的工作就是：<strong>从 write_q 取字符，按位置写入 0xB8000 起的显存</strong>。CPU 写完，显示器下一个刷新周期就能看到 —— <strong>没有"画图"过程，显存就是屏幕</strong>。</p>
+          </div>
+<h5 id="Lab17-的实验：F12-切换字符替换">Lab17 的实验：F12 切换字符替换</h5>
+<p>实验要求：按 F12 让屏幕上所有字母数字变成 <code>*</code>，再按一次恢复。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> judge = <span class="hljs-number">0</span>;          <span class="hljs-comment">// 全局开关</span><br><br><span class="hljs-comment">// 在 copy_to_cooked 里拦截 F12 按键</span><br>GETCH(tty-&gt;read_q, c);<br><span class="hljs-keyword">if</span> (c == <span class="hljs-string">'L'</span>) {           <span class="hljs-comment">// F12 的 ASCII 是 'L'（76）</span><br>    judge = !judge;<br>    <span class="hljs-keyword">continue</span>;<br>}<br><br><span class="hljs-comment">// 在 con_write 里替换字符</span><br><span class="hljs-keyword">if</span> (judge &amp;&amp; (<span class="hljs-built_in">isalpha</span>(c) || <span class="hljs-built_in">isdigit</span>(c))) {<br>    c = <span class="hljs-string">'*'</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>钩子点选择的工程价值</strong></p><p>为什么钩子加在 <code>copy_to_cooked</code> 和 <code>con_write</code>？因为这两个地方是<strong>字符流的"汇聚点"</strong> —— 所有键盘输入都会经过前者，所有输出都会经过后者。</p><p><strong>好的钩子点要在唯一汇聚处</strong> —— 不会漏掉某些路径。这是流水线设计的额外好处：便于审计和扩展。</p><p>同样的机制是真实系统的关键功能：</p><ul><li><strong>密码输入</strong>：终端关 echo，密码不显示</li><li><strong>行模式 vs 原始模式</strong>：行模式下回车才送数据，原始模式每个键立即送</li><li><strong>Tab 补全</strong>：拦截 Tab 键，触发补全逻辑</li><li><strong>Ctrl+C 中断</strong>：拦截 Ctrl+C，发送 SIGINT 信号</li></ul>
+          </div>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>按 A 显示 a 的完整链路：键盘硬件 → IRQ 1 中断 → keyboard_interrupt 读扫描码 → key_map 转 ASCII → 进 read_q → copy_to_cooked 进 secondary → 唤醒 Shell → Shell read 拿字符 → write 进 write_q → con_write 写显存 0xB8000 → 屏幕显示。三队列（read_q / secondary / write_q）分层缓冲。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab18-实现贪吃蛇游戏">Lab18 实现贪吃蛇游戏</h4>
+<p>Lab17 在字符流水线上加钩子改字符显示，Lab18 把这个思路推到极致 —— <strong>在内核里直接写一个游戏</strong>。贪吃蛇从屏幕左上角出发，按 WASD 控制方向，吃食物长大，撞自己就死。</p>
+<div class="note note-primary">
+            <p><strong>实验的综合价值</strong></p><p>一个不到 200 行的内核态游戏，串联了 OS 课程的全部内容：中断系统、进程调度、tty 队列、显存管理、时钟中断、全局变量。<strong>这就是为什么很多 OS 课程把它作为期末综合实验</strong>。</p>
+          </div>
+<h5 id="键盘输入异步通知游戏-——-生产者-消费者">键盘输入异步通知游戏 —— 生产者-消费者</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> fflag = <span class="hljs-number">0</span>;          <span class="hljs-comment">// 玩家1状态：0=正常模式，1=游戏开始，2-5=WASD方向</span><br><span class="hljs-type">int</span> fflag2 = <span class="hljs-number">0</span>;         <span class="hljs-comment">// 玩家2状态：2-5=方向键</span><br></code></pre></td></tr></tbody></table></figure>
+<p>游戏用<strong>两个全局变量</strong>驱动整个状态机。键盘中断异步修改它们，游戏主循环每一步读取最新值决定方向。</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>设置值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘q’</td>
+<td>fflag = 1</td>
+<td>启动游戏</td>
+</tr>
+<tr>
+<td>‘w’</td>
+<td>fflag = 2</td>
+<td>蛇 1 向上</td>
+</tr>
+<tr>
+<td>‘s’</td>
+<td>fflag = 3</td>
+<td>蛇 1 向下</td>
+</tr>
+<tr>
+<td>‘a’</td>
+<td>fflag = 4</td>
+<td>蛇 1 向左</td>
+</tr>
+<tr>
+<td>‘d’</td>
+<td>fflag = 5</td>
+<td>蛇 1 向右</td>
+</tr>
+</tbody>
+</table>
+<div class="note note-info">
+            <p><strong>事件驱动游戏架构的最简版</strong></p><p>键盘是<strong>异步事件源</strong>，游戏循环是<strong>同步消费者</strong>。游戏循环每帧（一次 <code>snake_delay</code> 周期）检查一次方向标志，应用最新值。</p><p>现代游戏用 SDL、GLFW 监听事件 → 写入事件队列，主循环每帧从队列取事件，更新游戏状态。Lab18 把队列简化成单个变量，但思路完全一样。</p>
+          </div>
+<h5 id="游戏循环-——-Game-Loop-模式">游戏循环 —— Game Loop 模式</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">while</span> (!game_end_flag) {<br>    update_direction_from_fflag();   <span class="hljs-comment">// 1. 读输入</span><br>    erase_snake(<span class="hljs-number">0</span>); erase_snake(<span class="hljs-number">1</span>);  <span class="hljs-comment">// 2. 擦除旧画面</span><br>    move_snake(<span class="hljs-number">0</span>, now_dir1);         <span class="hljs-comment">// 3. 更新逻辑（移动 + 碰撞检测）</span><br>    move_snake(<span class="hljs-number">1</span>, now_dir2);<br>    check_head_collision();<br>    draw_foods();                    <span class="hljs-comment">// 4. 绘制新画面</span><br>    draw_all_snakes();<br>    <span class="hljs-keyword">if</span> (game_over1 &amp;&amp; game_over2) <span class="hljs-keyword">break</span>;<br>    snake_delay();                   <span class="hljs-comment">// 5. 延时控制帧率</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>这是<strong>所有游戏的标准循环模式</strong>，从 Pong（1972）到 Cyberpunk 2077 都是这个结构。</p>
+<h5 id="画图-的本质-——-直接改显存">"画图"的本质 —— 直接改显存</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">draw_char</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y, <span class="hljs-type">char</span> ch, <span class="hljs-type">int</span> color)</span> {<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> *vram = (<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> *)<span class="hljs-number">0xB8000</span>;<br>    vram[y * <span class="hljs-number">80</span> + x] = (color &lt;&lt; <span class="hljs-number">8</span>) | ch;<br>}<br><br>draw_char(<span class="hljs-number">10</span>, <span class="hljs-number">5</span>, <span class="hljs-string">'+'</span>, <span class="hljs-number">0x0A</span>);    <span class="hljs-comment">// 蛇头（绿色）</span><br>draw_char(<span class="hljs-number">11</span>, <span class="hljs-number">5</span>, <span class="hljs-string">'*'</span>, <span class="hljs-number">0x0A</span>);    <span class="hljs-comment">// 蛇身</span><br>draw_char(<span class="hljs-number">20</span>, <span class="hljs-number">10</span>, <span class="hljs-string">'#'</span>, <span class="hljs-number">0x0C</span>);   <span class="hljs-comment">// 食物（红色）</span><br></code></pre></td></tr></tbody></table></figure>
+<p><strong>没有"画图"过程</strong> —— 写内存就是画图。这就是为什么字符终端能做到几乎零延迟显示。</p>
+<h5 id="jiffies-——-内核计时器">jiffies —— 内核计时器</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">snake_delay</span><span class="hljs-params">()</span> {<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> end = jiffies + speed;<br>    <span class="hljs-keyword">while</span> (jiffies &lt; end) ;                  <span class="hljs-comment">// 忙等待</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<p><code>jiffies</code> 是个全局变量，每次时钟中断（10ms 一次）+1。</p>
+<div class="note note-warning">
+            <p><strong>忙等待（busy wait）的代价</strong></p><p>游戏循环期间 CPU 100% 占用。<code>while (jiffies &lt; end)</code> 没有让出 CPU，其他进程完全没法运行。</p><p>现代内核用 <code>schedule_timeout()</code> 让出 CPU，等定时器到期再唤醒。Linux 0.11 内核态游戏简化处理 —— 反正就是教学，玩一局也就几十秒。</p>
+          </div>
+<div class="note note-danger">
+            <p><strong>为什么真实系统不会在内核里写游戏？</strong></p><ol><li><strong>稳定性</strong>：游戏 bug 会直接 panic 整个系统</li><li><strong>多用户</strong>：内核态游戏占用所有用户的资源</li><li><strong>可移植性</strong>：每个 OS 都要重新实现</li><li><strong>安全性</strong>：游戏代码有内核权限，能读所有数据</li></ol><p>正确架构是 <strong>用户态游戏 + 内核提供 API</strong>（sys_read 读键盘、sys_write 写终端、ioctl 控制终端模式）。这就是 Unix 哲学 —— <strong>内核只提供机制，策略在用户态</strong>。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>Lab18 = 在内核态写贪吃蛇。<strong>用全局变量 fflag 跨中断和循环传递状态</strong>，键盘中断异步写、游戏循环每帧读。游戏循环标准模式：读输入 → 擦旧 → 移动 → 画新 → 延时。综合应用了中断、调度、tty、显存、时钟全部子系统。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab19-proc-文件系统的实现">Lab19 proc 文件系统的实现</h4>
+<p><code>/proc</code> 是 Linux 一个<strong>特殊的目录</strong>：里面的文件不在硬盘上，每次 read 时由内核<strong>动态生成</strong>。比如 <code>cat /proc/psinfo</code> 显示当前所有进程信息 —— 这些数据来自内核的 <code>task[]</code> 数组，不是磁盘文件。</p>
+<div class="note note-primary">
+            <p><strong>procfs 的本质</strong></p><p>文件接口下的"伪装" —— 用户态看到的是普通文件（open/read/close），内核态实际是动态生成数据。这是 Unix <strong>"一切皆文件"哲学</strong>的极致体现。</p>
+          </div>
+<h5 id="加新文件类型-——-stat-h-的扩展">加新文件类型 —— stat.h 的扩展</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// include/sys/stat.h</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> S_IFREG  0100000   <span class="hljs-comment">// 普通文件</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> S_IFDIR  0040000   <span class="hljs-comment">// 目录</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> S_IFBLK  0060000   <span class="hljs-comment">// 块设备</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> S_IFCHR  0020000   <span class="hljs-comment">// 字符设备</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> S_IFIFO  0010000   <span class="hljs-comment">// 管道</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> S_IFPROC 0030000   <span class="hljs-comment">// ← 新加：proc 文件</span></span><br></code></pre></td></tr></tbody></table></figure>
+<h5 id="sys-read-的路由-——-加一个-if-分支">sys_read 的路由 —— 加一个 if 分支</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">sys_read</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> fd, <span class="hljs-type">char</span> *buf, <span class="hljs-type">int</span> count)</span> {<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">file</span> *<span class="hljs-title">file</span> =</span> current-&gt;filp[fd];<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">inode</span> *<span class="hljs-title">inode</span> =</span> file-&gt;f_inode;<br><br>    <span class="hljs-keyword">if</span> (S_ISCHR(inode-&gt;i_mode))      <span class="hljs-keyword">return</span> char_read(...);<br>    <span class="hljs-keyword">if</span> (S_ISBLK(inode-&gt;i_mode))      <span class="hljs-keyword">return</span> block_read(...);<br>    <span class="hljs-keyword">if</span> (S_ISDIR(inode-&gt;i_mode))      <span class="hljs-keyword">return</span> -EISDIR;<br>    <span class="hljs-keyword">if</span> (S_ISPROC(inode-&gt;i_mode))     <span class="hljs-keyword">return</span> psread(...);   <span class="hljs-comment">// ← 新加</span><br>    <span class="hljs-keyword">return</span> file_read(...);<br>}<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>"虚拟文件系统"的实现方式</strong></p><p>不是新建一套独立的系统调用，而是<strong>在现有的 sys_read 里加分支</strong> —— 每种特殊文件类型有自己的 read 函数。</p>
+          </div>
+<h5 id="psread-函数-——-内核状态的-格式化输出器">psread 函数 —— 内核状态的"格式化输出器"</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">psread</span><span class="hljs-params">(<span class="hljs-type">int</span> dev, <span class="hljs-type">char</span> *buf, <span class="hljs-type">int</span> count, <span class="hljs-type">off_t</span> *f_pos)</span> {<br>    <span class="hljs-type">int</span> i, j = <span class="hljs-number">0</span>;<br><br>    <span class="hljs-keyword">if</span> (!(*f_pos)) {                   <span class="hljs-comment">// ← 第一次读（f_pos=0），生成内容</span><br>        <span class="hljs-built_in">memset</span>(psbuffer, <span class="hljs-number">0</span>, SIZE);<br><br>        <span class="hljs-comment">// 表头</span><br>        addTitle(<span class="hljs-string">"pid"</span>, &amp;j);<br>        addTitle(<span class="hljs-string">"state"</span>, &amp;j);<br>        addTitle(<span class="hljs-string">"father"</span>, &amp;j);<br>        addTitle(<span class="hljs-string">"counter"</span>, &amp;j);<br>        addTitle(<span class="hljs-string">"start_time"</span>, &amp;j);<br>        psbuffer[j++] = <span class="hljs-string">'\n'</span>;<br><br>        <span class="hljs-comment">// 遍历所有进程</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; NR_TASKS; i++) {<br>            <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">task_struct</span> *<span class="hljs-title">p</span> =</span> task[i];<br>            <span class="hljs-keyword">if</span> (p == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">continue</span>;<br>            itoa(p-&gt;pid, &amp;j);<br>            itoa(p-&gt;state, &amp;j);<br>            itoa(p-&gt;father, &amp;j);<br>            itoa(p-&gt;counter, &amp;j);<br>            itoa(p-&gt;start_time, &amp;j);<br>            psbuffer[j++] = <span class="hljs-string">'\n'</span>;<br>        }<br>    }<br><br>    <span class="hljs-comment">// 把 psbuffer 的内容拷到用户空间 buf</span><br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; count; i++, (*f_pos)++) {<br>        <span class="hljs-keyword">if</span> (psbuffer[*f_pos] == <span class="hljs-string">'\0'</span>) <span class="hljs-keyword">break</span>;<br>        put_fs_byte(psbuffer[*f_pos], &amp;buf[i]);<br>    }<br>    <span class="hljs-keyword">return</span> i;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h5 id="f-pos-文件位置指针-——-为什么需要它"><code>f_pos</code> 文件位置指针 —— 为什么需要它</h5>
+<div class="note note-info">
+            <p><strong>f_pos 的双重作用</strong></p><ol><li><strong>作为"是否首次调用"的标志</strong>：第一次进入 <code>psread</code> 时 <code>f_pos = 0</code>，触发缓冲区生成。后续调用 <code>f_pos != 0</code>，跳过生成步骤，直接从缓冲区拷数据</li><li><strong>记录读取位置</strong>：read 后 <code>f_pos += 字节数</code>，下次接着读</li></ol><p><code>cat</code> 命令会循环 read 直到返回 0：</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">while</span> ((nread = read(fd, buf, <span class="hljs-number">512</span>)) &gt; <span class="hljs-number">0</span>) {<br>    write(<span class="hljs-number">1</span>, buf, nread);<br>}<br></code></pre></td></tr></tbody></table></figure><p>如果每次都重新生成 psbuffer，<code>f_pos</code> 永远不前进，cat 就死循环了。</p>
+          </div>
+<h5 id="put-fs-byte-——-跨用户-内核空间写字节"><code>put_fs_byte</code> —— 跨用户/内核空间写字节</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">put_fs_byte(psbuffer[*f_pos], &amp;buf[i]);<br></code></pre></td></tr></tbody></table></figure>
+<p><code>buf</code> 是用户空间的指针，内核不能直接 <code>buf[i] = ...</code>。必须通过 <code>put_fs_byte</code> 用 fs 段前缀写入 —— 这就是 Lab4 讲的"<code>fs = 0x17</code> 是 Linux 0.11 的特色"的应用。</p>
+<h5 id="现代-Linux-的-procfs">现代 Linux 的 procfs</h5>
+<p>Lab19 的 procfs 只是个玩具 —— 单一文件 <code>psinfo</code>，写死格式。现代 Linux 的 <code>/proc</code> 远超想象：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/proc/cpuinfo</code></td>
+<td>CPU 信息</td>
+</tr>
+<tr>
+<td><code>/proc/meminfo</code></td>
+<td>内存使用</td>
+</tr>
+<tr>
+<td><code>/proc/loadavg</code></td>
+<td>系统负载</td>
+</tr>
+<tr>
+<td><code>/proc/version</code></td>
+<td>内核版本</td>
+</tr>
+<tr>
+<td><code>/proc/pid/stat</code></td>
+<td>单个进程状态</td>
+</tr>
+<tr>
+<td><code>/proc/pid/maps</code></td>
+<td>进程内存映射</td>
+</tr>
+<tr>
+<td><code>/proc/sys/net/...</code></td>
+<td><strong>可写</strong> —— 调整内核参数</td>
+</tr>
+</tbody>
+</table>
+<div class="note note-primary">
+            <p><strong>procfs 的设计精髓</strong></p><p>把内核数据用文件接口暴露，让所有文件工具都能用 —— <strong>不需要专门的系统调用，不需要新的工具集</strong>。</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> 1 &gt; /proc/sys/net/ipv4/ip_forward   <span class="hljs-comment"># 开启 IP 转发</span><br></code></pre></td></tr></tbody></table></figure><p>这就是为什么 <code>/dev/null</code>、<code>/dev/zero</code>、<code>/dev/random</code> 都是文件 —— 它们读的内容不同，但接口完全一样。<strong>接口复用</strong> 是 Unix 哲学的核心。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>procfs = 用文件接口暴露内核状态。机制：加新文件类型 S_IFPROC，在 sys_read 里加分支调用 psread。psread 用 f_pos 判断是否首次调用（首次才生成数据），用 put_fs_byte 跨用户/内核空间写字节。Linux 后来发明的 <code>/proc/sys/</code> 可写文件让用户态能配置内核参数。</p></blockquote>
+          </div>
+<hr>
+<h4 id="Lab20-打印输出-MINIX-1-0-文件系统的目录树">Lab20 打印输出 MINIX 1.0 文件系统的目录树</h4>
+<p>最后一个实验把视角拉到<strong>最底层</strong>：直接读硬盘镜像文件 <code>harddisk.img</code>，按 MINIX 1.0 文件系统格式解析，打印出完整的目录树。这不是在 Linux 0.11 里跑代码，而是<strong>用 Windows 程序从外部剖析一个 MINIX 文件系统镜像</strong>。</p>
+<div class="note note-primary">
+            <p><strong>实验的工程价值</strong></p><p>等于把整个文件系统的数据结构从零开始重新实现一遍 —— 不依赖任何内核 API，纯字节级解析。走完之后，"文件系统神秘感"就消失了。</p>
+          </div>
+<h5 id="MINIX-1-0-文件系统的磁盘布局">MINIX 1.0 文件系统的磁盘布局</h5>
+<figure class="highlight scss"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs scss">┌─────────┬─────────┬─────────────────┬─────────────────┬─────────────┬─────────────┐<br>│ 引导块  │ 超级块  │ <span class="hljs-selector-tag">i</span> 节点位图块    │ 逻辑块位图块    │ <span class="hljs-selector-tag">i</span> 节点块    │ 数据块      │<br>│ (<span class="hljs-number">1</span>块)   │ (<span class="hljs-number">1</span>块)   │ (s_imap_blocks) │ (s_zmap_blocks) │ (若干)      │ (其余)      │<br>└─────────┴─────────┴─────────────────┴─────────────────┴─────────────┴─────────────┘<br>逻辑块号:  <span class="hljs-number">0</span>         <span class="hljs-number">1</span>                 <span class="hljs-number">2</span>..                    ..                  ..<br></code></pre></td></tr></tbody></table></figure>
+<table>
+<thead>
+<tr>
+<th>区域</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>引导块</strong></td>
+<td>启动时 BIOS 加载的引导程序</td>
+</tr>
+<tr>
+<td><strong>超级块</strong></td>
+<td>文件系统元数据（节点数、块数、魔数等）</td>
+</tr>
+<tr>
+<td><strong>i 节点位图</strong></td>
+<td>哪些 inode 已分配（1 位 / inode）</td>
+</tr>
+<tr>
+<td><strong>逻辑块位图</strong></td>
+<td>哪些数据块已分配（1 位 / 块）</td>
+</tr>
+<tr>
+<td><strong>i 节点块</strong></td>
+<td>所有 inode 的实际数据</td>
+</tr>
+<tr>
+<td><strong>数据块</strong></td>
+<td>文件和目录的实际内容</td>
+</tr>
+</tbody>
+</table>
+<h5 id="超级块-——-文件系统的-身份证">超级块 —— 文件系统的"身份证"</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">super_block</span> {</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> s_ninodes;        <span class="hljs-comment">// i 节点总数</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> s_nzones;         <span class="hljs-comment">// 逻辑块总数</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> s_imap_blocks;    <span class="hljs-comment">// i 节点位图占几块</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> s_zmap_blocks;    <span class="hljs-comment">// 逻辑块位图占几块</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> s_firstdatazone;  <span class="hljs-comment">// 第一个数据块号</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> s_log_zone_size;  <span class="hljs-comment">// log(块大小/逻辑块)</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span>  s_max_size;       <span class="hljs-comment">// 最大文件大小</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> s_magic;          <span class="hljs-comment">// 魔数（标识文件系统类型）</span><br>};<br></code></pre></td></tr></tbody></table></figure>
+<h5 id="i-节点-——-文件的元数据-分级寻址">i 节点 —— 文件的元数据 + 分级寻址</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">d_inode</span> {</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> i_mode;       <span class="hljs-comment">// 文件类型 + 权限</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> i_uid;        <span class="hljs-comment">// 所有者</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span>  i_size;       <span class="hljs-comment">// 文件大小（字节）</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span>  i_time;       <span class="hljs-comment">// 修改时间</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>  i_gid;        <span class="hljs-comment">// 组</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>  i_nlinks;     <span class="hljs-comment">// 硬链接数</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> i_zone[<span class="hljs-number">9</span>];    <span class="hljs-comment">// 数据块号（核心！）</span><br>};<br></code></pre></td></tr></tbody></table></figure>
+<p><code>i_zone[9]</code> 是 MINIX 文件系统寻址的核心：</p>
+<figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">i_zone</span>[<span class="hljs-number">0</span>] ~ i_zone[<span class="hljs-number">6</span>]: 直接块（<span class="hljs-number">7</span> 个，每块 <span class="hljs-number">1</span>KB = <span class="hljs-number">7</span>KB 直接寻址）<br><span class="hljs-attribute">i_zone</span>[<span class="hljs-number">7</span>]:             一次间接块（指向一块，那块装 <span class="hljs-number">256</span> 个块号 = <span class="hljs-number">256</span>KB）<br><span class="hljs-attribute">i_zone</span>[<span class="hljs-number">8</span>]:             二次间接块（指向一块，那块装 <span class="hljs-number">256</span> 个一次间接块号 = <span class="hljs-number">64</span>MB）<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>分级寻址的工程权衡</strong></p><ul><li>小文件（&lt; 7KB）用直接块，访问快</li><li>中文件（&lt; 256KB）用一次间接</li><li>大文件（&lt; 64MB）用二次间接</li></ul><p>如果全用直接块：每文件最多 7KB。如果全用间接块：小文件也要多读一次磁盘，慢 10 倍。<strong>分级是速度和灵活性的折衷</strong>。</p><p>现代 ext4 用 “extents”（区段）取代这种设计 —— 一个 extent 描述"连续 N 个块"，对大文件更高效。</p>
+          </div>
+<h5 id="目录的本质-——-一个特殊文件">目录的本质 —— 一个特殊文件</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">dir_entry</span> {</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> inode;     <span class="hljs-comment">// inode 号</span><br>    <span class="hljs-type">char</span> name[<span class="hljs-number">14</span>];            <span class="hljs-comment">// 文件名（最长 14 字符）</span><br>};<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>目录在 MINIX 里就是"装着 dir_entry 数组的普通文件"</strong>。目录的内容是 32 字节一项的目录项，每项是 <code>(inode 号, 文件名)</code>。</p>
+<div class="note note-warning">
+            <p><strong>14 字符文件名限制</strong></p><p>文件名长度限制 14 字符是 MINIX 1.0 的硬限制 —— 这就是为什么早期 Unix 文件名都很短。MINIX 2.0 扩展到 30 字符，ext2 到 255 字符。</p>
+          </div>
+<h5 id="递归打印目录树-——-DFS-遍历">递归打印目录树 —— DFS 遍历</h5>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">print_inode</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> id, <span class="hljs-type">int</span> tab_count, <span class="hljs-type">const</span> <span class="hljs-type">char</span>* name)</span> {<br>    <span class="hljs-keyword">if</span> (!is_inode_valid(id)) <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">d_inode</span> <span class="hljs-title">inode</span>;</span><br>    get_inode(id, &amp;inode);<br>    tab_count++;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> mode = inode.i_mode &gt;&gt; <span class="hljs-number">12</span>;     <span class="hljs-comment">// 高 4 位是文件类型</span><br><br>    <span class="hljs-keyword">if</span> (mode == <span class="hljs-number">4</span>) {                              <span class="hljs-comment">// 目录文件</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; tab_count; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\t"</span>);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%s\n"</span>, name);<br><br>        <span class="hljs-keyword">for</span> (m = <span class="hljs-number">0</span>; m &lt; <span class="hljs-number">7</span>; m++) {                 <span class="hljs-comment">// 遍历 i_zone[0..6] 直接块</span><br>            <span class="hljs-keyword">if</span> (inode.i_zone[m] == <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;<br>            get_partition_logical_block(inode.i_zone[m]);<br><br>            <span class="hljs-keyword">for</span> (n = <span class="hljs-number">0</span>; n &lt; <span class="hljs-number">64</span>; n++) {            <span class="hljs-comment">// 每块 64 个目录项</span><br>                <span class="hljs-built_in">memcpy</span>(&amp;dir, &amp;logical_block[n * <span class="hljs-number">16</span>], <span class="hljs-number">16</span>);<br>                <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span> || n == <span class="hljs-number">1</span>) <span class="hljs-keyword">continue</span>;   <span class="hljs-comment">// 跳过 . 和 ..</span><br>                <span class="hljs-keyword">if</span> (dir.inode == <span class="hljs-number">0</span>) <span class="hljs-keyword">break</span>;<br>                print_inode(dir.inode, tab_count, dir.name);    <span class="hljs-comment">// 递归</span><br>            }<br>        }<br>    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (mode == <span class="hljs-number">8</span>) {                       <span class="hljs-comment">// 普通文件</span><br>        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; tab_count; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\t"</span>);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%s\n"</span>, name);<br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h5 id="一次完整的-打开文件-过程">一次完整的"打开文件"过程</h5>
+<p><code>cat /usr/root/hello.c</code> 在 MINIX 1.0 上的完整流程：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">1. 从根 inode 1 开始<br>2. 读 inode 1 的 i_zone[0]，找到根目录数据块<br>3. 在根目录里找 <span class="hljs-string">"usr"</span> → 得到 inode 号 N1<br>4. 读 inode N1，找到 /usr 的数据块<br>5. 在 /usr 里找 <span class="hljs-string">"root"</span> → inode 号 N2<br>6. 读 inode N2，找 /usr/root 的数据块<br>7. 在 /usr/root 里找 <span class="hljs-string">"hello.c"</span> → inode 号 N3<br>8. 读 inode N3，根据 i_zone[] 读文件内容<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>路径解析的开销</strong></p><p>每一层路径解析都要读 2 次磁盘（inode + 数据块）。3 层路径 = 6 次磁盘 I/O。</p><p>这就是为什么路径越深越慢 —— <strong>dentry cache（目录项缓存）</strong> 就是为缓解这个发明的。</p>
+          </div>
+<h5 id="从-MINIX-到-ext4-——-演化路径">从 MINIX 到 ext4 —— 演化路径</h5>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>关键改进</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ext</td>
+<td>把 MINIX 的限制放宽（更大文件、更长文件名）</td>
+</tr>
+<tr>
+<td>ext2</td>
+<td>引入预留块组、ACL、扩展属性</td>
+</tr>
+<tr>
+<td>ext3</td>
+<td>加日志（journal）—— 崩溃后能快速恢复</td>
+</tr>
+<tr>
+<td>ext4</td>
+<td>extents（连续块）、延迟分配、大文件支持</td>
+</tr>
+</tbody>
+</table>
+<div class="note note-primary">
+            <p><strong>文件系统本质的简洁性</strong></p><p>再复杂的文件系统，底层都是"用某种结构把磁盘切成块、用某种方式把文件映射到块"。MINIX 1.0 的核心数据结构（超级块 + 位图 + inode + 数据块）30 年没变 —— ext4、XFS、Btrfs、ZFS 都能用这套框架理解，差别只在每个组件的设计选择。</p><p>Lab20 学到的所有概念都能直接套用到 ext4 上 —— 区别只在细节（extent 取代 i_zone、日志机制、动态 inode 等）。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>一句话带走</strong></p><blockquote><p>MINIX 1.0 文件系统 = 引导块 + 超级块 + inode 位图 + 块位图 + inode 表 + 数据块。inode 用 <code>i_zone[9]</code> 做分级寻址（7 直接 + 1 间接 + 1 二次间接，支持最大 64MB 文件）。目录本质是"装 dir_entry 数组的特殊文件"。递归遍历目录树 = DFS。核心数据结构 30 年没变，现代 ext4 仍是其变体。</p></blockquote>
+          </div>
+<hr>
+<h2 id="总结：从-Lab3-到-Lab20-的全景">总结：从 Lab3 到 Lab20 的全景</h2>
+<p>20 个实验串起操作系统的全部核心模块：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>对应实验</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shell 与命令</strong></td>
+<td>Lab3</td>
+</tr>
+<tr>
+<td><strong>系统调用</strong></td>
+<td>Lab4、Lab9、Lab10、Lab12、Lab13、Lab19</td>
+</tr>
+<tr>
+<td><strong>进程管理</strong></td>
+<td>Lab5、Lab6、Lab7/8</td>
+</tr>
+<tr>
+<td><strong>进程同步</strong></td>
+<td>Lab9、Lab13</td>
+</tr>
+<tr>
+<td><strong>物理内存</strong></td>
+<td>Lab10、Lab11、Lab12</td>
+</tr>
+<tr>
+<td><strong>虚拟内存</strong></td>
+<td>Lab11、Lab13</td>
+</tr>
+<tr>
+<td><strong>页面置换</strong></td>
+<td>Lab14</td>
+</tr>
+<tr>
+<td><strong>动态分配</strong></td>
+<td>Lab15（边界标识）、Lab16（伙伴系统）</td>
+</tr>
+<tr>
+<td><strong>设备管理</strong></td>
+<td>Lab17（tty/键盘/显示）、Lab18（综合）</td>
+</tr>
+<tr>
+<td><strong>文件系统</strong></td>
+<td>Lab19（procfs）、Lab20（MINIX 1.0）</td>
+</tr>
+</tbody>
+</table>
+<p>Lab18 是<strong>综合应用</strong>（在内核里写游戏，把前面所有概念用一遍），Lab19~20 是<strong>深入底层</strong>（看文件系统是怎么一砖一瓦搭起来的）。</p>
+<p>走完这 20 个实验，从用户敲键盘到屏幕显示一个字符、从 <code>cat /etc/passwd</code> 到磁盘数据返回，<strong>每一个环节你都能讲清楚</strong>。这就是操作系统的全貌。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Review/" class="category-chain-item">Review</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>OSLab</div>
+      <div>http://example.com/2026/07/18/Review/OSLab/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 18, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>July 18, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/07/18/Python/Django/" title="Django">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Django</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/07/04/Review/Basics%20of%20AI/" title="Basics of AI">
+                        <span class="hidden-mobile">Basics of AI</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
