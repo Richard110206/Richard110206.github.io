@@ -27,7 +27,7 @@
 <meta property="og:description" content="Cmd+Shift+F（Mac），调出全局搜索面板。 wps顽固的空白页：鼠标点击空白页，右键段落将行间距修改固定值为1 wps中照片显示不完全：ctrl+1 切换源代码和可显示的模式：ctrl+&#x2F; mac显示无法安全下载：按住control键右键打开点击保留  科学上网 &amp;&amp; Tiktok登录  注册美区账号,【别再当“国区受害者”了！手机搞定美区 Apple ID，从注册到畅">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-03-08T03:35:14.000Z">
-<meta property="article:modified_time" content="2026-04-01T14:41:27.619Z">
+<meta property="article:modified_time" content="2026-07-25T03:55:21.416Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -300,7 +300,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          435 words
+          4.3k words
         
       </span>
     
@@ -311,7 +311,7 @@
         
         
         
-          4 mins
+          37 mins
         
       </span>
     
@@ -532,6 +532,440 @@
 <p>mac 上切换 GLM 模型</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim ~/.claude/settings.json<br></code></pre></td></tr></tbody></table></figure>
 <figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"env"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>    <span class="hljs-attr">"ANTHROPIC_DEFAULT_HAIKU_MODEL"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"glm-4.5-air"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"ANTHROPIC_DEFAULT_SONNET_MODEL"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"glm-5-turbo"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"ANTHROPIC_DEFAULT_OPUS_MODEL"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"glm-5.1"</span><br>  <span class="hljs-punctuation">}</span><br><span class="hljs-punctuation">}</span><br></code></pre></td></tr></tbody></table></figure>
+<h3 id="ShopXO-部署排错合集-2026-07-25">ShopXO 部署排错合集(2026-07-25)</h3>
+<blockquote>
+<p>环境:1Panel + Docker PHP-FPM 8.2 / Debian 13 / 站点 <code>fuyangjia.top</code><br>
+容器名:<code>shopxo-php82</code>,镜像 <code>1panel-php-fpm:8.2.31</code><br>
+服务器:<code>101.35.232.52</code>(腾讯云)</p>
+</blockquote>
+<h4 id="问题-A-接口报-think-route-Domain-not-found">问题 A:接口报 <code>think\route\Domain not found</code></h4>
+<p><strong>遇到的问题</strong><br>
+小程序/网页请求接口时,PHP 抛出 <code>Class not found</code> 错误,提示 <code>think\route\Domain</code> 类找不到,整个接口直接挂掉。</p>
+<p><strong>为什么会出现</strong><br>
+ThinkPHP 8.1 的 <code>Route.php</code> 第 19 行 <code>use think\route\Domain;</code> 并在多处 <code>new Domain($this)</code> 实例化它。但 <code>vendor/topthink/framework/src/think/route/Domain.php</code> 这个文件在服务器上<strong>根本不存在</strong>。</p>
+<p><strong>知识点盲点</strong></p>
+<ul>
+<li><strong>vendor 完整性 ≠ 代码上传成功</strong>:zip 包解压不完整是常见坑,常见诱因有杀毒软件拦截、中文路径编码错误、zip 截断、FTP/SCP 传输中断。</li>
+<li><strong>PHP autoload 的脆弱性</strong>:Composer 的 autoload 是按需加载,文件不存在时只有真正调用到才会报错,容易在测试阶段漏过去。</li>
+</ul>
+<p><strong>如何解决</strong></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 从官方 v8.1.1 补回这一个文件</span><br>vendor/topthink/framework/src/think/route/Domain.php<br></code></pre></td></tr></tbody></table></figure>
+<p>本地校验过的内容来自 <code>https://raw.githubusercontent.com/top-think/framework/v8.1.1/src/think/route/Domain.php</code>(1285 字节)。</p>
+<hr>
+<h4 id="问题-B-接口报-file-put-contents-Failed-to-open-stream">问题 B:接口报 <code>file_put_contents(...): Failed to open stream</code></h4>
+<p><strong>遇到的问题</strong><br>
+错误路径指向容器内 <code>/www/sites/fuyangjia.top/index/runtime/session/shopxo/sess_xxxxx</code>,经历两个阶段:</p>
+<ol>
+<li><code>No such file or directory</code> → 目录不存在</li>
+<li><code>Permission denied</code> → 目录存在但 PHP 写不进去</li>
+</ol>
+<p><strong>为什么会出现</strong><br>
+<strong>关键背景:</strong> 1Panel 用 Docker 跑 PHP-FPM,同一个物理目录有两个视角:</p>
+<table>
+<thead>
+<tr>
+<th>视角</th>
+<th>路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>宿主机(SSH 直接看到)</td>
+<td><code>/opt/1panel/www/sites/fuyangjia.top/index/</code></td>
+</tr>
+<tr>
+<td>容器内(PHP-FPM 看到的)</td>
+<td><code>/www/sites/fuyangjia.top/index/</code></td>
+</tr>
+</tbody>
+</table>
+<p>挂载点把这两个路径映射到同一个物理目录。但 UID 不匹配:</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th><code>www-data</code> 的 UID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>宿主机 <code>/etc/passwd</code></td>
+<td><strong>33</strong></td>
+</tr>
+<tr>
+<td>容器内 <code>/etc/passwd</code></td>
+<td><strong>1000</strong></td>
+</tr>
+</tbody>
+</table>
+<p>PHP-FPM pool 配置写的是 <code>user = www-data</code>,意思是「以容器内的 www-data 跑」→ 实际是 UID 1000。而此前 <code>chown www-data:www-data</code> 给的是宿主机的 www-data → UID 33。<strong>同名不同 ID</strong>,所以 PHP-FPM 在 UID 1000 下无法写入属于 UID 33 的目录。</p>
+<p><strong>知识点盲点</strong></p>
+<ul>
+<li><strong>Linux UID/GID 是数字,名字只是 <code>/etc/passwd</code> 的映射</strong>:容器和宿主机各自有独立的 <code>/etc/passwd</code>,同一个名字 <code>www-data</code> 可以映射到不同的 UID。</li>
+<li><strong><code>chown www-data:www-data</code> 在容器化场景下是危险的</strong>:因为它取的是<strong>当前 shell 所在视角</strong>的 passwd 文件。在宿主机执行就拿到宿主机的 UID 33。</li>
+<li><strong><code>docker exec php -r 'echo posix_geteuid();'</code> 不能反映 FPM worker 的真实用户</strong>:因为 <code>docker exec</code> 默认以 root 跑,得到 <code>uid=0</code> 会误导。FPM worker 的身份只看 pool 配置(<code>/usr/local/etc/php-fpm.d/</code> 里的 <code>user</code> / <code>group</code>)。</li>
+</ul>
+<p><strong>如何解决</strong></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 步骤 1:确认 PHP 容器名</span><br>docker ps --format <span class="hljs-string">'{{.Names}}\t{{.Image}}'</span> | grep -i php<br><br><span class="hljs-comment"># 步骤 2:确认 PHP-FPM 实际跑的 UID</span><br>docker <span class="hljs-built_in">exec</span> shopxo-php82 sh -lc <span class="hljs-string">'grep -rE "^user|^group" /usr/local/etc/php-fpm.d/'</span><br>docker <span class="hljs-built_in">exec</span> shopxo-php82 sh -lc <span class="hljs-string">'cat /etc/passwd | grep -E "www|nginx|nobody"'</span><br><br><span class="hljs-comment"># 步骤 3:对照宿主机上同一目录的 owner</span><br><span class="hljs-built_in">ls</span> -la /opt/1panel/www/sites/fuyangjia.top/index/runtime/<br><br><span class="hljs-comment"># 步骤 4:用数字 UID 修正(不能用名字)</span><br><span class="hljs-built_in">chown</span> -R 1000:1000 /opt/1panel/www/sites/fuyangjia.top/index/runtime<br><span class="hljs-built_in">chmod</span> -R 0755      /opt/1panel/www/sites/fuyangjia.top/index/runtime<br></code></pre></td></tr></tbody></table></figure>
+<hr>
+<h4 id="问题-C-点击支付报「支付方式有误」">问题 C:点击支付报「支付方式有误」</h4>
+<p><strong>遇到的问题</strong><br>
+小程序点击支付时,接口返回 <code>payment_method_error_tips</code> → “支付方式有误”,根本走不到微信收银台。</p>
+<p><strong>为什么会出现</strong><br>
+<code>app/service/PaymentService.php</code> 的 <code>PaymentData</code> 方法里有一段针对微信小程序环境的过滤逻辑<strong>放错了位置</strong>:</p>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">public</span> <span class="hljs-built_in">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PaymentData</span>(<span class="hljs-params"><span class="hljs-variable">$params</span> = []</span>)</span><br><span class="hljs-function"></span>{<br>    <span class="hljs-variable">$res</span> = <span class="hljs-built_in">self</span>::<span class="hljs-title function_ invoke__">PaymentList</span>(<span class="hljs-variable">$params</span>);<br>    <span class="hljs-variable">$data</span> = <span class="hljs-keyword">empty</span>(<span class="hljs-variable">$res</span>) || <span class="hljs-keyword">empty</span>(<span class="hljs-variable">$res</span>[<span class="hljs-number">0</span>]) ? [] : <span class="hljs-variable">$res</span>[<span class="hljs-number">0</span>];  <span class="hljs-comment">// ← $data 是一维数组(单条支付方式)</span><br>    <span class="hljs-comment">// ❌ 这段把 $data 当成列表来过滤,但 $data 是一维数组</span><br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">defined</span>(<span class="hljs-string">'APPLICATION_CLIENT_TYPE'</span>) &amp;&amp; APPLICATION_CLIENT_TYPE == <span class="hljs-string">'weixin'</span>)<br>    {<br>        <span class="hljs-variable">$data</span> = <span class="hljs-title function_ invoke__">array_values</span>(<span class="hljs-title function_ invoke__">array_filter</span>(<span class="hljs-variable">$data</span>, function(<span class="hljs-variable">$item</span>)<br>        {<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>(<span class="hljs-variable">$item</span>[<span class="hljs-string">'payment'</span>]) &amp;&amp; <span class="hljs-variable">$item</span>[<span class="hljs-string">'payment'</span>] == <span class="hljs-string">'Weixin'</span>;<br>        }));<br>    }<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable">$data</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p><code>PaymentData</code> 按 ID 查<strong>单个</strong>支付方式(返回一维数组),<code>array_filter</code> 在一维数组上遍历每个字段值,<code>isset($item['payment'])</code> 永远 false,<strong>过滤后 <code>$data</code> 变成空数组 <code>[]</code></strong>。后续 <code>OrderService::Pay</code> 判空就直接报「支付方式有误」。</p>
+<p><strong>知识点盲点</strong></p>
+<ul>
+<li><strong>PHP <code>array_filter</code> 在一维关联数组上的行为</strong>:<code>array_filter</code> 会遍历数组的每个 value(此处是字符串、数字等标量字段值),而不是当成「一条记录」。把一维关联数组当成二维列表去 filter,结果是「过滤掉所有不符合结构的字段」,几乎一定会得到空数组。</li>
+<li><strong>看函数返回结构再写过滤逻辑</strong>:<code>PaymentList</code> 返回二维,<code>PaymentData</code> 返回一维(取 <code>[0]</code>),两者结构不同,过滤策略不能照搬。</li>
+<li><strong>重复过滤的代码味道</strong>:微信端支付方式筛选已经由 <code>BuyPaymentList</code> 基于 <code>apply_terminal</code> 字段正确处理了,<code>PaymentData</code> 再过滤一次属于职责越界。</li>
+</ul>
+<p><strong>如何解决</strong><br>
+删除 <code>PaymentData</code> 中(原第 289-297 行)那段错误的 <code>array_filter</code> 过滤。微信端的支付方式筛选已由 <code>BuyPaymentList</code> 处理。</p>
+<hr>
+<h4 id="问题-D-点击支付报「目录没有操作权限-…-public-」">问题 D:点击支付报「目录没有操作权限 […/public/]」</h4>
+<p><strong>遇到的问题</strong><br>
+修完问题 C 后再点支付,接口返回:</p>
+<figure class="highlight awk"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">目录没有操作权限 [<span class="hljs-regexp">/www/</span>sites<span class="hljs-regexp">/fuyangjia.top/i</span>ndex<span class="hljs-regexp">/public/</span>]<br></code></pre></td></tr></tbody></table></figure>
+<p>授权 <code>public/</code> 后又出现:</p>
+<figure class="highlight awk"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">目录没有操作权限 [<span class="hljs-regexp">/www/</span>sites<span class="hljs-regexp">/fuyangjia.top/i</span>ndex<span class="hljs-regexp">/extend/</span>payment/]<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>为什么会出现</strong><br>
+<code>app/service/PaymentService.php::PowerCheck()</code> 有<strong>两道</strong>校验,都需要 PHP-FPM(UID 1000)可写:</p>
+<ol>
+<li><code>dir_root_path</code>(API 模式下 = <code>public/</code>) — 用于写入支付入口文件 <code>payment_default_order_weixin_notify.php</code> / <code>_respond.php</code></li>
+<li><code>payment_dir</code> = <code>extend/payment/</code> — 支付插件目录</li>
+</ol>
+<p>之前的修复(问题 B)只覆盖了 <code>runtime/</code>,所以 <code>public/</code> 和 <code>extend/payment/</code> 仍是宿主机默认 owner(UID 33 或 root),容器内 UID 1000 写不进去。</p>
+<p><strong>知识点盲点</strong></p>
+<ul>
+<li><strong>PHP 应用写盘目录不止 <code>runtime/</code></strong>:缓存、日志、session 是显性的,但支付插件入口文件、上传目录、模板编译目录都需要写权限。<strong>只授权一部分目录,后续会持续踩坑</strong>。</li>
+<li><strong>「修一次解决一类」比「修一次解决一个」更省心</strong>:与其逐目录 chown,不如整站根目录一次性 chown 给容器内 PHP 用户。</li>
+<li><strong><code>sh -lc</code> 不支持 brace expansion</strong>:<code>docker exec shopxo-php82 sh -lc '...{a,b,c}...'</code> 不会展开,要么用 <code>bash -lc</code>,要么写成普通 <code>for</code> 循环。</li>
+</ul>
+<p><strong>如何解决</strong></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">SITE_ROOT=/opt/1panel/www/sites/fuyangjia.top/index<br><br><span class="hljs-comment"># 整站一次性授权</span><br><span class="hljs-built_in">chown</span> -R 1000:1000 <span class="hljs-variable">$SITE_ROOT</span><br><span class="hljs-built_in">chmod</span> -R 0755      <span class="hljs-variable">$SITE_ROOT</span><br><br><span class="hljs-comment"># 验证关键目录</span><br>docker <span class="hljs-built_in">exec</span> shopxo-php82 sh -lc <span class="hljs-string">'</span><br><span class="hljs-string">  for d in public extend/payment runtime app config; do</span><br><span class="hljs-string">    p=/www/sites/fuyangjia.top/index/$d</span><br><span class="hljs-string">    test -w "$p" &amp;&amp; echo "OK  $p" || echo "NO  $p"</span><br><span class="hljs-string">  done</span><br><span class="hljs-string">'</span><br></code></pre></td></tr></tbody></table></figure>
+<hr>
+<h4 id="问题-E-体验版-wx-requestPayment-报-access-denied">问题 E:体验版 wx.requestPayment 报 access denied</h4>
+<p><strong>遇到的问题</strong></p>
+<ul>
+<li>微信开发者工具 → 点支付 → 弹二维码 → 扫码支付 ✅</li>
+<li>体验版小程序 → 点支付 → <code>requestPayment:fail access denied</code> ❌</li>
+</ul>
+<p><strong>为什么会出现</strong><br>
+这是<strong>微信侧限制,和服务器代码无关</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>trade_type</th>
+<th>是否依赖小程序主体能力</th>
+<th>是否受备案影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开发工具「扫码支付」</td>
+<td>NATIVE</td>
+<td>否(等同于网页扫码支付)</td>
+<td>否</td>
+</tr>
+<tr>
+<td>体验版 <code>wx.requestPayment</code></td>
+<td>JSAPI</td>
+<td><strong>是</strong></td>
+<td><strong>是</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>该小程序尚未完成工信部备案</strong>,微信官方从 2024 年起对未备案小程序限制核心接口,包括微信支付、获取手机号等。所以 JSAPI 调起被微信侧直接拦截,前端表现为 <code>access denied</code>。</p>
+<p><strong>知识点盲点</strong></p>
+<ul>
+<li><strong>微信小程序备案是硬性门槛</strong>:2024 年起工信部要求所有小程序备案,未备案的小程序无法使用微信支付、获取手机号等核心接口。这是合规问题,不是代码问题。</li>
+<li><strong>NATIVE 与 JSAPI 的本质区别</strong>:NATIVE 是网页扫码支付逻辑,不依赖小程序主体能力;JSAPI 必须通过小程序主体调起,受备案约束。</li>
+<li><strong>「在开发者工具能用 ≠ 在真机能用」</strong>:开发者工具是开发环境,很多限制会被放宽,必须在体验版/正式版回归测试。</li>
+</ul>
+<p><strong>如何解决</strong></p>
+<ol>
+<li>等管局备案通过(通常 1–20 个工作日)</li>
+<li>备案通过后,再到 <a target="_blank" rel="noopener" href="http://pay.weixin.qq.com">pay.weixin.qq.com</a> →<code>产品中心</code>→<code>AppID 账号管理</code>,关联小程序 AppID 与商户号</li>
+<li>然后到小程序管理后台 →<code>微信支付</code>,确认绑定</li>
+<li>备案期间如要内部测试,<strong>继续使用扫码支付路径</strong>(开发者工具或 PC 端)</li>
+</ol>
+<hr>
+<h4 id="ShopXO-部署后标准检查清单-覆盖-2026-07-25-全部问题">ShopXO 部署后标准检查清单(覆盖 2026-07-25 全部问题)</h4>
+<p>每次覆盖代码或重新部署,<strong>必须</strong>走以下命令:</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs bash">SITE_ROOT=/opt/1panel/www/sites/fuyangjia.top/index<br><br><span class="hljs-comment"># 1. 目录授权(容器内 PHP-FPM = UID 1000)</span><br><span class="hljs-built_in">chown</span> -R 1000:1000 <span class="hljs-variable">$SITE_ROOT</span><br><span class="hljs-built_in">chmod</span> -R 0755      <span class="hljs-variable">$SITE_ROOT</span><br><br><span class="hljs-comment"># 2. runtime 子目录确保存在</span><br><span class="hljs-built_in">mkdir</span> -p <span class="hljs-variable">$SITE_ROOT</span>/runtime/session/shopxo \<br>         <span class="hljs-variable">$SITE_ROOT</span>/runtime/cache \<br>         <span class="hljs-variable">$SITE_ROOT</span>/runtime/log \<br>         <span class="hljs-variable">$SITE_ROOT</span>/runtime/temp<br><br><span class="hljs-comment"># 3. vendor 完整性检查</span><br><span class="hljs-built_in">ls</span> <span class="hljs-variable">$SITE_ROOT</span>/vendor/topthink/framework/src/think/route/Domain.php \<br>  &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">"OK Domain.php"</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"MISSING Domain.php"</span><br><br><span class="hljs-comment"># 4. 验证容器内关键目录可写</span><br>docker <span class="hljs-built_in">exec</span> shopxo-php82 sh -lc <span class="hljs-string">'</span><br><span class="hljs-string">  for d in public extend/payment runtime app config; do</span><br><span class="hljs-string">    p=/www/sites/fuyangjia.top/index/$d</span><br><span class="hljs-string">    test -w "$p" &amp;&amp; echo "OK  $p" || echo "NO  $p"</span><br><span class="hljs-string">  done</span><br><span class="hljs-string">'</span><br></code></pre></td></tr></tbody></table></figure>
+<p><strong>问题处理时序速查:</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>现象</th>
+<th>根因</th>
+<th>修复位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>think\route\Domain not found</code></td>
+<td>vendor 部署时丢文件</td>
+<td><code>vendor/.../route/Domain.php</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>Failed to open stream: sess_xxx</code></td>
+<td>runtime owner UID 33,容器要 1000</td>
+<td><code>chown -R 1000:1000 runtime</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>payment_method_error_tips</code></td>
+<td><code>PaymentData</code> 一维数组被错当列表过滤</td>
+<td><code>PaymentService.php</code> 删除 array_filter</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>dir_no_power_tips [/www/.../public/]</code></td>
+<td>public/ owner 不是 1000</td>
+<td>整站 <code>chown -R 1000:1000</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>dir_no_power_tips [/www/.../extend/payment/]</code></td>
+<td>同上,PowerCheck 第二道校验</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>requestPayment:fail access denied</code></td>
+<td>小程序未备案,微信侧限制 JSAPI</td>
+<td>等管局备案通过</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="Navicat-远程连接-MySQL-排查实录">Navicat 远程连接 MySQL 排查实录</h3>
+<blockquote>
+<p>服务器:<code>101.35.232.52</code>(腾讯云 Debian 13)<br>
+目标:本地 Navicat 连接服务器上的 MySQL</p>
+</blockquote>
+<h4 id="问题-Navicat-连接服务器-MySQL-完全失败">问题:Navicat 连接服务器 MySQL 完全失败</h4>
+<p><strong>遇到的问题</strong><br>
+Navicat 连接失败,完全没头绪,无法判断是端口不对、防火墙拦截、还是账号权限问题。</p>
+<p><strong>为什么会出现</strong><br>
+服务器上的 MySQL 跑在 Docker 容器中,通过 <code>docker-proxy</code> 绑定到 <code>127.0.0.1:3306</code>,<strong>只对本机开放,不对公网监听</strong>。1Panel 出于安全考虑,把端口映射配置成 <code>127.0.0.1:3306:3306</code>,这是非常合理的安全默认值 —— 数据库不应该直接暴露在公网。</p>
+<p><strong>知识点盲点</strong></p>
+<ol>
+<li><strong>端口探测是排查第一步</strong> — <code>Test-NetConnection</code> / <code>telnet</code> 能秒级定位「网络问题还是服务问题」,不要盲目改配置。</li>
+<li><strong><code>ss -tlnp</code> / <code>netstat -tlnp</code> 是核心诊断命令</strong> — 一次看到所有监听端口、监听 IP、对应进程,MySQL 真实端口和绑定地址一目了然。</li>
+<li><strong>看进程名比看端口号更可靠</strong> — 这次差点把 <code>13757</code>(1Panel)误认为 MySQL 端口,通过进程名 <code>1panel-core</code> 立刻识破。</li>
+<li><strong>Docker 监听地址的三种含义</strong>:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>监听地址</th>
+<th>含义</th>
+<th>外部能否连接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>127.0.0.1:3306</code></td>
+<td>只监听宿主机本地回环</td>
+<td>❌ 不能</td>
+</tr>
+<tr>
+<td><code>0.0.0.0:3306</code></td>
+<td>监听宿主机所有网卡(含公网 IP)</td>
+<td>✅ 能(若防火墙也放行)</td>
+</tr>
+<tr>
+<td><code>192.168.x.x:3306</code></td>
+<td>只监听内网网卡</td>
+<td>⚠️ 仅内网可连</td>
+</tr>
+</tbody>
+</table>
+<ol start="5">
+<li><strong>完整连接链路上的多重关卡</strong>:即使把 Docker 改成 <code>0.0.0.0:3306</code>,外部要连上 MySQL 还得过以下所有关卡:</li>
+</ol>
+<figure class="highlight scss"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs scss">Navicat 客户端<br>    ↓ ① 腾讯云安全组(入站规则)<br>    ↓ ② 服务器防火墙(iptables / ufw / firewalld)<br>    ↓ ③ Docker 端口映射(<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span> 还是 <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>)<br>    ↓ ④ MySQL 用户授权(user 表的 host 字段)<br>    ↓ ⑤ MySQL 密码验证<br>MySQL 服务<br></code></pre></td></tr></tbody></table></figure>
+<p>任意一关失败都会「连不上」,这就是为什么直接暴露公网连接 MySQL <strong>既不安全、调试又麻烦</strong>。</p>
+<p><strong>如何解决</strong></p>
+<p><strong>Step 1:本地端口连通性测试</strong></p>
+<figure class="highlight powershell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">Test-NetConnection</span> <span class="hljs-literal">-ComputerName</span> <span class="hljs-number">101.35</span>.<span class="hljs-number">232.52</span> <span class="hljs-literal">-Port</span> <span class="hljs-number">3306</span>  <span class="hljs-comment"># ❌ 不通</span><br><span class="hljs-built_in">Test-NetConnection</span> <span class="hljs-literal">-ComputerName</span> <span class="hljs-number">101.35</span>.<span class="hljs-number">232.52</span> <span class="hljs-literal">-Port</span> <span class="hljs-number">22</span>     <span class="hljs-comment"># ✅ 通</span><br></code></pre></td></tr></tbody></table></figure>
+<p>→ SSH 可用,通过 SSH 进入服务器继续排查。</p>
+<p><strong>Step 2:SSH 登录服务器,看 MySQL 真实监听情况</strong></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ss -tlnp<br><span class="hljs-comment"># LISTEN 127.0.0.1:3306 docker-proxy ← MySQL 在 Docker,只监听本机</span><br></code></pre></td></tr></tbody></table></figure>
+<p><strong>Step 3:对比方案,选 SSH 隧道</strong></p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+<th>安全性</th>
+<th>评价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用 1Panel 面板 Web 操作</td>
+<td>简单,一键备份</td>
+<td>面板暴露公网有风险</td>
+<td>⚠️</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>Navicat SSH 隧道</strong></td>
+<td><strong>零配置改动,加密传输</strong></td>
+<td>每次要 SSH 认证</td>
+<td>✅ 高</td>
+<td>⭐⭐⭐⭐⭐ <strong>采用</strong></td>
+</tr>
+<tr>
+<td>改 Docker 绑定 0.0.0.0</td>
+<td>直连方便</td>
+<td>MySQL 暴露公网,易被爆破</td>
+<td>❌ 低</td>
+<td>不推荐</td>
+</tr>
+</tbody>
+</table>
+<p><strong>SSH 隧道原理:</strong></p>
+<figure class="highlight scss"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs scss">┌─────────────┐         ┌─────────────┐         ┌──────────────┐<br>│  Navicat    │         │  服务器      │         │  Docker 中   │<br>│  (本机)     │         │  SSH 服务   │         │  MySQL       │<br>│ 数据 → 加密 ──── <span class="hljs-number">22</span>端口 ────→ 解密 ──── <span class="hljs-number">3306</span> ────→ 数据库      │<br>└─────────────┘         └─────────────┘         └──────────────┘<br>       │                       │<br>       └─── SSH 加密通道 ──────┘<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>Step 4:Navicat 配置</strong></p>
+<p>「常规」标签页(填服务器内 MySQL 信息):</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主机</td>
+<td><code>127.0.0.1</code></td>
+</tr>
+<tr>
+<td>端口</td>
+<td><code>3306</code></td>
+</tr>
+<tr>
+<td>用户名</td>
+<td>数据库账号(如 root)</td>
+</tr>
+<tr>
+<td>密码</td>
+<td>对应密码</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ 这里的 <code>127.0.0.1</code> 是<strong>服务器视角下的本机</strong>,不是你客户端本机。</p>
+</blockquote>
+<p>「SSH」标签页(勾选「使用 SSH 隧道」):</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主机</td>
+<td><code>101.35.232.52</code></td>
+</tr>
+<tr>
+<td>端口</td>
+<td><code>22</code></td>
+</tr>
+<tr>
+<td>用户名</td>
+<td><code>root</code></td>
+</tr>
+<tr>
+<td>验证方法</td>
+<td>密码 或 公钥</td>
+</tr>
+</tbody>
+</table>
+<p>✅ <strong>连接成功。</strong></p>
+<p><strong>经验总结</strong></p>
+<ol>
+<li>生产数据库绝不应直接暴露公网端口,推荐 SSH 隧道或 VPN 方案。</li>
+<li>SSH 隧道不仅适用于 MySQL,Redis、ES、Kafka、内网 Web 服务都可以这么连。</li>
+<li>安全组和服务器内部 iptables/uFW 是两层独立防火墙,<strong>两层都要放行</strong>。</li>
+</ol>
+<h4 id="附录-常用诊断命令速查">附录:常用诊断命令速查</h4>
+<p><strong>本地(Windows)</strong></p>
+<figure class="highlight powershell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># 测试 TCP 端口连通性</span><br><span class="hljs-built_in">Test-NetConnection</span> <span class="hljs-literal">-ComputerName</span> IP <span class="hljs-literal">-Port</span> 端口<br><br><span class="hljs-comment"># Telnet 测试</span><br>telnet IP 端口<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>服务器(Linux)</strong></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看监听端口(推荐)</span><br>ss -tlnp<br><br><span class="hljs-comment"># 查看监听端口(老命令)</span><br>netstat -tlnp<br><br><span class="hljs-comment"># 查看防火墙规则</span><br><span class="hljs-built_in">sudo</span> iptables -L -n<br><span class="hljs-built_in">sudo</span> ufw status<br><span class="hljs-built_in">sudo</span> firewall-cmd --list-all<br><br><span class="hljs-comment"># MySQL 配置位置</span><br><span class="hljs-built_in">cat</span> /etc/my.cnf<br><span class="hljs-built_in">cat</span> /etc/mysql/my.cnf<br><span class="hljs-built_in">cat</span> /etc/mysql/mariadb.conf.d/50-server.cnf<br><br><span class="hljs-comment"># Docker 容器端口映射</span><br>docker ps --format <span class="hljs-string">"table {{.Names}}\t{{.Ports}}"</span><br><br><span class="hljs-comment"># MySQL 用户授权</span><br>mysql -uroot -p<br>&gt; SELECT user, host FROM mysql.user;<br>&gt; SHOW VARIABLES LIKE <span class="hljs-string">'bind_address'</span>;<br>&gt; SHOW VARIABLES LIKE <span class="hljs-string">'port'</span>;<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>腾讯云安全组(必须单独配置)</strong></p>
+<blockquote>
+<p>安全组是云厂商层面的防火墙,<strong>独立于服务器内部的 iptables/uFW,两层都要放行才行</strong>。</p>
+</blockquote>
+<p>操作路径:腾讯云控制台 → 云服务器 → 实例 → 安全组 → 入站规则 → 添加规则</p>
+<hr>
+<h3 id="首页「共创专享」楼层商品顺序调整">首页「共创专享」楼层商品顺序调整</h3>
+<h4 id="问题-商品顺序与设计稿不一致-且-sort-level-改了不生效">问题:商品顺序与设计稿不一致,且 <code>sort_level</code> 改了不生效</h4>
+<p><strong>遇到的问题</strong><br>
+需要把首页「共创专享」楼层内 3 个商品的第 1 个(共创专享)与第 3 个(家庭健康套餐)位置互换。</p>
+<table>
+<thead>
+<tr>
+<th>修改前</th>
+<th>修改后</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 共创专享(id=3)</td>
+<td>① 家庭健康套餐(id=1)</td>
+</tr>
+<tr>
+<td>② 熔融盐草本漱口水(id=2)</td>
+<td>② 熔融盐草本漱口水(id=2)</td>
+</tr>
+<tr>
+<td>③ 家庭健康套餐(id=1)</td>
+<td>③ 共创专享(id=3)</td>
+</tr>
+</tbody>
+</table>
+<p>直觉做法是去后台改 <code>sort_level</code>,但<strong>改了不生效</strong>。</p>
+<p><strong>为什么会出现</strong><br>
+前端 <code>pages/index/index.vue</code> 仅渲染后端返回的 <code>data_list[*].goods</code>,<strong>顺序完全由后端决定</strong>。后端排序逻辑在 <code>app/service/GoodsService.php</code> 的 <code>HomeFloorList</code> 方法:</p>
+<ul>
+<li>排序字段由后台配置 <code>home_index_floor_goods_order_by_type</code> 决定(当前是「最新」,即 <code>g.id DESC</code>),<strong>不读 <code>sort_level</code></strong>。</li>
+<li>商品表 <code>sxo_goods</code> 中三个商品 id=1/2/3,按 <code>id DESC</code> 排出来就是 <code>[3, 2, 1]</code>,正好是修改前的顺序。</li>
+</ul>
+<p><strong>知识点盲点</strong></p>
+<ul>
+<li><strong>「前端只渲染」 ≠ 「前端能控制顺序」</strong>:小程序前端的列表渲染顺序 = 后端给什么顺序就显示什么顺序,改前端没有任何意义。</li>
+<li><strong>后台「排序字段」配置决定 SQL order by</strong>:看到 <code>order by type</code> 这种配置项,要先去代码里看它实际映射到哪个字段,不要凭字段名猜。</li>
+<li><strong><code>sort_level</code> 是商品级配置,但只有当 order by 选了它时才生效</strong>:很多 CMS / 电商系统都有这种「字段存在但默认不启用」的坑。</li>
+<li><strong>改全局配置会牵一发动全身</strong>:改后台 <code>rule</code> 会同时反转其他 5 个楼层,<strong>最小爆炸半径</strong>的做法是在 PHP 层加定向特判。</li>
+</ul>
+<p><strong>如何解决</strong></p>
+<p><strong>唯一改动点</strong>:<code>app/service/GoodsService.php</code> 的 <code>HomeFloorList</code> 方法内,第二次循环给 <code>$cv['goods']</code> 赋值之后(原文件 L247 后):</p>
+<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$cv</span>[<span class="hljs-string">'goods'</span>] = <span class="hljs-variable">$temp</span>;<br><br><span class="hljs-comment">// 共创专享楼层(id=1):反转默认排序,使「家庭健康套餐」展示在「共创专享」前面</span><br><span class="hljs-keyword">if</span>((<span class="hljs-variable">$cv</span>[<span class="hljs-string">'id'</span>] ?? <span class="hljs-number">0</span>) == <span class="hljs-number">1</span> &amp;&amp; <span class="hljs-title function_ invoke__">count</span>(<span class="hljs-variable">$cv</span>[<span class="hljs-string">'goods'</span>]) &gt;= <span class="hljs-number">3</span>)<br>{<br>    <span class="hljs-variable">$cv</span>[<span class="hljs-string">'goods'</span>] = <span class="hljs-title function_ invoke__">array_values</span>(<span class="hljs-title function_ invoke__">array_reverse</span>(<span class="hljs-variable">$cv</span>[<span class="hljs-string">'goods'</span>]));<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>说明:</strong></p>
+<ul>
+<li><code>$cv['id'] == 1</code> — 只对「共创专享」楼层生效,其他楼层不受影响。</li>
+<li><code>count($cv['goods']) &gt;= 3</code> — 守卫条件,商品数少于 3 时不处理(避免未来商品下架后出现意外)。</li>
+<li><code>array_reverse</code> + <code>array_values</code> — 反转顺序并重建索引。</li>
+</ul>
+<p><strong>缓存与生效</strong></p>
+<p><code>HomeFloorList</code> 内部带 180 秒缓存(<code>MyCache($key, $data, 180)</code>),<code>Index</code> 接口层还有一层缓存。改完代码部署后,最长 3 分钟内自动生效;若需要立即生效,可在 1Panel 后台清理 ShopXO 缓存或重启 PHP 容器。</p>
+<p><strong>回滚</strong></p>
+<p>删除上述 5 行新增代码即可恢复原状。</p>
 
                 
               </div>
@@ -589,7 +1023,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>April 1, 2026</div>
+          <div>July 25, 2026</div>
         </div>
       
       

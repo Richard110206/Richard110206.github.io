@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/cover/CMake-Tutorial.png?raw=true">
 <meta property="article:published_time" content="2025-09-21T01:37:34.000Z">
-<meta property="article:modified_time" content="2026-07-17T14:09:54.878Z">
+<meta property="article:modified_time" content="2026-07-25T04:05:58.102Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="CMake">
 <meta name="twitter:card" content="summary_large_image">
@@ -303,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k words
+          4.9k words
         
       </span>
     
@@ -314,7 +314,7 @@
         
         
         
-          31 mins
+          41 mins
         
       </span>
     
@@ -551,6 +551,9 @@
 <div class="note note-info">
             <ul><li><code>cmake_minimum_required(VERSION 3.31)</code></li></ul><p>用于指定 CMake 的<strong>最低版本要求</strong></p><ul><li><code>project(untitled)</code></li></ul><p>用于定义项目的名称</p><ul><li><code>set(CMAKE_CXX_STANDARD 20)</code></li></ul><p>用于设置 <strong>C++ 标准</strong></p><ul><li><code>add_executable(untitled main.cpp)</code></li></ul><p>用于添加一个<strong>可执行文件</strong>，并<strong>指定它的源文件</strong></p>
           </div>
+<div class="note note-info">
+            <p><strong>CMake 语法小贴士</strong>：</p><ul><li>命令大小写不敏感（<code>PROJECT</code> 和 <code>project</code> 等价），但<strong>约定俗成用小写</strong></li><li>命令参数之间用<strong>空格</strong>或<strong>分号</strong> <code>;</code> 分隔</li><li><strong>行注释</strong> 以 <code>#</code> 开头，可放在任何位置</li><li><strong>块注释</strong> 使用 <code>#[[ ... ]]</code> 形式（CMake 3.0+）</li></ul><figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs txt"># 这是一个 CMakeLists.txt 文件<br>cmake_minimum_required(VERSION 3.10)<br><br>#[[<br>这是块注释<br>可以跨越多行<br>]]<br>project(untitled)<br></code></pre></td></tr></tbody></table></figure>
+          </div>
 <p>  随后我们即可通过这个 <code>CMakeLists.txt</code> 文件生成目标平台下的原生工程，如Windows下的Visual Studio工程，macOS下的<code>Xcode</code>工程，Linux下的<code>Makefile</code>工程，这个过程在<code>cmake</code>中叫做配置（<code>config</code>）,这个过程本质上<strong>解决了跨平台编译问题</strong>。</p>
 <div class="note note-info">
             <p><strong>CMake 工作流程回顾</strong>：编写 <code>CMakeLists.txt</code> → 运行 <code>cmake</code> <strong>配置</strong>生成 Makefile（或其他构建文件）→ 运行 <code>make</code> <strong>编译链接</strong>生成可执行文件 → 运行程序。<br>两阶段的设计是 CMake 跨平台的关键：配置阶段处理平台差异，构建阶段执行实际的编译链接。</p>
@@ -682,6 +685,42 @@
 <div class="note note-danger">
             <p><strong>初学者最易踩的坑</strong>：<code>target_link_libraries</code> 中漏写 <code>PUBLIC/PRIVATE/INTERFACE</code> 时，CMake 会默认按旧式语法处理，可能造成依赖泄漏。<strong>新项目务必显式写明可见性</strong>。</p>
           </div>
+<h4 id="1-指定产物输出路径">1. 指定产物输出路径</h4>
+<p>通过预定义宏可以控制可执行程序和库文件的输出位置：</p>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs txt"># 设置可执行程序的输出路径（Linux 下的动态库默认有执行权限，也用这个宏）<br>set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)<br><br># 设置库文件的输出路径（静态库、动态库通用）<br>set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p>若指定路径中的子目录不存在，CMake 会<strong>自动创建</strong>，无需手动 <code>mkdir</code>。这两个宏属于<strong>目录级属性</strong>，只对当前 <code>CMakeLists.txt</code> 中定义的目标生效。</p>
+          </div>
+<h4 id="2-link-libraries-vs-target-link-libraries">2. link_libraries vs target_link_libraries</h4>
+<p>CMake 提供了两个链接库的命令，作用域不同：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用域</th>
+<th>推荐度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>link_libraries(lib)</code></td>
+<td><strong>全局</strong> —— 之后定义的所有目标都会链接</td>
+<td>❌ 仅简单项目</td>
+</tr>
+<tr>
+<td><code>target_link_libraries(target PRIVATE lib)</code></td>
+<td><strong>指定目标</strong> —— 只影响该 target</td>
+<td>✅ 现代 CMake 推荐</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs txt"># ❌ 旧风格（全局污染）<br>link_libraries(pthread)<br>add_executable(app1 main1.cpp)<br>add_executable(app2 main2.cpp)   # app2 也会被迫链接 pthread<br><br># ✅ 新风格（精确控制）<br>add_executable(app1 main1.cpp)<br>target_link_libraries(app1 PRIVATE pthread)<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="3-link-directories-指定库搜索路径">3. link_directories 指定库搜索路径</h4>
+<p>当库文件不在系统默认路径时，需要显式告诉 CMake 去哪里找：</p>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs txt"># 全局生效<br>link_directories(${PROJECT_SOURCE_DIR}/lib)<br><br># 现代 CMake 推荐写法（CMake 3.13+，针对特定目标）<br>target_link_directories(main PRIVATE ${PROJECT_SOURCE_DIR}/lib)<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>静态库 vs 动态库的加载差异</strong>：</p><ul><li><strong>静态库</strong> 在<strong>链接阶段</strong>就被拷贝进可执行文件，程序启动时静态库已加载到内存</li><li><strong>动态库</strong> 在<strong>链接阶段</strong>不会被打包进可执行文件，仅在程序运行并调用其函数时才加载到内存，因此<strong>多个进程可共享同一个动态库</strong>（所以动态库又叫共享库）</li></ul>
+          </div>
 <h3 id="（六）、使用第三方库（find-package）">（六）、使用第三方库（find_package）</h3>
 <p>  实际项目里我们经常要使用第三方库，比如 OpenCV、Boost、OpenSSL 等。CMake 通过 <code>find_package</code> 来定位这些库：</p>
 <figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs txt">cmake_minimum_required(VERSION 3.10)<br>project(opencv_demo)<br><br>set(CMAKE_CXX_STANDARD 17)<br><br># 查找 OpenCV 库<br>find_package(OpenCV REQUIRED)<br><br>add_executable(main main.cpp)<br><br># 链接 OpenCV 库（变量 OpenCV_LIBS 由 find_package 自动提供）<br>target_link_libraries(main ${OpenCV_LIBS})<br></code></pre></td></tr></tbody></table></figure>
@@ -695,7 +734,86 @@
           </div>
 <p>  如果 CMake 找不到库，可以通过以下方式指定路径：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 通过 CLI 参数指定</span><br>cmake .. -DOpenCV_DIR=/usr/local/Cellar/opencv/4.10.0/lib/cmake/opencv4<br><br><span class="hljs-comment"># 或设置环境变量</span><br><span class="hljs-built_in">export</span> CMAKE_PREFIX_PATH=/usr/local<br></code></pre></td></tr></tbody></table></figure>
-<h3 id="（七）、常用变量与命令速查">（七）、常用变量与命令速查</h3>
+<h3 id="（七）、变量操作与列表处理">（七）、变量操作与列表处理</h3>
+<h4 id="1-set-拼接变量">1. set 拼接变量</h4>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs txt">set(SRC_1 a.cpp b.cpp)<br>set(SRC_2 c.cpp d.cpp)<br># 把 SRC_2 和临时字符串追加到 SRC_1（结果会覆盖 SRC_1 的原值）<br>set(SRC_1 ${SRC_1} ${SRC_2} main.cpp)<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="2-list-命令详解">2. list 命令详解</h4>
+<p><code>list</code> 比 <code>set</code> 功能更强大，常用子命令：</p>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs txt">set(SRC a.cpp b.cpp c.cpp main.cpp)<br><br>list(APPEND SRC d.cpp)                            # 追加元素<br>list(REMOVE_ITEM SRC main.cpp)                    # 移除指定元素（如把测试文件从库源文件中剔除）<br>list(LENGTH SRC LEN)                              # 获取列表长度<br>list(GET SRC 0 FIRST_ITEM)                        # 按索引取元素（支持负数，-1 为末尾）<br>list(FIND SRC b.cpp IDX)                          # 查找元素索引，未找到返回 -1<br>list(REVERSE SRC)                                 # 反转列表<br>list(SORT SRC)                                    # 排序<br>list(REMOVE_DUPLICATES SRC)                       # 去重<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>CMake 中的 list 本质是用分号 <code>;</code> 分隔的字符串</strong>。<code>set(var a b c)</code> 和 <code>set(var "a;b;c")</code> 等价，直接打印 <code>${var}</code> 会得到 <code>abc</code>（无分隔符），但通过 <code>foreach</code> 遍历会得到三个独立元素。</p>
+          </div>
+<h4 id="3-字符串移除的常见应用">3. 字符串移除的常见应用</h4>
+<p>通过 <code>file(GLOB)</code> 搜索源文件后，可以用 <code>list(REMOVE_ITEM)</code> 排除不需要的文件：</p>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs txt">file(GLOB SRC_LIST ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)<br># 移除测试文件，只保留库源文件<br>list(REMOVE_ITEM SRC_LIST ${CMAKE_CURRENT_SOURCE_DIR}/test_main.cpp)<br>add_library(my_lib STATIC ${SRC_LIST})<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="（八）、流程控制（条件判断与循环）">（八）、流程控制（条件判断与循环）</h3>
+<h4 id="1-条件判断-if-elseif-else">1. 条件判断 if/elseif/else</h4>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs txt">if(&lt;condition&gt;)<br>    # commands<br>elseif(&lt;condition&gt;)<br>    # commands<br>else()<br>    # commands<br>endif()<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>常用条件表达式</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>常量</td>
+<td><code>if(TRUE)</code> / <code>if(FALSE)</code></td>
+<td><code>ON/YES/TRUE/Y/非零</code> 为真，<code>OFF/NO/FALSE/N/0/空串</code> 为假</td>
+</tr>
+<tr>
+<td>逻辑</td>
+<td><code>if(NOT A)</code>、<code>if(A AND B)</code>、<code>if(A OR B)</code></td>
+<td>非、与、或</td>
+</tr>
+<tr>
+<td>数值比较</td>
+<td><code>A LESS B</code>、<code>GREATER</code>、<code>EQUAL</code>、<code>LESS_EQUAL</code>、<code>GREATER_EQUAL</code></td>
+<td>数值大小</td>
+</tr>
+<tr>
+<td>字符串比较</td>
+<td><code>A STRLESS B</code>、<code>STREQUAL</code>、<code>STRLESS_EQUAL</code> 等</td>
+<td>字典序比较</td>
+</tr>
+<tr>
+<td>文件判断</td>
+<td><code>if(EXISTS path)</code>、<code>IS_DIRECTORY</code>、<code>IS_SYMLINK</code>、<code>IS_ABSOLUTE</code></td>
+<td>文件/路径判断</td>
+</tr>
+<tr>
+<td>列表判断</td>
+<td><code>if(item IN_LIST LIST_VAR)</code></td>
+<td>元素是否在列表中（CMake 3.3+）</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs txt">if(WIN32)<br>    message(STATUS "Building on Windows")<br>elseif(APPLE)<br>    message(STATUS "Building on macOS")<br>elseif(UNIX)<br>    message(STATUS "Building on Linux")<br>endif()<br><br>if(CMAKE_BUILD_TYPE STREQUAL "Debug")<br>    add_definitions(-DDEBUG_MODE)<br>endif()<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>PATH_EQUAL vs STREQUAL（CMake 3.24+）</strong>：比较路径时 <code>STREQUAL</code> 只做字符串比较，而 <code>PATH_EQUAL</code> 会自动规范化多余的分隔符 —— 例如 <code>/a//b///c</code> 和 <code>/a/b/c</code> 用 <code>STREQUAL</code> 比较为假，用 <code>PATH_EQUAL</code> 比较为真。</p>
+          </div>
+<h4 id="2-foreach-循环">2. foreach 循环</h4>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs txt"># 方式 1：遍历整数区间 [0, stop]<br>foreach(item RANGE 10)<br>    message(STATUS "item = ${item}")     # 0, 1, 2, ..., 10<br>endforeach()<br><br># 方式 2：遍历区间 [start, stop]，可指定步长<br>foreach(item RANGE 0 20 2)<br>    message(STATUS "item = ${item}")     # 0, 2, 4, ..., 20<br>endforeach()<br><br># 方式 3：遍历列表<br>set(SRC a.cpp b.cpp c.cpp)<br>foreach(f IN LISTS SRC)<br>    message(STATUS "file = ${f}")<br>endforeach()<br><br># 方式 4：并行遍历多个列表（CMake 3.17+）<br>list(APPEND NAMES ace sabo luffy)<br>list(APPEND AGES 17 19 19)<br>foreach(name age IN ZIP_LISTS NAMES AGES)<br>    message(STATUS "${name} is ${age}")<br>endforeach()<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="3-while-循环">3. while 循环</h4>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs txt">set(COUNT 0)<br>while(${COUNT} LESS 5)<br>    message(STATUS "count = ${COUNT}")<br>    math(EXPR COUNT "${COUNT} + 1")     # 整数运算<br>endwhile()<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><code>math(EXPR VAR "expression")</code> 用于执行整数运算，结果存到 <code>VAR</code> 中。</p>
+          </div>
+<h3 id="（九）、宏定义与编译选项">（九）、宏定义与编译选项</h3>
+<h4 id="1-add-definitions-添加预处理宏">1. add_definitions 添加预处理宏</h4>
+<p>相当于给编译器传递 <code>-D</code> 参数：</p>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs txt"># 等价于 g++ -DDEBUG -DVERSION=2 ...<br>add_definitions(-DDEBUG)<br>add_definitions(-DVERSION=2)<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>现代 CMake 推荐</strong>用 <code>target_compile_definitions</code> 替代全局的 <code>add_definitions</code>，避免污染其他目标：</p><figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs txt">target_compile_definitions(main PRIVATE DEBUG_MODE VERSION=2)<br></code></pre></td></tr></tbody></table></figure>
+          </div>
+<h4 id="2-add-compile-options-添加编译选项">2. add_compile_options 添加编译选项</h4>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs txt"># 全局添加警告选项<br>add_compile_options(-Wall -Wextra -Wpedantic)<br><br># 现代 CMake：针对特定目标<br>target_compile_options(main PRIVATE -Wall -Wextra)<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="3-指定-C-C-标准的三种方式">3. 指定 C/C++ 标准的三种方式</h4>
+<figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs txt"># 方式 1：全局变量（影响所有 target）<br>set(CMAKE_CXX_STANDARD 17)<br>set(CMAKE_CXX_STANDARD_REQUIRED ON)     # 必须使用，不能降级<br>set(CMAKE_CXX_EXTENSIONS OFF)           # 关闭编译器扩展（如 GNU 扩展）<br><br># 方式 2：执行 cmake 时通过 -D 参数<br># cmake .. -DCMAKE_CXX_STANDARD=17<br><br># 方式 3：现代 CMake，针对特定 target<br>target_compile_features(main PRIVATE cxx_std_17)<br></code></pre></td></tr></tbody></table></figure>
+<h3 id="（十）、常用变量与命令速查">（十）、常用变量与命令速查</h3>
 <h4 id="1-CMake-内置变量">1. CMake 内置变量</h4>
 <table>
 <thead>
@@ -746,12 +864,12 @@
 <div class="note note-danger">
             <p><strong>单配置生成器（如 Makefile、Ninja）的隐藏陷阱</strong>：若不显式指定 <code>CMAKE_BUILD_TYPE</code>，默认值是<strong>空字符串</strong>，意味着<strong>既没有调试信息也没有优化</strong>，且不会被 cache，每次重新配置都会丢失。建议在 <code>CMakeLists.txt</code> 中设置默认值：</p><figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs txt">if(NOT CMAKE_BUILD_TYPE)<br>    set(CMAKE_BUILD_TYPE Release)<br>endif()<br></code></pre></td></tr></tbody></table></figure>
           </div>
-<h3 id="（八）、CMake-CLI-常用命令">（八）、CMake CLI 常用命令</h3>
+<h3 id="（十一）、CMake-CLI-常用命令">（十一）、CMake CLI 常用命令</h3>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># === 配置阶段（生成构建文件） ===</span><br>cmake -S &lt;源码目录&gt; -B &lt;构建目录&gt;     <span class="hljs-comment"># 现代写法，一步到位</span><br>cmake -S . -B build                    <span class="hljs-comment"># 例如</span><br>cmake -B build -DCMAKE_BUILD_TYPE=Release  <span class="hljs-comment"># 追加参数</span><br><br><span class="hljs-comment"># === 构建阶段（执行编译） ===</span><br>cmake --build build                    <span class="hljs-comment"># 跨平台构建（自动调用 make/ninja/msbuild）</span><br>cmake --build build -j 8               <span class="hljs-comment"># 并行编译（8 个并行任务）</span><br>cmake --build build --target main      <span class="hljs-comment"># 只构建 main 这个目标</span><br>cmake --build build --clean-first      <span class="hljs-comment"># 构建前先清理</span><br><br><span class="hljs-comment"># === 安装阶段 ===</span><br>cmake --install build                  <span class="hljs-comment"># 安装到 CMAKE_INSTALL_PREFIX</span><br><br><span class="hljs-comment"># === 其他 ===</span><br>cmake --build build --verbose          <span class="hljs-comment"># 显示完整编译命令（调试用）</span><br>ccmake build                           <span class="hljs-comment"># 终端 UI 修改 CMake 缓存变量</span><br></code></pre></td></tr></tbody></table></figure>
 <div class="note note-info">
             <p><strong>为什么推荐 <code>cmake --build</code> 而不是直接 <code>make</code>？</strong> 因为 <code>cmake --build</code> 是<strong>跨平台</strong>的 —— 它会自动调用当前生成器的构建工具（Linux 下是 <code>make</code>，Windows 下是 <code>msbuild</code>，安装了 Ninja 时是 <code>ninja</code>），让构建命令无需关心平台差异。这也是<strong>前端 IDE</strong>（CLion、VS Code）内部使用的方式。</p>
           </div>
-<h3 id="（九）、最佳实践">（九）、最佳实践</h3>
+<h3 id="（十二）、最佳实践">（十二）、最佳实践</h3>
 <div class="note note-info">
             <p><strong>1. 永远使用外部构建</strong><br>不要在源码目录直接运行 <code>cmake .</code>，养成 <code>mkdir build &amp;&amp; cd build &amp;&amp; cmake ..</code> 的习惯。</p><p><em><em>2. 现代写法优先使用 target_</em> 系列命令</em>*<br>旧风格的全局命令（<code>include_directories</code>、<code>add_definitions</code>、<code>link_libraries</code>）影响整个项目及其子目录，容易造成污染。现代 CMake 推荐使用带 <code>target_</code> 前缀的命令，作用域明确：</p><figure class="highlight txt"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs txt"># ❌ 旧风格（全局生效）<br>include_directories(include/)<br><br># ✅ 新风格（只对指定 target 生效）<br>target_include_directories(main PRIVATE include/)<br></code></pre></td></tr></tbody></table></figure><p><strong>3. 显式指定 C++ 标准</strong><br>使用 <code>target_compile_features(main PRIVATE cxx_std_17)</code> 比全局 <code>set(CMAKE_CXX_STANDARD 17)</code> 更精确。</p><p><strong>4. 不要滥用 GLOB</strong><br>如果一定要用 <code>file(GLOB)</code>，务必加上 <code>CONFIGURE_DEPENDS</code>，否则新增文件不会触发重新配置。</p><p><strong>5. 保持 <code>CMakeLists.txt</code> 简洁</strong><br>复杂逻辑拆到子目录的 <code>CMakeLists.txt</code> 中，根目录只做顶层组织。</p>
           </div>
@@ -766,6 +884,13 @@
 <li>现代写法优先使用 <code>target_*</code> 系列命令，避免全局污染</li>
 </ul>
 <p>  更深入的内容推荐阅读官方文档：<a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/guide/tutorial/index.html">CMake Tutorial</a> 以及经典开源项目的 <code>CMakeLists.txt</code> 写法（如 <a target="_blank" rel="noopener" href="https://github.com/nlohmann/json">JSON for Modern C++</a>、<a target="_blank" rel="noopener" href="https://github.com/opencv/opencv">OpenCV</a>）。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://subingwen.cn/cmake/CMake-primer/">CMake 保姆级教程（上） — 爱编程的大丙</a></li>
+<li><a target="_blank" rel="noopener" href="https://subingwen.cn/cmake/CMake-advanced/">CMake 保姆级教程（下） — 爱编程的大丙</a></li>
+<li><a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/guide/tutorial/index.html">CMake Official Tutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/">CMake Reference Documentation</a></li>
+</ul>
 
                 
               </div>
@@ -830,7 +955,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>July 17, 2026</div>
+          <div>July 25, 2026</div>
         </div>
       
       
