@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/General/life-musings/server%20login.png?raw=true">
 <meta property="og:image" content="https://github.com/Richard110206/Blog-image/blob/main/article/General/life-musings/inside%20scoop.png?raw=true">
 <meta property="article:published_time" content="2025-07-14T15:34:51.000Z">
-<meta property="article:modified_time" content="2026-08-24T16:01:30.514Z">
+<meta property="article:modified_time" content="2026-08-29T17:14:47.991Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="updating">
 <meta name="twitter:card" content="summary_large_image">
@@ -317,7 +317,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          38k words
+          39k words
         
       </span>
     
@@ -328,7 +328,7 @@
         
         
         
-          321 mins
+          326 mins
         
       </span>
     
@@ -718,7 +718,11 @@
 <li>【商挑赛】分配了线上答辩的任务，先完成一下PPT的制作吧！</li>
 </ul>
 </li>
-<li>8.23</li>
+<li>8.23
+<ul>
+<li>【揭榜挂帅】完善项目案件的全部流程！</li>
+</ul>
+</li>
 <li>8.24
 <ul>
 <li>【揭榜挂帅】法律学科建设完成起来比我想象的要困难的多，很多预想的功能都还没有完全实现！</li>
@@ -726,6 +730,179 @@
 <li>在腾讯围棋上炸鱼哈哈哈，这分明是“老叟戏顽童”！</li>
 </ul>
 </li>
+<li>8.25
+<ul>
+<li>【商挑赛】除了问到调研的内容，有公司背书的真实性加持其他异常顺利，都没有给我出场的机会！</li>
+<li>【揭榜挂帅】法律学科建设完成BM25混合检索功能的实现！</li>
+<li>意图使用<a target="_blank" rel="noopener" href="https://github.com/anthropics/skills/tree/main/skills/skill-creator">anthropics的skill-creator</a>来开发一个答辩常见问题准备的skill，结果发现并不那么简单，效果并不理想！</li>
+</ul>
+</li>
+<li>8.26</li>
+<li>【揭榜挂帅】法律学科建设完成对抗质询和skill注入的功能！</li>
+<li>安装<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/2068355085243871946">知乎的CLI工具</a>，准备使用<a target="_blank" rel="noopener" href="https://github.com/jackwener/OpenCLI">OpenCLI</a>，可以先下载<a target="_blank" rel="noopener" href="https://opencli.info/download">OpenCLIApp</a></li>
+<li>8.27
+<ul>
+<li>之前就一直想，像是部署项目后端数据库等还是需要浏览器操作，能不能全部打包，结果这里竟然就将这些应用全部打包为<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/2024447023517115979">CLI工具</a>，一步到位！</li>
+<li>【黑土智农】的项目怎么就没有人想负责好好干呢，报个iCAN比赛都没时间都不想干活，这样的队伍呆着真是太累了！还是要找每个队员都对项目有信心、愿意且有时间去做的去朝着一个共同的方向努力！</li>
+</ul>
+</li>
+</ul>
+<p>🐙 GitHub CLI（gh）— 代码托管</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>命令</th>
+<th>claude代劳？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建仓库</td>
+<td>gh repo create</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>推送/拉取代码</td>
+<td>git push / git pull</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>克隆别人的项目</td>
+<td>gh repo clone</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>查看/创建 Issue（问题单）</td>
+<td>gh issue create/list</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>创建/合并 Pull Request</td>
+<td>gh pr create/merge</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>查看 GitHub 通知</td>
+<td>gh status</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>管理 Actions 密钥</td>
+<td>gh secret set</td>
+<td>✅ 能</td>
+</tr>
+</tbody>
+</table>
+<p>▲ Vercel CLI（vercel）— 前端部署</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>命令</th>
+<th>claude代劳？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>部署上线</td>
+<td>vercel deploy</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>本地开发预览</td>
+<td>vercel dev</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>管理环境变量（存 Supabase 密钥等）</td>
+<td>vercel env add</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>查看部署历史/回滚</td>
+<td>vercel ls / vercel rollback</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>绑定 Git 仓库（push 自动部署）</td>
+<td>vercel git connect</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>给项目换网址别名</td>
+<td>vercel alias</td>
+<td>✅ 能</td>
+</tr>
+</tbody>
+</table>
+<p>🗄️ Supabase CLI（supabase）— 后端</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>命令</th>
+<th>claude代劳？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建云端项目</td>
+<td>supabase projects create</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>建表/改表结构</td>
+<td>supabase db push</td>
+<td>✅ 能（写 SQL 迁移文件后推送）</td>
+</tr>
+<tr>
+<td>执行 SQL</td>
+<td>supabase db sql</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>拿 API 密钥</td>
+<td>supabase projects api‑keys</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>Edge Functions（云函数）</td>
+<td>supabase functions</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>管理文件存储</td>
+<td>supabase storage</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>数据库备份</td>
+<td>supabase backups</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>本地跑全套服务</td>
+<td>supabase start（需 Docker）</td>
+<td>✅ 能</td>
+</tr>
+<tr>
+<td>恢复暂停的项目</td>
+<td>supabase projects restore</td>
+<td>✅ 能</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>8.28
+<ul>
+<li>【iCAN】完成开发日志PDF的编写，增加了以往组会、例会、腾讯线上会议的截图进行丰富！</li>
+<li>国创赛产业赛道报名，这一个个报名信息，知识产权填写也太多了！</li>
+</ul>
+</li>
+<li>8.29</li>
+<li>完成国创赛产业赛道技术方案 PDF（依旧Claude Code+LaTex已经形成路径依赖了）</li>
+<li>智谱的AI输入法与Claude简直绝配，自动将你说的话分解，然后分条目地去进行组织，非常适合用来发布plan依次完成</li>
 </ul>
 
                 
@@ -770,7 +947,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>August 25, 2026</div>
+          <div>August 30, 2026</div>
         </div>
       
       
