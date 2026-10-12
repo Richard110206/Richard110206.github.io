@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://raw.githubusercontent.com/Richard110206/blog-image/main/cover/Simple-Git-Project-Management-Guide.png">
 <meta property="article:published_time" content="2025-07-13T03:16:13.000Z">
-<meta property="article:modified_time" content="2025-09-16T14:55:28.530Z">
+<meta property="article:modified_time" content="2026-10-10T15:37:37.262Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
@@ -303,7 +303,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k words
+          7.4k words
         
       </span>
     
@@ -314,7 +314,7 @@
         
         
         
-          21 mins
+          62 mins
         
       </span>
     
@@ -668,6 +668,331 @@
             <p>如果我上线测试时突然发现了一个<code>bug</code>，而我不知道他是他是何时产生的应该怎么办呢？</p>
           </div>
 <p><code>Git</code>也会提供相应的二分历史记录查找！</p>
+<h2 id="Git-Bundle：离线传输与无权限协作">Git Bundle：离线传输与无权限协作</h2>
+<p><code>Git</code> 的分布式设计让每个仓库都是完整的，但仓库之间的同步通常依赖网络（push / fetch）。当网络不存在或权限不足时——隔离内网、无 push 权限的贡献者、U 盘摆渡、离线备份——<code>git bundle</code> 提供了官方的离线传输方案：<strong>把 refs 和打包后的对象装进一个文件，对方可以像对待远程仓库一样 clone / fetch 它</strong>。</p>
+<p>前文已介绍 Git 的基本操作、快照模型与分支，本节补充这块离线场景下的知识。文中所有命令与输出均在 Git 2.52 上实际验证。</p>
+<h3 id="1、Git-Bundle-是什么">1、Git Bundle 是什么</h3>
+<p><strong>Git Bundle 是一个单文件归档，同时携带"引用（refs）“和这些引用背后"打包的对象（packfile）”</strong>。它可以被 <code>git clone</code>、<code>git fetch</code>、<code>git pull</code> 直接当作远程仓库使用。</p>
+<p>几个关键认识：</p>
+<ol>
+<li>
+<p><strong><code>.bundle</code> 文件的本质</strong>：一段人类可读的文本头部 + 一个二进制 packfile。头部声明"我有哪些 ref、我假定你已有哪几个提交"，packfile 部分则是标准的 Git 对象包。它不是通用压缩格式，Git 之外的解压工具无法读取。</p>
+</li>
+<li>
+<p><strong>能保存什么</strong>：分支与标签指向的 commit / tree / blob / tag 对象，即<strong>完整的提交历史和每一次提交的精确内容</strong>。相应地，它<strong>不保存</strong>：工作区文件、暂存区、<code>config</code>（含 remote 定义）、hooks、<code>.gitignore</code> 规则本身、LFS 大文件内容、子模块仓库本体。</p>
+</li>
+<li>
+<p><strong>与 ZIP 的区别</strong>：ZIP 只是某一时刻工作目录的普通压缩，没有版本概念；bundle 是"版本库的切片"，保留 DAG 结构、提交者身份、时间戳、签名，接收方合并时与网络 fetch 完全等价。</p>
+</li>
+<li>
+<p><strong>与仓库的关系</strong>：可以把 bundle 理解为一个<strong>只读的、单文件的迷你远程仓库</strong>。它不能被直接 commit 或 push，但可以从中 fetch；接收方的 <code>merge</code> / <code>cherry-pick</code> / <code>rebase</code> 照常工作。</p>
+</li>
+<li>
+<p><strong>典型场景</strong>：</p>
+<ul>
+<li>无 push 权限的贡献者向维护者交付提交（第 4 小节的主角）；</li>
+<li>物理隔离网络之间的代码摆渡（U 盘 / 光盘）；</li>
+<li>离线环境初始化仓库：先传 bundle，再 <code>git clone &lt;bundle&gt;</code>；</li>
+<li>单文件备份：定期 <code>--all</code> 打包整个仓库的引用可达历史；</li>
+<li>慢速链路下的提速分发（Git ≥ 2.38 实验性的 <code>git clone --bundle-uri=&lt;url&gt;</code> 即基于此）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="2、底层原理">2、底层原理</h3>
+<blockquote>
+<p>前置知识：前文《快照》《关联快照》两节已介绍 Git 快照模型（blob / tree / commit 与提交 DAG），此处直接使用。</p>
+</blockquote>
+<h4 id="2-1-一个-bundle-的真实字节结构">2.1 一个 bundle 的真实字节结构</h4>
+<p>下面是实验中一个增量 bundle 的文本头部（<code>head -n 4 a-work.bundle</code> 的真实输出）：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text"># v2 git bundle<br>-43425d8bda43987a3fed8f06abe5f58456157f52 init: base commit<br>01138fb2bd367f4686c641ae11e57c1e8dd592ff refs/heads/main<br><br></code></pre></td></tr></tbody></table></figure>
+<p>格式如下（v2，由 Git 官方 <code>git-bundle(5)</code> 文档定义）：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">a-work.bundle<br>├── # v2 git bundle               # 签名与版本<br>├── -&lt;sha&gt; &lt;oneline&gt;              # 前置依赖（Prerequisites，可选，可多行）<br>├── &lt;sha&gt; &lt;refname&gt;               # 引用列表（refs）<br>├── （空行，头部结束）<br>└── packfile 二进制数据            # 对象包，占据文件其余全部<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>签名行固定为 <code># v2 git bundle</code>；使用 SHA-256 仓库或对象过滤时会生成 <code># v3 git bundle</code>，v3 在签名后多出 <code>@object-format=sha256</code>、<code>@filter=...</code> 等能力行；</li>
+<li><strong>前置依赖行以 <code>-</code> 开头</strong>：表示"接收方必须已经拥有该对象"，注释部分是打包时该提交的一行摘要；</li>
+<li><strong>引用行</strong>：与 <code>git ls-remote</code> 的输出同构，是 bundle 对外暴露的"广播"；</li>
+<li>空行之后全部是 packfile 字节流。</li>
+</ul>
+<h4 id="2-2-对象如何保存：bundle-就是-固化的一次-fetch-会话">2.2 对象如何保存：bundle 就是"固化的一次 fetch 会话"</h4>
+<p>回忆网络传输时发生的事情：服务端广播自己的 refs，客户端声明自己有哪些提交（have），服务端据此算出<strong>缺失对象集合</strong>，打成一个 packfile 发过来。</p>
+<p><code>git bundle create</code> 做的是同一件事，只是把结果冻结成文件：</p>
+<ol>
+<li>参数被原样交给 <code>git rev-list</code> 语义解释（所以一切 rev-list 语法——分支名、<code>A..B</code> 范围、<code>--all</code>、<code>--since</code>——都可用）；</li>
+<li>正向引用可达、负向引用不可达的对象集合被 <code>git pack-objects</code> 压缩成<strong>一个</strong> packfile；</li>
+<li>被排除在外的历史边界上的提交被写入头部，成为前置依赖。</li>
+</ol>
+<p>因此：<strong>blob、tree、commit 在 bundle 中以 packfile 压缩格式原样存放，字节不变，SHA 不变</strong>。<code>git bundle unbundle</code> / <code>git fetch &lt;bundle&gt;</code> 时由 <code>git index-pack</code> 解包入库——与网络 fetch 的收包路径完全相同。</p>
+<h4 id="2-3-为什么-bundle-能-无损保留-提交历史">2.3 为什么 bundle 能"无损保留"提交历史</h4>
+<p>因为 Git 对象是<strong>内容寻址</strong>的：commit 对象的内容包含了父提交 SHA、作者、提交者、时间戳、提交信息，以及指向根 tree 的指针。bundle 传输的是对象本身而不是"补丁描述"，所以接收方拿到的提交 SHA 与发送方完全一致：</p>
+<ul>
+<li><code>git log</code> 看到的作者 / 提交者 / 时间戳 / GPG 签名全部一致；</li>
+<li><code>git merge-base</code>、<code>git cherry-pick</code>、<code>git rebase</code> 可以直接工作，就像刚执行过一次 <code>git fetch</code>；</li>
+<li>这也是 bundle 与 <code>format-patch</code> 的本质区别：后者传输的是"如何重建提交的说明"，接收方重新生成提交，SHA 会改变（详见第 6 小节对比）。</li>
+</ul>
+<h4 id="2-4-完整-bundle-与增量-bundle">2.4 完整 bundle 与增量 bundle</h4>
+<p>区别只在一处：<strong>头部是否存在前置依赖行</strong>。</p>
+<p>用前文的实验仓库示意（沿用《关联快照》中的 <code>o &lt;-- o</code> 提交图记法）：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">完整 bundle：git bundle create full.bundle main<br>    [43425d8] &lt;-- [2150e85] &lt;-- [01138fb]      三个提交全部打包，无前置依赖<br><br>增量 bundle：git bundle create incr.bundle origin/main..main<br>    (43425d8) &lt;-- [2150e85] &lt;-- [01138fb]      只打包后两个提交<br>      ↑<br>      前置依赖：接收方仓库必须已拥有此提交<br><br>记法：[x] 打包进 bundle；(x) 前置依赖，接收方需自备<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>git bundle create full.bundle main</code>：打包 <code>main</code> 可达的<strong>全部</strong>对象。无前置依赖（<code>git bundle verify</code> 会提示 <code>The bundle records a complete history.</code>），拿到任何机器都能直接 clone；</li>
+<li><code>git bundle create incr.bundle origin/main..main</code>：只打包 <code>origin/main</code> 不包含、而 <code>main</code> 新增的对象。<code>origin/main</code> 的 tip 成为前置依赖，<strong>接收方必须已拥有该提交</strong>。</li>
+</ul>
+<p>一个直观的体积感受（本实验仓库）：2 个提交的增量 bundle 约 0.4 KB，包含全部引用的完整 bundle 约 1.2 KB——packfile 压缩 + 增量裁剪使 bundle 通常远小于 <code>.git</code> 目录。</p>
+<h4 id="2-5-前置依赖（Prerequisites）的含义">2.5 前置依赖（Prerequisites）的含义</h4>
+<p>前置依赖行声明的是契约：<strong>“我假定你的仓库里已经有这些提交；否则我的 packfile 对你不完整”</strong>。<code>git bundle verify</code> 在接收方仓库中逐个检查这些 SHA 是否存在，缺失则拒绝并报错：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">error: Repository lacks these prerequisite commits:<br>error: 43425d8bda43987a3fed8f06abe5f58456157f52<br></code></pre></td></tr></tbody></table></figure>
+<p>注意它检查的是<strong>对象存在性</strong>（按 SHA），与对方把这些提交放在哪个分支、哪个 ref 上无关。这解释了第 5 小节"增量 bundle 可移植性"问题的根源。</p>
+<h3 id="3、常用命令">3、常用命令</h3>
+<h4 id="3-1-git-bundle-create-——-打包">3.1 <code>git bundle create</code> —— 打包</h4>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git bundle create [-q | --quiet | --progress] [--version=&lt;version&gt;] &lt;file&gt; &lt;git-rev-list-args&gt;<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><strong>功能</strong>：按 rev-list 参数选定对象与引用，写入单文件；</li>
+<li><strong>参数要点</strong>：
+<ul>
+<li><code>&lt;git-rev-list-args&gt;</code> 支持 rev-list 全部语法：<code>main</code>（整个分支）、<code>A..B</code>（范围）、<code>v1.0</code>（tag）、<code>--all</code>（全部引用，含 <code>refs/remotes/*</code> 与 <code>HEAD</code>）、<code>--since="2 weeks"</code> 等；</li>
+<li><code>-q</code> 抑制进度输出；</li>
+</ul>
+</li>
+<li><strong>执行结果</strong>：交互终端中显示 <code>Enumerating objects … / Counting objects … / Writing objects …</code> 进度（与 push/fetch 打包时相同，源自 <code>pack-objects</code>）；重定向或脚本环境下<strong>静默完成、无任何输出</strong>（实测 Git 2.52），成功与否只能靠退出码与后续 <code>verify</code> 确认；</li>
+<li><strong>使用场景</strong>：见第 1 小节场景列表；</li>
+<li><strong>注意事项</strong>：
+<ul>
+<li>同名文件会被<strong>静默覆盖</strong>（已实测）；</li>
+<li>只打 tag 的 bundle（如 <code>git bundle create v.bundle v1.0</code>）<strong>无法直接被 <code>git clone</code> 检出</strong>——clone 需要一个 <code>refs/heads/*</code> 分支来确定 HEAD，实测报 <code>fatal: your current branch 'main' does not have any commits yet</code>。tag-only bundle 应通过 <code>git fetch</code> 导入（见 3.6）；</li>
+<li><code>--all</code> 会把 <code>refs/remotes/origin/*</code>、<code>HEAD</code> 一并写入，通常无害；若只想传本地分支，显式列出分支名。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-2-git-bundle-verify-——-验证">3.2 <code>git bundle verify</code> —— 验证</h4>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git bundle verify [-q | --quiet] &lt;file&gt;<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>
+<p><strong>功能</strong>：检查 bundle 格式合法，且<strong>当前仓库</strong>拥有全部前置依赖；</p>
+</li>
+<li>
+<p><strong>必须在仓库内执行</strong>（它要查的是"当前仓库是否满足依赖"）；</p>
+</li>
+<li>
+<p><strong>执行结果</strong>（依赖满足）：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">The bundle contains this ref:<br>01138fb2bd367f4686c641ae11e57c1e8dd592ff refs/heads/main<br>The bundle requires this ref:<br>43425d8bda43987a3fed8f06abe5f58456157f52<br>The bundle uses this hash algorithm: sha1<br>a-work.bundle is okay<br></code></pre></td></tr></tbody></table></figure>
+<p>依赖缺失时输出 <code>Repository lacks these prerequisite commits</code> 并以非零码退出；</p>
+</li>
+<li>
+<p><strong>使用场景</strong>：接收方在导入前的第一道工序；</p>
+</li>
+<li>
+<p><strong>注意事项</strong>：它只验证依赖存在性，<strong>不预测合并是否冲突</strong>，也不修改仓库。</p>
+</li>
+</ul>
+<h4 id="3-3-git-bundle-list-heads-——-列出引用">3.3 <code>git bundle list-heads</code> —— 列出引用</h4>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git bundle list-heads &lt;file&gt; [&lt;refname&gt;…]<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>
+<p><strong>功能</strong>：列出 bundle 中的引用，语义与 <code>git ls-remote</code> 相同；只读文件头部，<strong>无需在仓库中执行</strong>（已实测）；</p>
+</li>
+<li>
+<p><strong>执行结果</strong>：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">01138fb2bd367f4686c641ae11e57c1e8dd592ff refs/heads/main<br></code></pre></td></tr></tbody></table></figure>
+</li>
+<li>
+<p><strong>使用场景</strong>：导入前确认"对方到底传了哪些分支 / tag"。</p>
+</li>
+</ul>
+<h4 id="3-4-git-bundle-unbundle-——-解包">3.4 <code>git bundle unbundle</code> —— 解包</h4>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git bundle unbundle &lt;file&gt;<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>
+<p><strong>功能</strong>：把对象交给 <code>git index-pack</code> 存入仓库，然后<strong>打印</strong>（而非创建）bundle 中的引用，格式同 <code>git fetch</code> 写往 <code>FETCH_HEAD</code> 的内容；</p>
+</li>
+<li>
+<p><strong>执行结果</strong>（实测）：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">fa4dffa073bb0f2a256082d3c230d5036976ae19 refs/heads/main<br></code></pre></td></tr></tbody></table></figure>
+</li>
+<li>
+<p><strong>使用场景</strong>：只想要对象入库、引用自己按需处理的场景；</p>
+</li>
+<li>
+<p><strong>注意事项</strong>：<strong>它不创建任何分支 / tag / 远程跟踪 ref</strong>。日常导入应优先用 <code>git fetch &lt;file&gt; &lt;refspec&gt;</code>（3.6），unbundle 属于底层操作。</p>
+</li>
+</ul>
+<h4 id="3-5-git-clone-bundle-——-从-bundle-克隆">3.5 <code>git clone &lt;bundle&gt;</code> —— 从 bundle 克隆</h4>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> &lt;file&gt; [目录名]<br>git <span class="hljs-built_in">clone</span> repo.bundle restored<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><strong>功能</strong>：把 bundle 当作远程仓库完成首次克隆；</li>
+<li><strong>执行结果</strong>：与普通 clone 一致，历史完整恢复（实测 <code>git log</code> 与源仓库一致）；</li>
+<li><strong>注意事项</strong>（重要）：
+<ul>
+<li>
+<p><strong>bundle 中需要有 <code>refs/heads/*</code> 分支</strong>才能确定检出目标（tag-only 会失败，见 3.1）；</p>
+</li>
+<li>
+<p>clone 后 <code>origin</code> 会被指向 <strong>bundle 文件路径</strong>（实测 <code>git remote -v</code> 显示 <code>... complete.bundle (fetch)</code>）。接入真实远程前需要改指：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git remote set-url origin git@github.com:用户名/仓库名.git<br></code></pre></td></tr></tbody></table></figure>
+</li>
+<li>
+<p>只有完整 bundle 适合作为 clone 源；增量 bundle 因前置依赖通常无法独立克隆。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-6-git-fetch-bundle-——-从-bundle-增量导入（最常用）">3.6 <code>git fetch &lt;bundle&gt;</code> —— 从 bundle 增量导入（最常用）</h4>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">git fetch &lt;file&gt; &lt;refspec&gt;<br>git fetch a-work.bundle main:alice-main          <span class="hljs-comment"># bundle 的 main → 本地分支 alice-main</span><br>git fetch a-work.bundle <span class="hljs-string">'refs/heads/*:refs/remotes/alice/*'</span>   <span class="hljs-comment"># 通配导入为远程跟踪分支</span><br>git pull a-work.bundle main                      <span class="hljs-comment"># fetch + merge，一步到位</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li>
+<p><strong>功能</strong>：像从远程 fetch 一样导入对象并按 refspec 建立引用，是<strong>更新已有仓库</strong>的标准姿势；</p>
+</li>
+<li>
+<p><strong>执行结果</strong>（实测）：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">From ../a-work.bundle<br> * [new branch]      main       -&gt; alice-main<br></code></pre></td></tr></tbody></table></figure>
+</li>
+<li>
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li>若 bundle 头部没有 <code>HEAD</code> 引用，<strong>不带 refspec 的裸 <code>git fetch &lt;bundle&gt;</code> 会失败</strong>（实测：<code>fatal: couldn't find remote ref HEAD</code>），因此养成显式写 refspec 的习惯；</li>
+<li>tag-only bundle 用 <code>git fetch v1.0.bundle 'refs/tags/*:refs/tags/*'</code> 导入（实测成功）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4、实战：开发者-A-→-开发者-B-的离线协作">4、实战：开发者 A → 开发者 B 的离线协作</h3>
+<p>场景：A、B 共同开发一个 GitHub 项目。A 已 clone、已 commit，但<strong>没有 push 权限</strong>；B 有 push 权限，负责把 A 的成果合入并推送。全程可用 U 盘 / 邮件附件 / 网盘中转 <code>.bundle</code> 文件。</p>
+<p>全流程总览：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs text">【A 打包】 git log origin/main..main 确认提交<br>        → git bundle create a-work.bundle origin/main..main<br>        → git bundle verify / list-heads 自检<br>        │<br>        │  .bundle 文件经 U 盘 / 邮件 / 网盘物理传输<br>        ▼<br>【B 导入】 git bundle verify a-work.bundle      前置依赖是否满足<br>        → git fetch a-work.bundle main:alice-main<br>        → merge-base / diff 检查提交关系<br>        → merge 或 cherry-pick 合入 main<br>        → git push --dry-run origin main 预演确认<br>        → git push origin main<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="4-1-开发者-A：打包交付">4.1 开发者 A：打包交付</h4>
+<p><strong>① 确认自己的提交</strong>——先同步远程引用，再看本地领先多少：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git fetch origin                 <span class="hljs-comment"># 无 push 权限不影响 fetch</span><br>git status -sb                   <span class="hljs-comment"># 输出 ## main...origin/main [ahead 2]</span><br>git <span class="hljs-built_in">log</span> --oneline origin/main..main   <span class="hljs-comment"># 列出待交付的提交</span><br></code></pre></td></tr></tbody></table></figure>
+<p>实测输出：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">## main...origin/main [ahead 2]<br>01138fb feat: update app.txt<br>2150e85 feat: add app.txt<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>② 生成 bundle</strong>。两种取法：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 增量：只含 origin/main 之后的新提交（推荐，体积最小）</span><br>git bundle create a-work.bundle origin/main..main<br><br><span class="hljs-comment"># 完整：含 main 全部历史（首次交付或对方仓库状态不明时更稳妥）</span><br>git bundle create a-work.bundle main<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>③ 发送前自检</strong>：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git bundle verify a-work.bundle      <span class="hljs-comment"># 应输出 "... is okay"</span><br>git bundle list-heads a-work.bundle  <span class="hljs-comment"># 确认引用与预期一致</span><br></code></pre></td></tr></tbody></table></figure>
+<p><strong>④ 发送</strong>：bundle 是普通单文件，U 盘、邮件附件、内网共享皆可。建议文件名带上作者与日期（<code>alice-2026-10-10.bundle</code>），多轮交付时不易混淆。</p>
+<h4 id="4-2-开发者-B：验证、导入、合并、推送">4.2 开发者 B：验证、导入、合并、推送</h4>
+<p><strong>① 验证</strong>（必须在 B 自己的仓库中执行）：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> 项目目录<br>git bundle verify /path/to/a-work.bundle<br></code></pre></td></tr></tbody></table></figure>
+<p>若报 <code>Repository lacks these prerequisite commits</code>，说明 B 的仓库缺少 bundle 假设的基线——先 <code>git fetch origin</code> 更新；仍失败则请 A 改发完整 bundle（<code>git bundle create x.bundle main</code>）。</p>
+<p><strong>② 查看包含的提交</strong>：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git bundle list-heads /path/to/a-work.bundle<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>③ 导入到独立分支</strong>——刻意<strong>不直接动 main</strong>，给检查留出空间：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git fetch /path/to/a-work.bundle main:alice-main<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>④ 检查分支与提交关系</strong>：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">log</span> --oneline --graph --all          <span class="hljs-comment"># 直观查看 alice-main 与 main 的关系</span><br>git merge-base main alice-main           <span class="hljs-comment"># 共同祖先；等于 main 的 tip 则可快进</span><br>git <span class="hljs-built_in">log</span> --oneline main..alice-main       <span class="hljs-comment"># A 比我多的提交</span><br>git diff main...alice-main               <span class="hljs-comment"># A 的净改动（三点 diff：自共同祖先起）</span><br></code></pre></td></tr></tbody></table></figure>
+<p>实测的分叉视图（B 的 main 在 base，alice-main 领先两个提交）：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">* 01138fb (alice-main) feat: update app.txt<br>* 2150e85 feat: add app.txt<br>* 43425d8 (HEAD -&gt; main, origin/main) init: base commit<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>⑤ 合并或 cherry-pick</strong>：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 方式一：整体合并（保留 A 的提交 SHA 与顺序）</span><br>git checkout main<br>git merge --no-ff alice-main -m <span class="hljs-string">"merge: Alice's offline work"</span><br><br><span class="hljs-comment"># 方式二：只挑部分提交（SHA 可从 git log main..alice-main 获得）</span><br>git cherry-pick &lt;sha1&gt; &lt;sha2&gt;<br></code></pre></td></tr></tbody></table></figure>
+<p><code>merge</code> 保留 A 的原始 SHA 与作者身份；<code>cherry-pick</code> 灵活但会生成新 SHA（作者保留，提交者变为 B）。</p>
+<p><strong>⑥ 推送到 GitHub</strong>：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git push --dry-run origin main    <span class="hljs-comment"># 先预演：确认只有预期提交将被上传</span><br>git <span class="hljs-built_in">log</span> --oneline origin/main..main   <span class="hljs-comment"># 逐条核对即将推送的提交</span><br>git push origin main<br></code></pre></td></tr></tbody></table></figure>
+<p>实测推送输出：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">To .../origin.git<br>   43425d8..01138fb  main -&gt; main<br></code></pre></td></tr></tbody></table></figure>
+<p>推送后可清理临时引用：<code>git branch -D alice-main</code>。</p>
+<h4 id="4-3-三个安全问题">4.3 三个安全问题</h4>
+<p><strong>如何确保不覆盖 B 已有的工作？</strong><br>
+<code>merge</code> / <code>cherry-pick</code> / <code>fetch</code> 本身都是只增不改的操作，真正的风险只在 push。规程：改动只进入 <code>alice-main</code> 临时分支 → 在 main 上以 merge 方式合入（冲突当场解决，历史双方都保留）→ push 前用 <code>--dry-run</code> 与 <code>git log origin/main..main</code> 双重核对。绝不在协作仓库上使用 <code>git push -f</code>。</p>
+<p><strong>如何避免错误地推送分支？</strong><br>
+永远使用<strong>显式 refspec</strong>（<code>git push origin main</code>），不依赖 <code>push.default</code> 的隐式行为；多分支仓库中先 <code>git log origin/main..main</code> 看清"将要推什么"。若确需覆盖远端（例如 B 本地做过 rebase），用 <code>git push --force-with-lease origin main</code>，它在远端被他人更新过时拒绝执行，是强制推送的安全形态。</p>
+<p><strong>A、B 的提交历史分叉了怎么办？</strong><br>
+分叉指 B 的 main 已含 A 没有的提交，同时 A 的 bundle 又基于旧基线。实测场景与处理：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git fetch a2.bundle main:from-a<br>git <span class="hljs-built_in">log</span> --oneline --graph --all     <span class="hljs-comment"># 观察到两条分叉线</span><br>git merge-base main from-a          <span class="hljs-comment"># 共同祖先停在旧 base（如 43425d8）</span><br></code></pre></td></tr></tbody></table></figure>
+<p>实测图形：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">* f4a9217 (from-a) feat: A's work on old base<br>| * 1657300 (HEAD -&gt; main) feat: B's own work<br>| * fa4dffa fix: improve app.txt<br>|/<br>* 43425d8 init: base commit<br></code></pre></td></tr></tbody></table></figure>
+<p>两种收敛方式：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 方式一：merge —— 产生合并提交，双方 SHA 均保留（推荐，实测通过）</span><br>git merge --no-ff from-a -m <span class="hljs-string">"merge: A's bundle work"</span><br><br><span class="hljs-comment"># 方式二：rebase —— 把 A 的提交重放到 B 的 main 顶端，历史线性但 A 的 SHA 改写</span><br>git rebase main from-a &amp;&amp; git merge --ff-only main   <span class="hljs-comment"># 在 from-a 分支上操作</span><br></code></pre></td></tr></tbody></table></figure>
+<p>选择依据：这些提交尚未出现在 GitHub 上、SHA 没有被他人引用，两种方式都安全；若追求可追溯用 merge，追求线性历史用 rebase。冲突处理与日常 merge / rebase 完全一致。</p>
+<h3 id="5、进阶用法">5、进阶用法</h3>
+<p><strong>1. 完整 bundle（备份 / 全新环境初始化）</strong></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git bundle create repo.bundle --all    <span class="hljs-comment"># 全部引用（分支 + tag + HEAD + 远程跟踪 ref）</span><br>git bundle create main.bundle main     <span class="hljs-comment"># 仅 main 的全部历史，无前置依赖</span><br></code></pre></td></tr></tbody></table></figure>
+<p>无前置依赖的 bundle 可在任何机器 <code>git clone</code>，这是它适合做备份单元的原因。</p>
+<p><strong>2. 增量 bundle（多轮离线交付）</strong></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git fetch origin                        <span class="hljs-comment"># 先更新基准，避免打包过期的范围</span><br>git bundle create incr.bundle origin/main..main<br></code></pre></td></tr></tbody></table></figure>
+<p>下一轮交付前，A 应先 <code>git fetch origin</code> 拿到 B 已合入的结果，新的增量范围才不会越来越臃肿（实测第二轮 bundle 仅含新提交，依赖指向 A 刚 fetch 到的 <code>origin/main</code>）。</p>
+<p><strong>3. 指定分支或 tag</strong></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git bundle create f.bundle feature-x v2.0        <span class="hljs-comment"># 一个分支 + 一个 tag</span><br>git bundle create f.bundle refs/heads/feature-x  <span class="hljs-comment"># 用完整 ref 名更精确</span><br></code></pre></td></tr></tbody></table></figure>
+<p><strong>4. 只传特定范围的提交</strong></p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git bundle create r.bundle main~5..main          <span class="hljs-comment"># 最近 5 个提交</span><br>git bundle create r.bundle 43425d8..main         <span class="hljs-comment"># 按共同祖先 SHA</span><br>git bundle create r.bundle --since=<span class="hljs-string">"2.weeks"</span> main  <span class="hljs-comment"># 按时间（rev-list 语义）</span><br></code></pre></td></tr></tbody></table></figure>
+<p>范围端点中被排除一侧的 tip 会自动成为前置依赖。</p>
+<p><strong>5. 用 bundle 更新已有仓库</strong><br>
+就是 3.6 的 fetch / pull：<code>git fetch new.bundle main:alice-main</code>。也可以把 bundle 注册成固定 remote（文件路径可作 URL）：<code>git remote add offline /path/x.bundle</code>，之后 <code>git fetch offline</code>——换新 bundle 时覆盖同一路径文件即可。</p>
+<p><strong>6. 验证前置依赖</strong><br>
+<code>git bundle verify &lt;file&gt;</code> 是唯一权威手段：依赖满足时列出 <code>requires this ref</code> 并输出 <code>is okay</code>；不满足时点名缺失的提交并以非零码退出。批量归档场景应在接收端脚本里以退出码做闸门。</p>
+<p><strong>7. 为什么增量 bundle 不能保证在任意仓库使用？</strong><br>
+前置依赖按 <strong>SHA</strong> 匹配。以下接收方都会验证失败：浅克隆（<code>--depth</code>，历史被截断）、经历过 rebase / filter-branch / reclone 的仓库（SHA 已改写）、或干脆是另一个项目。这不是 bug 而是契约——依赖行的存在就是声明"只保证在拥有这些提交的仓库中可用"。补救：请发送方扩大范围（如直接 <code>main</code> 全量）或改发完整 bundle。</p>
+<h3 id="6、与-Patch-Archive-ZIP-的对比">6、与 Patch / Archive / ZIP 的对比</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Git Bundle</th>
+<th>Git Patch（format-patch / am）</th>
+<th>Git Archive</th>
+<th>ZIP / tar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>保存的内容</td>
+<td>refs + packfile（对象库切片）</td>
+<td>提交的差异文本（邮件格式）</td>
+<td>某次提交的目录内容</td>
+<td>任意文件的字节压缩</td>
+</tr>
+<tr>
+<td>含提交历史</td>
+<td>✅ 完整 DAG</td>
+<td>⚠️ 提交信息保留，但按"重放"重建</td>
+<td>❌ 仅单个快照</td>
+<td>❌ 无版本概念</td>
+</tr>
+<tr>
+<td>保留提交身份</td>
+<td>✅ SHA、作者、提交者、签名逐位一致</td>
+<td>⚠️ 作者保留，提交者与 SHA 改变</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>离线传输</td>
+<td>✅ 单文件，U 盘 / 邮件</td>
+<td>✅ 纯文本，可直接贴邮件正文</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>可恢复仓库</td>
+<td>✅ clone / fetch 即得完整仓库</td>
+<td>⚠️ 逐个 am 重建，无分支 / ref 语义</td>
+<td>❌ 只能得到工作区</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>增量传输</td>
+<td>✅ 范围语法原生支持</td>
+<td>✅ 每提交一个补丁</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>典型场景</td>
+<td>无权限 / 隔离网络交付、单文件备份</td>
+<td>邮件列表工作流（如内核）、逐提交评审</td>
+<td>发布源码快照</td>
+<td>日常文件压缩</td>
+</tr>
+</tbody>
+</table>
+<p>经验法则：<strong>要"仓库对仓库"的等价传输用 bundle；要"人对人"的逐提交评审用 patch；要给别人编译用 archive/zip。</strong></p>
+<h3 id="7、边界与注意事项">7、边界与注意事项</h3>
+<ol>
+<li><strong>未 commit 的修改</strong>：不包含。bundle 只打包 refs 可达的对象；工作区与暂存区的改动尚不是对象。交付前先 commit，或用 <code>git stash</code> / <code>git diff</code> 另行处理。</li>
+<li><strong><code>.gitignore</code> 忽略的文件</strong>：不包含。忽略规则使这些文件从未被跟踪、不存在于对象库中；<code>.gitignore</code> 文件本身若被跟踪则会随历史打包。</li>
+<li><strong>Git LFS 对象</strong>：<strong>内容不包含</strong>。LFS 在仓库里只存指针文件（普通 blob，会进 bundle），真实大文件在 LFS 存储服务或 <code>.git/lfs/objects</code> 中。离线场景需发送方 <code>git lfs fetch --all</code> 后另行打包 <code>.git/lfs/objects</code>，接收方解包到对应位置。</li>
+<li><strong>Submodule</strong>：父仓库中的 gitlink（子模块的 commit SHA 记录）会随 tree 对象打包，但<strong>子模块仓库的对象不包含在 bundle 里</strong>。离线接收方无法仅凭父仓库 bundle 还原子模块，需单独为每个子模块制 bundle，或联机执行 <code>git submodule update --init</code>。</li>
+<li><strong>远程仓库权限配置</strong>：不包含。remote 定义、凭据、分支保护、hooks、<code>config</code> 都留在各自仓库中；bundle 只是数据 + 引用。clone 自 bundle 的仓库需自行 <code>git remote set-url origin &lt;真实地址&gt;</code>。</li>
+<li><strong>GitHub Issues / Pull Requests</strong>：不包含。它们存储在 GitHub 的数据库而非 Git 对象库，任何 Git 层面的传输（push、bundle、patch）都不会带走；需要迁移时应使用 GitHub 的导出工具。</li>
+<li><strong>是否适合长期备份</strong>：适合作为<strong>定期全量</strong>备份——<code>git bundle create backup.bundle --all</code> 产出的单文件可离线存放、可随时 clone 复活整个仓库。但要注意：bundle 只含 refs 可达对象（悬空提交、被删分支、<code>refs/stash</code> 这类特殊 ref 之外的状态不保证）；增量 bundle 链必须<strong>按序保存、一个不缺</strong>，且依赖 SHA 永不改变。稳妥策略是"增量日常 + 每隔一段时间一个独立完整的全量点"。</li>
+</ol>
+<p><strong>参考</strong>：<a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-bundle">git-bundle(1) 官方文档</a> · <a target="_blank" rel="noopener" href="https://git-scm.com/book/en/v2/Git-Internals-Packfiles">Git Book — Bundle 传输协议与 packfile 内部机制</a></p>
 <h2 id="总结">总结</h2>
 <p>至此，你学会了如何通过 <code>Git</code> 管理项目的版本历史，最终将项目代码推送到 <code>GitHub</code>。整个过程包括了从初始化仓库、添加文件、提交文件到推送到远程仓库的完整步骤。通过这些操作，你便已经具备了基本的版本控制能力。</p>
 <p>封面来源：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=hwP7WQkmECE">Git Explained in 100 Seconds</a></p>
@@ -735,7 +1060,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>September 16, 2025</div>
+          <div>October 10, 2026</div>
         </div>
       
       
