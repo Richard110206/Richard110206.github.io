@@ -1,0 +1,1059 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本文整理《算法设计与分析》第 1 章（算法概述）与第 2 章（递归与分治策略），按&quot;知识点 + 典型题目 + 解决方案&quot;组织，重点难点使用 Hexo note 标签标注；后续章节（贪心、回溯、分支限界等）也将整理进本篇。动态规划内容较多、单独成篇，见 Algorithm Design and Analysis: Dynamic Programming。   目录  第1章 算法概述 第2章 递归">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorithm Design and Analysis">
+<meta property="og:url" content="http://example.com/2026/10/23/Review/Algorithm-Design-and-Analysis/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="本文整理《算法设计与分析》第 1 章（算法概述）与第 2 章（递归与分治策略），按&quot;知识点 + 典型题目 + 解决方案&quot;组织，重点难点使用 Hexo note 标签标注；后续章节（贪心、回溯、分支限界等）也将整理进本篇。动态规划内容较多、单独成篇，见 Algorithm Design and Analysis: Dynamic Programming。   目录  第1章 算法概述 第2章 递归">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-23T07:30:00.000Z">
+<meta property="article:modified_time" content="2026-10-23T18:12:10.649Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta property="article:tag" content="Review">
+<meta property="article:tag" content="Algorithm Design and Analysis">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Algorithm Design and Analysis - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LQX&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/other/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>Else</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/other/life-musings/" target="_self">
+                    
+                    <span>精进日记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/08/13/other/Casual-Chronicles/" target="_self">
+                    
+                    <span>生活杂谈</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/banner_img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Algorithm Design and Analysis"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-10-23 15:30" pubdate>
+          October 23, 2026 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          47 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Algorithm Design and Analysis</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>本文整理《算法设计与分析》第 1 章（算法概述）与第 2 章（递归与分治策略），按"知识点 + 典型题目 + 解决方案"组织，重点难点使用 Hexo <code>note</code> 标签标注；后续章节（贪心、回溯、分支限界等）也将整理进本篇。动态规划内容较多、单独成篇，见 <a href="/2026/10/23/Review/Algorithm-Design-and-Analysis-DP/">Algorithm Design and Analysis: Dynamic Programming</a>。</p>
+</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul>
+<li><a href="#%E7%AC%AC1%E7%AB%A0-%E7%AE%97%E6%B3%95%E6%A6%82%E8%BF%B0">第1章 算法概述</a></li>
+<li><a href="#%E7%AC%AC2%E7%AB%A0-%E9%80%92%E5%BD%92%E4%B8%8E%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5">第2章 递归与分治策略</a></li>
+<li><a href="#%E5%B0%8F%E7%BB%93%E4%B8%8E%E8%80%83%E7%82%B9">小结与考点</a></li>
+</ul>
+<hr>
+<h2 id="第1章-算法概述">第1章 算法概述</h2>
+<h3 id="NP-完全性">NP 完全性</h3>
+<div class="note note-info">
+            <ul><li><strong>P 类</strong>：多项式时间内能<strong>求出</strong>解的问题；</li><li><strong>NP 类</strong>（Nondeterministic Polynomial，非确定性多项式）：多项式时间内能<strong>验证</strong>一个猜测解正确与否的问题（“近似猜测 + 验证”）；</li><li>典型 NP（完全）问题：TSP（旅行商）、子集和、顶点覆盖、3-SAT；</li><li>迄今为止，所有 NP 完全问题都还没有多项式时间算法（P =? NP 未解）。</li></ul>
+          </div>
+<hr>
+<h2 id="第2章-递归与分治策略">第2章 递归与分治策略</h2>
+<h3 id="递归的概念">递归的概念</h3>
+<div class="note note-info">
+            <p><strong>递归算法</strong>：直接或间接调用自身的算法。<strong>递归函数的二要素</strong>：</p><ol><li><strong>边界条件</strong>（何时终止）；</li><li><strong>递归方程</strong>（如何缩小规模）。</li></ol><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">Factorial</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> {              <span class="hljs-comment">// 例：阶乘</span><br>    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;           <span class="hljs-comment">// 边界条件</span><br>    <span class="hljs-keyword">return</span> n * Factorial(n - <span class="hljs-number">1</span>);    <span class="hljs-comment">// 递归方程</span><br>}<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">Fibonacci</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> {              <span class="hljs-comment">// 例：Fibonacci 数列 1,1,2,3,5,8,...</span><br>    <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">return</span> Fibonacci(n<span class="hljs-number">-1</span>) + Fibonacci(n<span class="hljs-number">-2</span>);<br>}<br></code></pre></td></tr></tbody></table></figure><p><strong>递归的优缺点</strong>：优点是算法简明、正确性易证明；缺点是执行效率不高（可能重复计算）、耗费栈空间。</p>
+          </div>
+<h4 id="双递归：Ackerman-函数">双递归：Ackerman 函数</h4>
+<div class="note note-info">
+            <p>当一个函数及其一个变量都由函数自身定义时，称为<strong>双递归函数</strong>。Ackerman 函数：</p><table><thead><tr><th>定义式</th><th>条件</th></tr></thead><tbody><tr><td>A(1, 0) = 2</td><td>—</td></tr><tr><td>A(0, m) = 1</td><td>m ≥ 0</td></tr><tr><td>A(n, 0) = n + 2</td><td>n ≥ 2</td></tr><tr><td>A(n, m) = A(A(n−1, m), m−1)</td><td>n, m ≥ 1</td></tr></tbody></table><p>增长极快：A(n,1) = 2n，A(n,2) = 2ⁿ，A(n,3) = 2<sup>(2</sup>(…^2))（共 n 层）；A(1,1)=2，A(2,2)=4，A(3,3)=16，A(4,4) 是 65536 层的 2 的幂塔。</p>
+          </div>
+<h4 id="排列问题">排列问题</h4>
+<div class="note note-info">
+            <p>产生 list[k…m] 的全部全排列：逐个把每个元素换到第 k 位，再递归排列剩下的 k+1…m 位，回溯时换回来（保证每层枚举完整）：</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">Perm</span><span class="hljs-params">(Type <span class="hljs-built_in">list</span>[], <span class="hljs-type">int</span> k, <span class="hljs-type">int</span> m)</span><br>{<br>    <span class="hljs-keyword">if</span> (k == m) {                   <span class="hljs-comment">// 只剩一个元素，输出一个排列</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= m; i++) <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-built_in">list</span>[i];<br>        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-built_in">endl</span>;<br>    } <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = k; i &lt;= m; i++) {<br>            Swap(<span class="hljs-built_in">list</span>[k], <span class="hljs-built_in">list</span>[i]); <span class="hljs-comment">// 第 i 个元素放到第 k 位</span><br>            Perm(<span class="hljs-built_in">list</span>, k + <span class="hljs-number">1</span>, m);   <span class="hljs-comment">// 递归排列后段</span><br>            Swap(<span class="hljs-built_in">list</span>[k], <span class="hljs-built_in">list</span>[i]); <span class="hljs-comment">// 换回来，继续枚举</span><br>        }<br>}<br></code></pre></td></tr></tbody></table></figure><p>以 {1,2,3,4} 为例：第一层分别固定 1、2、3、4（Swap(list[0], list[i])），对每个固定值再递归求 {2,3,4}、{1,3,4}、{2,1,4}、{2,3,1} 的排列，共 4! = 24 个。</p>
+          </div>
+<h4 id="整数划分问题">整数划分问题</h4>
+<div class="note note-info">
+            <p>将正整数 n 表示成一系列正整数之和，求划分种数 p(n)。如 n = 6 共 <strong>11</strong> 种：6；5+1；4+1+1、4+2；3+1+1+1、3+2+1、3+3；2+1+1+1+1、2+2+1+1、2+2+2；1+1+1+1+1+1（分类依据：<strong>最大加数</strong>）。</p><p>设 q(n, m) 表示最大加数不超过 m 的划分数，则加数中含有 m 与不含有 m 两类：</p><ul><li>q(n, m) = q(n, m−1) + q(n−m, m)（不含 m / 至少含一个 m）；</li><li>边界：q(n, 1) = 1，q(1, m) = 1，q(n, n) = q(n, n−1) + 1；m &gt; n 时 q(n, m) = q(n, n)。</li></ul>
+          </div>
+<h4 id="汉诺塔问题">汉诺塔问题</h4>
+<div class="note note-info">
+            <p>n 个圆盘从塔座 a 移到 b（每次移 1 个、大盘不压小盘、可借助 c）。分三步：先把上面 n−1 个移到 c，再把最大盘移到 b，最后把 n−1 个从 c 移到 b：</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">hanoi</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> c)</span><br>{<br>    <span class="hljs-keyword">if</span> (n &gt; <span class="hljs-number">0</span>) {<br>        hanoi(n<span class="hljs-number">-1</span>, a, c, b);   <span class="hljs-comment">// 上面 n-1 个：a -&gt; c</span><br>        move(a, b);            <span class="hljs-comment">// 最大盘：a -&gt; b</span><br>        hanoi(n<span class="hljs-number">-1</span>, c, b, a);   <span class="hljs-comment">// n-1 个：c -&gt; b</span><br>    }<br>}<br></code></pre></td></tr></tbody></table></figure><p>复杂度递推 T(n) = 2T(n−1) + 1，展开得 <strong>T(n) = 2ⁿ − 1 = O(2ⁿ)</strong>（典型的减治型递推）。</p><p>移动规律（选择题常考）：<strong>奇数次移动</strong>移动最小盘到"下一个"塔座，<strong>偶数次移动</strong>最小盘不动、在另外两塔之间移较小盘。</p>
+          </div>
+<div class="note note-warning">
+            <p><strong>练习：集合划分（第二类 Stirling 数）</strong>。n 元素集合划分为若干非空子集的方式数：n=3 时 5 种；n=4 时 <strong>15</strong> 种。递推：设 S(n, k) 为划分为 k 个非空子集的方式数，考察元素 n：独自成一类或放入已有的某一类——</p><p>S(n, k) = k·S(n−1, k) + S(n−1, k−1)，边界 S(n, 1) = 1，S(n, n) = 1。</p><p>验证 n=4：S(4,1)=1，S(4,2)=2×3+1=7，S(4,3)=3×1+3=6，S(4,4)=1，合计 15 ✓。</p>
+          </div>
+<h3 id="分治法的基本思想">分治法的基本思想</h3>
+<div class="note note-info">
+            <p><strong>设计思想</strong>：将一个难以直接解决的大问题分割成一些规模较小的相同问题，各个击破、分而治之。</p><p><strong>分治法的适用条件</strong>（4 条，考试常考）：</p><ol><li>该问题可以分解为若干个<strong>规模较小的相同</strong>问题；</li><li>问题规模缩小到一定程度就可以容易地解决；</li><li>子问题的解可以<strong>合并</strong>为原问题的解；</li><li>分解出的各个子问题<strong>相互独立</strong>（不含公共子问题——若重叠则应考虑动态规划）。</li></ol><p><strong>基本步骤</strong>：</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c">Divide-and-Conquer(P)<br>{<br>    <span class="hljs-keyword">if</span> (|P| &lt;= n0) <span class="hljs-keyword">return</span> Adhoc(P);        <span class="hljs-comment">// 规模足够小，直接解</span><br>    将 P 分解成较小的子问题 P1, P2, ..., Pk;<br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">1</span>; i &lt;= k; i++)<br>        yi = Divide-and-Conquer(Pi);       <span class="hljs-comment">// 递归求解各子问题</span><br>    <span class="hljs-keyword">return</span> Merge(y1, ..., yk);             <span class="hljs-comment">// 合并子问题的解</span><br>}<br></code></pre></td></tr></tbody></table></figure><p>设计时<strong>最好使子问题规模大致相同</strong>——把问题分成大小相等的 k 个子问题是行之有效的做法。</p><p><strong>求解过程三步</strong>：分（分解成独立同构子问题）→ 治（小问题直接解，否则继续分解）→ 合（合并成原问题的解）。</p><p><strong>复杂性递归方程</strong>：T(n) = k·T(n/m) + f(n)（分成 k 个规模 n/m 的子问题，划分与合并花 f(n)）。</p>
+          </div>
+<h4 id="递归方程求解四法">递归方程求解四法</h4>
+<p><strong>方法 1：猜 + 数学归纳验证</strong>（猜出答案形式，带系数验证）：</p>
+<ul>
+<li>T(n) = T(n/2) + n：猜 T(n) = an，代入 an = a(n/2) + n 得 a = 2，成立 → <strong>O(n)</strong>；</li>
+<li>T(n) = 4T(n/2) + n：猜 T(n) = an² + bn，代入得 2b + 1 = b 无解？改猜 T(n) = an² − n 验证成立 → <strong>O(n²)</strong>；</li>
+<li>T(n) = 2T(n/2) + n：猜 T(n) = anlogn + bn，代入得 a = 1 → <strong>O(nlogn)</strong>。</li>
+</ul>
+<p><strong>方法 2：迭代展开</strong>（反复代入递归式直到边界，再求和）。</p>
+<p><strong>方法 3：主定理</strong>——对 T(n) = aT(n/b) + f(n)（a ≥ 1, b &gt; 1），比较 f(n) 与 n^(log_b a)：</p>
+<table>
+<thead>
+<tr>
+<th>情形</th>
+<th>条件</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>f(n) = O(n^(log_b a − ε))</td>
+<td>T(n) = Θ(n^(log_b a))</td>
+</tr>
+<tr>
+<td>2</td>
+<td>f(n) = Θ(n^(log_b a)·log^k n)，k ≥ 0</td>
+<td>T(n) = Θ(n^(log_b a)·log^(k+1) n)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>f(n) = Ω(n^(log_b a + ε)) 且正则条件成立</td>
+<td>T(n) = Θ(f(n))</td>
+</tr>
+</tbody>
+</table>
+<p><strong>方法 4：递归树</strong>——树高 log_m n，每层 k^i 个结点、代价 k<sup>i·f(n/m</sup>i)，叶子共 k^(log_m n) = n^(log_m k) 个；逐层求和。适用于非标准型（如 f(n) = n²/logn）。</p>
+<div class="note note-warning">
+            <p><strong>练习速查</strong>（课件例题答案）：</p><table><thead><tr><th>递归方程</th><th>复杂度</th></tr></thead><tbody><tr><td>4T(n/2) + n</td><td>O(n²)</td></tr><tr><td>4T(n/2) + n²</td><td>O(n²logn)</td></tr><tr><td>4T(n/2) + n³</td><td>O(n³)</td></tr><tr><td>2T(n/2) + nlogn</td><td>O(nlog²n)</td></tr><tr><td>4T(n/2) + n²log²n</td><td>O(n²log³n)</td></tr><tr><td>T(n/2) + T(n/4) + n</td><td>O(n)（递归树）</td></tr><tr><td>T(n/2) + T(n/4) + n²</td><td>O(n²)</td></tr><tr><td>4T(n/2) + n²/logn</td><td>O(n²·loglogn)（递归树，主定理不适用）</td></tr></tbody></table>
+          </div>
+<h3 id="典型题目一：二分搜索">典型题目一：二分搜索</h3>
+<div class="note note-info">
+            <p><strong>问题</strong>：在已升序排列的 n 个元素 a[1:n] 中找出特定元素 x。</p><p><strong>思想</strong>：每次与中间元素比较，排除一半——x 等于中位元素则找到；x 更小则在左半继续；x 更大则在右半继续。</p><p><strong>例</strong>：a = [1 4 5 7 8 9 10 12 15 22 23 27 32 35]，查找 x = 35：比较 9（左半排除）→ 比较 23 → 比较 32 → 比较 35，共 <strong>4 次</strong>（⌈log₂14⌉ = 4）。</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">binary_search</span><span class="hljs-params">(Type a[], <span class="hljs-type">const</span> Type &amp;x, <span class="hljs-type">int</span> n)</span><br>{<br>    <span class="hljs-type">int</span> left = <span class="hljs-number">0</span>, right = n - <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (left &lt;= right) {<br>        <span class="hljs-type">int</span> mid = (left + right) / <span class="hljs-number">2</span>;<br>        <span class="hljs-keyword">if</span> (x == a[mid]) <span class="hljs-keyword">return</span> mid;<br>        <span class="hljs-keyword">if</span> (x &gt;  a[mid]) left  = mid + <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">else</span>             right = mid - <span class="hljs-number">1</span>;<br>    }<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>}<br></code></pre></td></tr></tbody></table></figure><p>递归方程 T(n) = T(n/2) + O(1)，解得 <strong>O(logn)</strong>。left &gt; right 即查找区间为空、元素不存在。</p>
+          </div>
+<h4 id="拓展：金块问题（同时找最大和最小）">拓展：金块问题（同时找最大和最小）</h4>
+<div class="note note-primary">
+            <p><strong>问题</strong>：用最少的比较次数在 n 个金块中同时找出最重和最轻的。</p><ul><li><strong>逐个比较</strong>：先扫一遍找最大（n−1 次），再扫剩下找最小（n−2 次），共 <strong>2n − 3</strong> 次；</li><li><strong>分治法</strong>：对半分成两堆，递归求各自的最大最小，合并时大者取大、小者取小（2 次比较）。T(n) = 2T(n/2) + 2，解得 <strong>⌈3n/2⌉ − 2</strong> 次——n = 8 时 13 次 → 10 次。</li></ul><p>（若只找最大：无论如何都要 n − 1 次。）</p>
+          </div>
+<h3 id="典型题目二：循环赛日程表">典型题目二：循环赛日程表</h3>
+<div class="note note-info">
+            <p><strong>问题</strong>：n = 2^k 个选手循环赛，每个选手与其他 n−1 个选手各赛一次，每个选手一天只赛一次，共 n−1 天。排出 n 行（选手）× n−1 列（天）的表，第 i 行第 j 列填选手 i 第 j 天的对手。</p><p><strong>分治构造</strong>：按选手编号对半分两半。先给前 n/2 个选手排出 n/2 − 1 天的表（左上角子表）；<strong>左下角</strong>是后 n/2 个选手的表，与左上角<strong>相同</strong>（用相对日程）；<strong>右上、右下</strong>再互相"交叉"填充（前一半选手在后 n/2 − 1 天与后一半选手比赛，规则：右上块 (i, j) = 左上块对应位置 + n/2 的对称映射）。n = 8 的完整日程表：</p><table><thead><tr><th style="text-align:center">选手\天</th><th style="text-align:center">1</th><th style="text-align:center">2</th><th style="text-align:center">3</th><th style="text-align:center">4</th><th style="text-align:center">5</th><th style="text-align:center">6</th><th style="text-align:center">7</th></tr></thead><tbody><tr><td style="text-align:center"><strong>1</strong></td><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">5</td><td style="text-align:center">6</td><td style="text-align:center">7</td><td style="text-align:center">8</td></tr><tr><td style="text-align:center"><strong>2</strong></td><td style="text-align:center">1</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center">6</td><td style="text-align:center">5</td><td style="text-align:center">8</td><td style="text-align:center">7</td></tr><tr><td style="text-align:center"><strong>3</strong></td><td style="text-align:center">4</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">7</td><td style="text-align:center">8</td><td style="text-align:center">5</td><td style="text-align:center">6</td></tr><tr><td style="text-align:center"><strong>4</strong></td><td style="text-align:center">3</td><td style="text-align:center">2</td><td style="text-align:center">1</td><td style="text-align:center">8</td><td style="text-align:center">7</td><td style="text-align:center">6</td><td style="text-align:center">5</td></tr><tr><td style="text-align:center"><strong>5</strong></td><td style="text-align:center">6</td><td style="text-align:center">7</td><td style="text-align:center">8</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center">4</td></tr><tr><td style="text-align:center"><strong>6</strong></td><td style="text-align:center">5</td><td style="text-align:center">8</td><td style="text-align:center">7</td><td style="text-align:center">2</td><td style="text-align:center">1</td><td style="text-align:center">4</td><td style="text-align:center">3</td></tr><tr><td style="text-align:center"><strong>7</strong></td><td style="text-align:center">8</td><td style="text-align:center">5</td><td style="text-align:center">6</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">1</td><td style="text-align:center">2</td></tr><tr><td style="text-align:center"><strong>8</strong></td><td style="text-align:center">7</td><td style="text-align:center">6</td><td style="text-align:center">5</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center">2</td><td style="text-align:center">1</td></tr></tbody></table><p>读法验证：每一行恰好与其余 7 人各赛一次；每一列（天）都是 4 场互不冲突的对局（完美匹配）。</p><p>填表总量即表的大小，复杂度 <strong>O(n²) = O(4^k)</strong>。</p><p><strong>拓展</strong>：n 不是 2 的幂怎么办？——<strong>逆时针轮转法</strong>：固定 1 号位，其余选手按顺序放入并"对位"，每轮其余选手逆时针旋转一格再对位；n 为奇数时添一个"虚拟选手"，与虚拟选手对上者当天轮空。</p>
+          </div>
+<h3 id="典型题目三：棋盘覆盖">典型题目三：棋盘覆盖</h3>
+<div class="note note-info">
+            <p><strong>问题</strong>：2^k × 2^k 的棋盘中恰有一个残缺方格，用 L 型骨牌（占 3 格）覆盖其余所有方格，骨牌互不重叠。</p><p><strong>骨牌数</strong>：(4^k − 1) / 3（方格总数 4^k 减去 1 个残缺格，再除以 3）。</p><p><strong>分治思路</strong>：把 2^k × 2^k 棋盘分成 4 个 2^(k−1) × 2^(k−1) 子棋盘，残缺格必位于其一；<strong>用一个 L 型骨牌覆盖中央汇合处的 3 个方格</strong>——这 3 个方格分别落在另外 3 个"无残缺"子棋盘中，相当于给它们各造了一个"伪残缺格"，于是 4 个子棋盘都成了同一问题的较小实例，递归分割直至 2×2 棋盘直接覆盖。</p><p>复杂性：T(n) = 4T(n/2) + O(1)，其中 n = 2^k，解得 <strong>T(n) = O(4^k) = O(n²)</strong>。</p>
+          </div>
+<h3 id="典型题目四：大整数乘法">典型题目四：大整数乘法</h3>
+<div class="note note-info">
+            <p><strong>问题</strong>：n 位（二进制）大整数 X、Y 相乘，机器字长放不下时如何高效计算。</p><p><strong>朴素</strong>：按位竖式乘法 O(n²)。</p><p><strong>分治</strong>：各拆成两半，X = A·2^(n/2) + B，Y = C·2^(n/2) + D，则</p><p>$$<br>XY = AC \cdot 2^{n} + (AD + BC) \cdot 2^{n/2} + BD<br>$$</p><p>若直接算 AC、AD、BC、BD 四个 n/2 位乘法，T(n) = 4T(n/2) + O(n) = O(n²)，<strong>并不比原来快</strong>。</p><p><strong>Karatsuba 技巧</strong>：注意到 (A−B)(D−C) = AD − AC − BD + BC，于是 AD + BC = AC + BD + (A−B)(D−C)，只需 <strong>3 次</strong> n/2 位乘法：</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">m1 := MULT(A, C, n/<span class="hljs-number">2</span>);           <span class="hljs-comment">// AC</span><br>m2 := MULT(A - B, D - C, n/<span class="hljs-number">2</span>);   <span class="hljs-comment">// (A-B)(D-C)</span><br>m3 := MULT(B, D, n/<span class="hljs-number">2</span>);           <span class="hljs-comment">// BD</span><br>S  := m1*<span class="hljs-number">2</span>^n + (m1 + m2 + m3)*<span class="hljs-number">2</span>^(n/<span class="hljs-number">2</span>) + m3;<br></code></pre></td></tr></tbody></table></figure><p>T(n) = 3T(n/2) + O(n) = <strong>O(n^(log₂3)) ≈ O(n^1.59)</strong>。继续分更多段、更复杂地组合，最终催生了<strong>快速傅里叶变换（FFT）</strong>——它也可看作一个复杂的分治算法。</p>
+          </div>
+<h3 id="典型题目五：Strassen-矩阵乘法">典型题目五：Strassen 矩阵乘法</h3>
+<div class="note note-info">
+            <p><strong>常规</strong>：两个 n 阶方阵相乘 O(n³)；二阶方阵按分块乘需 <strong>8 次子矩阵乘法、4 次加法</strong>，直接分块 T(n) = 8T(n/2) + O(n²) = O(n³)，<strong>也不划算</strong>。</p><p><strong>Strassen（1969）</strong>：用 7 次 n/2 阶乘法 + 18 次加减法完成：</p><table><thead><tr><th>中间量</th><th>定义</th><th>中间量</th><th>定义</th></tr></thead><tbody><tr><td>M1</td><td>A11(B12 − B22)</td><td>M5</td><td>(A11 + A22)(B11 + B22)</td></tr><tr><td>M2</td><td>(A11 + A12)B22</td><td>M6</td><td>(A12 − A22)(B21 + B22)</td></tr><tr><td>M3</td><td>(A21 + A22)B11</td><td>M7</td><td>(A11 − A21)(B11 + B12)</td></tr><tr><td>M4</td><td>A22(B21 − B11)</td><td></td><td></td></tr></tbody></table><table><thead><tr><th>结果</th><th>组合</th><th>结果</th><th>组合</th></tr></thead><tbody><tr><td>C11</td><td>M5 + M4 − M2 + M6</td><td>C21</td><td>M3 + M4</td></tr><tr><td>C12</td><td>M1 + M2</td><td>C22</td><td>M5 + M1 − M3 − M7</td></tr></tbody></table><p>T(n) = 7T(n/2) + O(n²) = <strong>O(n^(log₂7)) ≈ O(n^2.81)</strong>。矩阵乘法 exponent 的世界纪录仍在刷新（2018 教材 O(n^2.373) → 2020 Alman–Williams → 2024、2025、2026 各有推进），但都是"银河级算法"——理论上快、常数巨大，实际中 Strassen 之后基本不实用。</p>
+          </div>
+<h3 id="拓展：快速傅里叶变换（FFT）">拓展：快速傅里叶变换（FFT）</h3>
+<div class="note note-info">
+            <p><strong>出发点</strong>：多项式乘法。系数表示下按卷积相乘是 O(n²)；改用<strong>点值表示</strong>（n 个点上的取值唯一确定 n−1 次多项式），点值相乘只需 O(n)，瓶颈变成"系数 ↔ 点值"的转换。</p><p><strong>分治技巧</strong>：朴素对 n 个点求值仍是 O(n²)；<strong>选"正负成对"的点</strong>（x 与 −x），把多项式按奇偶次幂拆成两半，每对点共享 (P_even(x²), P_odd(x²)) 的计算，规模减半；要让每一层都正负成对，取平方后仍成对的点——<strong>复平面单位根</strong>。于是 T(n) = 2T(n/2) + O(n) = <strong>O(nlogn)</strong>：</p><p>系数 → 点值（求值，DFT）→ 点相乘 → 点值 → 系数（插值，逆 DFT）。</p><p>FFT 是大整数乘法"更快的方法"的最终答案，也是分治思想最辉煌的应用之一。</p>
+          </div>
+<h3 id="典型题目六：合并排序">典型题目六：合并排序</h3>
+<div class="note note-info">
+            <p><strong>思想</strong>：分成大小大致相同的两个子集合 → 分别排序 → 合并（Merge：两段各自有序，每次取两段前端较小者放入辅助数组，O(n)）。</p><p><strong>例</strong>：对 A = [9 4 5 2 1 7 4 6] 合并排序——先二分到单个元素，再逐层归并：</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">9 4 5 2 1 7 4 6<br>9 4 5 2 | 1 7 4 6<br>9 4 | 5 2 | 1 7 | 4 6<br>4 9 | 2 5 | 1 7 | 4 6        （两两归并）<br>2 4 5 9 | 1 4 6 7            （四四归并）<br>1 2 4 4 5 6 7 9              （最终归并）<br></code></pre></td></tr></tbody></table></figure><p>T(n) = 2T(n/2) + O(n)，迭代展开得 <strong>O(nlogn)</strong>。</p>
+          </div>
+<h3 id="典型题目七：快速排序">典型题目七：快速排序</h3>
+<div class="note note-info">
+            <p><strong>分治三步</strong>：选支点 x（默认 a[p]）→ <strong>划分</strong>（Partition：≤ x 的换到左边区域，≥ x 的换到右边区域，支点落位 a[q]）→ 对左右两段递归排序；<strong>合并无需做事</strong>（划分完自然有序）。</p><p><strong>例</strong>：a[1:8] = [8, 4, 1, 7, 11, 5, 6, 9]，取 8 作支点：</p><ul><li>分解：a[q] = 8；左段 a[p:q−1] = [4, 1, 7, 5, 6]；右段 a[q+1:r] = [11, 9]；</li><li>递归排序后合并：[1, 4, 5, 6, 7, <strong>8</strong>, 9, 11]。</li></ul><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">QuickSort</span><span class="hljs-params">(Type a[], <span class="hljs-type">int</span> p, <span class="hljs-type">int</span> r)</span><br>{<br>    <span class="hljs-keyword">if</span> (p &lt; r) {<br>        <span class="hljs-type">int</span> q = Partition(a, p, r);<br>        QuickSort(a, p, q - <span class="hljs-number">1</span>);   <span class="hljs-comment">// 左半段排序</span><br>        QuickSort(a, q + <span class="hljs-number">1</span>, r);   <span class="hljs-comment">// 右半段排序</span><br>    }<br>}<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">Partition</span><span class="hljs-params">(Type a[], <span class="hljs-type">int</span> p, <span class="hljs-type">int</span> r)</span>     <span class="hljs-comment">// 两端向中间扫描</span><br>{<br>    <span class="hljs-type">int</span> i = p, j = r + <span class="hljs-number">1</span>;<br>    Type x = a[p];<br>    <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) {<br>        <span class="hljs-keyword">while</span> (a[++i] &lt; x &amp;&amp; i &lt; r);      <span class="hljs-comment">// 左侧找 &gt;= x 的</span><br>        <span class="hljs-keyword">while</span> (a[--j] &gt; x);               <span class="hljs-comment">// 右侧找 &lt;= x 的</span><br>        <span class="hljs-keyword">if</span> (i &gt;= j) <span class="hljs-keyword">break</span>;<br>        Swap(a[i], a[j]);                 <span class="hljs-comment">// 交换到对面区域</span><br>    }<br>    a[p] = a[j];  a[j] = x;               <span class="hljs-comment">// 支点落位</span><br>    <span class="hljs-keyword">return</span> j;<br>}<br></code></pre></td></tr></tbody></table></figure><p><strong>性能取决于划分的对称性</strong>：</p><ul><li>最坏（每次划成 n−1 与 1，如已有序且总取首元素）：T(n) = T(n−1) + O(n) = <strong>O(n²)</strong>；</li><li>最好（每次对半）：T(n) = 2T(n/2) + O(n) = <strong>O(nlogn)</strong>；</li><li>一般/平均：O(nlogn)。<strong>随机化基准</strong>（randomizedPartition：随机选一个元素换到 a[p] 再划分）可期望避免最坏情况。</li></ul>
+          </div>
+<h3 id="典型题目八：线性时间选择">典型题目八：线性时间选择</h3>
+<div class="note note-info">
+            <p><strong>问题</strong>：在 n 个元素中找第 k 小（最小、最大、中位数是其特例）。直接排序 O(nlogn) 太差。</p><p><strong>随机化版（RandomizedSelect）</strong>：借用快排的划分，但<strong>只需递归一侧</strong>——划分后左段有 j 个元素：k ≤ j 在左段找第 k 小；k == j 直接返回支点；k &gt; j 在右段找第 k − j 小。</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">Type <span class="hljs-title function_">RandomizedSelect</span><span class="hljs-params">(Type a[], <span class="hljs-type">int</span> p, <span class="hljs-type">int</span> r, <span class="hljs-type">int</span> k)</span><br>{<br>    <span class="hljs-keyword">if</span> (p == r) <span class="hljs-keyword">return</span> a[p];<br>    <span class="hljs-type">int</span> i = RandomizedPartition(a, p, r);<br>    <span class="hljs-type">int</span> j = i - p + <span class="hljs-number">1</span>;                    <span class="hljs-comment">// 左段元素个数</span><br>    <span class="hljs-keyword">if</span> (k == j) <span class="hljs-keyword">return</span> a[i];<br>    <span class="hljs-keyword">if</span> (k &lt;  j) <span class="hljs-keyword">return</span> RandomizedSelect(a, p, i - <span class="hljs-number">1</span>, k);<br>    <span class="hljs-keyword">else</span>        <span class="hljs-keyword">return</span> RandomizedSelect(a, i + <span class="hljs-number">1</span>, r, k - j);<br>}<br></code></pre></td></tr></tbody></table></figure><p>期望意义下每次划分保留不超过 3n/4 的规模：T(n) ≤ T(3n/4) + O(n)，期望复杂度 <strong>O(n)</strong>；最坏仍 O(n²)。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>BFPRT（中位数的中位数）——最坏情况 O(n)</strong>：基准点的选取是关键，思路"<strong>中间的中间</strong>"：</p><ol><li>将 n 个元素每 5 个一组（共 ⌈n/5⌉ 组），组内排序（每组 O(1)）取各组<strong>中位数</strong>；</li><li>再取这些中位数的<strong>中位数</strong>作为划分基准 x。</li></ol><p>保证：至少有 n/4 个元素 ≤ x、至少 n/4 个元素 ≥ x（一半的组里有一半元素不超过各自中位数，而这些中位数的一半又不超过 x）。于是 T(n) ≤ T(n/5) + T(3n/4) + O(n)，由于 1/5 + 3/4 &lt; 1，解得<strong>最坏情况 O(n)</strong>。</p><p><strong>例</strong>（n = 22，找第 5 小）：a = [2,6,9,1,4,10,20,6,22,11,10,9,4,3,7,16,11,8,2,5,4,1]。</p><ul><li>分组 [2,6,9,1,4]、[10,20,6,22,11]、[10,9,4,3,7]、[16,11,8,2,5]、[4,1]，中位数集合 <strong>[4, 11, 7, 8, 4]</strong>，中位数的中位数（两个中位取较大）= <strong>7</strong> 作支点；</li><li>划分：a[1:11] = [2,6,1,4,6,4,3,2,5,4,1]（11 个），a[12:22] = [7,9,10,20,22,11,10,9,16,11,8]；第 5 小 ≤ 11，在左段继续找第 5 小；</li><li>左段分组 [2,6,1,4,6]、[4,3,2,5,4]、[1]，中间元集合 [4,4,1]，中位数的中位数 = <strong>4</strong> 作支点，划分 [2,1,3,2,1] 与 [6,4,6,4,5,4]……继续递归得第 5 小 = <strong>3</strong>。</li></ul>
+          </div>
+<h3 id="典型题目九：最接近点对">典型题目九：最接近点对</h3>
+<div class="note note-info">
+            <p><strong>问题</strong>：平面上 n 个点，找出距离最近的一对点。逐对比较 O(n²)。</p><p><strong>一维引入</strong>：按坐标中位数分割成 S1、S2（大致对半，<strong>分割点取中位数保证平衡</strong>），递归求各自最接近点对 d1、d2，d = min(d1, d2)；合并时还需检查<strong>跨界点对</strong>——一维情形只需检查紧邻分割线的两个点。T(n) = 2T(n/2) + O(n) = O(nlogn)。</p><p><strong>二维情形</strong>：用垂直中线 L 分割，d = min(左, 右)；合并时检查与 L 距离不超过 d 的条带内的点对。关键结论：<strong>条带中任一点只需与按 y 排序的后继至多 6 个点比较</strong>——因为 2d×d 的矩形可划成 6 个 (d/2)×(2d/3) 小格，每格至多 1 个点（否则格内两点距离已 &lt; d，矛盾）。合并代价 O(n)，故 <strong>T(n) = 2T(n/2) + O(n) = O(nlogn)</strong>。</p><p><strong>例</strong>（5 点）：a(0.5,0.5)、b(0.25,1)、c(1,2)、d(0.6,0.8)、e(0.9,0.5)。x 中位数 0.6，分 S1 = {b, a}、S2 = {d, e, c}，递归得 d1 = |ab| ≈ 0.56，d2 = |de| ≈ 0.42，检查跨线条带后最接近点对为 <strong>(a, d)</strong>，距离 √0.1 ≈ 0.316。</p><p><strong>练习（9 点，含解答）</strong>：点 a…i 坐标如下，求最接近点对。</p><table><thead><tr><th>点</th><th>a</th><th>b</th><th>c</th><th>d</th><th>e</th><th>f</th><th>g</th><th>h</th><th>i</th></tr></thead><tbody><tr><td>x</td><td>2</td><td>0.5</td><td>0.25</td><td>1</td><td>3</td><td>2</td><td>1</td><td>0.6</td><td>0.9</td></tr><tr><td>y</td><td>2</td><td>0.5</td><td>1</td><td>2</td><td>1</td><td>0.7</td><td>1</td><td>0.8</td><td>0.5</td></tr></tbody></table><p>解：按 x 排序后中位数为 1；<strong>中位线 x = 1 上有 d、g 两点，将这两点均分到左右两个区域</strong>：S1 = {b, c, d, h, i}，S2 = {a, e, f, g}。左段内最近点对为 (b, h)，距离 √0.1 ≈ 0.316；右段最近为 (e, f)（或 (f, g)），距离 ≈ 1.04。故 d = 0.316，再检查跨线条带 [1−d, 1+d] 内的点（d、g、i 等），最近跨界距离 |gi| ≈ 0.51 &gt; d。故最接近点对为 <strong>(b, h)，距离 ≈ 0.316</strong>。</p>
+          </div>
+<h3 id="分治思想在-LLM-中的应用">分治思想在 LLM 中的应用</h3>
+<div class="note note-info">
+            <p>课程讨论话题：大模型读长文也需要分治吗？——以 <strong>RAG（检索增强生成）的 Chunking</strong> 为例：</p><ul><li>上下文有上限、输入越长成本与延迟越高、无关内容干扰证据——所以<strong>先缩小证据范围，再让模型回答</strong>，这正是"分而治之"；</li><li>知识准备阶段把文档切块（Chunking）、逐块向量化、建索引；问答阶段检索候选片段、组装上下文交给 LLM——"分块粒度"决定检索能看见什么；</li><li>类比：文档 → 子块（分）、逐块检索评估（治）、重组证据回答（合）。</li></ul>
+          </div>
+<hr>
+<h2 id="小结与考点">小结与考点</h2>
+<h3 id="典型题目速查">典型题目速查</h3>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>划分方式</th>
+<th>递归方程</th>
+<th>复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>二分查找</td>
+<td>对半，只递归一侧</td>
+<td>T(n/2) + O(1)</td>
+<td>O(logn)</td>
+</tr>
+<tr>
+<td>金块问题（max+min）</td>
+<td>对半</td>
+<td>2T(n/2) + 2</td>
+<td>⌈3n/2⌉ − 2 次比较</td>
+</tr>
+<tr>
+<td>循环赛日程表</td>
+<td>选手对半、四象限填表</td>
+<td>—（填表即表大小）</td>
+<td>O(n²) = O(4^k)</td>
+</tr>
+<tr>
+<td>棋盘覆盖</td>
+<td>四象限 + 中心 L 骨牌</td>
+<td>4T(n/2) + O(1)</td>
+<td>O(4^k) = O(n²)</td>
+</tr>
+<tr>
+<td>大整数乘法</td>
+<td>两段、3 次子乘（Karatsuba）</td>
+<td>3T(n/2) + O(n)</td>
+<td>O(n^1.59)</td>
+</tr>
+<tr>
+<td>Strassen 矩阵乘</td>
+<td>四块、7 次子乘</td>
+<td>7T(n/2) + O(n²)</td>
+<td>O(n^2.81)</td>
+</tr>
+<tr>
+<td>FFT</td>
+<td>奇偶次幂 / 正负成对选点</td>
+<td>2T(n/2) + O(n)</td>
+<td>O(nlogn)</td>
+</tr>
+<tr>
+<td>合并排序</td>
+<td>对半</td>
+<td>2T(n/2) + O(n)</td>
+<td>O(nlogn)</td>
+</tr>
+<tr>
+<td>快速排序</td>
+<td>支点划分</td>
+<td>最坏 T(n−1) + O(n)</td>
+<td>最坏 O(n²)，平均 O(nlogn)</td>
+</tr>
+<tr>
+<td>随机选择</td>
+<td>支点划分，只递归一侧</td>
+<td>期望 T(3n/4) + O(n)</td>
+<td>期望 O(n)</td>
+</tr>
+<tr>
+<td>BFPRT 选择</td>
+<td>中位数的中位数做支点</td>
+<td>T(n/5) + T(3n/4) + O(n)</td>
+<td>最坏 O(n)</td>
+</tr>
+<tr>
+<td>最接近点对</td>
+<td>中线分割 + 6 点条带</td>
+<td>2T(n/2) + O(n)</td>
+<td>O(nlogn)</td>
+</tr>
+<tr>
+<td>汉诺塔</td>
+<td>上面 n−1 个盘子递归</td>
+<td>2T(n−1) + 1</td>
+<td>O(2ⁿ)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="考点清单">考点清单</h3>
+<ol>
+<li><strong>分治适用条件 4 条</strong>必背（特别是"子问题相互独立"——与动态规划的分界线）；</li>
+<li><strong>递归方程求解</strong>：主定理三种情形 + 会用递归树处理非标准型（T(n)=4T(n/2)+n²/logn → O(n²·loglogn)）；</li>
+<li>各典型题的<strong>递归方程与复杂度</strong>（上表）要能手推；</li>
+<li>循环赛日程表 n=8 要会画、棋盘覆盖骨牌数 (4^k−1)/3、汉诺塔 2ⁿ−1 与奇偶移动规律；</li>
+<li>快排最坏情形的构造（已有序 + 固定取首元素）与随机化改进；RandomizedSelect 与快排的唯一区别是<strong>只递归一侧</strong>；</li>
+<li>最接近点对的 <strong>6 点论证</strong>（2d×d 矩形 6 小格）是证明题常客。</li>
+</ol>
+<h3 id="易错点">易错点</h3>
+<div class="note note-warning">
+            <ul><li>主定理只适用于标准型 T(n) = aT(n/b) + f(n)：f(n) 与 n^(log_b a) <strong>多项式程度地</strong>可比才有效；像 f(n) = n²/logn 这种"差一个 log"的要用递归树。</li><li>分块直接算大整数乘法（4 次子乘）和矩阵乘法（8 次子乘）<strong>不会更快</strong>，复杂度不变；快的关键是 Karatsuba 减到 3 次、Strassen 减到 7 次。</li><li>快速排序"合并"步骤是空的（划分完自然有序），别与归并排序混；</li><li>最接近点对递归求完左右两半后，<strong>必须</strong>再检查跨线条带内的点对（按 y 排序后每个点只看后继 6 个），漏掉这步答案可能错；</li><li>循环赛日程表：行是选手、列是天（n−1 列）；n 不是 2 的幂时用轮转法，奇数加虚拟选手。</li><li>青蛙跳台阶这类"子问题重叠"的递归（Fibonacci 型）朴素递归是指数级——那是动态规划的入场券，一题多解对比见动态规划篇开头的"入门：青蛙跳台阶"。</li></ul>
+          </div>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Review/" class="category-chain-item">Review</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Review/" class="print-no-link">#Review</a>
+      
+        <a href="/tags/Algorithm-Design-and-Analysis/" class="print-no-link">#Algorithm Design and Analysis</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Algorithm Design and Analysis</div>
+      <div>http://example.com/2026/10/23/Review/Algorithm-Design-and-Analysis/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 23, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>October 24, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/10/23/Review/Algorithm-Design-and-Analysis-DP/" title="Algorithm Design and Analysis: Dynamic Programming">
+                        <span class="hidden-mobile">Algorithm Design and Analysis: Dynamic Programming</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

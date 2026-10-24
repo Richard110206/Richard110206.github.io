@@ -1,0 +1,1349 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本复习资料整理《算法设计与分析》第 3 章（动态规划），按三要素整理：(a) 状态转移方程的推导过程 → (b) 状态转移方程 → © 递推表，每道典型题除标准解法外补充第二种解法。重点难点使用 Hexo note 标签标注。第 1、2 章（算法概述与递归分治）及后续章节见 Algorithm Design and Analysis。   目录  第3章 动态规划  入门：青蛙跳台阶（一题多解）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorithm Design and Analysis: Dynamic Programming">
+<meta property="og:url" content="http://example.com/2026/10/23/Review/Algorithm-Design-and-Analysis-DP/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="本复习资料整理《算法设计与分析》第 3 章（动态规划），按三要素整理：(a) 状态转移方程的推导过程 → (b) 状态转移方程 → © 递推表，每道典型题除标准解法外补充第二种解法。重点难点使用 Hexo note 标签标注。第 1、2 章（算法概述与递归分治）及后续章节见 Algorithm Design and Analysis。   目录  第3章 动态规划  入门：青蛙跳台阶（一题多解）">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-23T03:02:21.000Z">
+<meta property="article:modified_time" content="2026-10-23T15:28:26.195Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta property="article:tag" content="Review">
+<meta property="article:tag" content="Algorithm Design and Analysis">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Algorithm Design and Analysis: Dynamic Programming - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LQX&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/other/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>Else</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/other/life-musings/" target="_self">
+                    
+                    <span>精进日记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/08/13/other/Casual-Chronicles/" target="_self">
+                    
+                    <span>生活杂谈</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/banner_img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Algorithm Design and Analysis: Dynamic Programming"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-10-23 11:02" pubdate>
+          October 23, 2026 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          15k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          122 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Algorithm Design and Analysis: Dynamic Programming</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>本复习资料整理《算法设计与分析》第 3 章（动态规划），按三要素整理：<strong>(a) 状态转移方程的推导过程 → (b) 状态转移方程 → © 递推表</strong>，每道典型题除标准解法外补充第二种解法。重点难点使用 Hexo <code>note</code> 标签标注。第 1、2 章（算法概述与递归分治）及后续章节见 <a href="/2026/10/23/Review/Algorithm-Design-and-Analysis/">Algorithm Design and Analysis</a>。</p>
+</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul>
+<li><a href="#%E7%AC%AC3%E7%AB%A0-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">第3章 动态规划</a>
+<ul>
+<li><a href="#%E5%85%A5%E9%97%A8%EF%BC%9A%E9%9D%92%E8%9B%99%E8%B7%B3%E5%8F%B0%E9%98%B6%EF%BC%88%E4%B8%80%E9%A2%98%E5%A4%9A%E8%A7%A3%EF%BC%89">入门：青蛙跳台阶（一题多解）</a></li>
+<li><a href="#%E7%83%AD%E8%BA%AB%EF%BC%9A%E6%9C%A8%E6%9D%A1%E6%B8%B8%E6%88%8F">热身：木条游戏</a></li>
+<li><a href="#3-1-%E7%9F%A9%E9%98%B5%E8%BF%9E%E4%B9%98%E7%A7%AF">3.1 矩阵连乘积</a></li>
+<li><a href="#3-3-%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97">3.3 最长公共子序列</a></li>
+<li><a href="#3-4-%E6%9C%80%E5%A4%A7%E5%AD%90%E6%AE%B5%E5%92%8C">3.4 最大子段和</a></li>
+<li><a href="#3-5-%E5%87%B8%E5%A4%9A%E8%BE%B9%E5%BD%A2%E6%9C%80%E4%BC%98%E4%B8%89%E8%A7%92%E5%89%96%E5%88%86">3.5 凸多边形最优三角剖分</a></li>
+<li><a href="#3-7-%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9">3.7 图像压缩</a></li>
+<li><a href="#3-8-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF">3.8 电路布线</a></li>
+<li><a href="#%E5%B0%8F%E7%BB%93%E4%B8%8E%E8%80%83%E7%82%B9">小结与考点</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="第3章-动态规划">第3章 动态规划</h2>
+<p>动态规划四步曲（各题严格按此展开）：</p>
+<ol>
+<li><strong>刻画最优解结构</strong>（证明最优子结构）；</li>
+<li><strong>递归地定义最优值</strong>（状态转移方程）；</li>
+<li><strong>自底向上计算最优值</strong>（填表）；</li>
+<li><strong>根据计算结果构造最优解</strong>（回溯标记）。</li>
+</ol>
+<p>核心口诀：<strong>“自顶向下分析，自底向上求解”</strong>——先站在最后一个元素的角度枚举决策，再从小到大填表。</p>
+<div class="note note-info">
+            <p><strong>SORTBOT 框架（每道 DP 题的通用总结模板）</strong></p><table><thead><tr><th>字段</th><th>含义</th></tr></thead><tbody><tr><td><strong>S</strong>ubproblem</td><td>子问题是什么</td></tr><tr><td><strong>O</strong>riginal Problem</td><td>原问题</td></tr><tr><td><strong>R</strong>elation</td><td>转移（最后一步的决策）</td></tr><tr><td><strong>T</strong>opology</td><td>计算顺序</td></tr><tr><td><strong>B</strong>ase case</td><td>边界</td></tr><tr><td><strong>O</strong>riginal Solution</td><td>怎么回溯出解</td></tr><tr><td><strong>T</strong>ime Complexity</td><td>复杂度</td></tr></tbody></table>
+          </div>
+<div class="note note-info">
+            <p><strong>动态规划的基本要素</strong>（一道题能不能用 DP 的判据）：</p><ol><li><strong>最优子结构性质</strong>：问题的最优解包含其子问题的最优解。验证套路是反证（剪贴法）——假设由最优解导出的子问题解不是最优的，就能"贴"出一个更好的解，与最优性矛盾；</li><li><strong>子问题重叠性质</strong>：递归求解时同一个子问题会被反复计算（画递归树看重复结点）。DP 用一张表把已解决的子问题答案保存下来，每个子问题只算一次；自底向上填表是"全算"，<strong>备忘录方法</strong>（自顶向下、按需递归 + 查表）是"用到才算"，二者复杂度同阶。</li></ol>
+          </div>
+<hr>
+<h3 id="入门：青蛙跳台阶（一题多解）">入门：青蛙跳台阶（一题多解）</h3>
+<h4 id="问题描述">问题描述</h4>
+<div class="note note-info">
+            <p>一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级台阶。求该青蛙跳上一个 n 级的台阶总共有多少种跳法？</p><p>这是本章的入门题：同一个问题可以用<strong>朴素递归、分治（中点分解）、动态规划</strong>三种姿势解决，通过对比体会"什么时候必须用动态规划"。</p>
+          </div>
+<h4 id="解法一：朴素递归（直接翻译递归方程）">解法一：朴素递归（直接翻译递归方程）</h4>
+<div class="note note-info">
+            <p>考察<strong>最后一步</strong>：跳 1 级（剩余 n−1 级）或跳 2 级（剩余 n−2 级），两类不重不漏：</p><p>$$f(n) = f(n-1) + f(n-2), \qquad f(0) = f(1) = 1$$</p><p>直接写成递归函数即可，但递归树中 f(n−2)、f(n−3)、……被<strong>反复计算</strong>（子问题重叠），复杂度是黄金比例指数级 <strong>O(1.618ⁿ)</strong>。这正是"分而不独立"的场景——分治法要求子问题互不重叠，此处失效，需要下两种解法。</p>
+          </div>
+<h4 id="解法二：分治——中点分解（倍增恒等式）">解法二：分治——中点分解（倍增恒等式）</h4>
+<div class="note note-primary">
+            <p>换一种分法：不按"最后一步"分，而是设一个<strong>中间点 m</strong>，把 0→n 的路径按"是否<strong>经过台阶 m</strong>"分成不重不漏的两类：</p><ul><li><strong>经过 m</strong>：路径 = 先从 0 走到 m，再从 m 走到 n。由平移不变性，两段各有 f(m)、f(n−m) 种，共 <strong>f(m) · f(n−m)</strong> 种；</li><li><strong>不经过 m</strong>：每步只能跳 1 或 2 级，想跳过 m 只能从 <strong>m−1 直接跳到 m+1</strong>——即路径必经过 m−1，并从那里一步跳过 m。这样的路径有 <strong>f(m−1) · f(n−m−1)</strong> 种。</li></ul><p>两者相加得到<strong>倍增恒等式</strong>：</p><p>$$<br>f(n) = f(m) \cdot f(n-m) + f(m-1) \cdot f(n-m-1), \qquad m = \lfloor n/2 \rfloor<br>$$</p><ul><li>n 为偶数时即 f(n) = f(n/2)² + f(n/2−1)²（递归树上"分治思想"一页给出的式子就是它）；课件问"n/2 一定是整数吗？"——不必是：取 m = ⌊n/2⌋，一般恒等式对奇偶都成立；</li><li>验算：f = (1, 1, 2, 3, 5, 8, 13, 21, 34)，f(8) = f(4)² + f(3)² = 25 + 9 = 34 ✓；奇数 f(7) = f(3)f(4) + f(2)f(3) = 15 + 6 = 21 ✓；</li><li>递归实现时让函数<strong>一次返回 (f(k−1), f(k)) 两个值</strong>，每层只递归一次：T(n) = T(n/2) + O(1) = <strong>O(log n)</strong>：</li></ul><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-built_in">pair</span>&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt; <span class="hljs-title function_">frog</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span>            <span class="hljs-comment">// 返回 { f(k-1), f(k) }</span><br>{<br>    <span class="hljs-keyword">if</span> (k == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> {<span class="hljs-number">1</span>, <span class="hljs-number">1</span>};       <span class="hljs-comment">// f(-1) 记 1（由 f(1)=f(0)+f(-1) 反推），f(0)=1</span><br>    <span class="hljs-keyword">auto</span> [a, b] = frog(k / <span class="hljs-number">2</span>);       <span class="hljs-comment">// a = f(m-1), b = f(m), m = k/2</span><br>    <span class="hljs-type">int</span> c = a * a + b * b;           <span class="hljs-comment">// f(2m)   = f(m)^2 + f(m-1)^2</span><br>    <span class="hljs-type">int</span> d = b * b + <span class="hljs-number">2</span> * a * b;       <span class="hljs-comment">// f(2m+1) = f(m)·f(m+1) + f(m-1)·f(m)</span><br>    <span class="hljs-keyword">return</span> (k % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) ? <span class="hljs-built_in">make_pair</span>(b, c) : <span class="hljs-built_in">make_pair</span>(c, d);<br>}<br></code></pre></td></tr></tbody></table></figure><p>这就是 Fibonacci <strong>快速倍增法</strong>，与矩阵快速幂（[[1,1],[1,0]] 的 n 次幂）同源——纯分治、不用动态规划，也能把复杂度做到 O(log n)。</p>
+          </div>
+<h4 id="解法三：动态规划填表">解法三：动态规划填表</h4>
+<div class="note note-info">
+            <p>把重叠子问题"存表重用"：从 f(0)、f(1) 出发自底向上递推，每个 f(k) 只算一次——<strong>O(n) 时间</strong>，空间可滚动到 O(1)。</p><p>计算 F(8) 的填表过程：</p><table><thead><tr><th style="text-align:center">k</th><th style="text-align:center">0</th><th style="text-align:center">1</th><th style="text-align:center">2</th><th style="text-align:center">3</th><th style="text-align:center">4</th><th style="text-align:center">5</th><th style="text-align:center">6</th><th style="text-align:center">7</th><th style="text-align:center">8</th></tr></thead><tbody><tr><td style="text-align:center">f(k)</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center">5</td><td style="text-align:center">8</td><td style="text-align:center">13</td><td style="text-align:center">21</td><td style="text-align:center"><strong>34</strong></td></tr></tbody></table><p>注意这是<strong>计数型 DP</strong>：动态规划不只求最大/最小等最优值，也数"方案数"——状态转移方程把不重不漏的决策类别<strong>相加</strong>而非取 max/min。</p>
+          </div>
+<h4 id="一题多解对比">一题多解对比</h4>
+<table>
+<thead>
+<tr>
+<th>解法</th>
+<th>思想</th>
+<th>复杂度</th>
+<th>关键点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>朴素递归</td>
+<td>直接翻译"最后一步"的递归方程</td>
+<td>O(1.618ⁿ)</td>
+<td>子问题重叠，重复计算爆炸</td>
+</tr>
+<tr>
+<td>记忆化递归</td>
+<td>递归 + 备忘录</td>
+<td>O(n)</td>
+<td>每个子问题只算一次</td>
+</tr>
+<tr>
+<td>DP 填表</td>
+<td>自底向上递推</td>
+<td>O(n)，空间 O(1)</td>
+<td>计数型 DP 的入门模板</td>
+</tr>
+<tr>
+<td>中点分治（倍增）</td>
+<td>"过 / 不过中点 m"的组合恒等式</td>
+<td><strong>O(log n)</strong></td>
+<td>一次返回 (f(k−1), f(k))，每层规模减半</td>
+</tr>
+</tbody>
+</table>
+<p><strong>启示（一题多解思想）</strong>：按"最后一步"分解会重叠 → 换"按中点分解"就独立了（分治视角）；或者保留"最后一步"分解但用表格消除重复（DP 视角）。同一道题，改变<strong>划分的维度</strong>或<strong>消除重复的手段</strong>，就得到完全不同的算法与复杂度——这个对比贯穿整章。</p>
+<h4 id="配套练习">配套练习</h4>
+<div class="note note-warning">
+            <p><strong>练习 1（作业）</strong>：青蛙一次可以跳上 1 级或 <strong>3 级</strong>台阶，跳上 n 级共有多少种跳法？写出算法并给出 n = 8 的计算过程。</p><p>最后一步跳 1 级或 3 级：f(n) = f(n−1) + f(n−3)；边界 f(0) = f(1) = f(2) = 1。填表：</p><table><thead><tr><th style="text-align:center">k</th><th style="text-align:center">0</th><th style="text-align:center">1</th><th style="text-align:center">2</th><th style="text-align:center">3</th><th style="text-align:center">4</th><th style="text-align:center">5</th><th style="text-align:center">6</th><th style="text-align:center">7</th><th style="text-align:center">8</th></tr></thead><tbody><tr><td style="text-align:center">f(k)</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">6</td><td style="text-align:center">9</td><td style="text-align:center"><strong>13</strong></td></tr></tbody></table><p>（如 8 = 7+1 = 5+3 两类来源：f(7) + f(5) = 9 + 4 = 13。）</p><p><strong>练习 2（作业）</strong>：正整数数组 a，节点 i、j（i &lt; j）的组合得分为 a[i] + a[j] + i − j（得分之和减去距离），求最高得分组合。</p><p><strong>变形是关键</strong>：得分 = (a[i] + i) + (a[j] − j)。i &lt; j 的限制下，从左到右扫一遍，对每个 j 用"目前最大的 a[i] + i"配上当前的 a[j] − j：</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> best = a[<span class="hljs-number">1</span>] + <span class="hljs-number">1</span>, ans = INT_MIN;      <span class="hljs-comment">// i = 1</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">2</span>; j &lt;= n; j++) {<br>    ans  = max(ans, best + a[j] - j);    <span class="hljs-comment">// 以 j 为右端点的最优组合</span><br>    best = max(best, a[j] + j);          <span class="hljs-comment">// 更新左侧最大 a[i]+i</span><br>}<br></code></pre></td></tr></tbody></table></figure><p>一遍扫描 <strong>O(n)</strong>。例 a = [3, 1, 4, 1, 5]：a[i]+i = (4, 3, 7, 5, 10)，a[j]−j = (2, −1, 1, −3, 0)，最优在 j = 5 取 best = 7（i = 3）：7 + 0 = <strong>7</strong>（验证 4 + 5 + 3 − 5 = 7 ✓）。</p>
+          </div>
+<hr>
+<h3 id="热身：木条游戏">热身：木条游戏</h3>
+<h4 id="问题描述-v2">问题描述</h4>
+<div class="note note-info">
+            <p>你有一根长度为 n（n 为整数）的木条，每次可以执行以下任意操作：</p><ol><li>选择一根木条并在某处切割，得到两块长度均为整数的新木条；</li><li>停止切割并计算总分——<strong>总分 = 各木条长度对应的价格之和</strong>。</li></ol><p>长度—价格表（只标到长度 10，故每段长度不能超过 10）：</p><table><thead><tr><th>长度</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr></thead><tbody><tr><td>价格</td><td>1</td><td>5</td><td>8</td><td>9</td><td>10</td><td>15</td><td>17</td><td>20</td><td>23</td><td>26</td></tr></tbody></table><p><strong>目标</strong>：求长度为 n 的木条能切出的最高总分。</p>
+          </div>
+<h4 id="状态转移方程">状态转移方程</h4>
+<p><strong>(a) 推导过程——考察"第一段切多长"</strong></p>
+<div class="note note-info">
+            <p>设 dp(k) 表示<strong>长度为 k 的木条的最高价值</strong>。站在切第一刀的角度枚举<strong>第一段的长度 i</strong>：切下长 i 的一段卖掉（得 p[i]），剩下长度 k−i 的木条是与原问题同构的子问题：</p><ul><li>第一段长 1：dp(k) = p[1] + dp(k−1)；</li><li>第一段长 2：dp(k) = p[2] + dp(k−2)；</li><li>……</li><li>第一段长 k（整根不切，前提是 k ≤ 10 有标价）：dp(k) = p[k] + dp(0)。</li></ul><p>到底第一段切多长？——<strong>取使 dp(k) 最大的 i</strong>。这就是"找切割点"的决策。</p>
+          </div>
+<p><strong>(b) 状态转移方程</strong></p>
+<p>$$<br>
+dp(k) = \max_{1 \le i \le \min(k, 10)} \big\lbrace\ p[i] + dp(k-i)\ \big\rbrace, \qquad dp(0) = 0<br>
+$$</p>
+<p>同时记录取得最大值的<strong>切割点</strong>（第一段长度），供构造方案。时间复杂度 <strong>O(n·min(n,10)) = O(n²)</strong>，空间 O(n)。</p>
+<p><strong>© 递推表——例题完整画表</strong></p>
+<div class="note note-warning">
+            <p><strong>例</strong>：对上表计算 k = 1…12 的最优值与第一段长度：</p><table><thead><tr><th>长度 k</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr></thead><tbody><tr><td>dp(k)</td><td>1</td><td>5</td><td>8</td><td>10</td><td>13</td><td>16</td><td>18</td><td>21</td><td>24</td><td>26</td><td>29</td><td><strong>32</strong></td></tr><tr><td>第一段</td><td>1</td><td>2</td><td>3</td><td>2</td><td>2</td><td>3</td><td>2</td><td>2</td><td>3</td><td>2</td><td>2</td><td>3</td></tr></tbody></table><p>逐项验算（以 k = 12 为例）：枚举第一段 i = 1…10，候选取值 1+29、5+26、8+24、9+21、10+18、15+16、17+13、20+10、23+8、26+5，最大为 <strong>8 + 24 = 32</strong>（第一段 3）。</p><p><strong>构造方案</strong>：由切割点表回溯——12 的第一段是 3，剩下 9 的第一段是 3，剩下 6 的第一段是 3，剩下 3 整段——最优方案 <strong>12 = 3 + 3 + 3 + 3，总分 4 × 8 = 32</strong>（注意"整根不切"未必最优：如 6 整根 15 &lt; 8+8 = 16）。</p>
+          </div>
+<h4 id="算法实现与-SORTBOT-小结">算法实现与 SORTBOT 小结</h4>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> dp[<span class="hljs-number">13</span>], cut[<span class="hljs-number">13</span>];<br>dp[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">1</span>; k &lt;= n; k++) {<br>    dp[k] = <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= k &amp;&amp; i &lt;= <span class="hljs-number">10</span>; i++)      <span class="hljs-comment">// 第一段长 i</span><br>        <span class="hljs-keyword">if</span> (p[i] + dp[k-i] &gt; dp[k]) {<br>            dp[k] = p[i] + dp[k-i];<br>            cut[k] = i;                           <span class="hljs-comment">// 记录切割点</span><br>        }<br>}<br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><strong>Subproblem</strong>: dp(k) —— 长度 k 的木条最高价值；</li>
+<li><strong>Original Problem</strong>: dp(n)；</li>
+<li><strong>Relation</strong>: 找切割点，$dp(k) = \max_i \lbrace p[i] + dp(k-i) \rbrace$；</li>
+<li><strong>Topology</strong>: dp(1), dp(2), …, dp(n)；</li>
+<li><strong>Base case</strong>: dp(0) = 0（初始价格表）；</li>
+<li><strong>Original Solution</strong>: 记录每个 dp(k) 对应的切割点，从 n 逐段回溯；</li>
+<li><strong>Time Complexity</strong>: O(n²)。</li>
+</ul>
+<h4 id="解法二：备忘录递归">解法二：备忘录递归</h4>
+<div class="note note-primary">
+            <p>按方程直接写自顶向下的递归 <code>V(k)</code>，用 memo[] 记录已算过的子问题；与图像压缩一节的做法完全同构。本题递归树会大量重复"长度 k−i"的子链，是<strong>子问题重叠性质</strong>最直观的例子：朴素递归是指数级，加一张备忘录表后每个 dp(k) 只算一次，复杂度回到 O(n²)。</p>
+          </div>
+<hr>
+<h3 id="3-1-矩阵连乘积">3.1 矩阵连乘积</h3>
+<h4 id="引例：加括号的顺序影响巨大">引例：加括号的顺序影响巨大</h4>
+<div class="note note-info">
+            <p>两个矩阵相乘：A 是 p×q，B 是 q×r，则 C = AB 需要 <strong>p·q·r</strong> 次数乘。三个矩阵连乘时，加括号顺序不同代价可能差一个量级。设 A₁ 为 10×100、A₂ 为 100×5、A₃ 为 5×50：</p><ul><li>(A₁A₂)A₃：先算 10×100×5 = 5000 次，再算 10×5×50 = 2500 次，共 <strong>7500</strong> 次；</li><li>A₁(A₂A₃)：先算 100×5×50 = 25000 次，再算 10×100×50 = 50000 次，共 <strong>75000</strong> 次。</li></ul><p>四个矩阵有 5 种完全加括号方式（一般地，n 个矩阵的加括号方式数是 Catalan 数，指数级）。<strong>矩阵连乘问题</strong>：给定 n 个矩阵的连乘积 A₁A₂⋯Aₙ，求<strong>数乘次数最少</strong>的完全加括号方式。</p>
+          </div>
+<h4 id="问题描述与记号">问题描述与记号</h4>
+<div class="note note-info">
+            <p>矩阵维数用 <strong>p 数组</strong>表示：Aᵢ 是 p_{i−1} × pᵢ，n 个矩阵对应 p₀, p₁, …, pₙ 共 n+1 个数。例：A[1:4] 各矩阵为 30×35、35×15、15×5、5×10，则 p = (30, 35, 15, 5, 10)。</p><p>记 A[i:j] = AᵢA_{i+1}⋯Aⱼ，<strong>m[i][j] = A[i:j] 所需的最少乘次数</strong>，原问题即求 <strong>m[1][n]</strong>。</p>
+          </div>
+<h4 id="最优子结构">最优子结构</h4>
+<div class="note note-primary">
+            <p>设 ((A₁⋯A_k)(A_{k+1}⋯A_n)) 是 A[1:n] 的一个<strong>最优计算次序</strong>（最优解在 A_k 与 A_{k+1} 之间断开，即最后一次相乘是 (A[1:k])·(A[k+1:n])），则子矩阵链 A[1:k] 与 A[k+1:n] 的计算次序也必然是最优的。</p><p><strong>反证</strong>：若 A[1:k] 存在计算量更少的次序 A′[1:k]，用它替换原次序中的子链，可构造出总计算量更少的 A[1:n] 计算次序，与"最优"矛盾。∎</p>
+          </div>
+<h4 id="状态转移方程-v2">状态转移方程</h4>
+<p><strong>(a) 推导过程——考察"最后一次相乘"的断开位置</strong></p>
+<div class="note note-info">
+            <p>对子问题 A[i:j]（i &lt; j），它的完全加括号方案一定在某处把链<strong>断成两截</strong>：A[i:j] = (A[i:k])(A[k+1:j])，最后一次相乘把两个子结果矩阵乘起来。断开位置 k 有 j − i 种选择（i ≤ k &lt; j）。固定 k 时总计算量为三部分之和：</p><p>$$<br>m[i][k] + m[k+1][j] + p_{i-1} p_k p_j<br>$$</p><p>三项依次是：<strong>左链 A[i:k] 的最优计算量、右链 A[k+1:j] 的最优计算量、把两个子结果矩阵合并的代价</strong>。</p>
+          </div>
+<p><strong>(b) 状态转移方程</strong></p>
+<p>$$<br>
+m[i][j] = \begin{cases}<br>
+0, &amp; i = j \quad \text{（单一矩阵无需相乘）} \\<br>
+\min\limits_{i \le k &lt; j} \big\lbrace\ m[i][k] + m[k+1][j] + p_{i-1} p_k p_j\ \big\rbrace, &amp; i &lt; j<br>
+\end{cases}<br>
+$$</p>
+<p>最优值为 m[1][n]；同时记录最优断开位置 <strong>s[i][j] = k</strong> 用于构造最优解。每个 m[i][j] 枚举 O(n) 个 k，共 O(n²) 个子问题，时间复杂度 <strong>O(n³)</strong>，空间 O(n²)。</p>
+<p><strong>© 递推表——例题完整画表</strong></p>
+<div class="note note-warning">
+            <p><strong>例 1</strong>：计算矩阵连乘积 A[1:6]，p = (30, 35, 15, 5, 10, 20, 25)，即各矩阵为 30×35、35×15、15×5、5×10、10×20、20×25。</p><p><strong>填表方法</strong>：m[i][j] 依赖更短的链，故<strong>按链长（对角线）从短到长填</strong>：先填链长 2（m[1][2], m[2][3], …），再链长 3，……最后 m[1][6]。m[i][j] = 对角线上 m[i][k]、m[k+1][j] 与合并代价 p_{i−1}p_k p_j 之和的最小值。</p><p><strong>m[i][j] 表</strong>（下三角不用）：</p><table><thead><tr><th style="text-align:center">m[i][j]</th><th style="text-align:center">j=1</th><th style="text-align:center">j=2</th><th style="text-align:center">j=3</th><th style="text-align:center">j=4</th><th style="text-align:center">j=5</th><th style="text-align:center">j=6</th></tr></thead><tbody><tr><td style="text-align:center"><strong>i=1</strong></td><td style="text-align:center">0</td><td style="text-align:center">15750</td><td style="text-align:center">7875</td><td style="text-align:center">9375</td><td style="text-align:center">11875</td><td style="text-align:center"><strong>15125</strong></td></tr><tr><td style="text-align:center"><strong>i=2</strong></td><td style="text-align:center"></td><td style="text-align:center">0</td><td style="text-align:center">2625</td><td style="text-align:center">4375</td><td style="text-align:center">7125</td><td style="text-align:center">10500</td></tr><tr><td style="text-align:center"><strong>i=3</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">0</td><td style="text-align:center">750</td><td style="text-align:center">2500</td><td style="text-align:center">5375</td></tr><tr><td style="text-align:center"><strong>i=4</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">0</td><td style="text-align:center">1000</td><td style="text-align:center">3500</td></tr><tr><td style="text-align:center"><strong>i=5</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">0</td><td style="text-align:center">5000</td></tr><tr><td style="text-align:center"><strong>i=6</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">0</td></tr></tbody></table><p><strong>s[i][j] 表</strong>（最优断开位置）：</p><table><thead><tr><th style="text-align:center">s[i][j]</th><th style="text-align:center">j=2</th><th style="text-align:center">j=3</th><th style="text-align:center">j=4</th><th style="text-align:center">j=5</th><th style="text-align:center">j=6</th></tr></thead><tbody><tr><td style="text-align:center"><strong>i=1</strong></td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center"><strong>3</strong></td></tr><tr><td style="text-align:center"><strong>i=2</strong></td><td style="text-align:center"></td><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">3</td></tr><tr><td style="text-align:center"><strong>i=3</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">3</td></tr><tr><td style="text-align:center"><strong>i=4</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">4</td><td style="text-align:center">5</td></tr><tr><td style="text-align:center"><strong>i=5</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">5</td></tr></tbody></table><p>抽两格验算：m[1][2] = p₀p₁p₂ = 30×35×15 = 15750（唯一断点 k = 1）；m[3][6] = min{0 + 1000 + 15×5×25 = 2875, 750 + 0 + 15×10×25 = 4500, 2500 + 0 + 15×20×25 = 10000} = <strong>2875</strong>（三个断点 k = 3, 4, 5 对应的候选值，取最小）。</p>
+          </div>
+<h4 id="构造最优解">构造最优解</h4>
+<div class="note note-info">
+            <p>算出最优值后，由 <strong>s[i][j] 递归地构造最优解</strong>：s[1][6] = 3 说明最后一次相乘在 A₃|A₄ 处断开；再看 s[1][3] = 1、s[4][6] = 5……每一步把链一分为二，直到单矩阵。上例的最优计算次序为：</p><p>$$<br>((A_1 (A_2 A_3))((A_4 A_5) A_6)), \qquad 最少数乘次数 = m[1][6] = 15125<br>$$</p>
+          </div>
+<h4 id="算法实现">算法实现</h4>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">MatrixChain</span><span class="hljs-params">(<span class="hljs-type">int</span> *p, <span class="hljs-type">int</span> n, <span class="hljs-type">int</span> **m, <span class="hljs-type">int</span> **s)</span><br>{<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) m[i][i] = <span class="hljs-number">0</span>;            <span class="hljs-comment">// m[i][i] 初始化</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> r = <span class="hljs-number">2</span>; r &lt;= n; r++)                         <span class="hljs-comment">// r 个矩阵连乘（链长）</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n - r + <span class="hljs-number">1</span>; i++) {           <span class="hljs-comment">// i 是本轮链的第一个矩阵</span><br>            <span class="hljs-type">int</span> j = i + r - <span class="hljs-number">1</span>;                           <span class="hljs-comment">// j 是本轮链的最后一个矩阵</span><br>            m[i][j] = m[i][i] + m[i+<span class="hljs-number">1</span>][j] + p[i<span class="hljs-number">-1</span>]*p[i]*p[j];   <span class="hljs-comment">// 先假设最优划分位于 i 处</span><br>            s[i][j] = i;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = i + <span class="hljs-number">1</span>; k &lt; j; k++) {            <span class="hljs-comment">// 变化分割位置，逐一测试</span><br>                <span class="hljs-type">int</span> t = m[i][k] + m[k+<span class="hljs-number">1</span>][j] + p[i<span class="hljs-number">-1</span>]*p[k]*p[j];<br>                <span class="hljs-keyword">if</span> (t &lt; m[i][j]) { m[i][j] = t; s[i][j] = k; } <span class="hljs-comment">// 更优则替换</span><br>            }<br>        }<br>}<br><br><span class="hljs-comment">// 构造最优解：按 s 表递归加括号</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">Traceback</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j, <span class="hljs-type">int</span> **s)</span><br>{<br>    <span class="hljs-keyword">if</span> (i == j) <span class="hljs-keyword">return</span>;<br>    Traceback(i, s[i][j], s);<br>    Traceback(s[i][j] + <span class="hljs-number">1</span>, j, s);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Multiply A[%d:%d] and A[%d:%d]\n"</span>, i, s[i][j], s[i][j]+<span class="hljs-number">1</span>, j);<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>算法分析：三重循环，<strong>T(n) = O(n³)</strong>。</p>
+<h4 id="SORTBOT-小结">SORTBOT 小结</h4>
+<ul>
+<li><strong>Subproblem</strong>: dp(i, j) = m[i][j] —— 从第 i 个矩阵乘到第 j 个矩阵的最优值；</li>
+<li><strong>Original Problem</strong>: dp(1, n)；</li>
+<li><strong>Relation</strong>: 切割点问题，$dp(i,j) = \min_k \lbrace dp(i,k) + dp(k{+}1,j) + p_{i-1} p_k p_j \rbrace$；</li>
+<li><strong>Topology</strong>: dp(i, j)，1 ≤ i ≤ j ≤ n，按链长（对角线）自短向长填表；</li>
+<li><strong>Base case</strong>: dp(i, i) = 0；</li>
+<li><strong>Original Solution</strong>: mark(i, j) = s[i][j]，递归加括号；</li>
+<li><strong>Time Complexity</strong>: O(n³)。</li>
+</ul>
+<h4 id="解法二：备忘录方法">解法二：备忘录方法</h4>
+<div class="note note-primary">
+            <p>矩阵连乘也可用<strong>备忘录方法</strong>自顶向下求解：直接按递归式写 <code>LookupChain(i, j)</code>，数组 m 初始化为 0 表示"未算过"，进入函数先查表，算过直接返回：</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">LookupChain</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j)</span><br>{<br>    <span class="hljs-keyword">if</span> (m[i][j] &gt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> m[i][j];          <span class="hljs-comment">// 已求过，直接返回</span><br>    <span class="hljs-keyword">if</span> (i == j) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-type">int</span> u = LookupChain(i+<span class="hljs-number">1</span>, j) + p[i<span class="hljs-number">-1</span>]*p[i]*p[j];<br>    s[i][j] = i;                              <span class="hljs-comment">// 先假设断点在 i</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = i + <span class="hljs-number">1</span>; k &lt; j; k++) {<br>        <span class="hljs-type">int</span> t = LookupChain(i, k) + LookupChain(k+<span class="hljs-number">1</span>, j) + p[i<span class="hljs-number">-1</span>]*p[k]*p[j];<br>        <span class="hljs-keyword">if</span> (t &lt; u) { u = t; s[i][j] = k; }<br>    }<br>    <span class="hljs-keyword">return</span> m[i][j] = u;                       <span class="hljs-comment">// 记入备忘录</span><br>}<br></code></pre></td></tr></tbody></table></figure><ul><li>复杂度同样是 O(n³)，区别只在计算顺序：填表法把 θ(n²) 个子问题<strong>全部</strong>算一遍，备忘录法<strong>只算真正被递归到的</strong>子问题；</li><li>当子问题空间中实际上只有一部分会被用到时，备忘录法更省；本题子问题几乎全被用到，两种方法效率相当。</li></ul>
+          </div>
+<h4 id="配套练习-v2">配套练习</h4>
+<div class="note note-warning">
+            <p><strong>练习</strong>：计算矩阵连乘积 A[1:5]，各矩阵维数依次为 10×2、2×10、10×1、1×5、5×10（p = (10, 2, 10, 1, 5, 10)），画 m、s 表并给出最优加括号方式。</p><p><strong>m[i][j] 表</strong>：</p><table><thead><tr><th style="text-align:center">m[i][j]</th><th style="text-align:center">j=1</th><th style="text-align:center">j=2</th><th style="text-align:center">j=3</th><th style="text-align:center">j=4</th><th style="text-align:center">j=5</th></tr></thead><tbody><tr><td style="text-align:center"><strong>i=1</strong></td><td style="text-align:center">0</td><td style="text-align:center">200</td><td style="text-align:center">40</td><td style="text-align:center">90</td><td style="text-align:center"><strong>190</strong></td></tr><tr><td style="text-align:center"><strong>i=2</strong></td><td style="text-align:center"></td><td style="text-align:center">0</td><td style="text-align:center">20</td><td style="text-align:center">30</td><td style="text-align:center">90</td></tr><tr><td style="text-align:center"><strong>i=3</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">0</td><td style="text-align:center">50</td><td style="text-align:center">150</td></tr><tr><td style="text-align:center"><strong>i=4</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">0</td><td style="text-align:center">50</td></tr><tr><td style="text-align:center"><strong>i=5</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">0</td></tr></tbody></table><p><strong>s[i][j] 表</strong>：</p><table><thead><tr><th style="text-align:center">s[i][j]</th><th style="text-align:center">j=2</th><th style="text-align:center">j=3</th><th style="text-align:center">j=4</th><th style="text-align:center">j=5</th></tr></thead><tbody><tr><td style="text-align:center"><strong>i=1</strong></td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">3</td><td style="text-align:center"><strong>3</strong></td></tr><tr><td style="text-align:center"><strong>i=2</strong></td><td style="text-align:center"></td><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center">3</td></tr><tr><td style="text-align:center"><strong>i=3</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">3</td><td style="text-align:center">3</td></tr><tr><td style="text-align:center"><strong>i=4</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">4</td></tr></tbody></table><p>由 s[1][5] = 3 断成 A[1:3] 与 A[4:5]；s[1][3] = 1 再断成 A₁ 与 A[2:3]——最优加括号方式为 <strong>((A₁(A₂A₃))(A₄A₅))，最少数乘次数 m[1][5] = 190</strong>。</p>
+          </div>
+<hr>
+<h3 id="3-3-最长公共子序列">3.3 最长公共子序列</h3>
+<h4 id="基本概念">基本概念</h4>
+<div class="note note-info">
+            <p><strong>子序列</strong>：给定序列 X = ⟨A, B, C, B, D, A, B⟩ 和 Z = ⟨B, C, D, B⟩，若 Z 的各元素是 X 中<strong>按下标递增</strong>依次出现的（这里是下标 ⟨2, 3, 5, 7⟩），称 Z 是 X 的子序列——<strong>不要求连续</strong>。</p><p><strong>公共子序列</strong>：若 Z 既是 X 的子序列又是 Y 的子序列。例：X = ⟨A,B,C,B,D,A,B⟩，Y = ⟨B,D,C,A,B,A⟩，则 Z₁ = ⟨B,C,A⟩ 是公共子序列，而 Z₂ = ⟨B,C,B,A⟩ 是它们的<strong>最长公共子序列（LCS）</strong>，长度为 4。</p><p><strong>问题</strong>：给定序列 X = ⟨x₁, ⋯, xₘ⟩ 和 Y = ⟨y₁, ⋯, yₙ⟩，求 X 和 Y 的最长公共子序列。穷举法要列出 X 的所有 2ᵐ 个子序列再逐一检查，<strong>指数时间</strong>不可行。</p>
+          </div>
+<h4 id="最优子结构-v2">最优子结构</h4>
+<div class="note note-primary">
+            <p>设 Z = ⟨z₁, ⋯, z_k⟩ 是 X 与 Y 的 LCS，则（三种情形）：</p><ol><li><strong>若 x_m = y_n = z_k</strong>：则 Z_{k−1} = ⟨z₁, ⋯, z_{k−1}⟩ 是 X_{m−1} 与 Y_{n−1} 的 LCS。（反证：若不是，X_{m−1} 与 Y_{n−1} 有更长的公共子序列 W，则 W 拼上 x_m 是 X 与 Y 更长的公共子序列，矛盾）</li><li><strong>若 x_m ≠ y_n 且 z_k ≠ x_m</strong>：则 Z 是 X_{m−1} 与 Y 的 LCS。（反证：若 X_{m−1} 与 Y 有长度大于 k 的公共子序列 W，则 W 也是 X 与 Y 的公共子序列，与 Z 最长矛盾）</li><li><strong>若 x_m ≠ y_n 且 z_k ≠ y_n</strong>：则 Z 是 X 与 Y_{n−1} 的 LCS。（同理）</li></ol><p>最长公共子序列问题具有<strong>最优子结构性质</strong>。∎</p>
+          </div>
+<h4 id="状态转移方程-v3">状态转移方程</h4>
+<p><strong>(a) 推导过程——考察前缀的最后一对字符</strong></p>
+<div class="note note-info">
+            <p>由最优子结构，把子问题定义为<strong>前缀</strong>：c[i][j] 表示 X 的前 i 个字符 Xᵢ 与 Y 的前 j 个字符 Yⱼ 的 LCS 长度。考察子问题的"最后一对字符"x_i 与 y_j：</p><ul><li><strong>x_i = y_j</strong>：这个公共字符一定可以放进 LCS 的末尾（情形 1），问题规模各退一格——c[i][j] = c[i−1][j−1] + 1；</li><li><strong>x_i ≠ y_j</strong>：LCS 的最后一个字符不可能同时等于 x_i 和 y_j，故最优解要么"不用 x_i"（情形 2），要么"不用 y_n"（情形 3）——两种来源取大者：c[i][j] = max{ c[i−1][j], c[i][j−1] }。</li></ul><p>同时记录每个格子取值的来源 b[i][j]（↖ 左上 / ↑ 上 / ← 左），供回溯构造 LCS。</p>
+          </div>
+<p><strong>(b) 状态转移方程</strong></p>
+<p>$$<br>
+c[i][j] = \begin{cases}<br>
+0, &amp; i = 0 \text{ 或 } j = 0 \\<br>
+c[i-1][j-1] + 1, &amp; i, j &gt; 0;\ x_i = y_j \\<br>
+\max\lbrace c[i-1][j],\ c[i][j-1] \rbrace, &amp; i, j &gt; 0;\ x_i \ne y_j<br>
+\end{cases}<br>
+$$</p>
+<p>最优值 c[m][n]。共 θ(mn) 个不同子问题，自底向上每个 O(1) 求解，时间复杂度 <strong>O(mn)</strong>，空间 O(mn)。</p>
+<p><strong>© 递推表——例题完整画表</strong></p>
+<div class="note note-warning">
+            <p><strong>例（练习）</strong>：X = ⟨A, B, C, B, D, A, B⟩（m = 7），Y = ⟨B, D, C, A, B, A⟩（n = 6），求 LCS。</p><p><strong>填表方法</strong>：行标 i（X 的前缀长度），列标 j（Y 的前缀长度）；第 0 行、第 0 列全为 0；逐行从左到右填：x_i = y_j 取左上加 1（记 ↖），否则取上/左中的大者（记 ↑ 或 ←，相等时任取）。表中每格写"c 值 + 方向"。</p><table><thead><tr><th style="text-align:center">c[i][j] / b</th><th style="text-align:center">j=0</th><th style="text-align:center">j=1 (B)</th><th style="text-align:center">j=2 (D)</th><th style="text-align:center">j=3 ©</th><th style="text-align:center">j=4 (A)</th><th style="text-align:center">j=5 (B)</th><th style="text-align:center">j=6 (A)</th></tr></thead><tbody><tr><td style="text-align:center"><strong>i=0</strong></td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td></tr><tr><td style="text-align:center"><strong>i=1 (A)</strong></td><td style="text-align:center">0</td><td style="text-align:center">0 ↑</td><td style="text-align:center">0 ↑</td><td style="text-align:center">0 ↑</td><td style="text-align:center">1 ↖</td><td style="text-align:center">1 ←</td><td style="text-align:center">1 ↖</td></tr><tr><td style="text-align:center"><strong>i=2 (B)</strong></td><td style="text-align:center">0</td><td style="text-align:center">1 ↖</td><td style="text-align:center">1 ←</td><td style="text-align:center">1 ←</td><td style="text-align:center">1 ↑</td><td style="text-align:center">2 ↖</td><td style="text-align:center">2 ←</td></tr><tr><td style="text-align:center"><strong>i=3 ©</strong></td><td style="text-align:center">0</td><td style="text-align:center">1 ↑</td><td style="text-align:center">1 ↑</td><td style="text-align:center">2 ↖</td><td style="text-align:center">2 ←</td><td style="text-align:center">2 ↑</td><td style="text-align:center">2 ↑</td></tr><tr><td style="text-align:center"><strong>i=4 (B)</strong></td><td style="text-align:center">0</td><td style="text-align:center">1 ↖</td><td style="text-align:center">1 ↑</td><td style="text-align:center">2 ↑</td><td style="text-align:center">2 ↑</td><td style="text-align:center">3 ↖</td><td style="text-align:center">3 ←</td></tr><tr><td style="text-align:center"><strong>i=5 (D)</strong></td><td style="text-align:center">0</td><td style="text-align:center">1 ↑</td><td style="text-align:center">2 ↖</td><td style="text-align:center">2 ↑</td><td style="text-align:center">2 ↑</td><td style="text-align:center">3 ↑</td><td style="text-align:center">3 ↑</td></tr><tr><td style="text-align:center"><strong>i=6 (A)</strong></td><td style="text-align:center">0</td><td style="text-align:center">1 ↑</td><td style="text-align:center">2 ↑</td><td style="text-align:center">2 ↑</td><td style="text-align:center">3 ↖</td><td style="text-align:center">3 ↑</td><td style="text-align:center">4 ↖</td></tr><tr><td style="text-align:center"><strong>i=7 (B)</strong></td><td style="text-align:center">0</td><td style="text-align:center">1 ↖</td><td style="text-align:center">2 ↑</td><td style="text-align:center">2 ↑</td><td style="text-align:center">3 ↑</td><td style="text-align:center">4 ↖</td><td style="text-align:center">4 ↑</td></tr></tbody></table><p>最优值 <strong>c[7][6] = 4</strong>。<strong>回溯构造 LCS</strong>：从 (7, 6) 出发按箭头走，遇到 ↖ 时箭头<strong>尾部</strong>对应的字符即公共子序列元素：→ (6,6) ↖ 取 A → (5,5) ↑ → (4,5) ↖ 取 B → (3,4) ← → (3,3) ↖ 取 C → (2,2) ← → (2,1) ↖ 取 B → (1,0) 停止。得到 <strong>LCS = ⟨B, C, B, A⟩</strong>。</p>
+          </div>
+<h4 id="构造最优解与不唯一性">构造最优解与不唯一性</h4>
+<div class="note note-info">
+            <p><strong>构造要点</strong>：b 表中<strong>水平和垂直箭头只指引构造解的方向</strong>，<strong>斜箭头（↖）尾部位置对应的元素</strong>才是公共子序列的元素，逆着箭头收集即得 LCS。</p><p><strong>问题探讨（考试常问）</strong>：</p><ol><li>两个序列的最长公共子序列<strong>唯一吗</strong>？——<strong>不唯一</strong>。上例中 ⟨B,C,B,A⟩、⟨B,C,A,B⟩、⟨B,D,A,B⟩ 都是长度为 4 的 LCS；</li><li>若 c[i−1][j] = c[i][j−1]，b[i][j] 取 ↑（2）还是 ←（3）？——<strong>不影响 LCS 的长度</strong>，但可能回溯出<strong>内容不同</strong>的公共子序列。</li></ol>
+          </div>
+<h4 id="算法实现-v2">算法实现</h4>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">LCS_LENGTH</span><span class="hljs-params">(<span class="hljs-type">int</span> m, <span class="hljs-type">int</span> n, <span class="hljs-type">char</span> *x, <span class="hljs-type">char</span> *y, <span class="hljs-type">int</span> **c, <span class="hljs-type">int</span> **b)</span><br>{<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) c[i][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) c[<span class="hljs-number">0</span>][j] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++)<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) {<br>            <span class="hljs-keyword">if</span> (x[i] == y[j]) {<br>                c[i][j] = c[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>] + <span class="hljs-number">1</span>;  b[i][j] = <span class="hljs-number">1</span>;   <span class="hljs-comment">// 1 = ↖ 左上</span><br>            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c[i<span class="hljs-number">-1</span>][j] &gt;= c[i][j<span class="hljs-number">-1</span>]) {<br>                c[i][j] = c[i<span class="hljs-number">-1</span>][j];        b[i][j] = <span class="hljs-number">2</span>;   <span class="hljs-comment">// 2 = ↑ 上</span><br>            } <span class="hljs-keyword">else</span> {<br>                c[i][j] = c[i][j<span class="hljs-number">-1</span>];        b[i][j] = <span class="hljs-number">3</span>;   <span class="hljs-comment">// 3 = ← 左</span><br>            }<br>        }<br>}<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">LCS</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j, <span class="hljs-type">char</span> *x, <span class="hljs-type">int</span> **b)</span>   <span class="hljs-comment">// 根据 b 的内容打印 Xi 与 Yj 的 LCS</span><br>{<br>    <span class="hljs-keyword">if</span> (i == <span class="hljs-number">0</span> || j == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;<br>    <span class="hljs-keyword">if</span>      (b[i][j] == <span class="hljs-number">1</span>) { LCS(i<span class="hljs-number">-1</span>, j<span class="hljs-number">-1</span>, x, b); <span class="hljs-built_in">cout</span> &lt;&lt; x[i]; }<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (b[i][j] == <span class="hljs-number">2</span>)  LCS(i<span class="hljs-number">-1</span>, j,   x, b);<br>    <span class="hljs-keyword">else</span>                    LCS(i,   j<span class="hljs-number">-1</span>, x, b);<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>计算最优值 O(mn)，构造最优解 O(m+n)。</p>
+<h4 id="SORTBOT-小结-v2">SORTBOT 小结</h4>
+<ul>
+<li><strong>Subproblem</strong>: LCS(i, j) = c[i][j] —— X 前缀与 Y 前缀的 LCS 长度；</li>
+<li><strong>Original Problem</strong>: LCS(m, n)；</li>
+<li><strong>Relation</strong>: 末字符相等 → 左上 + 1；不等 → max{上, 左}；</li>
+<li><strong>Topology</strong>: LCS(i, j)，0 ≤ i ≤ m, 0 ≤ j ≤ n，逐行（或逐列）填表；</li>
+<li><strong>Base case</strong>: LCS(i, 0) = 0, LCS(0, j) = 0；</li>
+<li><strong>Original Solution</strong>: mark(i, j) = b 表方向，从 (m, n) 回溯；</li>
+<li><strong>Time Complexity</strong>: O(mn)。</li>
+</ul>
+<h4 id="解法二：滚动数组（空间优化）">解法二：滚动数组（空间优化）</h4>
+<div class="note note-primary">
+            <p>若只需 LCS <strong>长度</strong>，c 表可以压成一行：c[i][j] 只依赖本行的 c[i][j−1] 与上一行的 c[i−1][j]、c[i−1][j−1]，逐行滚动只需 O(min(m, n)) 空间：</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 只求长度：滚动一维数组</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) {<br>    <span class="hljs-type">int</span> prev = <span class="hljs-number">0</span>;                     <span class="hljs-comment">// 保存 c[i-1][j-1]</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) {<br>        <span class="hljs-type">int</span> tmp = c[j];               <span class="hljs-comment">// 旧的 c[i-1][j]</span><br>        c[j] = (x[i] == y[j]) ? prev + <span class="hljs-number">1</span> : max(c[j], c[j<span class="hljs-number">-1</span>]);<br>        prev = tmp;<br>    }<br>}<br><span class="hljs-comment">// c[n] 即 LCS 长度</span><br></code></pre></td></tr></tbody></table></figure><p>时间仍 O(mn)、空间降到 O(n)。若还要构造方案，可用 Hirschberg 算法（分治 + 两遍滚动）在 O(mn) 时间、O(n) 空间内求出方案，或退回二维 b 表。此外与其它题一样可用备忘录递归。</p>
+          </div>
+<h4 id="拓展思考题：通配符匹配">拓展思考题：通配符匹配</h4>
+<div class="note note-primary">
+            <p>把"公共子序列"换成"带通配符的模式匹配"：文本 t[1…m]、模式 p[1…n]，模式中的 <code>*</code> 可匹配<strong>任意长度</strong>的连续字符（含空），其余字符须逐字相等。判断 p 能否匹配整个 t。</p><p>SORTBOT 分析（布尔型 DP）：</p><ul><li><strong>Subproblem</strong>: dp(i, j) —— t[1…i] 与 p[1…j] 是否匹配（0/1）；</li><li><strong>Original Problem</strong>: dp(m, n)；</li><li><strong>Relation</strong>: 按 p[j] 分类——</li></ul><p>$$<br>dp(i,j) = \begin{cases}<br>dp(i-1, j-1), &amp; p_j \ne \ast \text{ 且 } t_i = p_j \\<br>0, &amp; p_j \ne \ast \text{ 且 } t_i \ne p_j \\<br>dp(i, j-1) \ \lor\ dp(i-1, j), &amp; p_j = \ast \text{（}\ast\text{ 匹配空 / 再吞一个字符）}<br>\end{cases}<br>$$</p><ul><li><strong>Topology</strong>: dp(i, j)，逐行填表；</li><li><strong>Base case</strong>: dp(0, 0) = 1（都为空可匹配），dp(i, 0) = 0，dp(0, j) = 0；</li><li><strong>Original Solution</strong>: 方向标记 ↓ / ↘ / → 回溯出匹配位置；</li><li><strong>Time Complexity</strong>: O(mn)。</li></ul><p><code>*</code> 分支的两个来源分别对应"<code>*</code> 匹配空串"（j 退一格）和"<code>*</code> 再吞掉一个字符"（i 退一格），与 LCS 的"删一个字符"决策如出一辙。</p>
+          </div>
+<hr>
+<h3 id="3-4-最大子段和">3.4 最大子段和</h3>
+<h4 id="问题描述-v3">问题描述</h4>
+<div class="note note-info">
+            <p>给定由 n 个整数（可能为负）组成的序列 a₁, a₂, ⋯, a_n，求该序列的<strong>连续</strong>子段和的最大值：</p><p>$$<br>\max\big\lbrace\ 0,\ \max_{1 \le i \le j \le n} \sum_{k=i}^{j} a_k\ \big\rbrace<br>$$</p><p>当所有整数均为负时，规定最大子段和为 0（取空子段）。例：(a₁, ⋯, a₆) = (−2, 11, −4, 13, −5, −2)，最大子段和为 a₂ + a₃ + a₄ = 11 − 4 + 13 = <strong>20</strong>。</p>
+          </div>
+<h4 id="状态转移方程-v4">状态转移方程</h4>
+<p><strong>(a) 推导过程——考察"以 a[i] 结尾"</strong></p>
+<div class="note note-info">
+            <p>直接定义"前 i 项的最大子段和"没有好转移（最优子段终点未知、起点未知，两个方向都断不干净）。正确的子问题是给子段<strong>锚定一个端点</strong>：</p><p>设 dp(i) = <strong>以 a[i] 为结尾</strong>的最大子段和。考察 a[i] 前面那段累积 dp(i−1)：</p><ul><li>若 dp(i−1) &gt; 0：接上前段更有利——dp(i) = dp(i−1) + a[i]；</li><li>若 dp(i−1) ≤ 0：前段是累赘，<strong>起点重置</strong>为 i——dp(i) = a[i]。</li></ul><p>全局答案不固定结尾在哪：<strong>ans = max₁≤i≤n dp(i)</strong>（最优子段一定以某个 i 结尾）。</p>
+          </div>
+<p><strong>(b) 状态转移方程</strong></p>
+<p>$$<br>
+dp(i) = \max\big\lbrace\ dp(i-1) + a[i],\ a[i] \big\rbrace, \qquad dp(1) = a[1], \qquad ans = \max_{1 \le i \le n} dp(i)<br>
+$$</p>
+<p>mark(i) 记录"是否起点重置"。时间复杂度 <strong>O(n)</strong>、空间 O(1)——本章最轻的一道题。</p>
+<p><strong>© 递推表</strong></p>
+<div class="note note-warning">
+            <p><strong>例</strong>：a = (−2, 11, −4, 13, −5, −2)：</p><table><thead><tr><th style="text-align:center">i</th><th style="text-align:center">1</th><th style="text-align:center">2</th><th style="text-align:center">3</th><th style="text-align:center">4</th><th style="text-align:center">5</th><th style="text-align:center">6</th></tr></thead><tbody><tr><td style="text-align:center">a[i]</td><td style="text-align:center">−2</td><td style="text-align:center">11</td><td style="text-align:center">−4</td><td style="text-align:center">13</td><td style="text-align:center">−5</td><td style="text-align:center">−2</td></tr><tr><td style="text-align:center">dp(i)</td><td style="text-align:center">−2</td><td style="text-align:center">11</td><td style="text-align:center">7</td><td style="text-align:center"><strong>20</strong></td><td style="text-align:center">15</td><td style="text-align:center">13</td></tr><tr><td style="text-align:center">重置?</td><td style="text-align:center">是</td><td style="text-align:center">是</td><td style="text-align:center">否</td><td style="text-align:center">否</td><td style="text-align:center">否</td><td style="text-align:center">否</td></tr></tbody></table><p>逐项看：i=1 时 dp=−2（前无元素）；i=2 前面 dp=−2 ≤ 0，重置，dp=11；i=3 接上 11−4=7；i=4 接上 7+13=<strong>20</strong>（全局最大，子段 a₂…a₄）；i=5、i=6 虽递减但 ans 已锁定 20。<strong>最大子段和 = 20</strong>。</p>
+          </div>
+<h4 id="算法实现-v3">算法实现</h4>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">MaxSum</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> *a)</span><br>{<br>    <span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;              <span class="hljs-comment">// b 即滚动后的 dp(i)</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {<br>        <span class="hljs-keyword">if</span> (b &gt; <span class="hljs-number">0</span>) b += a[i];        <span class="hljs-comment">// 前一段为正：接上</span><br>        <span class="hljs-keyword">else</span>       b  = a[i];        <span class="hljs-comment">// 前一段非正：起点重置</span><br>        <span class="hljs-keyword">if</span> (b &gt; sum) sum = b;        <span class="hljs-comment">// sum 始终记录全局最大</span><br>    }<br>    <span class="hljs-keyword">return</span> sum;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="SORTBOT-小结-v3">SORTBOT 小结</h4>
+<ul>
+<li><strong>Subproblem</strong>: dp(i) —— 以 a[i] 为结束的最大子段和；</li>
+<li><strong>Original Problem</strong>: max dp(i)；</li>
+<li><strong>Relation</strong>: dp(i) = max{dp(i−1) + a[i], a[i]}（是否起点重置）；</li>
+<li><strong>Topology</strong>: dp(1), dp(2), …, dp(n) 一维递增；</li>
+<li><strong>Base case</strong>: dp(1) = a[1]；</li>
+<li><strong>Original Solution</strong>: mark(i) 记录重置点，重置处即最优子段起点，dp 最大处即终点；</li>
+<li><strong>Time Complexity</strong>: O(n)。</li>
+</ul>
+<h4 id="解法二：分治法">解法二：分治法</h4>
+<div class="note note-primary">
+            <p>最大子段和还有经典的<strong>分治解法</strong>（也是 DP 之外的另一条正路）：把 a[left…right] 从 mid 分成两半，最优子段只有三种可能——</p><ol><li>完全落在左半 a[left…mid]：递归求解；</li><li>完全落在右半 a[mid+1…right]：递归求解；</li><li><strong>跨越中点</strong>：一定是"左半以 mid 结尾的最大后缀 + 右半以 mid+1 开头的最大前缀"，两个方向各线性扫一遍即可。</li></ol><p>$$<br>T(n) = 2T(n/2) + O(n) \ \Rightarrow\ T(n) = O(n \log n)<br>$$</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">MaxSubSum</span><span class="hljs-params">(<span class="hljs-type">int</span> *a, <span class="hljs-type">int</span> left, <span class="hljs-type">int</span> right)</span><br>{<br>    <span class="hljs-keyword">if</span> (left == right) <span class="hljs-keyword">return</span> a[left] &gt; <span class="hljs-number">0</span> ? a[left] : <span class="hljs-number">0</span>;<br>    <span class="hljs-type">int</span> mid = (left + right) / <span class="hljs-number">2</span>;<br>    <span class="hljs-type">int</span> lsum = MaxSubSum(a, left, mid);<br>    <span class="hljs-type">int</span> rsum = MaxSubSum(a, mid + <span class="hljs-number">1</span>, right);<br>    <span class="hljs-type">int</span> s1 = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;                          <span class="hljs-comment">// 左半以 mid 结尾的最大后缀</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = mid; i &gt;= left; i--)  { b += a[i]; <span class="hljs-keyword">if</span> (b &gt; s1) s1 = b; }<br>    <span class="hljs-type">int</span> s2 = <span class="hljs-number">0</span>; b = <span class="hljs-number">0</span>;                          <span class="hljs-comment">// 右半以 mid+1 开头的最大前缀</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = mid + <span class="hljs-number">1</span>; i &lt;= right; i++) { b += a[i]; <span class="hljs-keyword">if</span> (b &gt; s2) s2 = b; }<br>    <span class="hljs-keyword">return</span> max(lsum, max(rsum, s1 + s2));<br>}<br></code></pre></td></tr></tbody></table></figure><p>另一个 O(n) 视角是<strong>前缀和</strong>：子段和 Σ_{k=i}^{j} a_k = S_j − S_{i−1}，要让子段和最大就让被减的前缀最小——ans = max_j (S_j − min_{i&lt;j} S_i)，一遍扫描维护前缀最小值即可，与 DP 异曲同工。</p>
+          </div>
+<hr>
+<h3 id="3-5-凸多边形最优三角剖分">3.5 凸多边形最优三角剖分</h3>
+<h4 id="基本概念-v2">基本概念</h4>
+<div class="note note-info">
+            <p><strong>凸多边形</strong>：任意一条边向两方延长成直线，多边形其余各边均在此直线同旁。连接多边形内两个不相邻顶点的线段称为<strong>弦</strong>。</p><p><strong>三角剖分</strong>：将凸多边形分割成互不重叠的三角形的弦的集合 T——n 个顶点的凸多边形的三角剖分含 <strong>n − 3 条弦</strong>和 <strong>n − 2 个三角形</strong>。</p><p><strong>权函数</strong> w：给每个三角形赋一个权（如三边权之和＝周长、面积、顶点权和等）。剖分的权 = 各三角形权之和。<strong>问题</strong>：求权值之和<strong>最小</strong>的三角剖分。</p>
+          </div>
+<h4 id="与矩阵连乘的对应关系">与矩阵连乘的对应关系</h4>
+<div class="note note-info">
+            <p>这是本章最漂亮的"一题两面"：</p><table><thead><tr><th>矩阵连乘</th><th>凸多边形三角剖分</th></tr></thead><tbody><tr><td>n 个矩阵的连乘积</td><td>n + 1 个顶点的凸多边形</td></tr><tr><td>完全加括号方式</td><td>三角剖分（弦的集合）</td></tr><tr><td>最后一次相乘的断点 k</td><td>根三角形 v₀v_k v_n</td></tr><tr><td>子链 A[1:k]、A[k+1:n]</td><td>子多边形 ⟨v₀⋯v_k⟩、⟨v_k⋯v_n⟩</td></tr></tbody></table><p>完全加括号的矩阵连乘对应一棵<strong>完全二叉树</strong>（叶 = 矩阵，内部结点 = 相乘），而这棵二叉树又一一对应凸多边形的一个三角剖分：三角剖分中的弦组成二叉树的内部结点，除 v₀v_n 之外的边组成叶子结点。<strong>三角剖分 = 矩阵连乘的几何化身</strong>。</p>
+          </div>
+<h4 id="状态转移方程-v5">状态转移方程</h4>
+<p><strong>(a) 推导过程——考察根三角形</strong></p>
+<div class="note note-info">
+            <p>设凸多边形 ⟨v₀, v₁, ⋯, v_n⟩ 的最优三角剖分 T 含三角形 v₀v_k v_n（称为根三角形，k ∈ {1, ⋯, n−1}），则该三角形把原多边形分成三部分：三角形 v₀v_k v_n 自身、子多边形 ⟨v₀, ⋯, v_k⟩、子多边形 ⟨v_k, ⋯, v_n⟩——对应二叉树的根与左右子树。</p><p><strong>最优子结构</strong>（反证）：若子多边形 ⟨v₀⋯v_k⟩ 存在权更小的剖分，替换进 T 会得到权更小的原多边形剖分，矛盾。故 T 限制在两个子多边形上的剖分也必是最优的。</p><p>于是与矩阵连乘同构：枚举根三角形的顶点 k，代价 = 两个子多边形的最优剖分 + 根三角形的权 w(v₀, v_k, v_n)。</p>
+          </div>
+<p><strong>(b) 状态转移方程</strong></p>
+<p>用 t[i][j]（1 ≤ i ≤ j ≤ n）表示子多边形 {v_{i−1}, v_i, ⋯, v_j} 的最优三角剖分权值：</p>
+<p>$$<br>
+t[i][j] = \begin{cases}<br>
+0, &amp; i = j \\<br>
+\min\limits_{i \le k &lt; j} \big\lbrace\ t[i][k] + t[k+1][j] + w(v_{i-1},\ v_k,\ v_j) \big\rbrace, &amp; i &lt; j<br>
+\end{cases}<br>
+$$</p>
+<p>最优值 = <strong>t[1][n]</strong>（多边形共 n + 1 个顶点 v₀…v_n）；s[i][j] 记录最优剖分位置。与矩阵连乘完全同构——把 w(v_{i−1}, v_k, v_j) 换成 p_{i−1}p_k p_j 就是 m[i][j] 的方程。复杂度 <strong>O(n³)</strong>。</p>
+<p><strong>© 递推表——例题完整画表</strong></p>
+<div class="note note-warning">
+            <p><strong>练习</strong>：凸六边形顶点 v₀…v₅ 的坐标依次为 (2,3), (1,2), (1,1), (7,1), (7,2), (6,3)，权函数 w = 三角形周长，求最优三角剖分。</p><p><strong>填表方法</strong>：与矩阵连乘一样<strong>按链长（对角线）从短到长填</strong> t[i][j]，n = 5（t[i][i] = 0；t[i][i+1] = 单个三角形的周长，是递推的起点）：</p><table><thead><tr><th style="text-align:center">t[i][j]</th><th style="text-align:center">j=i+1</th><th style="text-align:center">j=i+2</th><th style="text-align:center">j=i+3</th><th style="text-align:center">j=i+4</th></tr></thead><tbody><tr><td style="text-align:center"><strong>i=1</strong></td><td style="text-align:center">4.65 (t[1][2])</td><td style="text-align:center">18.27 (t[1][3])</td><td style="text-align:center">29.76 (t[1][4])</td><td style="text-align:center"><strong>34.54</strong> (t[1][5])</td></tr><tr><td style="text-align:center"><strong>i=2</strong></td><td style="text-align:center">13.08 (t[2][3])</td><td style="text-align:center">26.17 (t[2][4])</td><td style="text-align:center">29.76 (t[2][5])</td><td style="text-align:center"></td></tr><tr><td style="text-align:center"><strong>i=3</strong></td><td style="text-align:center">13.08 (t[3][4])</td><td style="text-align:center">18.27 (t[3][5])</td><td style="text-align:center"></td><td style="text-align:center"></td></tr><tr><td style="text-align:center"><strong>i=4</strong></td><td style="text-align:center">4.65 (t[4][5])</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td></tr></tbody></table><p><strong>s 表</strong>（最优剖分位置）：s[1][3] = 2，s[1][4] = 3，s[1][5] = <strong>2</strong>，s[2][4] = 2，s[2][5] = 2，s[3][5] = 3；t[i][i+1] 是三角形无需求断点。</p><p>抽一格验算：t[1][3] = min{t[1][1] + t[2][3] + w(v₀v₁v₃), t[1][2] + t[3][3] + w(v₀v₂v₃)}，其中 w(v₀v₁v₃) = √2 + √37 + √29 ≈ 12.88，w(v₀v₂v₃) = √5 + 6 + √29 ≈ 13.62，故 t[1][3] = min{0 + 13.08 + 12.88, 4.65 + 0 + 13.62} = <strong>18.27</strong>（k = 2 更优）。</p><p><strong>构造最优解</strong>：s[1][5] = 2 → 根三角形 <strong>v₀v₂v₅</strong>；左子多边形 {v₀,v₁,v₂} 已是三角形 <strong>v₀v₁v₂</strong>；右子多边形 {v₂,v₃,v₄,v₅} 由 s[3][5] = 3 剖成 <strong>v₂v₃v₅</strong> 与 <strong>v₃v₄v₅</strong>。即弦集 {v₀v₂, v₂v₅, v₃v₅}，最优值 <strong>t[1][5] ≈ 34.54</strong>（四个三角形周长 4.65 + 11.62 + 13.62 + 4.65）。</p>
+          </div>
+<h4 id="算法实现-v4">算法实现</h4>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// w(i, k, j) = 三角形 v_i v_k v_j 的权（如周长），需按坐标预先实现</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">MinWeightTriangulation</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">double</span> **t, <span class="hljs-type">int</span> **s)</span><br>{<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) t[i][i] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> r = <span class="hljs-number">2</span>; r &lt;= n; r++)                    <span class="hljs-comment">// 子多边形链长</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n - r + <span class="hljs-number">1</span>; i++) {<br>            <span class="hljs-type">int</span> j = i + r - <span class="hljs-number">1</span>;<br>            t[i][j] = t[i][i] + t[i+<span class="hljs-number">1</span>][j] + w(i<span class="hljs-number">-1</span>, i, j);   <span class="hljs-comment">// 先假设剖分位置在 i</span><br>            s[i][j] = i;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = i + <span class="hljs-number">1</span>; k &lt; j; k++) {       <span class="hljs-comment">// 变化剖分位置，逐一测试</span><br>                <span class="hljs-type">double</span> u = t[i][k] + t[k+<span class="hljs-number">1</span>][j] + w(i<span class="hljs-number">-1</span>, k, j);<br>                <span class="hljs-keyword">if</span> (u &lt; t[i][j]) { t[i][j] = u; s[i][j] = k; }<br>            }<br>        }<br>}<br><span class="hljs-comment">// 最优值 t[1][n]；构造最优解与矩阵连乘完全相同：按 s 表递归输出根三角形</span><br></code></pre></td></tr></tbody></table></figure>
+<p>与 MatrixChain 逐行同构，复杂度 <strong>O(n³)</strong>。SORTBOT 也与矩阵连乘一致（Subproblem 换成"子多边形的最优剖分"，Relation 的代价项换成 w(v_{i−1}, v_k, v_j)）。</p>
+<h4 id="问题探讨">问题探讨</h4>
+<div class="note note-primary">
+            <p>上述讨论都基于一个假设：<strong>根边是 v₀v_n</strong>（即 t[1][n] 以固定边为根）。若变换根边的位置——比如以 v₂v₅ 为根边——表格的行列含义要跟着重排，但<strong>最优剖分本身不变</strong>（同一个多边形的最小权剖分是客观的）：换根只是换了同一棵剖分二叉树的表示方式。真正需要变根的是"多边形在圆周上可旋转"的变形题，此时各顶点按新根重编号即可套用同一算法。</p>
+          </div>
+<hr>
+<h3 id="3-7-图像压缩">3.7 图像压缩</h3>
+<h4 id="问题描述-v4">问题描述</h4>
+<div class="note note-info">
+            <p>数字化图像是 n×n 的像素阵列，每个像素有一个 0~255 的灰度值，<strong>定长存储</strong>一个像素需 8 位。为减少存储空间采用<strong>变长模式</strong>：不同像素用不同位数存储。方案分三步：</p><ol><li><strong>图像线性化</strong>：把 n×n 图像按行展开成一维序列 {p₁, p₂, …, pₙ}；</li><li><strong>分段</strong>：将像素分成<strong>连续的 m 段</strong> s₁, s₂, …, sₘ，使每段中所有像素的<strong>存储位数相同</strong>（取该段最大灰度值所需的位数），每段最多 256 个像素；</li><li><strong>存储三方面信息</strong>：<ul><li>第 i 段的<strong>段长</strong> l[i]：用 <strong>8 位</strong>二进制表示；</li><li>第 i 段中像素的<strong>存储位数</strong> b[i]：用 <strong>3 位</strong>二进制表示（灰度 0~255 最多 8 位，3 位够编码）；</li><li>段内所有像素按 b[i] 位的变长二进制串。</li></ul></li></ol><p>即每段有一个 <strong>11 位的段头</strong>（8 + 3 = 11）。<strong>目标：找一个最优分段，使总存储位数最少。</strong></p>
+          </div>
+<h4 id="引例：为什么变长能省空间">引例：为什么变长能省空间</h4>
+<div class="note note-info">
+            <p><strong>例</strong>：像素序列 {6, 5, 7, 5, 245, 180, 28, 28, 19, 22, 25, 20}（共 12 个像素）。</p><ul><li><strong>定长</strong>：每个像素 8 位 → 12 × 8 = <strong>96 bit</strong>；</li><li><strong>分段存储</strong>：{6, 5, 7, 5} | {245, 180} | {28, 28, 19, 22, 25, 20}<ul><li>第 1 段：l₁ = 4，最大灰度 7 → b₁ = 3 位；</li><li>第 2 段：l₂ = 2，最大灰度 245 → b₂ = 8 位；</li><li>第 3 段：l₃ = 6，最大灰度 28 → b₃ = 5 位；</li><li>像素位：4×3 + 2×8 + 6×5 = <strong>58 bit</strong>；</li><li>加上 3 个段头：58 + 11×3 = <strong>91 bit</strong>。</li></ul></li></ul><p>91 &lt; 96，<strong>少了 5 bit</strong>。</p><p><strong>例 1（16 个像素）</strong>：P = {10, 9, 12, 40, 50, 35, 15, 12, 8, 10, 9, 15, 11, 130, 160, 240}<br>分 4 段：{10,9,12}(b=4) | {40,50,35}(b=6) | {15,12,8,10,9,15,11}(b=4) | {130,160,240}(b=8)<br>总位数 = 3×4 + 3×6 + 7×4 + 3×8 + 11×4 = <strong>126 bit</strong>，而定长 16×8 = <strong>128 bit</strong>。</p><p>注意：段头是变长模式的<strong>代价</strong>——分段越多，11×段数的开销越大，所以并不是"段越小越好"，需要统筹优化。</p>
+          </div>
+<h4 id="最优子结构-v3">最优子结构</h4>
+<div class="note note-primary">
+            <p>设 l[i], b[i]（1 ≤ i ≤ m）是像素序列 {p₁, p₂, …, pₙ} 的一个<strong>最优分段</strong>，则：</p><ul><li>l[1], b[1] 是前 l[1] 个像素 {p₁, …, p_{l[1]}} 的最优分段；</li><li>l[i], b[i]（2 ≤ i ≤ m）是剩余像素 {p_{l[1]+1}, …, pₙ} 的最优分段。</li></ul>
+          </div>
+<h4 id="状态转移方程-v6">状态转移方程</h4>
+<p><strong>(a) 推导过程——考察"最后一个像素"的分段情况</strong></p>
+<div class="note note-info">
+            <p>设 s[i] 表示<strong>前 i 个像素的最少存储位数</strong>，a[i] 表示第 i 个像素 pᵢ 单独存储所需的位数（即 pᵢ 的二进制位数）。<strong>站在最后一个像素 pᵢ 的角度，枚举"最后一段"包含多少个像素</strong>：</p><ol><li>假设 pᵢ <strong>自成一段</strong>（最后一段 1 个像素）：s[i] = s[i−1] + 保存 pᵢ 的代价 = s[i−1] + 1×a[i] + 11；</li><li>假设<strong>最后 2 个像素</strong>为一段：s[i] = s[i−2] + 2×max{a[i−1], a[i]} + 11；</li><li>……假设<strong>最后 i 个像素</strong>为一段：s[i] = s[0] + i×max{a[1…i]} + 11；</li><li>到底最后多少个元素为一段？——<strong>取使 s[i] 最小的那个 k</strong>；</li><li>段内位数取段中最大值：代价 = k × max{后 k 个灰度值的二进制位数} + 11；</li><li>剩下的子问题 s[i−k] 与原问题同构，递归求解即可。</li></ol><p>从小下标验证一遍（帮助理解方程）：</p><ul><li>i = 1（p₁ 只能自成一组）：s[1] = s[0] + 1×a[1] + 11；</li><li>i = 2：s[2] = min{ s[0] + 2×max{a[1], a[2]} + 11,  s[1] + 1×a[2] + 11 }；</li><li>i = 3：s[3] = min{ s[0] + 3×max{a[1], a[2], a[3]} + 11,  s[1] + 2×max{a[2], a[3]} + 11,  s[2] + 1×a[3] + 11 }。</li></ul><p>规律浮现：<strong>min 里的每一项都是"s[i−k] + 最后 k 个像素成一段的代价"</strong>，抽象即得状态转移方程。</p>
+          </div>
+<p><strong>(b) 状态转移方程</strong></p>
+<p>$$<br>
+s[i] = \min_{1 \le k \le \min(i,256)} \Big\lbrace s[i-k] + k \times b_{max}(i-k+1,\ i) \Big\rbrace + 11, \qquad s[0] = 0<br>
+$$</p>
+<p>其中 $b_{max}(i-k+1,\ i) = \max\lbrace a[i-k+1],\ a[i-k+2],\ \ldots,\ a[i]\rbrace$（最后 k 个像素所需的最大位数）。</p>
+<p>同时记录取得最小值的 <strong>l[i] = k</strong>（前 i 个像素的最优分段中，最后一段的像素个数）和 <strong>b[i] = b_max</strong>（最后一段的存储位数），供构造最优解用。</p>
+<ul>
+<li>每个段长不超过 256，故 k ≤ min(i, 256)；</li>
+<li>时间复杂度 <strong>O(n × min(n, 256)) = O(n²)</strong>，空间 O(n)。</li>
+</ul>
+<p><strong>© 递推表——例题完整画表</strong></p>
+<div class="note note-warning">
+            <p><strong>例</strong>：求像素序列 <strong>p = {7, 6, 5, 8, 129, 138, 1}</strong> 的最优分段。</p><p>各像素所需位数 a[i]：7→3, 6→3, 5→3, 8→4, 129→8, 138→8, 1→1。</p><p><strong>填表方法</strong>：候选值表的行是"最后一段的长度 k"，列是"像素个数 i"，第 (k, i) 格填</p><p>$$<br>\text{候选值} = s[i-k] + k \times \max\lbrace a[i-k+1…i]\rbrace + 11<br>$$</p><p>即"假设最后 k 个像素自成一段"时 s[i] 的候选值；每一列取最小值（加粗）即为 s[i]，同时记下对应的 k → l[i] 和段内最大位数 → b[i]。</p><table><thead><tr><th style="text-align:center">最后段长 k ↓ \ i →</th><th style="text-align:center">1<br>(3位)</th><th style="text-align:center">2<br>(3位)</th><th style="text-align:center">3<br>(3位)</th><th style="text-align:center">4<br>(4位)</th><th style="text-align:center">5<br>(8位)</th><th style="text-align:center">6<br>(8位)</th><th style="text-align:center">7<br>(1位)</th></tr></thead><tbody><tr><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>14</strong></td><td style="text-align:center">28</td><td style="text-align:center">31</td><td style="text-align:center">35</td><td style="text-align:center"><strong>46</strong></td><td style="text-align:center">65</td><td style="text-align:center">66</td></tr><tr><td style="text-align:center"><strong>2</strong></td><td style="text-align:center"></td><td style="text-align:center"><strong>17</strong></td><td style="text-align:center">31</td><td style="text-align:center">36</td><td style="text-align:center">47</td><td style="text-align:center"><strong>54</strong></td><td style="text-align:center">73</td></tr><tr><td style="text-align:center"><strong>3</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"><strong>20</strong></td><td style="text-align:center">37</td><td style="text-align:center">52</td><td style="text-align:center">55</td><td style="text-align:center"><strong>62</strong></td></tr><tr><td style="text-align:center"><strong>4</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"><strong>27</strong></td><td style="text-align:center">57</td><td style="text-align:center">60</td><td style="text-align:center">63</td></tr><tr><td style="text-align:center"><strong>5</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">51</td><td style="text-align:center">65</td><td style="text-align:center">68</td></tr><tr><td style="text-align:center"><strong>6</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">59</td><td style="text-align:center">73</td></tr><tr><td style="text-align:center"><strong>7</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">67</td></tr></tbody></table><p>每列逐项验算（以 i = 5 为例）：k=1: 27+1×8+11=46；k=2: 20+2×max{4,8}+11=47；k=3: 17+3×8+11=52；k=4: 14+4×8+11=57；k=5: 0+5×8+11=51。最小 46 → s[5]=46, l[5]=1, b[5]=8。</p><p>汇总得：</p><table><thead><tr><th style="text-align:center">i</th><th style="text-align:center">1</th><th style="text-align:center">2</th><th style="text-align:center">3</th><th style="text-align:center">4</th><th style="text-align:center">5</th><th style="text-align:center">6</th><th style="text-align:center">7</th></tr></thead><tbody><tr><td style="text-align:center">s[i]</td><td style="text-align:center">14</td><td style="text-align:center">17</td><td style="text-align:center">20</td><td style="text-align:center">27</td><td style="text-align:center">46</td><td style="text-align:center">54</td><td style="text-align:center"><strong>62</strong></td></tr><tr><td style="text-align:center">l[i]</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">3</td></tr><tr><td style="text-align:center">b[i]</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">8</td><td style="text-align:center">8</td><td style="text-align:center">8</td></tr></tbody></table>
+          </div>
+<h4 id="构造最优解-v2">构造最优解</h4>
+<div class="note note-info">
+            <p><strong>回溯思路</strong>：</p><ol><li>考察 l[n]：看最后一段包含多少个像素点（设为 k）；</li><li>把最后 k 个像素点分割出去，它们按 b[n] 位存储；</li><li>考察 l[n−k]，继续向前切割；</li><li>……直到剩余元素自成一段。</li></ol><p><strong>上例</strong>：l[7] = 3 → 最后 3 个像素 {129, 138, 1} 为一段（b = 8，段长 3，需 max 位数 8）；剩下前 4 个，l[4] = 4 → {7, 6, 5, 8} 自成一段（b = 4）。</p><p>$$<br>\lbrace7, 6, 5, 8\rbrace_{b=4} \quad\Big|\quad \lbrace129, 138, 1\rbrace_{b=8}, \qquad 总位数 = (4{\times}4+11) + (3{\times}8+11) = 27 + 35 = 62<br>$$</p><p>进一步的追问是"<strong>会不会更好？</strong>“——由候选值表第 7 列可知 62 已是 7 个候选中的最小，DP 保证这就是该编码方案下的最优（本例 62 &gt; 定长 7×8 = 56，是因为 7 个像素分 2 段的段头开销 22 位吃掉了收益；像素数越多、灰度分布越"聚簇”，变长收益越明显）。</p>
+          </div>
+<h4 id="算法实现-v5">算法实现</h4>
+<div class="note note-info">
+            <figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// length() 为判断 p[i] 二进制位数；a[i] 保存每个像素的位数</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">Compress</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> p[], <span class="hljs-type">int</span> s[], <span class="hljs-type">int</span> l[], <span class="hljs-type">int</span> b[])</span><br>{<br>    <span class="hljs-type">int</span> Lmax = <span class="hljs-number">256</span>, header = <span class="hljs-number">11</span>;   <span class="hljs-comment">// 段长上限 256，段头 8+3=11 位</span><br>    s[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)           <span class="hljs-comment">// i 为像素序列的长度，从 1 开始，每次增加一个像素</span><br>    {<br>        <span class="hljs-type">int</span> ai = length(p[i]);<br>        <span class="hljs-type">int</span> bmax = ai;<br>        s[i] = s[i<span class="hljs-number">-1</span>] + bmax;              <span class="hljs-comment">// 先假设把最后一个元素单独分成一段是最佳方案</span><br>        l[i] = <span class="hljs-number">1</span>;  b[i] = bmax;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">2</span>; j &lt;= i &amp;&amp; j &lt;= Lmax; j++)   <span class="hljs-comment">// 再试将最后 j 个像素点划分为一段</span><br>        {<br>            <span class="hljs-keyword">if</span> (bmax &lt; a[i-j+<span class="hljs-number">1</span>]) bmax = a[i-j+<span class="hljs-number">1</span>];   <span class="hljs-comment">// 段内位数 = 段中最大位数（j 增大时增量维护）</span><br>            <span class="hljs-keyword">if</span> (s[i] &gt; s[i-j] + j * bmax)<br>            {<br>                s[i] = s[i-j] + j * bmax;<br>                l[i] = j;<br>                b[i] = bmax;<br>            }<br>        }<br>        s[i] += header;                    <span class="hljs-comment">// 段头 11 位（放在 min 之后，因为每个候选恰含一个段头）</span><br>    }<br>}<br><br><span class="hljs-comment">// 构造最优解：由 l[] 从后向前切分</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">Traceback</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> p[], <span class="hljs-type">int</span> l[], <span class="hljs-type">int</span> b[])</span><br>{<br>    <span class="hljs-type">int</span> i = n;<br>    <span class="hljs-keyword">while</span> (i &gt; <span class="hljs-number">0</span>) {<br>        <span class="hljs-comment">// p[i-l[i]+1 .. i] 为一段，按 b[i] 位存储</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"段: %d 个像素, 每像素 %d 位\n"</span>, l[i], b[i]);<br>        i -= l[i];<br>    }<br>}<br></code></pre></td></tr></tbody></table></figure><p>时间复杂度 O(n·min(n,256)) = <strong>O(n²)</strong>，空间 O(n)。</p>
+          </div>
+<h4 id="SORTBOT-小结-v4">SORTBOT 小结</h4>
+<ul>
+<li><strong>Subproblem</strong>: dp(i) —— 前 i 个像素的最少存储位数；</li>
+<li><strong>Original Problem</strong>: dp(n)；</li>
+<li><strong>Relation</strong>: 找断点，最后 k 个元素单独成一组，$dp(i) = \min_k\lbrace dp(i-k) + k \cdot b_{max} + 11\rbrace$；</li>
+<li><strong>Topology</strong>: dp(1), dp(2), …, dp(n)（一维递增）；</li>
+<li><strong>Base case</strong>: dp(0) = 0（或 dp(1) = b₁ + 11）；</li>
+<li><strong>Original Solution</strong>: mark(k) → 记录 l[]，按"最后一段多长"回溯切分；</li>
+<li><strong>Time Complexity</strong>: O(n²)。</li>
+</ul>
+<h4 id="解法二：记忆化搜索">解法二：记忆化搜索</h4>
+<div class="note note-primary">
+            <p>同一个最优子结构，也可以按"自顶向下"的直接递归写法实现——递归函数 <code>S(i)</code> 表示前 i 个像素的最少位数，枚举最后一段长度 k 取 min；用备忘录数组 memo[] 避免重复求同一个子问题：</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">S</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span>                       <span class="hljs-comment">// 前 i 个像素的最少存储位数</span><br>{<br>    <span class="hljs-keyword">if</span> (i == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span> (memo[i] != <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> memo[i];<br>    <span class="hljs-type">int</span> best = INT_MAX, bmax = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">1</span>; k &lt;= i &amp;&amp; k &lt;= <span class="hljs-number">256</span>; k++) {   <span class="hljs-comment">// 最后 k 个像素为一段</span><br>        bmax = max(bmax, a[i-k+<span class="hljs-number">1</span>]);              <span class="hljs-comment">// 倒着枚举，bmax 可增量维护</span><br>        best = min(best, S(i-k) + k * bmax + <span class="hljs-number">11</span>);<br>    }<br>    <span class="hljs-keyword">return</span> memo[i] = best;<br>}<br></code></pre></td></tr></tbody></table></figure><ul><li>复杂度同样是 O(n²)，只是计算顺序不同：迭代填表是"自底向上"，记忆化是"按需计算"；</li><li>优点：只算真正用到的子问题，代码与推导直接对应；缺点：递归栈深度 O(n)；</li><li><strong>另一个视角</strong>：把 0, 1, 2, …, n 看作 n+1 个点，若"最后 k 个像素成一段"就连一条边 i−k → i，边权 = k·b_max + 11，则问题等价于求 <strong>0 到 n 的最短路</strong>（DAG 上的最短路，按拓扑序 dp 即上面的填表）。这个视角解释了为什么 s[0]=0 是源点、段头 11 是"边权的一部分"。</li></ul>
+          </div>
+<h4 id="配套练习-v3">配套练习</h4>
+<div class="note note-warning">
+            <p><strong>练习</strong>：求像素序列 <strong>p = {9, 11, 127, 178, 3, 1, 2}</strong> 的最优分段。</p><p>各像素所需位数 a = (4, 4, 7, 8, 2, 1, 2)。</p><p>候选值表（(k, i) 格 = s[i−k] + k×max{a[i−k+1…i]} + 11，每列最小值加粗）：</p><table><thead><tr><th style="text-align:center">k ↓ \ i →</th><th style="text-align:center">1<br>(4)</th><th style="text-align:center">2<br>(4)</th><th style="text-align:center">3<br>(7)</th><th style="text-align:center">4<br>(8)</th><th style="text-align:center">5<br>(2)</th><th style="text-align:center">6<br>(1)</th><th style="text-align:center">7<br>(2)</th></tr></thead><tbody><tr><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>15</strong></td><td style="text-align:center">30</td><td style="text-align:center">37</td><td style="text-align:center">51</td><td style="text-align:center"><strong>49</strong></td><td style="text-align:center">61</td><td style="text-align:center">64</td></tr><tr><td style="text-align:center"><strong>2</strong></td><td style="text-align:center"></td><td style="text-align:center"><strong>19</strong></td><td style="text-align:center">40</td><td style="text-align:center"><strong>36</strong></td><td style="text-align:center">59</td><td style="text-align:center"><strong>51</strong></td><td style="text-align:center">64</td></tr><tr><td style="text-align:center"><strong>3</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"><strong>32</strong></td><td style="text-align:center">50</td><td style="text-align:center">54</td><td style="text-align:center">67</td><td style="text-align:center"><strong>53</strong></td></tr><tr><td style="text-align:center"><strong>4</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">43</td><td style="text-align:center">58</td><td style="text-align:center">62</td><td style="text-align:center">75</td></tr><tr><td style="text-align:center"><strong>5</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">51</td><td style="text-align:center">66</td><td style="text-align:center">70</td></tr><tr><td style="text-align:center"><strong>6</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">59</td><td style="text-align:center">74</td></tr><tr><td style="text-align:center"><strong>7</strong></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">67</td></tr></tbody></table><p>汇总：</p><table><thead><tr><th style="text-align:center">i</th><th style="text-align:center">1</th><th style="text-align:center">2</th><th style="text-align:center">3</th><th style="text-align:center">4</th><th style="text-align:center">5</th><th style="text-align:center">6</th><th style="text-align:center">7</th></tr></thead><tbody><tr><td style="text-align:center">s[i]</td><td style="text-align:center">15</td><td style="text-align:center">19</td><td style="text-align:center">32</td><td style="text-align:center">36</td><td style="text-align:center">49</td><td style="text-align:center">51</td><td style="text-align:center"><strong>53</strong></td></tr><tr><td style="text-align:center">l[i]</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center">2</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">3</td></tr><tr><td style="text-align:center">b[i]</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">7</td><td style="text-align:center">8</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td></tr></tbody></table><p><strong>构造最优解</strong>：l[7] = 3 → {3, 1, 2} 一段（b=2）；l[4] = 2 → {127, 178} 一段（b=8）；l[2] = 2 → {9, 11} 一段（b=4）。</p><p>$$<br>\lbrace9, 11\rbrace_{b=4} \quad\Big|\quad \lbrace127, 178\rbrace_{b=8} \quad\Big|\quad \lbrace3, 1, 2\rbrace_{b=2}, \qquad 总位数 = (2{\times}4+11)+(2{\times}8+11)+(3{\times}2+11) = 19+27+17 = 53<br>$$</p><p>定长存储需 7×8 = 56 位，最优分段 53 位。</p>
+          </div>
+<hr>
+<h3 id="3-8-电路布线">3.8 电路布线</h3>
+<h4 id="问题描述-v5">问题描述</h4>
+<div class="note note-info">
+            <p>在一块电路板的上、下两端各有 n 个接线柱。上端第 i 号接线柱通过一根导线连到下端第 <strong>π(i)</strong> 号接线柱，π 是 {1, 2, …, n} 的一个<strong>排列</strong>（每根线对应一个 i，记作连线 (i, π(i))）。</p><p><strong>相交的定义</strong>：对于连线 (i, π(i)) 和 (j, π(j))，若 i &lt; j 而 π(i) &gt; π(j)，则这两条线<strong>相交</strong>（导线画在板同一侧时必然交叉）。</p><p>n 条连线要分布到<strong>若干绝缘层</strong>上，同一绝缘层上的连线不能相交。<strong>电路布线问题</strong>：确定哪些连线安排在第一层上，使该层上有<strong>尽可能多的连线且互不相交</strong>——即求<strong>最大不相交连接子集（MNS, Maximum Non-Crossing Subset）</strong>。</p>
+          </div>
+<h4 id="引例">引例</h4>
+<div class="note note-info">
+            <p><strong>例</strong>：n = 10，π = (4, 6, 1, 9, 3, 8, 5, 7, 10, 2)，即连线集合</p><p>$$<br>\lbrace(1,4),\ (2,6),\ (3,1),\ (4,9),\ (5,3),\ (6,8),\ (7,5),\ (8,7),\ (9,10),\ (10,2)\rbrace<br>$$</p><p>可从中选出 5 条互不相交的线，例如 {(3,1), (5,3), (7,5), (8,7), (9,10)}——下端编号 1 &lt; 3 &lt; 5 &lt; 7 &lt; 10 随上端编号递增而递增，故两两不交。第一层最多布 <strong>5</strong> 条线。</p><p><strong>观察（贯穿全题的关键）</strong>：一组连线互不相交 ⇔ 把它们按上端 i 从小到大排序后，下端 π(i) 也严格递增 ⇔ <strong>这组连线对应 π 序列的一个递增子序列</strong>。这暗示了后面的解法二。</p>
+          </div>
+<h4 id="子问题定义">子问题定义</h4>
+<div class="note note-info">
+            <p>把问题化为多步决策，自底向上：先求只有 1 条连线时的最大不相交子集，再求 2 条的、3 条的……**如何定义子问题？**引入两个自由度：</p><p>$$<br>N(i, j) = \lbrace (t, \pi(t)) \mid t \le i,\ \pi(t) \le j \rbrace \subseteq Nets<br>$$</p><p>即<strong>只考虑前 i 条连线、且下端接线柱编号不超过 j</strong> 的连线集合；MNS(i, j) 是 N(i, j) 的最大不相交子集，其大小记为</p><p>$$<br>Size(i, j) = |MNS(i, j)|,\qquad 原问题的解 = Size(n, n).<br>$$</p><p>(i, j) 分别刻画"上端只许用前 i 条"和"下端不许超过 j"——这正是填一张 n×n 表的由来。</p>
+          </div>
+<h4 id="状态转移方程-v7">状态转移方程</h4>
+<p><strong>(a) 推导过程——对"第 i 条线"分三种情形</strong></p>
+<div class="note note-info">
+            <p>固定 j 轴不变，考察<strong>第 i 条连线 (i, π(i)) 是否可用、是否选用</strong>：</p><p><strong>情形 1：i = 1（只有第一条线）</strong></p><p>$$<br>Size(1, j) = \begin{cases} 0, &amp; j &lt; \pi(1) \\ 1, &amp; j \ge \pi(1) \end{cases}<br>$$</p><p>j 还没大到容得下 π(1) 时，(1, π(1)) ∉ N(1, j)，集合为空；否则可以选它。例：π(1) = 8 时，Size[1][1…7] = 0，Size[1][8…10] = 1。</p><p><strong>情形 2：i &gt; 1 且 j &lt; π(i)</strong></p><p>(i, π(i)) ∉ N(i, j)——第 i 条线的下端超出了 j，根本不可用，<strong>把 i 删掉对结果没有影响</strong>：</p><p>$$<br>N(i, j) = N(i-1, j), \qquad Size(i, j) = Size(i-1, j)<br>$$</p><p><strong>情形 3：i &gt; 1 且 j ≥ π(i)</strong>——第 i 条线"可用"，但"可用"不等于"该选"，分两种子情形比较：</p><ul><li><p><strong>若 (i, π(i)) ∈ MNS(i, j)（选它）</strong>：集合中其余任何线 (t, π(t)) 都应满足 t &lt; i 且 π(t) &lt; π(i)（否则与 (i, π(i)) 相交）。于是剩下的选择范围收缩为"前 i−1 条线、下端 &lt; π(i)"，故</p><p>$$MNS(i, j) = MNS(i-1,\ \pi(i)-1) \cup \lbrace(i, \pi(i))\rbrace, \qquad Size(i, j) = Size(i-1,\ \pi(i)-1) + 1;$$</p><p>注意收缩到 <strong>π(i)−1</strong> 而不是 j−1：选了 (i, π(i)) 之后，其余线的下端被卡在 π(i) 之前，与 j 无关；</p></li><li><p><strong>若 (i, π(i)) ∉ MNS(i, j)（不选它）</strong>：与情形 2 同理，删掉 i 不影响：</p><p>$$MNS(i, j) = MNS(i-1, j), \qquad Size(i, j) = Size(i-1, j).$$</p></li></ul><p>两种子情形取更优者。用引例中的 (5, 3) 可以说明"不选"可能更优：当 j 较大时，前 4 条线里已有 3 条互不相交（{(1,4),(2,6),(4,9)}），把 (5,3) 选进来反而只能搭配 2 条——所以<strong>必须取 max，不能贪心地见线就选</strong>。</p>
+          </div>
+<p><strong>(b) 状态转移方程</strong></p>
+<p>$$<br>
+Size(i, j) = \begin{cases}<br>
+Size(i-1, j), &amp; i &gt; 1,\ j &lt; \pi(i) \quad \text{（第 } i \text{ 条线放不下，直接继承）} \\[6pt]<br>
+\max\lbrace Size(i-1,\ j),\ Size(i-1,\ \pi(i)-1) + 1 \rbrace, &amp; i &gt; 1,\ j \ge \pi(i) \quad \text{（不选 / 选 第 } i \text{ 条线）}<br>
+\end{cases}<br>
+$$</p>
+<p>边界（i = 1 一行单独初始化）：</p>
+<p>$$<br>
+Size(1, j) = \begin{cases} 0, &amp; j &lt; \pi(1) \\ 1, &amp; j \ge \pi(1) \end{cases}<br>
+$$</p>
+<p>最优值 = Size(n, n)。时间复杂度 <strong>O(n²)</strong>（每个格子 O(1)），空间 O(n²)。</p>
+<p><strong>© 递推表——例题完整画表</strong></p>
+<div class="note note-warning">
+            <p><strong>例（n = 10）</strong>：π = (8, 7, 4, 2, 5, 1, 9, 3, 10, 6)，即连线为</p><p>$$<br>\lbrace(1,8),\ (2,7),\ (3,4),\ (4,2),\ (5,5),\ (6,1),\ (7,9),\ (8,3),\ (9,10),\ (10,6)\rbrace<br>$$</p><p><strong>填表方法</strong>：行标 i（第 i 条线），列标 j（下端编号上限），一行一行往下填：</p><ul><li>第 1 行：π(1) = 8 → Size[1][1…7] = 0，Size[1][8…10] = 1；</li><li>第 i 行（i ≥ 2）：j &lt; π(i) 的格子照抄上一行；j ≥ π(i) 的格子取 max{上一行同列, 上一行第 π(i)−1 列 + 1}。</li></ul><table><thead><tr><th style="text-align:center">Size[i][j]</th><th style="text-align:center">j=1</th><th style="text-align:center">j=2</th><th style="text-align:center">j=3</th><th style="text-align:center">j=4</th><th style="text-align:center">j=5</th><th style="text-align:center">j=6</th><th style="text-align:center">j=7</th><th style="text-align:center">j=8</th><th style="text-align:center">j=9</th><th style="text-align:center">j=10</th></tr></thead><tbody><tr><td style="text-align:center"><strong>i=1</strong> (π=8)</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td></tr><tr><td style="text-align:center"><strong>i=2</strong> (π=7)</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td></tr><tr><td style="text-align:center"><strong>i=3</strong> (π=4)</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td></tr><tr><td style="text-align:center"><strong>i=4</strong> (π=2)</td><td style="text-align:center">0</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td></tr><tr><td style="text-align:center"><strong>i=5</strong> (π=5)</td><td style="text-align:center">0</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td></tr><tr><td style="text-align:center"><strong>i=6</strong> (π=1)</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td></tr><tr><td style="text-align:center"><strong>i=7</strong> (π=9)</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center">3</td></tr><tr><td style="text-align:center"><strong>i=8</strong> (π=3)</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center">3</td></tr><tr><td style="text-align:center"><strong>i=9</strong> (π=10)</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center"><strong>4</strong></td></tr><tr><td style="text-align:center"><strong>i=10</strong> (π=6)</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center"><strong>4</strong></td></tr></tbody></table><p>抽两格验算：</p><ul><li>Size[5][5]：j = 5 ≥ π(5) = 5 → max{Size[4][5], Size[4][4] + 1} = max{1, 1+1} = <strong>2</strong>（选了 (5,5)，剩下只能在"前 4 条、下端 ≤ 4"里选，恰能配上 (3,4) 或 (4,2)）；</li><li>Size[10][10]：j = 10 ≥ π(10) = 6 → max{Size[9][10], Size[9][5] + 1} = max{4, 2+1} = <strong>4</strong>。</li></ul><p>看 <strong>Size[10][10] = 4</strong>：最大不相交子集共 <strong>4</strong> 条导线。</p>
+          </div>
+<h4 id="构造最优解-v3">构造最优解</h4>
+<div class="note note-info">
+            <p><strong>回溯思路</strong>：从 (i, j) = (n, n) 出发向前走，判断第 i 条线在不在最优解里：</p><ul><li>若 <strong>Size[i][j] ≠ Size[i−1][j]</strong>，说明不选第 i 条线凑不出这个大小 → <strong>i ∈ MNS</strong>：记录 i，且剩余线必须满足 π(t) &lt; π(i)，令 <strong>j ← π(i) − 1</strong>；</li><li>若相等，说明不选 i 也一样 → i ∉ MNS，j 不动；</li><li>i 递减到 1 时<strong>特判</strong>：若 j ≥ π(1) 则 1 ∈ MNS（第 1 行没有"上一行"可比较）。</li></ul><p><strong>上例回溯</strong>（对照表中数值跳变的格子）：</p><table><thead><tr><th style="text-align:center">步骤</th><th style="text-align:left">状态</th><th style="text-align:left">判断</th><th style="text-align:left">动作</th></tr></thead><tbody><tr><td style="text-align:center">i=10</td><td style="text-align:left">Size[10][10]=4 = Size[9][10]=4</td><td style="text-align:left">10 ∉ MNS</td><td style="text-align:left">j 不变</td></tr><tr><td style="text-align:center">i=9</td><td style="text-align:left">Size[9][10]=4 ≠ Size[8][10]=3</td><td style="text-align:left"><strong>9 ∈ MNS</strong></td><td style="text-align:left">j ← π(9)−1 = 9</td></tr><tr><td style="text-align:center">i=8</td><td style="text-align:left">Size[8][9]=3 = Size[7][9]=3</td><td style="text-align:left">8 ∉ MNS</td><td style="text-align:left">j 不变</td></tr><tr><td style="text-align:center">i=7</td><td style="text-align:left">Size[7][9]=3 ≠ Size[6][9]=2</td><td style="text-align:left"><strong>7 ∈ MNS</strong></td><td style="text-align:left">j ← π(7)−1 = 8</td></tr><tr><td style="text-align:center">i=6</td><td style="text-align:left">Size[6][8]=2 = Size[5][8]=2</td><td style="text-align:left">6 ∉ MNS</td><td style="text-align:left">j 不变</td></tr><tr><td style="text-align:center">i=5</td><td style="text-align:left">Size[5][8]=2 ≠ Size[4][8]=1</td><td style="text-align:left"><strong>5 ∈ MNS</strong></td><td style="text-align:left">j ← π(5)−1 = 4</td></tr><tr><td style="text-align:center">i=4</td><td style="text-align:left">Size[4][4]=1 = Size[3][4]=1</td><td style="text-align:left">4 ∉ MNS</td><td style="text-align:left">j 不变</td></tr><tr><td style="text-align:center">i=3</td><td style="text-align:left">Size[3][4]=1 ≠ Size[2][4]=0</td><td style="text-align:left"><strong>3 ∈ MNS</strong></td><td style="text-align:left">j ← π(3)−1 = 3</td></tr><tr><td style="text-align:center">i=2</td><td style="text-align:left">Size[2][3]=0 = Size[1][3]=0</td><td style="text-align:left">2 ∉ MNS</td><td style="text-align:left">j 不变</td></tr><tr><td style="text-align:center">i=1</td><td style="text-align:left">特判：j = 3 &lt; π(1) = 8</td><td style="text-align:left">1 ∉ MNS</td><td style="text-align:left">结束</td></tr></tbody></table><p>$$<br>MNS = \lbrace(3, 4),\ (5, 5),\ (7, 9),\ (9, 10)\rbrace, \qquad |MNS| = 4 = Size(10, 10)<br>$$</p><p>（正是表中数值 4 → 3 → 2 → 1 的跳变点。）</p>
+          </div>
+<h4 id="算法实现-v6">算法实现</h4>
+<div class="note note-info">
+            <figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 求 Size 表；C[i] 即 π(i)</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">MNS</span><span class="hljs-params">(<span class="hljs-type">int</span> C[], <span class="hljs-type">int</span> n, <span class="hljs-type">int</span> **size)</span><br>{<br>    <span class="hljs-comment">// 初始化 size[1][*]（情形 1）</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt; C[<span class="hljs-number">1</span>]; j++)<br>        size[<span class="hljs-number">1</span>][j] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = C[<span class="hljs-number">1</span>]; j &lt;= n; j++)<br>        size[<span class="hljs-number">1</span>][j] = <span class="hljs-number">1</span>;<br><br>    <span class="hljs-comment">// 计算 size[i][*]，1 &lt; i &lt; n（情形 2、3）</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt; n; i++) {<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt; C[i]; j++)          <span class="hljs-comment">// j &lt; π(i)：照抄上一行</span><br>            size[i][j] = size[i<span class="hljs-number">-1</span>][j];<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = C[i]; j &lt;= n; j++)         <span class="hljs-comment">// j &gt;= π(i)：不选 / 选 取 max</span><br>            size[i][j] = max(size[i<span class="hljs-number">-1</span>][j], size[i<span class="hljs-number">-1</span>][C[i]<span class="hljs-number">-1</span>] + <span class="hljs-number">1</span>);<br>    }<br>    <span class="hljs-comment">// 第 n 行只需要 size[n][n]（回溯时对 i=n 只会在 j=n 处查询一次）</span><br>    size[n][n] = max(size[n<span class="hljs-number">-1</span>][n], size[n<span class="hljs-number">-1</span>][C[n]<span class="hljs-number">-1</span>] + <span class="hljs-number">1</span>);<br>}<br><br><span class="hljs-comment">// 在 Net[0..m-1] 中返回最大不相交连线集合（构造最优解）</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">Traceback</span><span class="hljs-params">(<span class="hljs-type">int</span> C[], <span class="hljs-type">int</span> **size, <span class="hljs-type">int</span> n, <span class="hljs-type">int</span> Net[], <span class="hljs-type">int</span> &amp;m)</span><br>{<br>    <span class="hljs-type">int</span> j = n;          <span class="hljs-comment">// 所允许的底部最大编号</span><br>    m = <span class="hljs-number">0</span>;              <span class="hljs-comment">// 连线的游标</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = n; i &gt; <span class="hljs-number">1</span>; i--)<br>        <span class="hljs-keyword">if</span> (size[i][j] != size[i<span class="hljs-number">-1</span>][j]) {   <span class="hljs-comment">// i 号 net 在 MNS 中?</span><br>            Net[m++] = i;<br>            j = C[i] - <span class="hljs-number">1</span>;                   <span class="hljs-comment">// 其余线的下端必须 &lt; π(i)</span><br>        }<br>    <span class="hljs-keyword">if</span> (j &gt;= C[<span class="hljs-number">1</span>])      <span class="hljs-comment">// 1 号在 MNS 中? （i=1 没有上一行，单独特判）</span><br>        Net[m++] = <span class="hljs-number">1</span>;<br>}<br></code></pre></td></tr></tbody></table></figure><p>两个细节：</p><ul><li>主循环是 <code>i &lt; n</code> 而不是 <code>i &lt;= n</code>：第 n 行只算 size[n][n] 一个格子，因为回溯从 (n, n) 出发，走一步就进入第 n−1 行及以前，其余格子用不到；</li><li><code>i = 1</code> 的时候特殊处理（没有上一行可比，只能用 j ≥ π(1) 判断）。</li></ul><p>算法复杂性 <strong>O(n²)</strong>。</p>
+          </div>
+<h4 id="SORTBOT-小结-v5">SORTBOT 小结</h4>
+<ul>
+<li><strong>Subproblem</strong>: dp(i, j) —— 前 i 条线、下端 ≤ j 的最大不相交子集大小；</li>
+<li><strong>Original Problem</strong>: dp(n, n)；</li>
+<li><strong>Relation</strong>: j &lt; π(i) 继承上一行；j ≥ π(i) 取 max{不选, 选}；</li>
+<li><strong>Topology</strong>: dp(i, j)，0 ≤ i, j ≤ n，按行填表（i 从小到大，j 从小到大）；</li>
+<li><strong>Base case</strong>: i = 1 一行；</li>
+<li><strong>Original Solution</strong>: mark(i, j) → 比较 size[i][j] 与 size[i−1][j] 回溯，Net[] 收集；</li>
+<li><strong>Time Complexity</strong>: O(n²)。</li>
+</ul>
+<h4 id="解法二：转化为最长递增子序列（LIS）">解法二：转化为最长递增子序列（LIS）</h4>
+<div class="note note-primary">
+            <p>由引例的观察：<strong>一组连线互不相交 ⇔ 它们的上端编号与下端编号同时严格递增</strong>。把每条连线 (i, π(i)) 看成数对，按 i 排序后就是序列</p><p>$$<br>\pi(1),\ \pi(2),\ \ldots,\ \pi(n),<br>$$</p><p><strong>最大不相交连线子集 = π 序列的最长严格递增子序列（LIS）</strong>。</p><p><strong>O(n²) 的 LIS-DP</strong>（与 Size 表殊途同归，但状态更省）：设 f[i] 为以 π(i) 结尾的 LIS 长度，</p><p>$$<br>f[i] = \max_{t &lt; i,\ \pi(t) &lt; \pi(i)} \lbrace f[t]\rbrace + 1, \qquad 答案 = \max_i f[i]<br>$$</p><p>构造方案时给每个 i 记前驱 pre[i]，从最长者回溯即得 MNS。</p><p><strong>用本节例题验证</strong>：π = (8, 7, 4, 2, 5, 1, 9, 3, 10, 6)，逐项计算 f：</p><table><thead><tr><th style="text-align:center">i</th><th style="text-align:center">1</th><th style="text-align:center">2</th><th style="text-align:center">3</th><th style="text-align:center">4</th><th style="text-align:center">5</th><th style="text-align:center">6</th><th style="text-align:center">7</th><th style="text-align:center">8</th><th style="text-align:center">9</th><th style="text-align:center">10</th></tr></thead><tbody><tr><td style="text-align:center">π(i)</td><td style="text-align:center">8</td><td style="text-align:center">7</td><td style="text-align:center">4</td><td style="text-align:center">2</td><td style="text-align:center">5</td><td style="text-align:center">1</td><td style="text-align:center">9</td><td style="text-align:center">3</td><td style="text-align:center">10</td><td style="text-align:center">6</td></tr><tr><td style="text-align:center">f[i]</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">1</td><td style="text-align:center">3</td><td style="text-align:center">2</td><td style="text-align:center"><strong>4</strong></td><td style="text-align:center">3</td></tr></tbody></table><p>LIS 长 <strong>4</strong>（以 π(9)=10 结尾），回溯前驱：10 ← 9(i=7) ← 5(i=5) ← 4(i=3)，即递增子序列 (4, 5, 9, 10)，对应连线 {(3,4), (5,5), (7,9), (9,10)}——与 Size 表回溯结果完全一致。引例 π = (4, 6, 1, 9, 3, 8, 5, 7, 10, 2) 的 LIS 是 (1, 3, 5, 7, 10)，长 5，对应 {(3,1), (5,3), (7,5), (8,7), (9,10)}。</p><p><strong>O(n log n) 的贪心 + 二分</strong>：维护数组 d[]，d[len] 表示"长度为 len 的递增子序列的最小可能结尾"，每来一个数在 d 中二分找第一个 ≥ 它的位置替换（严格递增用 lower_bound），最终 len 即答案。n 达 10⁵ 以上时这是唯一可行解法。</p><table><thead><tr><th>对比</th><th>Size(i, j) 二维 DP（正解）</th><th>LIS 转化</th></tr></thead><tbody><tr><td>状态</td><td>O(n²) 个</td><td>O(n) 个</td></tr><tr><td>复杂度</td><td>O(n²)</td><td>O(n²) 或 O(n log n)</td></tr><tr><td>通用性</td><td>模板化，"前 i 个 + 上界 j"的二维套路可迁移到很多题</td><td>只在"不相交 ⇔ 双递增"的排列场景成立</td></tr><tr><td>考试</td><td>老师要求画 Size 表的按这个写</td><td>检查答案 / 大规模数据的第二解法</td></tr></tbody></table>
+          </div>
+<hr>
+<h3 id="小结与考点">小结与考点</h3>
+<blockquote>
+<p>本章按讲次持续补充，以下是已整理题目的横向对比与考试注意事项。</p>
+</blockquote>
+<h4 id="已整理题目对比">已整理题目对比</h4>
+<table>
+<thead>
+<tr>
+<th>题目</th>
+<th>状态（子问题）</th>
+<th>最后一步决策</th>
+<th>方程要点</th>
+<th>复杂度</th>
+<th>解法二</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>青蛙跳台阶（计数型）</td>
+<td>f(k)：到第 k 级的跳法数</td>
+<td>最后一步跳 1 级还是 2 级（相加）</td>
+<td>f(k) = f(k−1) + f(k−2)</td>
+<td>O(n)</td>
+<td>分治倍增 O(log n)</td>
+</tr>
+<tr>
+<td>木条游戏</td>
+<td>dp(k)：长 k 的最高价值</td>
+<td>第一段切多长（枚举 i 取 max）</td>
+<td>dp(k) = max{p[i]+dp(k−i)}</td>
+<td>O(n²)</td>
+<td>备忘录递归</td>
+</tr>
+<tr>
+<td>3.1 矩阵连乘</td>
+<td>m[i][j]：A[i:j] 最少乘次</td>
+<td>最后一次相乘断在哪（枚举 k 取 min）</td>
+<td>m[i][k]+m[k+1][j]+p_{i−1}p_k p_j</td>
+<td>O(n³)</td>
+<td>备忘录方法</td>
+</tr>
+<tr>
+<td>3.3 LCS</td>
+<td>c[i][j]：前缀 LCS 长度</td>
+<td>末字符相等？左上+1 : max{上, 左}</td>
+<td>分段函数 + b 表回溯</td>
+<td>O(mn)</td>
+<td>滚动数组、备忘录；拓展：通配符匹配</td>
+</tr>
+<tr>
+<td>3.4 最大子段和</td>
+<td>dp(i)：<strong>以 i 结尾</strong>的最大和</td>
+<td>接上前段还是起点重置</td>
+<td>dp(i) = max{dp(i−1)+a[i], a[i]}</td>
+<td>O(n)</td>
+<td>分治 O(n log n)、前缀和</td>
+</tr>
+<tr>
+<td>3.5 三角剖分</td>
+<td>t[i][j]：子多边形最优剖分</td>
+<td>根三角形选 v_k（枚举 k 取 min）</td>
+<td>与矩阵连乘同构，代价换 w(v_{i−1}v_k v_j)</td>
+<td>O(n³)</td>
+<td>（化为矩阵连乘框架）</td>
+</tr>
+<tr>
+<td>3.7 图像压缩</td>
+<td>s[i]：前 i 像素最少位数</td>
+<td>最后一段多长（枚举 k 取 min）</td>
+<td>s[i−k]+k·b_max+11</td>
+<td>O(n²)</td>
+<td>记忆化搜索、DAG 最短路</td>
+</tr>
+<tr>
+<td>3.8 电路布线</td>
+<td>Size(i,j)：前 i 线、下端 ≤ j 的 MNS</td>
+<td>第 i 条线选不选（取 max）</td>
+<td>选则收缩到 π(i)−1</td>
+<td>O(n²)</td>
+<td>LIS（O(n²)/O(n log n)）</td>
+</tr>
+</tbody>
+</table>
+<p>共同心法：<strong>站在"最后一个元素"做决策</strong>——问"最后一段有多长"（木条、矩阵连乘、图像压缩）还是"最后一个元素选不选"（LCS、电路布线、最大子段和）；决策枚举完取 min/max，记录标记数组，自底向上填表，再回溯构造解。一维状态沿长度递增填；二维状态或按行（LCS、电路布线）或按对角线/链长（矩阵连乘、三角剖分）。</p>
+<h4 id="画表要求">画表要求</h4>
+<ol>
+<li><strong>矩阵连乘 / 三角剖分</strong>：画 m[i][j]（或 t[i][j]）上三角表 + s[i][j] 断点表，<strong>按链长（对角线）从短到长填</strong>，最后给出由 s 表递归加括号的最优解；</li>
+<li><strong>LCS</strong>：画 c[i][j] 表并在每格标注来源方向 b（↖/↑/←），第 0 行第 0 列为 0；从 c[m][n] 按箭头回溯，↖ 尾部字符即 LCS 元素；</li>
+<li><strong>最大子段和</strong>：列 a[i] / dp(i) / 是否重置 三行小表，dp 最大处即最优子段终点；</li>
+<li><strong>图像压缩</strong>：画候选值三角表（行 = 最后一段长度 k，列 = 像素个数 i，格 = s[i−k] + k·b_max + 11），逐列取最小，另列 s / l / b 三行汇总表；</li>
+<li><strong>电路布线</strong>：画 Size[i][j] 二维表（行 = 线号 i，列 = 下端上限 j），逐行填：j &lt; π(i) 照抄上一行、j ≥ π(i) 取 max；回溯路径在表上标出；</li>
+<li>答题顺序：<strong>(a) 先写"考察最后一个元素"的推导 → (b) 再写状态转移方程（分段函数 / min-max 式）→ © 最后填表并给出最优解</strong>。</li>
+</ol>
+<h4 id="易错点">易错点</h4>
+<div class="note note-warning">
+            <ul><li>矩阵连乘：合并代价是 <strong>p_{i−1}·p_k·p_j</strong>（左链行数 × 断点处维数 × 右链列数），三个下标别写错；填表顺序是<strong>按链长</strong>不是按行；m[i][i] = 0 是边界。</li><li>LCS：c[i][j] 的 i 对应 X 的前缀、j 对应 Y 的前缀，别串轴；x_i = y_j 时<strong>必须</strong>取 c[i−1][j−1]+1（可证明不会更差）；LCS 不唯一，b 表在 c[i−1][j] = c[i][j−1] 时取 ↑ 或 ← 都对，只是回溯出的子序列可能不同。</li><li>最大子段和：dp(i) 的定义是"<strong>以 i 结尾</strong>"的最大和，不是"前 i 项"的最大和（后者无最优子结构）；全局答案是 max dp(i) 不是 dp(n)；全负序列答案为 0。</li><li>三角剖分：t[i][j] 对应子多边形 {v_{i−1}, ⋯, v_j}（含 j−i+2 个顶点），答案是 <strong>t[1][n]</strong>（顶点 v₀…v_n 共 n+1 个）；t[i][i+1] = 单个三角形的权，是递推起点。</li><li>木条游戏：段长受价格表长度限制；"整根不切"未必最优（如长 6 整根 15 &lt; 3+3 = 16）。</li><li>图像压缩：段头是 <strong>11 位（8 位段长 + 3 位位数）</strong>，别漏加；段内位数取<strong>段中最大灰度</strong>的位数；每段最多 <strong>256</strong> 个像素（k 的上限）；s[i] 加 11 放在 min 外面和里面等价（每个候选恰含一个新段头），代码里放在外面。</li><li>电路布线：j ≥ π(i) 选线时收缩到 <strong>Size(i−1, π(i)−1) + 1</strong>，不是 Size(i−1, j−1) + 1——选了 (i, π(i)) 后其余线被 π(i) 卡住，与 j 无关；回溯到 i = 1 要<strong>特判</strong>；MNS 是"选出的线两两不交"的最大集合，不是把所有线都检验一遍。</li><li>图像压缩例 {7,6,5,8,129,138,1} 的最优解 62 位<strong>大于</strong>定长 56 位：DP 求的是"该变长编码方案下"的最优，不代表一定比定长好——段头开销在小规模下可能吞掉收益，答题时按方程算即可。</li></ul>
+          </div>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Review/" class="category-chain-item">Review</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Review/" class="print-no-link">#Review</a>
+      
+        <a href="/tags/Algorithm-Design-and-Analysis/" class="print-no-link">#Algorithm Design and Analysis</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Algorithm Design and Analysis: Dynamic Programming</div>
+      <div>http://example.com/2026/10/23/Review/Algorithm-Design-and-Analysis-DP/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>October 23, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>October 23, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/10/23/Review/Algorithm-Design-and-Analysis/" title="Algorithm Design and Analysis">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Algorithm Design and Analysis</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/10/22/Python/PyTorch-Notes/" title="PyTorch Notes">
+                        <span class="hidden-mobile">PyTorch Notes</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
