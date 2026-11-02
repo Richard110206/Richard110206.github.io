@@ -27,7 +27,7 @@
 <meta property="og:description" content="本复习资料整理《算法设计与分析》第 3 章（动态规划），按三要素整理：(a) 状态转移方程的推导过程 → (b) 状态转移方程 → © 递推表，每道典型题除标准解法外补充第二种解法。重点难点使用 Hexo note 标签标注。第 1、2 章（算法概述与递归分治）及后续章节见 Algorithm Design and Analysis。   目录  第3章 动态规划  入门：青蛙跳台阶（一题多解）">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-10-23T03:02:21.000Z">
-<meta property="article:modified_time" content="2026-10-23T15:28:26.195Z">
+<meta property="article:modified_time" content="2026-10-30T15:04:11.219Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Review">
 <meta property="article:tag" content="Algorithm Design and Analysis">
@@ -302,7 +302,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          15k words
+          20k words
         
       </span>
     
@@ -313,7 +313,7 @@
         
         
         
-          122 mins
+          166 mins
         
       </span>
     
@@ -380,6 +380,9 @@
 <li><a href="#3-5-%E5%87%B8%E5%A4%9A%E8%BE%B9%E5%BD%A2%E6%9C%80%E4%BC%98%E4%B8%89%E8%A7%92%E5%89%96%E5%88%86">3.5 凸多边形最优三角剖分</a></li>
 <li><a href="#3-7-%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9">3.7 图像压缩</a></li>
 <li><a href="#3-8-%E7%94%B5%E8%B7%AF%E5%B8%83%E7%BA%BF">3.8 电路布线</a></li>
+<li><a href="#3-9-%E6%B5%81%E6%B0%B4%E4%BD%9C%E4%B8%9A%E8%B0%83%E5%BA%A6">3.9 流水作业调度</a></li>
+<li><a href="#3-10-0-1%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98">3.10 0-1背包问题</a></li>
+<li><a href="#%E6%89%A9%E5%B1%95%EF%BC%9A%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98">扩展：完全背包问题</a></li>
 <li><a href="#%E5%B0%8F%E7%BB%93%E4%B8%8E%E8%80%83%E7%82%B9">小结与考点</a></li>
 </ul>
 </li>
@@ -792,6 +795,121 @@ $$</p>
             <p>由引例的观察：<strong>一组连线互不相交 ⇔ 它们的上端编号与下端编号同时严格递增</strong>。把每条连线 (i, π(i)) 看成数对，按 i 排序后就是序列</p><p>$$<br>\pi(1),\ \pi(2),\ \ldots,\ \pi(n),<br>$$</p><p><strong>最大不相交连线子集 = π 序列的最长严格递增子序列（LIS）</strong>。</p><p><strong>O(n²) 的 LIS-DP</strong>（与 Size 表殊途同归，但状态更省）：设 f[i] 为以 π(i) 结尾的 LIS 长度，</p><p>$$<br>f[i] = \max_{t &lt; i,\ \pi(t) &lt; \pi(i)} \lbrace f[t]\rbrace + 1, \qquad 答案 = \max_i f[i]<br>$$</p><p>构造方案时给每个 i 记前驱 pre[i]，从最长者回溯即得 MNS。</p><p><strong>用本节例题验证</strong>：π = (8, 7, 4, 2, 5, 1, 9, 3, 10, 6)，逐项计算 f：</p><table><thead><tr><th style="text-align:center">i</th><th style="text-align:center">1</th><th style="text-align:center">2</th><th style="text-align:center">3</th><th style="text-align:center">4</th><th style="text-align:center">5</th><th style="text-align:center">6</th><th style="text-align:center">7</th><th style="text-align:center">8</th><th style="text-align:center">9</th><th style="text-align:center">10</th></tr></thead><tbody><tr><td style="text-align:center">π(i)</td><td style="text-align:center">8</td><td style="text-align:center">7</td><td style="text-align:center">4</td><td style="text-align:center">2</td><td style="text-align:center">5</td><td style="text-align:center">1</td><td style="text-align:center">9</td><td style="text-align:center">3</td><td style="text-align:center">10</td><td style="text-align:center">6</td></tr><tr><td style="text-align:center">f[i]</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">1</td><td style="text-align:center">3</td><td style="text-align:center">2</td><td style="text-align:center"><strong>4</strong></td><td style="text-align:center">3</td></tr></tbody></table><p>LIS 长 <strong>4</strong>（以 π(9)=10 结尾），回溯前驱：10 ← 9(i=7) ← 5(i=5) ← 4(i=3)，即递增子序列 (4, 5, 9, 10)，对应连线 {(3,4), (5,5), (7,9), (9,10)}——与 Size 表回溯结果完全一致。引例 π = (4, 6, 1, 9, 3, 8, 5, 7, 10, 2) 的 LIS 是 (1, 3, 5, 7, 10)，长 5，对应 {(3,1), (5,3), (7,5), (8,7), (9,10)}。</p><p><strong>O(n log n) 的贪心 + 二分</strong>：维护数组 d[]，d[len] 表示"长度为 len 的递增子序列的最小可能结尾"，每来一个数在 d 中二分找第一个 ≥ 它的位置替换（严格递增用 lower_bound），最终 len 即答案。n 达 10⁵ 以上时这是唯一可行解法。</p><table><thead><tr><th>对比</th><th>Size(i, j) 二维 DP（正解）</th><th>LIS 转化</th></tr></thead><tbody><tr><td>状态</td><td>O(n²) 个</td><td>O(n) 个</td></tr><tr><td>复杂度</td><td>O(n²)</td><td>O(n²) 或 O(n log n)</td></tr><tr><td>通用性</td><td>模板化，"前 i 个 + 上界 j"的二维套路可迁移到很多题</td><td>只在"不相交 ⇔ 双递增"的排列场景成立</td></tr><tr><td>考试</td><td>老师要求画 Size 表的按这个写</td><td>检查答案 / 大规模数据的第二解法</td></tr></tbody></table>
           </div>
 <hr>
+<h3 id="3-9-流水作业调度">3.9 流水作业调度</h3>
+<h4 id="问题描述-v6">问题描述</h4>
+<div class="note note-info">
+            <p>n 个作业 {J₁, J₂, ⋯, Jₙ} 要在两台机器 M1、M2 组成的流水线上加工：每个作业<strong>先在 M1 上加工</strong>（耗时 aᵢ），<strong>再在 M2 上加工</strong>（耗时 bᵢ）；每台机器同一时刻只能加工一个作业，且两台机器上的加工<strong>次序必须相同</strong>。<strong>目标</strong>：确定最优加工次序，使<strong>总完工时间</strong>（最后一个作业在 M2 上的完成时刻）最短。</p><p>例：6 个任务的打字（M1）、打印（M2）时间如下，求最佳任务安排次序及总时间：</p><table><thead><tr><th>任务</th><th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>J6</th></tr></thead><tbody><tr><td>打字 M1（aᵢ）</td><td>30</td><td>120</td><td>50</td><td>20</td><td>90</td><td>110</td></tr><tr><td>打印 M2（bᵢ）</td><td>80</td><td>100</td><td>90</td><td>60</td><td>30</td><td>10</td></tr></tbody></table>
+          </div>
+<h4 id="Johnson-法则">Johnson 法则</h4>
+<div class="note note-info">
+            <p><strong>口诀（记住这个规则就可以）</strong>：</p><ol><li><strong>M1 流水线：把小的放在前面</strong> —— M1 上加工时间 aᵢ 小的作业排在前半段（按 aᵢ 从小到大）；</li><li><strong>M2 流水线：把小的放在后面</strong> —— M2 上加工时间 bᵢ 小的作业排在后半段（bᵢ 越小越靠最后）。</li></ol><p>正式表述：令 N₁ = { i | aᵢ ≤ bᵢ }（M1 时间小的），N₂ = { i | aᵢ &gt; bᵢ }；N₁ 内按 <strong>aᵢ 递增</strong>、N₂ 内按 <strong>bᵢ 递减</strong>排列，先 N₁ 后 N₂ 即为最优调度。等价的相邻判定（Johnson 不等式）——作业 i 应排在作业 j 之前当且仅当</p><p>$$\min\lbrace a_i,\ b_j\rbrace \ \le\ \min\lbrace a_j,\ b_i\rbrace$$</p><p>按法则只需一次排序，复杂度 <strong>O(n log n)</strong>（通用的动态规划解法以"剩余作业集 S + M2 可开工时刻 t"为状态 T(S, t)，子问题可达指数量级，仅用于推导出该法则，做题直接套口诀）。</p><p><strong>上例</strong>：aᵢ ≤ bᵢ 的 {J1, J3, J4} 按 aᵢ 升序 → J4, J1, J3；其余 {J2, J5, J6} 按 bᵢ 降序 → J2, J5, J6。最优次序 <strong>J4 → J1 → J3 → J2 → J5 → J6，总完工时间 430</strong>（M1 完成时刻 20/50/100/220/310/420，M2 完成时刻 80/160/250/350/380/430）。</p><p><strong>课堂练习</strong>：a = {5, 1, 8, 5, 3, 4}，b = {7, 2, 2, 4, 7, 4}，同法得 <strong>J2 → J5 → J1 → J4 → J6 → J3，总完工时间 28</strong>（M1 完成时刻 1/4/9/14/18/26，M2 完成时刻 3/11/18/22/26/28）。</p><p>注意：Johnson 法则是<strong>充分条件</strong>——按法则排出的调度一定最优，但最优调度<strong>不唯一</strong>（练习中 J2 J5 J6 J1 J4 J3 同样得 28）。</p>
+          </div>
+<hr>
+<h3 id="3-10-0-1背包问题">3.10 0-1背包问题</h3>
+<h4 id="问题背景">问题背景</h4>
+<div class="note note-info">
+            <p>某工厂有 <strong>10 吨</strong>时效性原料，可用于生产某产品。现有三家公司分别提出订单：</p><table><thead><tr><th>公司</th><th>所需原料</th><th>报酬</th></tr></thead><tbody><tr><td>A</td><td>4 吨</td><td>70 万</td></tr><tr><td>B</td><td>5 吨</td><td>80 万</td></tr><tr><td>C</td><td>7 吨</td><td>140 万</td></tr></tbody></table><p>该工厂该如何签单，使得报酬最大化？——签 <strong>A + B</strong>（共用 9 吨，得 <strong>150 万</strong>）最优；若按性价比贪心地先签单位报酬最高的 C（20 万/吨），只能得 140 万。<strong>局部最优凑不出全局最优，需要动态规划统筹。</strong></p><p>推广：工厂有 1000 吨原料，n 家公司 X₁, ⋯, Xₙ 各提出订单（所需原料与报酬如下表），如何签单使总报酬最大？0-1 背包模型对<strong>股市投资、资源分配、工业生产和运输</strong>等都具有重要意义。</p><table><thead><tr><th>公司</th><th>X₁</th><th>X₂</th><th>X₃</th><th>⋯</th><th>Xₙ</th></tr></thead><tbody><tr><td>所需原料</td><td>4 吨</td><td>5 吨</td><td>7 吨</td><td>⋯</td><td>122 吨</td></tr><tr><td>报酬</td><td>70 万</td><td>80 万</td><td>140 万</td><td>⋯</td><td>260 万</td></tr></tbody></table>
+          </div>
+<h4 id="问题描述-v7">问题描述</h4>
+<div class="note note-info">
+            <p>给定 <strong>n 种物品</strong>和一个<strong>容量为 c 的背包</strong>：物品 i 的重量为 wᵢ &gt; 0、价值为 vᵢ &gt; 0（1 ≤ i ≤ n）。问如何选择装入背包的物品，使装入物品的<strong>总价值最大</strong>？</p><p>设决策变量 xᵢ 表示物品 i 是否装入，问题的形式化描述（<strong>一个特殊的整数规划问题</strong>）：</p><p>$$<br>\max\ \sum_{i=1}^{n} v_i x_i \qquad \text{s.t.}\quad \sum_{i=1}^{n} w_i x_i \le c,\qquad x_i \in \lbrace 0, 1\rbrace,\ 1 \le i \le n<br>$$</p><p>"0-1"的含义：每种物品<strong>只有一件</strong>，要么<strong>整个装入</strong>（xᵢ = 1）、要么<strong>不装</strong>（xᵢ = 0），不能只装一部分、也不能重复装。n 个物品共 2ⁿ 种选取组合，穷举不可行——与矩阵连乘的 Catalan 数情形一样，靠最优子结构剪枝。</p>
+          </div>
+<h4 id="子问题定义与最优子结构">子问题定义与最优子结构</h4>
+<div class="note note-info">
+            <p>仿照电路布线"限定范围"的思路定义子问题——<strong>只看后缀物品</strong>：</p><p>$$<br>m(i,\ j) = \text{容量为 } j\text{、可选物品为 } i,\ i{+}1,\ \ldots,\ n\ \text{时能装入的最大价值}<br>$$</p><p><strong>原问题 = m(1, c)</strong>：自由度 i 刻画"哪些物品可选"，j 刻画"容量还剩多少"，m(i, j) 就是一张 n 行 c 列的表。</p><p><strong>最优子结构（反证法）</strong>：设 m(i, j) 的最优解<strong>含物品 i</strong>，则该解中除去物品 i 的剩余部分（容量 j − wᵢ，可选物品 i+1, ⋯, n）必是 m(i+1, j − wᵢ) 的最优解——若不然，把更优的子方案"贴"回原解，会得到比 m(i, j) 更大的价值，与最优性矛盾。∎</p>
+          </div>
+<h4 id="状态转移方程-v8">状态转移方程</h4>
+<p><strong>(a) 推导过程——考察"物品 i 放不放进背包"</strong></p>
+<div class="note note-info">
+            <p>站在物品 i（当前可选中编号最小的物品）的角度，决策只有"放 / 不放"两类：</p><ul><li><strong>装不下</strong>（j &lt; wᵢ）：物品 i 想放也放不进去，只能不选——m(i, j) = m(i+1, j)；</li><li><strong>装得下</strong>（j ≥ wᵢ）：两种选择取大者——<ul><li><strong>不放</strong>物品 i：容量不消耗，价值 = m(i+1, j)；</li><li><strong>放</strong>物品 i：先挣得 vᵢ、容量剩 j − wᵢ，之后只能在物品 i+1, ⋯, n 里继续选——价值 = m(i+1, j − wᵢ) + vᵢ。</li></ul></li></ul>
+          </div>
+<p><strong>(b) 状态转移方程</strong></p>
+<p>$$<br>
+m(i,\ j) = \begin{cases}<br>
+\max\big\lbrace, m(i{+}1,\ j),\ m(i{+}1,\ j-w_i) + v_i ,\big\rbrace, &amp; j \ge w_i \\[4pt]<br>
+m(i{+}1,\ j), &amp; 0 \le j &lt; w_i<br>
+\end{cases}<br>
+$$</p>
+<p>边界（第 n 行单独初始化，或等价地补充定义 m(n+1, j) = 0）：</p>
+<p>$$<br>
+m(n,\ j) = \begin{cases} v_n, &amp; j \ge w_n \\ 0, &amp; 0 \le j &lt; w_n \end{cases}<br>
+$$</p>
+<p>最优值 = <strong>m(1, c)</strong>。共 n·c 个子问题、每个 O(1) 转移，时间复杂度 <strong>O(nc)</strong>、空间 O(nc)——注意这是<strong>伪多项式</strong>时间（c 的数值本身可以指数大）。</p>
+<p><strong>© 递推表——例题完整画表</strong></p>
+<div class="note note-warning">
+            <p><strong>例</strong>：n = 5，c = 10，w = (2, 2, 6, 5, 4)，v = (6, 3, 5, 4, 6)，求能装入的最大价值与最优装法。</p><p><strong>填表方法</strong>：与电路布线相反，这里 m(i, j) 依赖<strong>下一行</strong> m(i+1, ⋯)，故从第 n = 5 行出发<strong>自下而上</strong>逐行填：第 5 行按边界直接写（j &lt; 4 为 0，j ≥ 4 为 6）；第 i 行的每一格——j &lt; wᵢ 照抄下一行同列，j ≥ wᵢ 取 max{下一行同列， 下一行第 j − wᵢ 列 + vᵢ}。</p><table><thead><tr><th style="text-align:center">m[i][j]</th><th style="text-align:center">j=1</th><th style="text-align:center">j=2</th><th style="text-align:center">j=3</th><th style="text-align:center">j=4</th><th style="text-align:center">j=5</th><th style="text-align:center">j=6</th><th style="text-align:center">j=7</th><th style="text-align:center">j=8</th><th style="text-align:center">j=9</th><th style="text-align:center">j=10</th></tr></thead><tbody><tr><td style="text-align:center"><strong>i=1</strong> (w=2,v=6)</td><td style="text-align:center">0</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">9</td><td style="text-align:center">9</td><td style="text-align:center">12</td><td style="text-align:center">12</td><td style="text-align:center">15</td><td style="text-align:center">15</td><td style="text-align:center"><strong>15</strong></td></tr><tr><td style="text-align:center"><strong>i=2</strong> (w=2,v=3)</td><td style="text-align:center">0</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">9</td><td style="text-align:center">9</td><td style="text-align:center">9</td><td style="text-align:center">10</td><td style="text-align:center">11</td></tr><tr><td style="text-align:center"><strong>i=3</strong> (w=6,v=5)</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">10</td><td style="text-align:center">11</td></tr><tr><td style="text-align:center"><strong>i=4</strong> (w=5,v=4)</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">10</td><td style="text-align:center">10</td></tr><tr><td style="text-align:center"><strong>i=5</strong> (w=4,v=6)</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td></tr></tbody></table><p>抽格验算：</p><ul><li>m[3][10]：j = 10 ≥ w₃ = 6 → max{m[4][10], m[4][4] + 5} = max{10, 6 + 5} = <strong>11</strong>（放物品 3 才能突破 10）；</li><li>m[2][10]：max{m[3][10], m[3][8] + 3} = max{11, 6 + 3} = <strong>11</strong>（不放物品 2 更优）；</li><li>m[1][10]：max{m[2][10], m[2][8] + 6} = max{11, 9 + 6} = <strong>15</strong>。</li></ul><p><strong>最优值 m(1, 10) = 15</strong>。</p>
+          </div>
+<h4 id="构造最优解-v4">构造最优解</h4>
+<div class="note note-info">
+            <p>算出 m 表后从 (i, c) = (1, 10) 出发<strong>自上而下回溯</strong>，逐步判断物品 i 装没装：</p><ul><li>若 <strong>m[i][c] ≠ m[i+1][c]</strong>：不装物品 i 凑不出这个价值 → <strong>xᵢ = 1</strong>，容量收缩 c ← c − wᵢ；</li><li>若相等：不装 i 也一样 → xᵢ = 0，c 不动；</li><li>到 i = n 时<strong>特判</strong>（第 n 行没有下一行可比较）：m[n][c] &gt; 0 则 xₙ = 1。</li></ul><table><thead><tr><th style="text-align:center">步骤</th><th style="text-align:left">状态</th><th style="text-align:left">判断</th><th style="text-align:left">动作</th></tr></thead><tbody><tr><td style="text-align:center">i=1</td><td style="text-align:left">m[1][10]=15 ≠ m[2][10]=11</td><td style="text-align:left"><strong>x₁ = 1</strong></td><td style="text-align:left">c ← 10 − 2 = 8</td></tr><tr><td style="text-align:center">i=2</td><td style="text-align:left">m[2][8]=9 ≠ m[3][8]=6</td><td style="text-align:left"><strong>x₂ = 1</strong></td><td style="text-align:left">c ← 8 − 2 = 6</td></tr><tr><td style="text-align:center">i=3</td><td style="text-align:left">m[3][6]=6 = m[4][6]=6</td><td style="text-align:left">x₃ = 0</td><td style="text-align:left">c 不变</td></tr><tr><td style="text-align:center">i=4</td><td style="text-align:left">m[4][6]=6 = m[5][6]=6</td><td style="text-align:left">x₄ = 0</td><td style="text-align:left">c 不变</td></tr><tr><td style="text-align:center">i=5</td><td style="text-align:left">特判：m[5][6]=6 &gt; 0</td><td style="text-align:left"><strong>x₅ = 1</strong></td><td style="text-align:left">结束</td></tr></tbody></table><p>$$<br>x = (1,\ 1,\ 0,\ 0,\ 1),\qquad 装入重量 = 2+2+4 = 8 \le 10,\quad 总价值 = 6+3+6 = 15 = m(1,10)\ \checkmark<br>$$</p>
+          </div>
+<h4 id="算法实现-v7">算法实现</h4>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c">template&lt;class Type&gt;<br><span class="hljs-type">void</span> <span class="hljs-title function_">Knapsack</span><span class="hljs-params">(Type v[], Type w[], <span class="hljs-type">int</span> c, <span class="hljs-type">int</span> n, Type **m)</span><br>{<br>    <span class="hljs-type">int</span> jMax = min(w[n], c);                          <span class="hljs-comment">// 防止 j 溢出</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; jMax; j++) m[n][j] = <span class="hljs-number">0</span>;       <span class="hljs-comment">// j &lt; w[n]：装不下物品 n</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = jMax; j &lt;= c; j++) m[n][j] = v[n];   <span class="hljs-comment">// j &gt;= w[n]：装入物品 n</span><br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = n - <span class="hljs-number">1</span>; i &gt; <span class="hljs-number">1</span>; i--) {                 <span class="hljs-comment">// 完整计算第 2..n-1 行</span><br>        jMax = min(w[i], c);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; jMax; j++) m[i][j] = m[i+<span class="hljs-number">1</span>][j];            <span class="hljs-comment">// 装不下：照抄</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = jMax; j &lt;= c; j++)<br>            m[i][j] = max(m[i+<span class="hljs-number">1</span>][j], m[i+<span class="hljs-number">1</span>][j-w[i]] + v[i]);           <span class="hljs-comment">// 不放 / 放</span><br>    }<br>    m[<span class="hljs-number">1</span>][c] = m[<span class="hljs-number">2</span>][c];                                <span class="hljs-comment">// 第 1 行只需求 m[1][c] 一个格子</span><br>    <span class="hljs-keyword">if</span> (c &gt;= w[<span class="hljs-number">1</span>]) m[<span class="hljs-number">1</span>][c] = max(m[<span class="hljs-number">1</span>][c], m[<span class="hljs-number">2</span>][c-w[<span class="hljs-number">1</span>]] + v[<span class="hljs-number">1</span>]);<br>}<br><br>template&lt;class Type&gt;<br><span class="hljs-type">void</span> <span class="hljs-title function_">Traceback</span><span class="hljs-params">(Type **m, Type w[], <span class="hljs-type">int</span> x[], <span class="hljs-type">int</span> n, Type c)</span>   <span class="hljs-comment">// 由 m 表构造最优解</span><br>{<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++)<br>        <span class="hljs-keyword">if</span> (m[i][c] == m[i+<span class="hljs-number">1</span>][c]) x[i] = <span class="hljs-number">0</span>;           <span class="hljs-comment">// 未装物品 i</span><br>        <span class="hljs-keyword">else</span> { x[i] = <span class="hljs-number">1</span>; c -= w[i]; }                 <span class="hljs-comment">// 装入物品 i，容量收缩</span><br>    x[n] = (m[n][c] &gt; <span class="hljs-number">0</span>) ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;                     <span class="hljs-comment">// 最后一件特判</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>算法分析：双重循环，<strong>O(nc)</strong> 时间、O(nc) 空间。两处优化值得注意：</p>
+<ul>
+<li><code>jMax = min(w[i], c)</code> 把每行循环分成两段写，<strong>防止 j − w[i] 下标溢出</strong>（j &lt; w[i] 的格子只照抄、不参与 max）；</li>
+<li>回溯只用到 m[1][c] 一个格子，<strong>第 1 行无需整行计算</strong>——主循环写 <code>i &gt; 1</code>，最后单独求 m[1][c]，简化最后一步。</li>
+</ul>
+<h4 id="SORTBOT-小结-v6">SORTBOT 小结</h4>
+<ul>
+<li><strong>Subproblem</strong>: m(i, j) —— 容量 j、可选物品 i…n 的最大价值；</li>
+<li><strong>Original Problem</strong>: m(1, c)；</li>
+<li><strong>Relation</strong>: 物品 i 放不放进背包，$m(i,j) = \max\lbrace m(i{+}1,j),\ m(i{+}1,j-w_i)+v_i\rbrace$（j ≥ wᵢ；j &lt; wᵢ 只能不装）；</li>
+<li><strong>Topology</strong>: m(i, j)，1 ≤ i ≤ n、0 ≤ j ≤ c，<strong>自下而上</strong>逐行填表（第 n 行先填）；</li>
+<li><strong>Base case</strong>: m(n, j) = 0（j &lt; wₙ）/ vₙ（j ≥ wₙ），等价于 m(n+1, j) = 0；</li>
+<li><strong>Original Solution</strong>: 比较 m[i][c] 与 m[i+1][c] 回溯（不同则装、容量收缩），xₙ 特判；</li>
+<li><strong>Time Complexity</strong>: O(nc)。</li>
+</ul>
+<h4 id="算法改进：跳跃点法">算法改进：跳跃点法</h4>
+<div class="note note-primary">
+            <p>填满整表的限制：<strong>c 很大时表大到没法画、也没必要画</strong>。注意 m(i, j) 是关于 j 的<strong>阶梯状单调不减函数</strong>——j 从 0 涨到 c，函数值只在少数几个容量处<strong>跳变</strong>。如上例第 5 行 m(5, j)：j &lt; 4 时恒为 0、j ≥ 4 时恒为 6，只有 <strong>(0, 0) 和 (4, 6) 两个跳跃点</strong>。存下跳跃点，函数就完全确定：m(i, j) = p[i] 中容量 j′ ≤ j 的点里最大的价值。</p><p>记 <strong>p[i] 为 m(i, ·) 的全部跳跃点集合</strong>（每个点是 (容量, 价值) 二元组），p[i] 可由 p[i+1] 递归地求出：</p><ol><li><strong>Base case：p[n+1] = {(0, 0)}</strong>（什么都不装，价值 0）；</li><li><strong>q[i+1] = p[i+1] ⊕ (wᵢ, vᵢ)</strong>：把 p[i+1] 的每个跳跃点整体平移——"装一件物品 i"得新点 (j + wᵢ, m + vᵢ)，容量超过 c 的点丢弃；</li><li><strong>p[i] = p[i+1] ∪ q[i+1]</strong>，再<strong>清除受控跳跃点</strong>：若 (a, b) 与 (c′, d) 满足 a ≤ c′ 且 b ≥ d（存在重量不增、价值还不减的点），则 (c′, d) <strong>受控</strong>，删去——清完后 p[i] 中容量、价值均严格递增。</li></ol><p><strong>例</strong>：n = 3，c = 6，w = (4, 3, 2)，v = (5, 2, 1)：</p><table><thead><tr><th style="text-align:center">i</th><th style="text-align:left">p[i+1]</th><th style="text-align:left">q[i+1] = p[i+1] ⊕ (wᵢ, vᵢ)</th><th style="text-align:left">p[i]（合并后清受控点）</th></tr></thead><tbody><tr><td style="text-align:center">3</td><td style="text-align:left">{(0,0)}</td><td style="text-align:left">{(2,1)}</td><td style="text-align:left">{(0,0), (2,1)}</td></tr><tr><td style="text-align:center">2</td><td style="text-align:left">{(0,0), (2,1)}</td><td style="text-align:left">{(3,2), (5,3)}</td><td style="text-align:left">{(0,0), (2,1), (3,2), (5,3)}</td></tr><tr><td style="text-align:center">1</td><td style="text-align:left">{(0,0), (2,1), (3,2), (5,3)}</td><td style="text-align:left">{(4,5), (6,6)}（(7,7)、(9,8) 超容量丢弃）</td><td style="text-align:left">{(0,0), (2,1), (3,2), (4,5), (6,6)}（(5,3) 受控于 (4,5)，删）</td></tr></tbody></table><p>m(1, 6) = p[1] 中容量 ≤ 6 的点里最大价值 = <strong>6</strong>；回溯构造解：(6,6) 来自 q[1] → 装物品 1、退回 (2,1)；(2,1) 来自 q[3] → 装物品 3、退回 (0,0)。<strong>x = (1, 0, 1)</strong>：装入 4 + 2 = 6、价值 5 + 1 = 6 ✓。</p><p>复杂度：合并每步 p 至多翻倍，|p[i]| ≤ 2ⁿ⁻ⁱ，故总体 <strong>O(min{nc, 2ⁿ})</strong>——c 很大、跳跃点稀疏时远快于填满整表；但 wᵢ 很小时跳跃点可稠密到指数级（0-1 背包本身是 NP 难问题，伪多项式已是不俗的保证）。</p>
+          </div>
+<h4 id="配套练习-v4">配套练习</h4>
+<div class="note note-warning">
+            <p><strong>练习</strong>：n = 5，c = 10，W = (1, 5, 4, 2, 2)，V = (4, 6, 4, 3, 2)，画 m 表并构造最优解。</p><table><thead><tr><th style="text-align:center">m[i][j]</th><th style="text-align:center">j=1</th><th style="text-align:center">j=2</th><th style="text-align:center">j=3</th><th style="text-align:center">j=4</th><th style="text-align:center">j=5</th><th style="text-align:center">j=6</th><th style="text-align:center">j=7</th><th style="text-align:center">j=8</th><th style="text-align:center">j=9</th><th style="text-align:center">j=10</th></tr></thead><tbody><tr><td style="text-align:center"><strong>i=1</strong> (w=1,v=4)</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">7</td><td style="text-align:center">7</td><td style="text-align:center">9</td><td style="text-align:center">10</td><td style="text-align:center">11</td><td style="text-align:center">13</td><td style="text-align:center">13</td><td style="text-align:center"><strong>15</strong></td></tr><tr><td style="text-align:center"><strong>i=2</strong> (w=5,v=6)</td><td style="text-align:center">0</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">5</td><td style="text-align:center">6</td><td style="text-align:center">7</td><td style="text-align:center">9</td><td style="text-align:center">9</td><td style="text-align:center">11</td><td style="text-align:center">11</td></tr><tr><td style="text-align:center"><strong>i=3</strong> (w=4,v=4)</td><td style="text-align:center">0</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">7</td><td style="text-align:center">7</td><td style="text-align:center">9</td><td style="text-align:center">9</td><td style="text-align:center">9</td></tr><tr><td style="text-align:center"><strong>i=4</strong> (w=2,v=3)</td><td style="text-align:center">0</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td><td style="text-align:center">5</td></tr><tr><td style="text-align:center"><strong>i=5</strong> (w=2,v=2)</td><td style="text-align:center">0</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td><td style="text-align:center">2</td></tr></tbody></table><p>（自下而上：第 5 行 j ≥ 2 恒为 2；第 4 行 j = 2, 3 为 3、j ≥ 4 后 max{m[5][j], m[5][j−2]+3} 恒为 5；第 3 行 j ≥ 6 后开始吃到 m[4][j−4]+4；……）</p><p><strong>回溯</strong>：m[1][10]=15 ≠ m[2][10]=11 → x₁=1，c←9；m[2][9]=11 ≠ m[3][9]=9 → x₂=1，c←4；m[3][4]=5 = m[4][4]=5 → x₃=0；m[4][4]=5 ≠ m[5][4]=2 → x₄=1，c←2；特判 m[5][2]=2 &gt; 0 → x₅=1。</p><p>$$<br>x = (1,\ 1,\ 0,\ 1,\ 1),\qquad 重量 = 1+5+2+2 = 10 \le 10,\quad 价值 = 4+6+3+2 = 15<br>$$</p><p>背包恰好装满，最优值 <strong>15</strong>。</p>
+          </div>
+<hr>
+<h3 id="扩展：完全背包问题">扩展：完全背包问题</h3>
+<h4 id="问题描述-v8">问题描述</h4>
+<div class="note note-info">
+            <p>把 0-1 背包"每种物品只有一件"的限制去掉：<strong>每种物品有无穷多件</strong>，只要容量允许，同一种物品可以重复装。决策变量 xᵢ 从 0/1 放宽为非负整数：</p><p>$$<br>\max\ \sum_{i=1}^{n} v_i x_i \qquad \text{s.t.}\quad \sum_{i=1}^{n} w_i x_i \le c,\qquad x_i \in \lbrace 0, 1, 2, \ldots\rbrace<br>$$</p><p>回头一看——<strong>热身的木条游戏就是完全背包</strong>：“长度 i 的段"是物品（重量 = 长度、价值 = 价格 p[i]），每种长度可以切出任意多段，dp(k) = max{p[i] + dp(k−i)} 正是完全背包的转移方程。0-1 背包问"放不放”，完全背包问"装几件"。</p>
+          </div>
+<h4 id="状态转移方程-v9">状态转移方程</h4>
+<p><strong>(a) 推导过程——从"放不放"到"装几件"</strong></p>
+<div class="note note-info">
+            <p>子问题仍用 m(i, j)（容量 j、可选物品 i…n）。物品 i 现在可以装 <strong>0 件、1 件、⋯、⌊j/wᵢ⌋ 件</strong>，直接枚举件数照搬 0-1 的思路：</p><p>$$<br>m(i,\ j) = \max_{0 \le k \le \lfloor j/w_i \rfloor} \big\lbrace\ m(i{+}1,\ j - k,w_i) + k,v_i\ \big\rbrace<br>$$</p><p>每个格子要枚举 O© 个 k，总复杂度 O(nc·c)——能算但浪费。<strong>关键优化藏在"装了一件之后还能继续装"</strong>：</p><ul><li><strong>不装</strong>物品 i：m(i+1, j)；</li><li><strong>至少装一件</strong>物品 i：先挣得 vᵢ、容量剩 j − wᵢ，剩下的容量里<strong>物品 i 依然可选</strong>（还有无穷件）——子问题是 <strong>m(i, j − wᵢ)</strong> 而不是 m(i+1, j − wᵢ)！</li></ul><p>$$<br>m(i,\ j) = \max\big\lbrace\ m(i{+}1,\ j),\ m(i,\ j-w_i) + v_i \big\rbrace<br>$$</p><p>“装 k 件"被拆成"先装 1 件、再在剩余容量里继续考虑物品 i”，k 重枚举化为一层递推，复杂度回到 <strong>O(nc)</strong>。</p>
+          </div>
+<p><strong>(b) 状态转移方程</strong></p>
+<p>$$<br>
+m(i,\ j) = \begin{cases}<br>
+\max\big\lbrace, m(i{+}1,\ j),\ m(i,\ j-w_i) + v_i ,\big\rbrace, &amp; j \ge w_i \\[4pt]<br>
+m(i{+}1,\ j), &amp; 0 \le j &lt; w_i<br>
+\end{cases}<br>
+$$</p>
+<p>边界 <strong>m(n+1, j) = 0</strong>。与 0-1 背包<strong>只差一个下标</strong>：第二项从"下一行"m(i+1, j−wᵢ) 变成"本行"m(i, j−wᵢ)——<strong>自依赖正是"可重复装"的体现</strong>。最优值仍是 m(1, c)，时间 O(nc)。</p>
+<p><strong>© 递推表——同一道例题，两种背包</strong></p>
+<div class="note note-warning">
+            <p>对 3.10 的例题数据（n = 5，c = 10，w = (2, 2, 6, 5, 4)，v = (6, 3, 5, 4, 6)）按完全背包重算一遍：</p><table><thead><tr><th style="text-align:center">m[i][j]</th><th style="text-align:center">j=1</th><th style="text-align:center">j=2</th><th style="text-align:center">j=3</th><th style="text-align:center">j=4</th><th style="text-align:center">j=5</th><th style="text-align:center">j=6</th><th style="text-align:center">j=7</th><th style="text-align:center">j=8</th><th style="text-align:center">j=9</th><th style="text-align:center">j=10</th></tr></thead><tbody><tr><td style="text-align:center"><strong>i=1</strong> (w=2,v=6)</td><td style="text-align:center">0</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">12</td><td style="text-align:center">12</td><td style="text-align:center">18</td><td style="text-align:center">18</td><td style="text-align:center">24</td><td style="text-align:center">24</td><td style="text-align:center"><strong>30</strong></td></tr><tr><td style="text-align:center"><strong>i=2</strong> (w=2,v=3)</td><td style="text-align:center">0</td><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">9</td><td style="text-align:center">9</td><td style="text-align:center">12</td><td style="text-align:center">12</td><td style="text-align:center">15</td></tr><tr><td style="text-align:center"><strong>i=3</strong> (w=6,v=5)</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">12</td><td style="text-align:center">12</td><td style="text-align:center">12</td></tr><tr><td style="text-align:center"><strong>i=4</strong> (w=5,v=4)</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">12</td><td style="text-align:center">12</td><td style="text-align:center">12</td></tr><tr><td style="text-align:center"><strong>i=5</strong> (w=4,v=6)</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">12</td><td style="text-align:center">12</td><td style="text-align:center">12</td></tr></tbody></table><p>抽格验算：</p><ul><li>m[5][8]：max{m[6][8]=0, m[5][4] + 6} = 6 + 6 = <strong>12</strong>——本行自依赖允许"装两件物品 5"（0-1 背包同一格只能装一件，是 6）；</li><li>m[1][10] = max{m[2][10] = 15, m[1][8] + 6 = 24 + 6} = <strong>30</strong>。</li></ul><p><strong>最优值从 15 涨到 30</strong>：回溯 m[1][10] ← m[1][8] ← m[1][6] ← m[1][4] ← m[1][2] ← m[1][0]，每一步都是"再装一件物品 1"——最优方案 <strong>x = (5, 0, 0, 0, 0)</strong>：物品 1 装 5 件，恰好装满 2×5 = 10、价值 6×5 = 30。</p><p>对比第 1 行最能看出差别（j = 2…10）：0-1 背包 m(1, j) = (6, 6, 9, 9, 12, 12, 15, 15, 15)——容量再多，物品 1 也只有一件可加；完全背包 m(1, j) = (6, 6, 12, 12, 18, 18, 24, 24, 30)——容量每涨 2 就多装一件，线性上升。</p>
+          </div>
+<h4 id="与-0-1-背包的对比（考点）">与 0-1 背包的对比（考点）</h4>
+<div class="note note-primary">
+            <table><thead><tr><th>对比项</th><th>0-1 背包</th><th>完全背包</th></tr></thead><tbody><tr><td>物品件数</td><td>每种 1 件</td><td>每种无穷多件</td></tr><tr><td>决策</td><td>物品 i 放 / 不放</td><td>物品 i 装 0…⌊c/wᵢ⌋ 件</td></tr><tr><td>转移方程</td><td>max{m(i+1, j), m(i+1, j−wᵢ) + vᵢ}</td><td>max{m(i+1, j), m(i, j−wᵢ) + vᵢ}</td></tr><tr><td><strong>一维滚动枚举方向</strong></td><td><strong>j 从 c 到 wᵢ 倒序</strong></td><td><strong>j 从 wᵢ 到 c 正序</strong></td></tr><tr><td>例题最优值（同数据）</td><td>15，x = (1, 1, 0, 0, 1)</td><td>30，x = (5, 0, 0, 0, 0)</td></tr></tbody></table><p><strong>为什么一维滚动的方向不同（经典考点）</strong>：把二维表压成一维 f[j] 后，更新 f[j] 用到的 f[j − wᵢ] 该是"上一层"还是"本层"？</p><ul><li>0-1 背包：转移要的是<strong>下一行</strong>（上一轮的 i+1 层）值——j <strong>倒序</strong>枚举时 f[j − wᵢ] 尚未被本轮更新，恰好保留上一层值，同一件物品不会被装第二次；</li><li>完全背包：转移要的是<strong>本行</strong>（本轮的 i 层）值——j <strong>正序</strong>枚举时 f[j − wᵢ] 已被本轮更新为本层值，"装一件后还能继续装"得以实现。</li></ul><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 一维滚动数组（只求最优值时，空间 O(c)）</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = c;  j &gt;= w[i]; j--)   <span class="hljs-comment">// 0-1 背包：倒序</span><br>        f[j] = max(f[j], f[j-w[i]] + v[i]);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = w[i]; j &lt;= c;  j++)   <span class="hljs-comment">// 完全背包：正序</span><br>        g[j] = max(g[j], g[j-w[i]] + v[i]);<br>}<br></code></pre></td></tr></tbody></table></figure><p>方向写反，0-1 背包就悄悄变成完全背包（同一件物品被重复装入），这是最隐蔽的错误来源。</p>
+          </div>
+<h4 id="算法实现与-SORTBOT-小结-v2">算法实现与 SORTBOT 小结</h4>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 完全背包：二维 m 表（与 3.10 的 Knapsack 只差一个下标）</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= c; j++)<br>    m[n][j] = j / w[n] * v[n];                        <span class="hljs-comment">// 第 n 行：能装几件装几件</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = n - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">1</span>; i--)<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt;= c; j++) {<br>        m[i][j] = m[i+<span class="hljs-number">1</span>][j];<br>        <span class="hljs-keyword">if</span> (j &gt;= w[i])<br>            m[i][j] = max(m[i][j], m[i][j-w[i]] + v[i]);   <span class="hljs-comment">// 注意：第二项是本行 m[i]</span><br>    }<br><span class="hljs-comment">// 回溯：若 m[i][c] != m[i+1][c] → 装一件物品 i（x[i]++），c -= w[i]，i 不前进——继续尝试同种物品</span><br></code></pre></td></tr></tbody></table></figure>
+<ul>
+<li><strong>Subproblem</strong>: m(i, j) —— 容量 j、可选物品 i…n（每种无限件）的最大价值；</li>
+<li><strong>Original Problem</strong>: m(1, c)；</li>
+<li><strong>Relation</strong>: $m(i,j) = \max\lbrace m(i{+}1,j),\ m(i,j-w_i)+v_i\rbrace$——"至少装一件"后<strong>停在本行</strong>；</li>
+<li><strong>Topology</strong>: m(i, j)，自下而上逐行，<strong>行内 j 从小到大</strong>（本行自依赖要求 j − wᵢ 先算好）；</li>
+<li><strong>Base case</strong>: m(n+1, j) = 0；</li>
+<li><strong>Original Solution</strong>: m[i][c] ≠ m[i+1][c] 则装一件物品 i 且 <strong>i 不前进</strong>，xᵢ 计件数；</li>
+<li><strong>Time Complexity</strong>: O(nc)。</li>
+</ul>
+<div class="note note-info">
+            <p><strong>配套练习</strong>：对 3.10 的练习数据（n = 5，c = 10，W = (1, 5, 4, 2, 2)，V = (4, 6, 4, 3, 2)）按完全背包求解：物品 1 重量仅 1、价值 4，性价比最高且可重复装，装满最优——<strong>m(1, j) = 4j，m(1, 10) = 40，x = (10, 0, 0, 0, 0)</strong>（对比 0-1 背包的 15）。同一组数据在两种背包下 15 → 40 的巨大差异再次说明：<strong>子问题的定义决定转移方程，一个下标之差就是两道题。</strong></p>
+          </div>
+<hr>
 <h3 id="小结与考点">小结与考点</h3>
 <blockquote>
 <p>本章按讲次持续补充，以下是已整理题目的横向对比与考试注意事项。</p>
@@ -873,9 +991,33 @@ $$</p>
 <td>O(n²)</td>
 <td>LIS（O(n²)/O(n log n)）</td>
 </tr>
+<tr>
+<td>3.9 流水作业调度</td>
+<td>T(S,t)：t 时刻起加工作业集 S 的最短时间</td>
+<td>相邻两作业 i、j 谁在前（Johnson 不等式）</td>
+<td>口诀：M1 小的在前、M2 小的在后</td>
+<td>O(n log n)</td>
+<td>通用 DP T(S,t)（指数量级，仅用于推导）</td>
+</tr>
+<tr>
+<td>3.10 0-1背包</td>
+<td>m(i,j)：容量 j、物品 i…n 的最大价值</td>
+<td>物品 i 放不放（取 max）</td>
+<td>m(i,j)=max{m(i+1,j), m(i+1,j−wᵢ)+vᵢ}</td>
+<td>O(nc)</td>
+<td>跳跃点法 O(min{nc, 2ⁿ})</td>
+</tr>
+<tr>
+<td>完全背包</td>
+<td>m(i,j)：容量 j、物品 i…n（每种无限件）</td>
+<td>物品 i 装几件 → 装一件后停本行</td>
+<td>m(i,j)=max{m(i+1,j), m(i,j−wᵢ)+vᵢ}</td>
+<td>O(nc)</td>
+<td>一维滚动（j 正序枚举）</td>
+</tr>
 </tbody>
 </table>
-<p>共同心法：<strong>站在"最后一个元素"做决策</strong>——问"最后一段有多长"（木条、矩阵连乘、图像压缩）还是"最后一个元素选不选"（LCS、电路布线、最大子段和）；决策枚举完取 min/max，记录标记数组，自底向上填表，再回溯构造解。一维状态沿长度递增填；二维状态或按行（LCS、电路布线）或按对角线/链长（矩阵连乘、三角剖分）。</p>
+<p>共同心法：<strong>站在"最后一个元素"做决策</strong>——问"最后一段有多长"（木条、矩阵连乘、图像压缩）还是"最后一个元素选不选"（LCS、电路布线、最大子段和、0-1 背包）；决策枚举完取 min/max，记录标记数组，自底向上填表，再回溯构造解。一维状态沿长度递增填；二维状态或按行（LCS、电路布线）或按对角线/链长（矩阵连乘、三角剖分）；0-1 背包按行<strong>自下而上</strong>，完全背包多了一层"本行自依赖"。流水作业调度反其道而行——不逐格填表，先用 Johnson 法则（M1 小的在前、M2 小的在后）一步排序出最优次序，口诀记牢即可。</p>
 <h4 id="画表要求">画表要求</h4>
 <ol>
 <li><strong>矩阵连乘 / 三角剖分</strong>：画 m[i][j]（或 t[i][j]）上三角表 + s[i][j] 断点表，<strong>按链长（对角线）从短到长填</strong>，最后给出由 s 表递归加括号的最优解；</li>
@@ -883,11 +1025,13 @@ $$</p>
 <li><strong>最大子段和</strong>：列 a[i] / dp(i) / 是否重置 三行小表，dp 最大处即最优子段终点；</li>
 <li><strong>图像压缩</strong>：画候选值三角表（行 = 最后一段长度 k，列 = 像素个数 i，格 = s[i−k] + k·b_max + 11），逐列取最小，另列 s / l / b 三行汇总表；</li>
 <li><strong>电路布线</strong>：画 Size[i][j] 二维表（行 = 线号 i，列 = 下端上限 j），逐行填：j &lt; π(i) 照抄上一行、j ≥ π(i) 取 max；回溯路径在表上标出；</li>
+<li><strong>0-1 / 完全背包</strong>：画 m[i][j] 表（行 = 物品 i，<strong>自下而上</strong>从 n 到 1；列 = 容量 j 从 1 到 c），每格 j &lt; wᵢ 照抄下一行、j ≥ wᵢ 取 max{m[i+1][j], m[i+1][j−wᵢ]+vᵢ}（完全背包第二项换成本行 m[i][j−wᵢ]）；回溯比较 m[i][c] 与 m[i+1][c]（不同则 xᵢ=1、c−=wᵢ），到 xₙ 特判；</li>
+<li><strong>流水作业调度</strong>：按口诀分组排序给出次序（N₁ = {aᵢ ≤ bᵢ} 按 aᵢ 升序在前，N₂ 按 bᵢ 降序在后），再列两台机器的逐任务完成时刻（甘特图）验证总完工时间；</li>
 <li>答题顺序：<strong>(a) 先写"考察最后一个元素"的推导 → (b) 再写状态转移方程（分段函数 / min-max 式）→ © 最后填表并给出最优解</strong>。</li>
 </ol>
 <h4 id="易错点">易错点</h4>
 <div class="note note-warning">
-            <ul><li>矩阵连乘：合并代价是 <strong>p_{i−1}·p_k·p_j</strong>（左链行数 × 断点处维数 × 右链列数），三个下标别写错；填表顺序是<strong>按链长</strong>不是按行；m[i][i] = 0 是边界。</li><li>LCS：c[i][j] 的 i 对应 X 的前缀、j 对应 Y 的前缀，别串轴；x_i = y_j 时<strong>必须</strong>取 c[i−1][j−1]+1（可证明不会更差）；LCS 不唯一，b 表在 c[i−1][j] = c[i][j−1] 时取 ↑ 或 ← 都对，只是回溯出的子序列可能不同。</li><li>最大子段和：dp(i) 的定义是"<strong>以 i 结尾</strong>"的最大和，不是"前 i 项"的最大和（后者无最优子结构）；全局答案是 max dp(i) 不是 dp(n)；全负序列答案为 0。</li><li>三角剖分：t[i][j] 对应子多边形 {v_{i−1}, ⋯, v_j}（含 j−i+2 个顶点），答案是 <strong>t[1][n]</strong>（顶点 v₀…v_n 共 n+1 个）；t[i][i+1] = 单个三角形的权，是递推起点。</li><li>木条游戏：段长受价格表长度限制；"整根不切"未必最优（如长 6 整根 15 &lt; 3+3 = 16）。</li><li>图像压缩：段头是 <strong>11 位（8 位段长 + 3 位位数）</strong>，别漏加；段内位数取<strong>段中最大灰度</strong>的位数；每段最多 <strong>256</strong> 个像素（k 的上限）；s[i] 加 11 放在 min 外面和里面等价（每个候选恰含一个新段头），代码里放在外面。</li><li>电路布线：j ≥ π(i) 选线时收缩到 <strong>Size(i−1, π(i)−1) + 1</strong>，不是 Size(i−1, j−1) + 1——选了 (i, π(i)) 后其余线被 π(i) 卡住，与 j 无关；回溯到 i = 1 要<strong>特判</strong>；MNS 是"选出的线两两不交"的最大集合，不是把所有线都检验一遍。</li><li>图像压缩例 {7,6,5,8,129,138,1} 的最优解 62 位<strong>大于</strong>定长 56 位：DP 求的是"该变长编码方案下"的最优，不代表一定比定长好——段头开销在小规模下可能吞掉收益，答题时按方程算即可。</li></ul>
+            <ul><li>矩阵连乘：合并代价是 <strong>p_{i−1}·p_k·p_j</strong>（左链行数 × 断点处维数 × 右链列数），三个下标别写错；填表顺序是<strong>按链长</strong>不是按行；m[i][i] = 0 是边界。</li><li>LCS：c[i][j] 的 i 对应 X 的前缀、j 对应 Y 的前缀，别串轴；x_i = y_j 时<strong>必须</strong>取 c[i−1][j−1]+1（可证明不会更差）；LCS 不唯一，b 表在 c[i−1][j] = c[i][j−1] 时取 ↑ 或 ← 都对，只是回溯出的子序列可能不同。</li><li>最大子段和：dp(i) 的定义是"<strong>以 i 结尾</strong>"的最大和，不是"前 i 项"的最大和（后者无最优子结构）；全局答案是 max dp(i) 不是 dp(n)；全负序列答案为 0。</li><li>三角剖分：t[i][j] 对应子多边形 {v_{i−1}, ⋯, v_j}（含 j−i+2 个顶点），答案是 <strong>t[1][n]</strong>（顶点 v₀…v_n 共 n+1 个）；t[i][i+1] = 单个三角形的权，是递推起点。</li><li>木条游戏：段长受价格表长度限制；"整根不切"未必最优（如长 6 整根 15 &lt; 3+3 = 16）。</li><li>图像压缩：段头是 <strong>11 位（8 位段长 + 3 位位数）</strong>，别漏加；段内位数取<strong>段中最大灰度</strong>的位数；每段最多 <strong>256</strong> 个像素（k 的上限）；s[i] 加 11 放在 min 外面和里面等价（每个候选恰含一个新段头），代码里放在外面。</li><li>电路布线：j ≥ π(i) 选线时收缩到 <strong>Size(i−1, π(i)−1) + 1</strong>，不是 Size(i−1, j−1) + 1——选了 (i, π(i)) 后其余线被 π(i) 卡住，与 j 无关；回溯到 i = 1 要<strong>特判</strong>；MNS 是"选出的线两两不交"的最大集合，不是把所有线都检验一遍。</li><li>图像压缩例 {7,6,5,8,129,138,1} 的最优解 62 位<strong>大于</strong>定长 56 位：DP 求的是"该变长编码方案下"的最优，不代表一定比定长好——段头开销在小规模下可能吞掉收益，答题时按方程算即可。</li><li>0-1 背包：课件约定 m(i, j) 的可选物品是 <strong>i…n（后缀）</strong>，填表从第 n 行<strong>自下而上</strong>；j &lt; wᵢ 的格子照抄下一行、<strong>不能加价值</strong>；回溯比较 m[i][c] 与 m[i+1][c] 判断是否装入，到 xₙ 要<strong>特判</strong>（m[n][c] &gt; 0 则装）。</li><li>完全背包：与 0-1 的转移<strong>只差一个下标</strong>（m(i+1, j−wᵢ) → m(i, j−wᵢ)）；一维滚动时 <strong>0-1 背包 j 倒序、完全背包 j 正序</strong>，方向写反两道题互串（0-1 会变成重复装入）。</li><li>跳跃点法：p[i] 由 p[i+1] ∪ (p[i+1] ⊕ (wᵢ, vᵢ)) 合并<strong>清受控点</strong>得到，(0,0) 恒为跳跃点；跳跃点按容量、价值<strong>均严格递增</strong>排列，否则就是受控点没删干净。</li><li>流水作业调度：N₁ 的分组标准是 <strong>aᵢ ≤ bᵢ</strong>（M1 时间不大于 M2 时间的归 N₁，按 aᵢ 升序在前；N₂ 按 bᵢ 降序在后）；Johnson 法则是<strong>充分条件</strong>，最优调度不唯一，按法则给出一个最优次序并用完成时刻验证即可。</li></ul>
           </div>
 
                 
@@ -955,7 +1099,7 @@ $$</p>
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>October 23, 2026</div>
+          <div>October 30, 2026</div>
         </div>
       
       

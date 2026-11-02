@@ -27,7 +27,7 @@
 <meta property="og:description" content="目前主要跟着这个项目学习：glm-5.3-flash-from-scratch 推荐资料  LLMs-from-scratch：《Build a Large Language Model (From Scratch)》配套仓库，从零一步步搭 GPT nanoGPT：Karpathy 的极简 GPT 训练实现，读懂主干架构的最佳参考 minbpe：Karpathy 的极简 BPE 分词器实现，学 T">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-10-22T07:08:13.000Z">
-<meta property="article:modified_time" content="2026-10-23T06:12:17.661Z">
+<meta property="article:modified_time" content="2026-11-01T14:26:09.360Z">
 <meta property="article:author" content="Li Qinxuan">
 <meta property="article:tag" content="Agent">
 <meta property="article:tag" content="LLM">
@@ -302,7 +302,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          186 words
+          1k words
         
       </span>
     
@@ -313,7 +313,7 @@
         
         
         
-          2 mins
+          9 mins
         
       </span>
     
@@ -379,6 +379,33 @@
 <li><strong>SFT</strong>：在预训练模型的基础上做监督微调</li>
 <li><strong>模型后续点</strong>：训练跑通之后，再深入一些模型的改进方向</li>
 </ol>
+<h4 id="Tokenizer：手动实现一个简单分词器">Tokenizer：手动实现一个简单分词器</h4>
+<p>从分词器开始，先手动实现一个最简单的版本，整体思路是：</p>
+<ol>
+<li>预设一个数据集，作为我们的语料库；</li>
+<li>对语料库做字符串处理，按标点和空格把内容切分开，切出来的 token 只有单词和标点两类；</li>
+<li>对所有 token 去重——词表里不可能让同一个单词对应两个不同的 token ID；</li>
+<li>再做 sort 排序，排序对程序本身意义不大，主要是方便查看；</li>
+<li>最后给每个 token 一一编号，构造出「token → token ID」的键值对，词表（vocab）就建好了。</li>
+</ol>
+<p>之后编码走的还是同样的流程：把句子拆分成单个的 token（通常是单词和标点），再拿它们去查前面构造好的词表，按键值对找到每个单词对应的 token ID，把数字输出出来。</p>
+<p>测试的时候，可以额外加一段不属于语料库的句子进来。这时会发现有些词在词表里查不到——这个词表太小，没办法涵盖所有单词，直接查就会报错。所以一般还会往词表里加几个特殊 token：</p>
+<ol>
+<li><code>&lt;|endoftext|&gt;</code>：标记文本的开始与结束，用来分隔两段不相关的文本；</li>
+<li><code>&lt;|unk|&gt;</code>：词表里识别不了的词统一归为这一类，放在词表末尾。</li>
+</ol>
+<p>有了这两个特殊 token，遇到生词时程序就不会报错了。对应的就是 <code>SimpleTokenizerV2</code> 的实现：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">SimpleTokenizerV2</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, vocab</span>):<br>        <span class="hljs-variable language_">self</span>.str_to_int = vocab<br>        <span class="hljs-variable language_">self</span>.int_to_str = { i:s <span class="hljs-keyword">for</span> s,i <span class="hljs-keyword">in</span> vocab.items()}<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">encode</span>(<span class="hljs-params">self, text</span>):<br>        preprocessed = re.split(<span class="hljs-string">r'([,.:;?_!"()\']|--|\s)'</span>, text)<br>        preprocessed = [item.strip() <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> preprocessed <span class="hljs-keyword">if</span> item.strip()]<br>        preprocessed = [<br>            item <span class="hljs-keyword">if</span> item <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.str_to_int<br>            <span class="hljs-keyword">else</span> <span class="hljs-string">"&lt;|unk|&gt;"</span> <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> preprocessed<br>        ]<br><br>        ids = [<span class="hljs-variable language_">self</span>.str_to_int[s] <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> preprocessed]<br>        <span class="hljs-keyword">return</span> ids<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">decode</span>(<span class="hljs-params">self, ids</span>):<br>        text = <span class="hljs-string">" "</span>.join([<span class="hljs-variable language_">self</span>.int_to_str[i] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> ids])<br>        <span class="hljs-comment"># Replace spaces before the specified punctuations</span><br>        text = re.sub(<span class="hljs-string">r'\s+([,.:;?!"()\'])'</span>, <span class="hljs-string">r'\1'</span>, text)<br>        <span class="hljs-keyword">return</span> text<br></code></pre></td></tr></tbody></table></figure>
+<p>其中 <code>encode</code> 负责把文本转成 token ID 序列，<code>decode</code> 再把 ID 还原成文本（顺带去掉标点前多出来的空格）。</p>
+<h4 id="BPE-分词器（tiktoken）">BPE 分词器（tiktoken）</h4>
+<p>上面是我们手动实现的分词器，实际使用中也可以直接用现成的 BPE（Byte Pair Encoding，字节对编码）分词器来完成。它的好处是：</p>
+<ol>
+<li><strong>词表更大、分词更精细</strong>：不再是我们手写的那种小词表，比如 <code>cl100k_base</code> 就有约 10 万个 token；</li>
+<li><strong>不会卡在不认识的单词上</strong>：手写版本遇到词表外的词只能归到 <code>&lt;|unk|&gt;</code>，而 BPE 会把不认识的词拆成更小的子词单元。比如 unfamiliar 可以把 un 拆出来，unhappiness 可以拆成 un / happi / ness 这样的几部分——一个长单词总能拆到词表里已有的单元为止（极端情况下拆到字节级别），所以任何新词都能表示出来，也就不需要 <code>&lt;|unk|&gt;</code> 了。</li>
+</ol>
+<p>用 tiktoken 试一下 encode / decode 的完整流程：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> tiktoken<br><br><span class="hljs-comment"># Choose an encoding that matches the models you might be using (e.g., for GPT-4, GPT-3.5-turbo)</span><br>encoding = tiktoken.get_encoding(<span class="hljs-string">"cl100k_base"</span>)<br>text_en = <span class="hljs-string">"Hello, world! This is a test sentence for tiktoken."</span><br><br><span class="hljs-comment"># --- Encode (Text to Token IDs) ---</span><br><span class="hljs-comment"># encode() converts the string into a list of integer token IDs</span><br>token_ids_en = encoding.encode(text_en)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f"Original English Text: '<span class="hljs-subst">{text_en}</span>'"</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f"Encoded Token IDs (English): <span class="hljs-subst">{token_ids_en}</span>"</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f"Number of tokens (English): <span class="hljs-subst">{<span class="hljs-built_in">len</span>(token_ids_en)}</span>"</span>)<br><br><span class="hljs-comment"># To see the actual tokens that correspond to the IDs (optional, for understanding)</span><br><span class="hljs-comment"># This requires decoding each ID individually or using a helper.</span><br><span class="hljs-comment"># Note: decoding individual IDs might not always yield readable strings if tokens are sub-word units.</span><br>decoded_parts_en = [encoding.decode([token_id]) <span class="hljs-keyword">for</span> token_id <span class="hljs-keyword">in</span> token_ids_en]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f"Decoded Parts (English, for understanding): <span class="hljs-subst">{decoded_parts_en}</span>"</span>)<br><br><span class="hljs-comment"># --- Decode (Token IDs to Text) ---</span><br><span class="hljs-comment"># decode() converts a list of integer token IDs back into a string</span><br>decoded_text_en = encoding.decode(token_ids_en)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f"Decoded English Text: '<span class="hljs-subst">{decoded_text_en}</span>'"</span>)<br><br>decoded_modified = [encoding.decode([token_id + <span class="hljs-number">1</span>]) <span class="hljs-keyword">for</span> token_id <span class="hljs-keyword">in</span> token_ids_en]<br><span class="hljs-built_in">print</span>(decoded_modified)<br><br><span class="hljs-comment"># Check if decoded text matches original (should be True)</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f"Decoded matches original? <span class="hljs-subst">{decoded_text_en == text_en}</span>"</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f"After Modifications? <span class="hljs-subst">{decoded_modified == text_en}</span>"</span>)<br></code></pre></td></tr></tbody></table></figure>
+<p>最后几行是个小实验：把每个 token ID 加 1 再解码，得到的文本和原文完全对不上。这说明 token ID 只是词表里的编号，数字上的加减并不对应语义上的变化——改动一个 ID，查出来的就是另一个完全不同的 token。</p>
 
                 
               </div>
@@ -445,7 +472,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Updated on</div>
-          <div>October 23, 2026</div>
+          <div>November 1, 2026</div>
         </div>
       
       
