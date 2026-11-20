@@ -1,0 +1,1262 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本文整理《算法设计与分析》第 5 章（回溯法）与第 6 章（分支限界法）——课程的算法实现与分析部分，按&quot;知识点 + 典型题目 + 搜索树&#x2F;过程表解析&quot;组织：每道典型题给出解空间树、约束&#x2F;限界函数、完整搜索过程与答案，树状图用等宽字符画出，队列演化用表格填写，重点难点使用 Hexo note 标签标注。前两篇见 Algorithm Design and Analysis（第 1、2 章）与 Al">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorithm Design and Analysis: Backtracking and Branch-and-Bound">
+<meta property="og:url" content="http://example.com/2026/11/13/Review/Algorithm-Design-and-Analysis-Backtracking-BnB/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="本文整理《算法设计与分析》第 5 章（回溯法）与第 6 章（分支限界法）——课程的算法实现与分析部分，按&quot;知识点 + 典型题目 + 搜索树&#x2F;过程表解析&quot;组织：每道典型题给出解空间树、约束&#x2F;限界函数、完整搜索过程与答案，树状图用等宽字符画出，队列演化用表格填写，重点难点使用 Hexo note 标签标注。前两篇见 Algorithm Design and Analysis（第 1、2 章）与 Al">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-11-13T13:30:00.000Z">
+<meta property="article:modified_time" content="2026-11-13T16:08:38.442Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta property="article:tag" content="Review">
+<meta property="article:tag" content="Algorithm Design and Analysis">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Algorithm Design and Analysis: Backtracking and Branch-and-Bound - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LQX&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/other/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>Else</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/other/life-musings/" target="_self">
+                    
+                    <span>精进日记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/08/13/other/Casual-Chronicles/" target="_self">
+                    
+                    <span>生活杂谈</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/banner_img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Algorithm Design and Analysis: Backtracking and Branch-and-Bound"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-11-13 21:30" pubdate>
+          November 13, 2026 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          100 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Algorithm Design and Analysis: Backtracking and Branch-and-Bound</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>本文整理《算法设计与分析》第 5 章（回溯法）与第 6 章（分支限界法）——课程的<strong>算法实现与分析</strong>部分，按"知识点 + 典型题目 + 搜索树/过程表解析"组织：每道典型题给出<strong>解空间树、约束/限界函数、完整搜索过程与答案</strong>，树状图用等宽字符画出，队列演化用表格填写，重点难点使用 Hexo <code>note</code> 标签标注。前两篇见 <a href="/2026/10/23/Review/Algorithm-Design-and-Analysis/">Algorithm Design and Analysis</a>（第 1、2 章）与 <a href="/2026/10/23/Review/Algorithm-Design-and-Analysis-DP/">Algorithm Design and Analysis: Dynamic Programming</a>（第 3 章）。</p>
+</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul>
+<li><a href="#%E7%AC%AC5%E7%AB%A0-%E5%9B%9E%E6%BA%AF%E6%B3%95">第5章 回溯法</a>
+<ul>
+<li><a href="#5-1-%E5%9B%9E%E6%BA%AF%E6%B3%95%E7%9A%84%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6">5.1 回溯法的算法框架</a></li>
+<li><a href="#%E4%BE%8B1%EF%BC%9A0-1%E8%83%8C%E5%8C%85%E7%9A%84%E5%9B%9E%E6%BA%AF%E6%90%9C%E7%B4%A2%E8%BF%87%E7%A8%8B">例1：0-1背包的回溯搜索过程</a></li>
+<li><a href="#%E4%BE%8B2%EF%BC%9A%E8%A3%85%E8%BD%BD%E9%97%AE%E9%A2%98%E4%B8%8E%E4%B8%8A%E7%95%8C%E5%87%BD%E6%95%B0">例2：装载问题与上界函数</a></li>
+<li><a href="#%E4%BE%8B3%EF%BC%9A0-1%E8%83%8C%E5%8C%85%E7%9A%84%E9%99%90%E7%95%8C%E5%87%BD%E6%95%B0%E4%B8%8E%E5%89%AA%E6%9E%9D%E6%90%9C%E7%B4%A2">例3：0-1背包的限界函数与剪枝搜索</a></li>
+<li><a href="#%E4%BE%8B4%EF%BC%9A%E6%89%B9%E5%A4%84%E7%90%86%E4%BD%9C%E4%B8%9A%E8%B0%83%E5%BA%A6%EF%BC%88%E6%8E%92%E5%88%97%E6%A0%91%EF%BC%89">例4：批处理作业调度（排列树）</a></li>
+<li><a href="#%E4%BE%8B5%EF%BC%9A%E5%9B%BE%E7%9A%84-m-%E7%9D%80%E8%89%B2%E9%97%AE%E9%A2%98">例5：图的 m 着色问题</a></li>
+<li><a href="#%E4%BE%8B6%EF%BC%9AN-%E7%9A%87%E5%90%8E%E9%97%AE%E9%A2%98">例6：N 皇后问题</a></li>
+<li><a href="#%E4%BE%8B7%EF%BC%9A%E6%97%85%E8%A1%8C%E5%95%86%E9%97%AE%E9%A2%98-TSP">例7：旅行商问题 TSP</a></li>
+<li><a href="#%E4%BE%8B8%EF%BC%9A%E5%AD%90%E9%9B%86%E5%92%8C%E9%97%AE%E9%A2%98">例8：子集和问题</a></li>
+<li><a href="#5-2-%E5%B0%8F%E7%BB%93%E4%B8%8E%E8%80%83%E7%82%B9%EF%BC%88%E5%9B%9E%E6%BA%AF%E6%B3%95%EF%BC%89">5.2 小结与考点（回溯法）</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AC%AC6%E7%AB%A0-%E5%88%86%E6%94%AF%E9%99%90%E7%95%8C%E6%B3%95">第6章 分支限界法</a>
+<ul>
+<li><a href="#6-1-%E5%88%86%E6%94%AF%E9%99%90%E7%95%8C%E6%B3%95%E7%9A%84%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6">6.1 分支限界法的算法框架</a></li>
+<li><a href="#%E4%BE%8B1%EF%BC%9A0-1%E8%83%8C%E5%8C%85%E7%9A%84%E9%98%9F%E5%88%97%E5%BC%8F%E5%88%86%E6%94%AF%E9%99%90%E7%95%8C">例1：0-1背包的队列式分支限界</a></li>
+<li><a href="#%E4%BE%8B2%EF%BC%9A0-1%E8%83%8C%E5%8C%85%E7%9A%84%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E5%BC%8F%E5%88%86%E6%94%AF%E9%99%90%E7%95%8C">例2：0-1背包的优先队列式分支限界</a></li>
+<li><a href="#%E4%BE%8B3%EF%BC%9A%E5%B8%A6%E4%B8%8A%E7%95%8C%E5%87%BD%E6%95%B0%E7%9A%84%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E5%BC%8F%E5%88%86%E6%94%AF%E9%99%90%E7%95%8C">例3：带上界函数的优先队列式分支限界</a></li>
+<li><a href="#%E4%BE%8B4%EF%BC%9A%E8%A3%85%E8%BD%BD%E9%97%AE%E9%A2%98%E7%9A%84%E9%98%9F%E5%88%97%E5%BC%8F%E5%88%86%E6%94%AF%E9%99%90%E7%95%8C">例4：装载问题的队列式分支限界</a></li>
+<li><a href="#%E4%BE%8B5%EF%BC%9A%E8%A3%85%E8%BD%BD%E9%97%AE%E9%A2%98%E7%9A%84%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E5%BC%8F%E5%88%86%E6%94%AF%E9%99%90%E7%95%8C">例5：装载问题的优先队列式分支限界</a></li>
+<li><a href="#%E4%BE%8B6%EF%BC%9ATSP-%E7%9A%84%E5%88%86%E6%94%AF%E9%99%90%E7%95%8C%E6%B1%82%E8%A7%A3">例6：TSP 的分支限界求解</a></li>
+<li><a href="#6-2-%E5%9B%9E%E6%BA%AF%E6%B3%95%E4%B8%8E%E5%88%86%E6%94%AF%E9%99%90%E7%95%8C%E6%B3%95%E5%AF%B9%E6%AF%94">6.2 回溯法与分支限界法对比</a></li>
+</ul>
+</li>
+<li><a href="#%E5%B0%8F%E7%BB%93%E4%B8%8E%E8%80%83%E7%82%B9">小结与考点</a></li>
+</ul>
+<hr>
+<h2 id="第5章-回溯法">第5章 回溯法</h2>
+<p><strong>学习要求</strong>：理解回溯法的<strong>深度优先搜索</strong>策略；掌握回溯法解题的算法框架——(1) 子集树算法框架、(2) 排列树算法框架；通过应用范例学习回溯法的设计策略。</p>
+<h3 id="5-1-回溯法的算法框架">5.1 回溯法的算法框架</h3>
+<h4 id="基本概念：解空间与三类结点">基本概念：解空间与三类结点</h4>
+<div class="note note-info">
+            <p><strong>回溯法</strong>：类似穷举的搜索尝试过程，在搜索尝试过程中寻找问题的解——但"回头是岸"：搜索<strong>组织得井井有条</strong>（解空间树保证不遗漏）、<strong>高效</strong>（剪枝避免不必要的搜索）。</p><p>用回溯法解题时，应首先<strong>明确定义问题的解空间</strong>：问题的解空间至少应包含问题的一个（最优）解。解空间一般写成 <strong>n-元组</strong> (x₁, x₂, …, xₙ) 的形式，用一棵<strong>树</strong>表示（例：0-1 背包 n = 3 时解空间为 8 个 0/1 三元组，对应一棵 3 层完全二叉树，左分支"放入"、右分支"不放入"）。</p><p>搜索过程中的三类结点：</p><table><thead><tr><th>结点</th><th>定义</th></tr></thead><tbody><tr><td><strong>扩展结点</strong></td><td>正在产生儿子的结点</td></tr><tr><td><strong>活结点</strong></td><td>自身已生成，但其儿子还没有全部生成</td></tr><tr><td><strong>死结点</strong></td><td>不满足约束，或所有儿子已经产生——不能向纵深方向移动</td></tr></tbody></table><p>引入动机（课堂例子）：<strong>罗密欧与朱丽叶迷宫问题</strong>——一些互相连通的交叉路口，给定入口与出口，存在通路时输出一条通路。走"死路"就退回来换一条走，这正是回溯的直观形象。</p>
+          </div>
+<h4 id="解空间的两种结构：子集树与排列树">解空间的两种结构：子集树与排列树</h4>
+<div class="note note-info">
+            <ul><li><strong>子集树</strong>：与"每个元素的选/不选"类问题对应，如 0-1 背包问题。n 个元素的子集树有 <strong>2ⁿ 个叶结点</strong>，遍历需 <strong>O(2ⁿ)</strong> 时间；</li><li><strong>排列树</strong>：与"n 个元素排成一列"类问题对应，如旅行售货员问题（TSP）。树中从根至叶的路径集合构成解空间，(n−1)! 个叶子（固定起点时），遍历需 <strong>O(n!)</strong> 时间。</li></ul><p>满足所有约束条件的解状态结点称为<strong>回答结点</strong>（叶结点）。</p>
+          </div>
+<h4 id="剪枝函数：约束函数与限界函数">剪枝函数：约束函数与限界函数</h4>
+<div class="note note-info">
+            <p>回溯法按<strong>深度优先</strong>策略从根开始搜索解空间：搜索到任一结点时，判断该点是否包含问题的解——包含则继续向下深度优先搜索，否则<strong>跳过该结点以下的子树（剪枝）</strong>，向上逐级回溯。剪枝函数有两类：</p><ol><li><strong>约束函数 Constraint</strong>：在扩展结点处剪去<strong>不满足约束条件</strong>的子树（可行性剪枝）；</li><li><strong>限界函数 Bound</strong>：剪去<strong>得不到最优解</strong>的子树（最优性剪枝——从根到当前扩展结点的部分解已有的代价/收益，配上子树的最优可能值，若已不可能超过当前最优解，则整棵子树剪掉）。</li></ol><div class="note note-warning">            <p><strong>回溯法为什么比穷举法效率高？</strong> 使用约束函数和限界函数分别剪去不满足约束的子树和不能产生最优解的子树，避免无效搜索。但注意：最坏情况下仍要遍历整棵树——子集树 O(2ⁿ)、排列树 O(n!)，剪枝改进的是<strong>平均/实际</strong>搜索量，不改变最坏复杂度阶。</p>          </div>
+          </div>
+<h4 id="算法框架与复杂度">算法框架与复杂度</h4>
+<div class="note note-info">
+            <p>回溯法对解空间作深度优先搜索，一般用<strong>递归</strong>实现，t 表示搜索深度：</p><figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> t)</span>                <span class="hljs-comment">// 通用框架</span><br>{<br>    <span class="hljs-keyword">if</span> (t &gt; n) output(x);            <span class="hljs-comment">// 到达叶结点，输出一个解</span><br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = f(n,t); i &lt;= g(n,t); i++) {<br>            <span class="hljs-comment">// f(n,t)、g(n,t)：当前扩展结点处未搜索过的子树的起始、终止编号</span><br>            x[t] = h(i);             <span class="hljs-comment">// h(i)：x[t] 的第 i 个可选值</span><br>            <span class="hljs-keyword">if</span> (Constraint(t) &amp;&amp; Bound(t))   <span class="hljs-comment">// 约束函数 + 限界函数</span><br>                backtrack(t + <span class="hljs-number">1</span>);<br>        }<br>}<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> t)</span>                <span class="hljs-comment">// 子集树框架（0/1 选择）</span><br>{<br>    <span class="hljs-keyword">if</span> (t &gt; n) output(x);<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= <span class="hljs-number">1</span>; i++) {<br>            x[t] = i;<br>            <span class="hljs-keyword">if</span> (legal(t)) backtrack(t + <span class="hljs-number">1</span>);<br>        }<br>}<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> t)</span>                <span class="hljs-comment">// 排列树框架（换位生成排列）</span><br>{<br>    <span class="hljs-keyword">if</span> (t &gt; n) output(x);<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = t; i &lt;= n; i++) {<br>            swap(x[t], x[i]);        <span class="hljs-comment">// 第 i 个元素放到第 t 位</span><br>            <span class="hljs-keyword">if</span> (legal(t)) backtrack(t + <span class="hljs-number">1</span>);<br>            swap(x[t], x[i]);        <span class="hljs-comment">// 回溯时换回来，保证每层枚举完整</span><br>        }<br>}<br></code></pre></td></tr></tbody></table></figure><p>复杂度：遍历<strong>子集树</strong>需 <strong>O(2ⁿ)</strong> 计算时间；遍历<strong>排列树</strong>需 <strong>O(n!)</strong> 计算时间。</p>
+          </div>
+<hr>
+<h3 id="例1：0-1背包的回溯搜索过程">例1：0-1背包的回溯搜索过程</h3>
+<h4 id="问题描述">问题描述</h4>
+<div class="note note-info">
+            <p>n = 3，C = 30，w = {16, 15, 15}，v = {45, 25, 25}。用回溯法搜索整个解空间（此例先<strong>不启用剪枝</strong>，完整演示深度优先搜索与回溯的机制）。</p><p>解空间（8 个三元组）：{(0,0,0), (0,0,1), (0,1,0), (0,1,1), (1,0,0), (1,0,1), (1,1,0), (1,1,1)}，用一棵 3 层完全二叉树表示，结点标注 <strong>Cr（剩余容量）、V（当前价值）</strong>。</p>
+          </div>
+<h4 id="解空间树与搜索过程">解空间树与搜索过程</h4>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">A(Cr=30, V=0)<br>├─1─ B(Cr=14, V=45)          放入物品1：Cr=30-16=14，V=0+45=45<br>│    ├─1─ D ✗ Cr=14 &lt; w2=15，不可行解 → 回溯到 B<br>│    └─0─ E(Cr=14, V=45)<br>│         ├─1─ J ✗ Cr=14 &lt; w3=15，不可行解 → 回溯到 E<br>│         └─0─ K ● 叶结点：x=(1,0,0)，V=45<br>└─0─ C(Cr=30, V=0)<br>     ├─1─ F(Cr=15, V=25)     放入物品2<br>     │    ├─1─ L ● 叶结点：x=(0,1,1)，Cr=0，V=50 ★ 50&gt;45<br>     │    └─0─ M ● 叶结点：x=(0,1,0)，V=25 &lt; 50<br>     └─0─ G(Cr=30, V=0)<br>          ├─1─ N ● 叶结点：x=(0,0,1)，V=25 &lt; 50<br>          └─0─ O ● 叶结点：x=(0,0,0)，V=0<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-info">
+            <p><strong>搜索轨迹</strong>（按深度优先，逐结点记录扩展/活/死状态）：</p><table><thead><tr><th style="text-align:center">步骤</th><th style="text-align:left">动作</th><th style="text-align:left">状态说明</th></tr></thead><tbody><tr><td style="text-align:center">1</td><td style="text-align:left">扩展 A，先到 B（x₁=1）</td><td style="text-align:left">Cr=14，V=45；A、B 为活结点</td></tr><tr><td style="text-align:center">2</td><td style="text-align:left">扩展 B，先到 D（x₂=1）</td><td style="text-align:left">Cr=14 &lt; w₂=15，D 导致不可行解，<strong>回溯到 B</strong></td></tr><tr><td style="text-align:center">3</td><td style="text-align:left">扩展 B，到 E（x₂=0）</td><td style="text-align:left">E 可行，A、B、E 为活结点</td></tr><tr><td style="text-align:center">4</td><td style="text-align:left">扩展 E：J（x₃=1）不可行；K（x₃=0）为叶</td><td style="text-align:left">得可行解 x=(1,0,0)，V=45；K、E、B、A 依次成为死结点</td></tr><tr><td style="text-align:center">5</td><td style="text-align:left">A 再次成为扩展结点，到 C（x₁=0）</td><td style="text-align:left">Cr=30，V=0；活结点 A、C</td></tr><tr><td style="text-align:center">6</td><td style="text-align:left">扩展 C 到 F（x₂=1），再扩展 F 到 L（x₃=1）</td><td style="text-align:left">Cr=0，V=50，<strong>50 &gt; 45</strong>，得更优可行解 x=(0,1,1)</td></tr><tr><td style="text-align:center">7</td><td style="text-align:left">扩展 F 到 M（x₃=0）</td><td style="text-align:left">V=25 &lt; 50，不是最优解</td></tr><tr><td style="text-align:center">8</td><td style="text-align:left">扩展 C 到 G（x₂=0），再到 N、O</td><td style="text-align:left">V=25、V=0，均不如 50</td></tr><tr><td style="text-align:center">9</td><td style="text-align:left">G、C、A 依次成为死结点</td><td style="text-align:left">算法结束</td></tr></tbody></table><p><strong>最优解 X = (0, 1, 1)，最优值 50</strong>（恰好装满：15 + 15 = 30）。</p><p>若在搜索中启用<strong>约束函数</strong>（超出容量 C 的子树直接剪去，即上图的 ✗ 结点），D、J 两棵子树不必生成——这正是回溯比穷举快的第一层来源；再配上限界函数还可以剪掉"不可能更优"的右子树，见例 2、例 3。</p>
+          </div>
+<hr>
+<h3 id="例2：装载问题与上界函数">例2：装载问题与上界函数</h3>
+<h4 id="问题描述-v2">问题描述</h4>
+<div class="note note-info">
+            <p>两艘轮船的载重量分别为 c₁ 与 c₂，n 个集装箱的重量 W = {w₁, …, wₙ}。问：是否存在一种合理的装载方案，可将这 n 个集装箱<strong>全部装上 2 船</strong>？（装载问题是 <strong>NP 难问题</strong>）</p><p>若问题有解，采用如下策略可得一个最优装载方案：</p><ol><li>将<strong>第一艘船尽可能装满</strong>；</li><li>将剩余的集装箱装上第二艘船。</li></ol><p>"将第一艘船尽可能装满"等价于如下 0-1 背包问题：</p><p>$$<br>\max \sum_{i=1}^{n} w_i x_i \qquad \text{s.t.} \quad \sum_{i=1}^{n} w_i x_i \le c_1,\quad x_i \in \lbrace 0, 1 \rbrace<br>$$</p><p>引例：n = 3，c₁ = c₂ = 50，w = [10, 40, 40] 时可全部装船（船 1 装 10+40）；若 w = [20, 40, 40]，则 20+40+40 = 100 &gt; 50+50，无法全部装船。</p><p><strong>算法思路</strong>：利用最优解性质（上界函数）进一步剪去不含最优解的子树。</p>
+          </div>
+<h4 id="上界函数的设计">上界函数的设计</h4>
+<div class="note note-info">
+            <p>记 <strong>cw</strong> 为当前已装载的重量，<strong>r</strong> 为剩余（尚未决策）集装箱的重量和，<strong>bestw</strong> 为当前最优载重量。子集树第 i 层结点处：</p><ul><li><strong>可行性约束函数</strong>：cw + wᵢ ≤ c₁ 时才能进入左子树（xᵢ = 1）；</li><li><strong>上界函数</strong>：进入右子树（xᵢ = 0）之前检查 <strong>cw + r &gt; bestw</strong>——把剩余集装箱<strong>全部</strong>装上也不过如此，若它不超过当前最优值 bestw，右子树不可能含更优解，直接剪去。</li></ul><p>r 在进入第 i 层时先减去 wᵢ（wᵢ 已决策），回溯时再加回来。</p>
+          </div>
+<h4 id="例题完整搜索过程（n-4，c₁-12，W-8-6-2-3-）">例题完整搜索过程（n=4，c₁=12，W={8,6,2,3}）</h4>
+<div class="note note-warning">
+            <p><strong>例 1</strong>：n = 4，c₁ = 12，W = {8, 6, 2, 3}（总重 19）。搜索过程（只画<strong>实际生成</strong>的结点）：</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs text">A(cw=0, r=19)                            bestw=0<br>├─x1=1─ B(cw=8)                          r=11<br>│   ├─x2=1─ ✗ cw=8+6=14 &gt; 12（约束剪枝，D 不生成）<br>│   └─x2=0─ E(cw=8)                      r=5<br>│       ├─x3=1─ H(cw=10)                 r=3<br>│       │   ├─x4=1─ ✗ cw=13 &gt; 12（约束剪枝）<br>│       │   └─x4=0─ ● 叶：cw=10 → bestw=10<br>│       └─x3=0─ I(cw=8)<br>│           ├─x4=1─ ● 叶：cw=8+3=11 → bestw=11 ★<br>│           └─x4=0─ ✗ cw+r=8 ≤ bestw=11（上界函数剪枝）<br>└─x1=0─ ✗ cw+r = 0+11 = 11 &gt; bestw=11 不成立（整棵右子树剪掉）<br></code></pre></td></tr></tbody></table></figure><p>关键判断：<strong>A 处进入右子树前检查 cw + r = 0 + 11 &gt; bestw = 11 不成立</strong>——剩余 3 个箱子（6+2+3=11）即使全装也只是 11，不会更好，整棵子树剪掉。</p><p><strong>最优值 bestw = 11，最优解 x = (1, 0, 0, 1)</strong>（装 8+3，恰好 11 ≤ 12）。</p>
+          </div>
+<h4 id="算法实现">算法实现</h4>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Loading</span> {</span><br>    <span class="hljs-type">int</span>  n;        <span class="hljs-comment">// 集装箱数</span><br>    Type c,        <span class="hljs-comment">// 第一艘船载重量</span><br>         *w,       <span class="hljs-comment">// 集装箱重量数组</span><br>         cw,       <span class="hljs-comment">// 当前载重量</span><br>         bestw,    <span class="hljs-comment">// 当前最优载重量</span><br>         r;        <span class="hljs-comment">// 剩余集装箱重量（未决策部分）</span><br>    <span class="hljs-type">int</span>  *x, *bestx;   <span class="hljs-comment">// 当前解 / 构造最优解</span><br>    <span class="hljs-type">void</span> <span class="hljs-title function_">Backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span>;<br>};<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Loading::Backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span>          <span class="hljs-comment">// 搜索第 i 层结点</span><br>{<br>    <span class="hljs-keyword">if</span> (i &gt; n) {                        <span class="hljs-comment">// 到达叶结点：记录最优解</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) bestx[j] = x[j];<br>        bestw = cw;<br>        <span class="hljs-keyword">return</span>;<br>    }<br>    r -= w[i];                    <span class="hljs-comment">// w[i] 即将决策，从 r 中扣除</span><br>    <span class="hljs-keyword">if</span> (cw + w[i] &lt;= c) {         <span class="hljs-comment">// 约束：装得下，进左子树 x[i]=1</span><br>        x[i] = <span class="hljs-number">1</span>;  cw += w[i];<br>        Backtrack(i + <span class="hljs-number">1</span>);<br>        x[i] = <span class="hljs-number">0</span>;  cw -= w[i];<br>    }<br>    <span class="hljs-keyword">if</span> (cw + r &gt; bestw) {         <span class="hljs-comment">// 上界：右子树可能更优才搜索 x[i]=0</span><br>        x[i] = <span class="hljs-number">0</span>;<br>        Backtrack(i + <span class="hljs-number">1</span>);<br>    }<br>    r += w[i];                    <span class="hljs-comment">// 回溯，恢复 r</span><br>}<br><br>Type <span class="hljs-title function_">MaxLoading</span><span class="hljs-params">(Type w[], Type c, <span class="hljs-type">int</span> n, <span class="hljs-type">int</span> bestx[])</span><br>{<br>    Loading X;<br>    X.w = w;  X.c = c;  X.n = n;<br>    X.bestw = <span class="hljs-number">0</span>;  X.cw = <span class="hljs-number">0</span>;             <span class="hljs-comment">// 初始化</span><br>    X.r = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) X.r += w[i];   <span class="hljs-comment">// r = 全部重量</span><br>    X.Backtrack(<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">return</span> X.bestw;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>算法复杂性：<strong>O(2ⁿ)</strong>（最坏），上界函数使实际生成的结点远少于 2ⁿ。</p>
+<hr>
+<h3 id="例3：0-1背包的限界函数与剪枝搜索">例3：0-1背包的限界函数与剪枝搜索</h3>
+<h4 id="问题描述与限界函数">问题描述与限界函数</h4>
+<div class="note note-info">
+            <p>0-1 背包求<strong>最优解</strong>（收益最大的装载方案），适合用<strong>子集树</strong>表示解空间。搜索时的两条剪枝规则：</p><ul><li><strong>约束剪枝</strong>：只要左儿子结点是一个可行结点，搜索就进入左子树（cw + wᵢ ≤ c）；</li><li><strong>限界剪枝</strong>：在右子树中<strong>有可能包含最优解</strong>时才进入右子树搜索，否则将右子树剪去——怎么限界？</li></ul><p><strong>限界函数（上界）</strong>：设当前位于结点 X 处，已考察若干物品，当前重量 cw、当前价值 cp、剩余容量 c − cw。用<strong>贪心法</strong>计算"剩余容量 + 剩余物品"构成的<strong>一般背包问题</strong>（允许只装物品的一部分）的最优值 rp，则</p><p>$$<br>bp = cp + rp<br>$$</p><p>是 X 的子树上所有可能答案结点目标函数值的<strong>上界</strong>。若 bp ≤ bestp（当前最优值），剪去该子树。</p><p>例：n = 4，c = 7，p = [9, 10, 7, 4]，w = [3, 5, 2, 1]。单位重量价值 [3, 2, 3.5, 4]，按递减序装入：物品 4 → 3 → 1 → 0.2 个物品 2，即 x = [1, 0.2, 1, 1]，价值 22——<strong>最优值不超过 22</strong>。</p>
+          </div>
+<h4 id="算法实现-v2">算法实现</h4>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Knapsack</span> {</span><br>    <span class="hljs-type">int</span>  n;        <span class="hljs-comment">// 物品数</span><br>    Type c,        <span class="hljs-comment">// 背包容量</span><br>         *w, *p,   <span class="hljs-comment">// 物品重量、价值数组（已按 p[i]/w[i] 非增序排序！）</span><br>         cw,       <span class="hljs-comment">// 当前已装重量</span><br>         cp,       <span class="hljs-comment">// 当前已装价值</span><br>         bestp;    <span class="hljs-comment">// 当前最优价值</span><br>    <span class="hljs-type">void</span> <span class="hljs-title function_">Backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span>;<br>    <span class="hljs-type">double</span> <span class="hljs-title function_">Bound</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span>;<br>};<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Knapsack::Backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span><br>{<br>    <span class="hljs-keyword">if</span> (i &gt; n) {                        <span class="hljs-comment">// 叶结点</span><br>        <span class="hljs-keyword">if</span> (cp &gt; bestp) bestp = cp;<br>        <span class="hljs-keyword">return</span>;<br>    }<br>    <span class="hljs-keyword">if</span> (cw + w[i] &lt;= c) {         <span class="hljs-comment">// 约束：可装入 → 左子树 x[i]=1</span><br>        cw += w[i];  cp += p[i];<br>        Backtrack(i + <span class="hljs-number">1</span>);<br>        cw -= w[i];  cp -= p[i];<br>    }<br>    <span class="hljs-keyword">if</span> (Bound(i + <span class="hljs-number">1</span>) &gt; bestp)     <span class="hljs-comment">// 限界：右子树可能含最优解</span><br>        Backtrack(i + <span class="hljs-number">1</span>);         <span class="hljs-comment">// x[i]=0</span><br>}<br><br><span class="hljs-type">double</span> <span class="hljs-title function_">Knapsack::Bound</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span>     <span class="hljs-comment">// 上界：贪心装满剩余容量</span><br>{<br>    <span class="hljs-type">int</span> cleft = c - cw;           <span class="hljs-comment">// 剩余容量</span><br>    <span class="hljs-type">double</span> b = cp;<br>    <span class="hljs-keyword">while</span> (i &lt;= n &amp;&amp; w[i] &lt;= cleft) {   <span class="hljs-comment">// 整件装得下就整件装</span><br>        cleft -= w[i];<br>        b += p[i];<br>        i++;<br>    }<br>    <span class="hljs-keyword">if</span> (i &lt;= n) b += (<span class="hljs-type">double</span>)p[i] / w[i] * cleft;  <span class="hljs-comment">// 最后一件散装</span><br>    <span class="hljs-keyword">return</span> b;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>回溯法解 0-1 背包的<strong>前置条件：物品已按 pᵢ/wᵢ 非增次序排序</strong>（这样 Bound 里的贪心才是按单位价值从高到低装）。</p>
+<h4 id="例题完整搜索过程（n-8，M-110）">例题完整搜索过程（n=8，M=110）</h4>
+<div class="note note-warning">
+            <p><strong>例</strong>：n = 8，M = 110，(w₀,…,w₇) = (1, 11, 21, 23, 33, 43, 45, 55)，(p₀,…,p₇) = (11, 21, 31, 33, 43, 53, 55, 65)，物品已按 pᵢ/wᵢ 非增序排好：</p><table><thead><tr><th style="text-align:center">i</th><th style="text-align:center">0</th><th style="text-align:center">1</th><th style="text-align:center">2</th><th style="text-align:center">3</th><th style="text-align:center">4</th><th style="text-align:center">5</th><th style="text-align:center">6</th><th style="text-align:center">7</th></tr></thead><tbody><tr><td style="text-align:center"><strong>pᵢ</strong></td><td style="text-align:center">11</td><td style="text-align:center">21</td><td style="text-align:center">31</td><td style="text-align:center">33</td><td style="text-align:center">43</td><td style="text-align:center">53</td><td style="text-align:center">55</td><td style="text-align:center">65</td></tr><tr><td style="text-align:center"><strong>wᵢ</strong></td><td style="text-align:center">1</td><td style="text-align:center">11</td><td style="text-align:center">21</td><td style="text-align:center">23</td><td style="text-align:center">33</td><td style="text-align:center">43</td><td style="text-align:center">45</td><td style="text-align:center">55</td></tr><tr><td style="text-align:center"><strong>pᵢ/wᵢ</strong></td><td style="text-align:center">11</td><td style="text-align:center">1.9</td><td style="text-align:center">1.48</td><td style="text-align:center">1.43</td><td style="text-align:center">1.3</td><td style="text-align:center">1.23</td><td style="text-align:center">1.22</td><td style="text-align:center">1.18</td></tr></tbody></table><p>解向量记 y[0…7]，<strong>L</strong> 记当前最优收益（初值 0）。完整搜索树（结点标注：路径 y、cw、cp；✗ = 约束剪枝；bp = cp + rp 为上界）：</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs text">∅  L=0<br>└─1  cw=1   cp=11<br>   ├─11  cw=12  cp=32<br>   │  ├─111  cw=33  cp=63<br>   │  │  ├─1111  cw=56  cp=96<br>   │  │  │  ├─11111  cw=89  cp=139<br>   │  │  │  │  ├─111111 ✗ cw=132&gt;110（约束剪枝）<br>   │  │  │  │  └─111110  cw=89<br>   │  │  │  │     ├─1111101 ✗ cw=134&gt;110<br>   │  │  │  │     └─1111100  cw=89<br>   │  │  │  │        ├─11111001 ✗ cw=144&gt;110<br>   │  │  │  │        └─11111000 ● 叶A：cp=139 → L=139（第一个答案结点）<br>   │  │  │  └─11110  cw=56  bp=96+66.44=162.44&gt;L → 搜索<br>   │  │  │     ├─111101  cw=99  cp=149<br>   │  │  │     │  ├─1111011 ✗ cw=144&gt;110<br>   │  │  │     │  └─1111010 ● 叶B：cp=149 → L=149<br>   │  │  │     └─111100  cw=56  bp=96+65.64=161.64&gt;L → 搜索<br>   │  │  │        ├─1111001  cw=101  cp=151<br>   │  │  │        │  ├─11110011 ✗ cw=156&gt;110<br>   │  │  │        │  └─11110010 ● 叶C：cp=151 → L=151<br>   │  │  │        └─1111000  cw=56  bp=96+63.82=159.82&gt;L → 搜索<br>   │  │  │           ├─11110001 ✗ cw=111&gt;110<br>   │  │  │           └─11110000 ● 叶：cp=96（不更新）<br>   │  │  └─1110  cw=33  cp=63  bp=63+97.22=160.22&gt;L → 搜索<br>   │  │     ├─11101  cw=66  cp=106<br>   │  │     │  ├─111011  cw=109  cp=159<br>   │  │     │  │  ├─1110111 ✗ cw=154&gt;110<br>   │  │     │  │  └─1110110 ● 叶D：cp=159 → L=159 ★ 最优<br>   │  │     │  └─111010  cw=66  bp=106+52=158&lt;L → 剪枝<br>   │  │     └─11100  cw=33  bp=63+94.56=157.56&lt;L → 剪枝<br>   │  └─110  cw=12  cp=32  bp=32+127.77=159.77&gt;L → 搜索<br>   │     ├─1101  cw=35  cp=65  bp=65+94.77=159.77&gt;L → 搜索<br>   │     │  ├─11011  cw=68  cp=108  bp=108+51.77=159.77&gt;L → 搜索<br>   │     │  │  ├─110111 ✗ cw=111&gt;110<br>   │     │  │  └─110110  cw=68  bp=108+51.33=159.33&gt;L → 搜索<br>   │     │  │     ├─1101101 ✗ cw=113&gt;110<br>   │     │  │     └─1101100 ● 叶：cp=108（不更新）<br>   │     │  └─11010  cw=35  bp=65+92.11=157.11&lt;L → 剪枝<br>   │     └─1100  cw=12  bp=32+122.89=154.89&lt;L → 剪枝<br>   └─10  cw=1  bp=11+146.44=157.44&lt;L → 剪枝<br>└─0  cw=0  bp=0+155.12=155.12&lt;L → 剪枝<br></code></pre></td></tr></tbody></table></figure><p><strong>逐结点验算上界</strong>（rp：剩余容量与<strong>尚未决策</strong>物品按单位价值贪心散装）：</p><table><thead><tr><th style="text-align:center">结点（y 前缀）</th><th style="text-align:center">cw</th><th style="text-align:center">cp</th><th style="text-align:center">剩余容量</th><th style="text-align:left">rp 的构成</th><th style="text-align:center">bp = cp + rp</th><th style="text-align:left">动作</th></tr></thead><tbody><tr><td style="text-align:center">11110（y₄=0）</td><td style="text-align:center">56</td><td style="text-align:center">96</td><td style="text-align:center">54</td><td style="text-align:left">53 + (54−43)×55/45 = 66.44</td><td style="text-align:center"><strong>162.44</strong></td><td style="text-align:left">&gt; L=139，搜索</td></tr><tr><td style="text-align:center">111100（y₅=0）</td><td style="text-align:center">56</td><td style="text-align:center">96</td><td style="text-align:center">54</td><td style="text-align:left">55 + (54−45)×65/55 = 65.64</td><td style="text-align:center"><strong>161.64</strong></td><td style="text-align:left">&gt; L=149，搜索</td></tr><tr><td style="text-align:center">1111000（y₆=0）</td><td style="text-align:center">56</td><td style="text-align:center">96</td><td style="text-align:center">54</td><td style="text-align:left">54×65/55 = 63.82</td><td style="text-align:center"><strong>159.82</strong></td><td style="text-align:left">&gt; L=151，搜索</td></tr><tr><td style="text-align:center">1110（y₃=0）</td><td style="text-align:center">33</td><td style="text-align:center">63</td><td style="text-align:center">77</td><td style="text-align:left">43 + 53 + (77−33−43)×55/45 = 97.22</td><td style="text-align:center"><strong>160.22</strong></td><td style="text-align:left">&gt; L=151，搜索</td></tr><tr><td style="text-align:center">111010（y₅=0）</td><td style="text-align:center">66</td><td style="text-align:center">106</td><td style="text-align:center">44</td><td style="text-align:left">44×65/55 = 52</td><td style="text-align:center"><strong>158</strong></td><td style="text-align:left">&lt; L=159，剪枝</td></tr><tr><td style="text-align:center">11100（y₄=0）</td><td style="text-align:center">33</td><td style="text-align:center">63</td><td style="text-align:center">77</td><td style="text-align:left">53 + (77−43)×55/45 = 94.56</td><td style="text-align:center"><strong>157.56</strong></td><td style="text-align:left">&lt; L=159，剪枝</td></tr><tr><td style="text-align:center">110（y₂=0）</td><td style="text-align:center">12</td><td style="text-align:center">32</td><td style="text-align:center">98</td><td style="text-align:left">33 + 43 + (98−23−33)×53/43 = 127.77</td><td style="text-align:center"><strong>159.77</strong></td><td style="text-align:left">&gt; L=151，搜索</td></tr><tr><td style="text-align:center">1101（y₃=1）</td><td style="text-align:center">35</td><td style="text-align:center">65</td><td style="text-align:center">75</td><td style="text-align:left">43 + (75−33)×53/43 = 94.77</td><td style="text-align:center"><strong>159.77</strong></td><td style="text-align:left">&gt; L=159，搜索</td></tr><tr><td style="text-align:center">11010（y₄=0）</td><td style="text-align:center">35</td><td style="text-align:center">65</td><td style="text-align:center">75</td><td style="text-align:left">53 + (75−43)×55/45 = 92.11</td><td style="text-align:center"><strong>157.11</strong></td><td style="text-align:left">&lt; L=159，剪枝</td></tr><tr><td style="text-align:center">1100（y₃=0）</td><td style="text-align:center">12</td><td style="text-align:center">32</td><td style="text-align:center">98</td><td style="text-align:left">43 + 53 + (98−33−43)×55/45 = 122.89</td><td style="text-align:center"><strong>154.89</strong></td><td style="text-align:left">&lt; L=159，剪枝</td></tr><tr><td style="text-align:center">10（y₁=0）</td><td style="text-align:center">1</td><td style="text-align:center">11</td><td style="text-align:center">109</td><td style="text-align:left">31 + 33 + 43 + (109−21−23−33)×53/43 = 146.44</td><td style="text-align:center"><strong>157.44</strong></td><td style="text-align:left">&lt; L=159，剪枝</td></tr><tr><td style="text-align:center">0（y₀=0）</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">110</td><td style="text-align:left">21 + 31 + 33 + 43 + (110−11−21−23−33)×53/43 = 155.12</td><td style="text-align:center"><strong>155.12</strong></td><td style="text-align:left">&lt; L=159，剪枝</td></tr></tbody></table><p><strong>答案结点依次产生</strong>：A（139）→ B（149）→ C（151）→ <strong>D（159）</strong>——L 一路抬升，后面的子树被越来越紧的上界剪掉。</p><p><strong>结论</strong>：最优值 <strong>159</strong>，结点 D 是最优答案结点，<strong>最优解 x = (1,1,1,0,1,1,0,0)</strong>（装入物品 0、1、2、4、5：重量 1+11+21+33+43 = 109 ≤ 110，价值 11+21+31+43+53 = 159）。解空间树共 2⁹ − 1 = <strong>511</strong> 个结点，算法仅实际生成 <strong>36</strong> 个——限界函数的剪枝威力一目了然。</p>
+          </div>
+<hr>
+<h3 id="例4：批处理作业调度（排列树）">例4：批处理作业调度（排列树）</h3>
+<h4 id="问题描述-v3">问题描述</h4>
+<div class="note note-info">
+            <p>给定 n 个作业的集合 J = {J₁, J₂, …, Jₙ}。每个作业 Jᵢ 有两项任务，分别要在 2 台机器上完成：每个作业必须<strong>先由机器 1 处理，再由机器 2 处理</strong>。作业 Jᵢ 需要机器 j 的处理时间为 tⱼᵢ。要确定 n 个作业的最优加工顺序，使<strong>在机器 2 上完成所有作业的时间总和最小</strong>。</p><p>可以证明：<strong>存在最佳作业调度使得在机器 1 和机器 2 上作业以相同次序完成</strong>（同顺序调度）——因此解空间是一棵<strong>排列树</strong>，n 个作业的调度方案是 {1…n} 的排列。</p>
+          </div>
+<h4 id="例题：3-个作业的完整枚举">例题：3 个作业的完整枚举</h4>
+<div class="note note-warning">
+            <p><strong>例</strong>：tᵢⱼ 如下（tᵢⱼ 表示作业 i 在机器 j 上的处理时间）：</p><table><thead><tr><th style="text-align:center">tᵢⱼ</th><th style="text-align:center">机器 1</th><th style="text-align:center">机器 2</th></tr></thead><tbody><tr><td style="text-align:center">作业 1</td><td style="text-align:center">2</td><td style="text-align:center">1</td></tr><tr><td style="text-align:center">作业 2</td><td style="text-align:center">3</td><td style="text-align:center">1</td></tr><tr><td style="text-align:center">作业 3</td><td style="text-align:center">2</td><td style="text-align:center">3</td></tr></tbody></table><p><strong>完成时间递推</strong>：设调度次序为 s₁, s₂, …, sₙ，F₁ⱼ = 作业 sⱼ 在机器 1 上的完成时刻、F₂ⱼ = 作业 sⱼ 在机器 2 上的完成时刻：</p><p>$$<br>F_{1j} = F_{1,j-1} + t_{1 s_j}, \qquad F_{2j} = \max\lbrace F_{1j},\ F_{2,j-1} \rbrace + t_{2 s_j}, \qquad 目标 = \sum_{j=1}^{n} F_{2j}<br>$$</p><p>排列树共 3! = 6 个叶结点，逐一计算（每行给 M1 完成时刻与 M2 完成时刻 F₂ⱼ）：</p><table><thead><tr><th style="text-align:center">加工次序</th><th style="text-align:center">M1 逐作业完成</th><th style="text-align:center">M2 逐作业完成 F₂ⱼ</th><th style="text-align:center">完成时间和</th></tr></thead><tbody><tr><td style="text-align:center">(1, 2, 3)</td><td style="text-align:center">2, 5, 7</td><td style="text-align:center">3, 6, 10</td><td style="text-align:center">19</td></tr><tr><td style="text-align:center"><strong>(1, 3, 2)</strong></td><td style="text-align:center">2, 4, 7</td><td style="text-align:center"><strong>3, 7, 8</strong></td><td style="text-align:center"><strong>18 ★</strong></td></tr><tr><td style="text-align:center">(2, 1, 3)</td><td style="text-align:center">3, 5, 7</td><td style="text-align:center">4, 6, 10</td><td style="text-align:center">20</td></tr><tr><td style="text-align:center">(2, 3, 1)</td><td style="text-align:center">3, 5, 7</td><td style="text-align:center">4, 8, 9</td><td style="text-align:center">21</td></tr><tr><td style="text-align:center">(3, 1, 2)</td><td style="text-align:center">2, 4, 7</td><td style="text-align:center">5, 6, 8</td><td style="text-align:center">19</td></tr><tr><td style="text-align:center">(3, 2, 1)</td><td style="text-align:center">2, 5, 7</td><td style="text-align:center">5, 6, 8</td><td style="text-align:center">19</td></tr></tbody></table><p>以 (1, 3, 2) 验算：F₁₁ = 2，F₂₁ = 2+1 = 3；F₁₃ = 2+2 = 4，F₂₃ = max(4, 3)+3 = 7；F₁₂ = 4+3 = 7，F₂₂ = max(7, 7)+1 = 8；和 = 3+7+8 = <strong>18</strong>（即课件标注的 F₁₁=2、F₂₁=3、F₁₃=4、F₂₃=7、F₁₂=7、F₂₂=8）。</p><p><strong>最优调度 (1, 3, 2)，最小完成时间和 18</strong>（对比课件中另一方案 (3, 2, 1) = 19）。</p>
+          </div>
+<hr>
+<h3 id="例5：图的-m-着色问题">例5：图的 m 着色问题</h3>
+<h4 id="问题描述-v4">问题描述</h4>
+<div class="note note-info">
+            <p>已知无向图 G = (V, E) 和 m 种不同的颜色：只用这 m 种颜色对图 G 的结点着色，每个结点着一种颜色。问<strong>是否存在一种着色方案</strong>，使图中任意<strong>相邻</strong>两个结点颜色不同。整数 m 称为图 G 的<strong>着色数</strong>。</p><p>背景：<strong>四色定理</strong>——每幅地图都可以用不多于 4 种颜色着色，使有共同边界的国家颜色不同（1976 年阿佩尔和哈肯用计算机运行 1200 小时证明）。地图 → 平面图：每个区域一个结点，相邻区域连边。</p><p><strong>解向量</strong>：n-元组 (x₀, x₁, …, xₙ₋₁)，xᵢ ∈ {1, …, m} 表示结点 i 的颜色（解空间大小 mⁿ）；<strong>隐式约束</strong>：若边 (i, j) ∈ E，则 xᵢ ≠ xⱼ。解空间树是一棵<strong>度数为 m、高为 n+1 的树</strong>（i 级上每个结点有 m 个儿子）。</p>
+          </div>
+<h4 id="例题：4-结点图的-3-着色">例题：4 结点图的 3 着色</h4>
+<div class="note note-warning">
+            <p><strong>例</strong>：n = 4，m = 3，图 G 的边集 E = {(0,1), (0,3), (1,2), (1,3), (2,3)}（四边形 0-1-2-3-0 加对角线 1-3）。</p><p>搜索过程（使用<strong>约束函数 Ok</strong> 剪枝：与已着色的相邻结点同色则剪）：</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">x0=1<br>├─x1=1 ✗ 与结点0相邻同色<br>├─x1=2 ✓<br>│   ├─x2=1 ✓（0、2 不相邻）<br>│   │   ├─x3=1 ✗ 与 x0=1 相邻同色<br>│   │   ├─x3=2 ✗ 与 x1=2 相邻同色<br>│   │   └─x3=3 ✓ → 第一个解 X=(1, 2, 1, 3) ★<br>│   └─x2=3 ✓<br>│       └─x3=1/2/3 全 ✗（x3 与 0、1、2 都相邻）→ 死结点<br>└─x1=3 ✓（对称地展开，得到其余解）<br></code></pre></td></tr></tbody></table></figure><p><strong>全部 3-着色方案共 6 个</strong>（0、2 不相邻，可同色）：</p><table><thead><tr><th style="text-align:center">x0=1</th><th style="text-align:center">x0=2</th><th style="text-align:center">x0=3</th></tr></thead><tbody><tr><td style="text-align:center">(1, 2, 1, 3)</td><td style="text-align:center">(2, 1, 2, 3)</td><td style="text-align:center">(3, 1, 3, 2)</td></tr><tr><td style="text-align:center">(1, 3, 1, 2)</td><td style="text-align:center">(2, 3, 2, 1)</td><td style="text-align:center">(3, 2, 3, 1)</td></tr></tbody></table><p>深度优先找到<strong>第一个解 (1, 2, 1, 3)</strong>。</p>
+          </div>
+<h4 id="课堂练习">课堂练习</h4>
+<div class="note note-warning">
+            <p><strong>练习</strong>：对下图（5 个结点 a, b, c, d, e；边 ab, ac, ad, bc, cd, be, ce, de）用回溯算法求 3-着色方案：(1) 给出解向量形式，指出解空间树的类型；(2) 描述搜索过程；(3) 画出找到一个解所生成的部分搜索树，并给出这个解。</p><p><strong>参考解答</strong>（按课件答案）：</p><ol><li>解向量 <strong>X = (x₀, x₁, x₂, x₃, x₄)</strong>，xᵢ ∈ {1, 2, 3}（依次对应 a, b, c, d, e）。解空间树的类型：课件参考答案写"<strong>子集树</strong>"——更准确地说它是<strong>每个结点有 m = 3 个儿子的 3 叉树</strong>（每层在 3 种颜色中选一种，不是 0/1 二选一）；</li><li>约束：相邻结点异色——a 与 b、c、d 相邻；b 与 a、c、e 相邻；c 与 a、b、d、e 相邻；d 与 a、c、e 相邻；e 与 b、c、d 相邻；</li><li>部分搜索树：</li></ol><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs text">x0=1（a）<br>├─x1=1 ✗（a-b 相邻）<br>└─x1=2（b）✓<br>    ├─x2=1 ✗（a-c 相邻）   ├─x2=2 ✗（b-c 相邻）<br>    └─x2=3（c）✓<br>        ├─x3=1 ✗（a-d 相邻）  ├─x3=3 ✗（c-d 相邻）<br>        └─x3=2（d）✓<br>            └─x4=1（e）✓ → X = (1, 2, 3, 2, 1) ★<br></code></pre></td></tr></tbody></table></figure><p><strong>找到的解 X = (1, 2, 3, 2, 1)</strong>：a=1，b=2，c=3，d=2，e=1。</p>
+          </div>
+<h4 id="算法实现-v3">算法实现</h4>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">bool</span> <span class="hljs-title function_">Color::Ok</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span>            <span class="hljs-comment">// 检查颜色 x[k] 是否可用</span><br>{<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++)<br>        <span class="hljs-keyword">if</span> (a[k][j] == <span class="hljs-number">1</span> &amp;&amp; x[j] == x[k])    <span class="hljs-comment">// 与相邻结点同色</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>}<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Color::Backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> t)</span><br>{<br>    <span class="hljs-keyword">if</span> (t &gt; n) {                 <span class="hljs-comment">// 到达叶结点：得到一个着色方案</span><br>        sum++;                   <span class="hljs-comment">// sum：已找到的着色方案数</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-built_in">cout</span> &lt;&lt; x[i] &lt;&lt; <span class="hljs-string">' '</span>;<br>        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-built_in">endl</span>;<br>    }<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) {<br>            x[t] = i;<br>            <span class="hljs-keyword">if</span> (Ok(t)) Backtrack(t + <span class="hljs-number">1</span>);    <span class="hljs-comment">// 约束函数剪枝</span><br>        }<br>}<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">mColoring</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> m, <span class="hljs-type">int</span> **a)</span><br>{<br>    Color X;<br>    X.n = n;  X.m = m;  X.a = a;    <span class="hljs-comment">// 图的顶点数、颜色数、邻接矩阵</span><br>    X.sum = <span class="hljs-number">0</span>;<br>    <span class="hljs-type">int</span> *p = new <span class="hljs-type">int</span>[n + <span class="hljs-number">1</span>];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) p[i] = <span class="hljs-number">0</span>;<br>    X.x = p;<br>    X.Backtrack(<span class="hljs-number">1</span>);           <span class="hljs-comment">// 从第 1 层开始逐结点着色</span><br>    delete[] p;<br>    <span class="hljs-keyword">return</span> X.sum;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>算法复杂性：最坏 <strong>O(n·mⁿ)</strong>（每个结点用 Ok 检查颜色可用性需 O(n)）。</p>
+<hr>
+<h3 id="例6：N-皇后问题">例6：N 皇后问题</h3>
+<h4 id="问题描述-v5">问题描述</h4>
+<div class="note note-info">
+            <p>在 n×n 的棋盘上放置 n 个皇后，使它们彼此不受攻击——<strong>任何两个都不在同一行、同一列或同一斜线上</strong>。输入棋盘大小 n（n ≤ 13），输出放置方法数。</p><p><strong>问题剖析</strong>：</p><ul><li>问题的状态即棋盘的布局状态；状态空间树的根为空棋盘，每个布局的下一步可能布局是该布局结点的子结点；</li><li>每行中有且只有一个皇后 → 采用<strong>逐行布局</strong>的方式。</li></ul><p><strong>解向量</strong>：(x₁, …, xₙ)，xᵢ 为皇后 i 的<strong>列号</strong>（皇后 i 放在第 i 行）。约束集合：</p><ol><li>xᵢ ≠ xⱼ（不在同一列）；</li><li>|i − j| ≠ |xᵢ − xⱼ|，即 xᵢ − i ≠ xⱼ − j 且 xᵢ + i ≠ xⱼ + j（不在同一斜线）。</li></ol><p>由于列互异，解空间实质是 {1…n} 的排列——课件按<strong>排列树</strong>处理（n! 个叶结点）；实现上每层枚举 n 个列、用约束函数当场剪掉同列/同对角线的分支。</p>
+          </div>
+<h4 id="例题：4-皇后的部分搜索树">例题：4-皇后的部分搜索树</h4>
+<div class="note note-warning">
+            <p><strong>例</strong>：n = 4（列号从 0 开始记）。得到<strong>第一个答案状态</strong>即终止时实际生成的部分状态空间树（B 代表被剪枝的结点，ans 是第一个答案结点）：</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs text">1（根）<br>├─x0=0 ─ 2<br>│   ├─x1=1 ─ 3 B   （与 x0 同对角线）<br>│   ├─x1=2 ─ 8<br>│   │   ├─x2=1 ─ 9  B（与 x1 同对角线）<br>│   │   └─x2=3 ─ 11 B（与 x1 同对角线）<br>│   └─x1=3 ─ 13<br>│       ├─x2=1 ─ 14<br>│       │   └─x3=2 ─ 15 B（与 x2 同对角线）<br>│       └─x2=2 ─ 16 B（与 x1 同对角线）<br>└─x0=1 ─ 18<br>    ├─x1=0 ─ 19 B（与 x0 同对角线）<br>    ├─x1=2 ─ 24 B（与 x0 同对角线）<br>    └─x1=3 ─ 29<br>        └─x2=0 ─ 30<br>            └─x3=2 ─ 31 ans ★<br></code></pre></td></tr></tbody></table></figure><ul><li>x0 = 0 分支全军覆没（4-皇后在角上无解）：x1=2、x1=3 的所有 x2 选择都被对角线约束剪掉；</li><li>x0 = 1 → x1 = 3 → x2 = 0 → x3 = 2 得到第一个解 <strong>(1, 3, 0, 2)</strong>；</li><li><strong>还有其它解</strong>：<strong>(2, 0, 3, 1)</strong>——与第一个解<strong>左右对称</strong>（4-皇后共 2 个解）。</li></ul>
+          </div>
+<h4 id="算法实现-v4">算法实现</h4>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">bool</span> <span class="hljs-title function_">Queen::Place</span><span class="hljs-params">(<span class="hljs-type">int</span> k)</span>             <span class="hljs-comment">// 检查列号 x[k] 是否合法</span><br>{<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt; k; j++)<br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">abs</span>(k - j) == <span class="hljs-built_in">abs</span>(x[j] - x[k])    <span class="hljs-comment">// 同一斜线</span><br>         || x[j] == x[k])                     <span class="hljs-comment">// 同一列</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>}<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">Queen::Backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> t)</span><br>{<br>    <span class="hljs-keyword">if</span> (t &gt; n) sum++;                 <span class="hljs-comment">// 得到一个放置方法</span><br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {<br>            x[t] = i;                 <span class="hljs-comment">// 皇后 t 放在第 t 行第 i 列</span><br>            <span class="hljs-keyword">if</span> (Place(t)) Backtrack(t + <span class="hljs-number">1</span>);<br>        }<br>}<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">nQueen</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span><br>{<br>    Queen X;<br>    X.n = n;  X.sum = <span class="hljs-number">0</span>;<br>    <span class="hljs-type">int</span> *p = new <span class="hljs-type">int</span>[n + <span class="hljs-number">1</span>];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) p[i] = <span class="hljs-number">0</span>;<br>    X.x = p;<br>    X.Backtrack(<span class="hljs-number">1</span>);<br>    delete[] p;<br>    <span class="hljs-keyword">return</span> X.sum;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<hr>
+<h3 id="例7：旅行商问题-TSP">例7：旅行商问题 TSP</h3>
+<h4 id="问题描述与解空间">问题描述与解空间</h4>
+<div class="note note-info">
+            <p>4 个城市的完全图（数字为边费用）：1-2 = 30，1-3 = 6，1-4 = 4，2-3 = 5，2-4 = 10，3-4 = 20。从城市 1 出发，经过每个城市恰好一次再回到 1，求费用最小的路线。</p><p>解空间：<strong>排列树</strong>，固定起点后从根到叶子对应一条路线，共 (n−1)! = 3! = 6 条。</p>
+          </div>
+<h4 id="例题：6-条路线全枚举-限界剪枝">例题：6 条路线全枚举 + 限界剪枝</h4>
+<div class="note note-warning">
+            <p><strong>全枚举</strong>（排列树 6 个叶结点）：</p><table><thead><tr><th style="text-align:center">路线</th><th style="text-align:left">费用构成</th><th style="text-align:center">总费用</th></tr></thead><tbody><tr><td style="text-align:center">1→2→3→4→1</td><td style="text-align:left">30 + 5 + 20 + 4</td><td style="text-align:center">59</td></tr><tr><td style="text-align:center">1→2→4→3→1</td><td style="text-align:left">30 + 10 + 20 + 6</td><td style="text-align:center">66</td></tr><tr><td style="text-align:center"><strong>1→3→2→4→1</strong></td><td style="text-align:left">6 + 5 + 10 + 4</td><td style="text-align:center"><strong>25 ★</strong></td></tr><tr><td style="text-align:center">1→3→4→2→1</td><td style="text-align:left">6 + 20 + 10 + 30</td><td style="text-align:center">66</td></tr><tr><td style="text-align:center"><strong>1→4→2→3→1</strong></td><td style="text-align:left">4 + 10 + 5 + 6</td><td style="text-align:center"><strong>25 ★</strong></td></tr><tr><td style="text-align:center">1→4→3→2→1</td><td style="text-align:left">4 + 20 + 5 + 30</td><td style="text-align:center">59</td></tr></tbody></table><p><strong>最优费用 25</strong>（两条路线：1→3→2→4→1 与 1→4→2→3→1）。</p><p><strong>限界函数剪枝</strong>：从根到当前扩展结点处的<strong>部分线路费用</strong>已经超过目前已找到的最优解时，可断定<strong>以该结点为根的子树不可能包含最优解</strong>，整棵剪去。例如当前最优解 25 已找到时，结点 (1, 2) 的部分费用 30 &gt; 25，其下两条路线（59、66）所在的整棵子树直接剪掉；深度优先过程中结点 (1, 4, 3, 2) 的部分费用 4+20+5 = 29 &gt; 25 也会被剪。</p>
+          </div>
+<hr>
+<h3 id="例8：子集和问题">例8：子集和问题</h3>
+<h4 id="问题描述-v6">问题描述</h4>
+<div class="note note-info">
+            <p>设有 n = 6 个正数的集合 W = {w₀, w₁, w₂, w₃, w₄, w₅} = {5, 10, 12, 13, 15, 18} 和整数 M = 30，求 W 的<strong>所有元素之和为 M 的子集</strong>。</p><p><strong>结点标注</strong> (s, i, r)：s = 已选择的元素和，i = 即将选择的元素下标，r = 剩余元素和（如根 (0, 0, 73)，73 = 全部元素之和）。剪枝依据（元素全为正数）：</p><ul><li><strong>约束</strong>：s &gt; M 的分支直接剪去（和只会越加越大，回不来了）；</li><li><strong>限界</strong>（可选加强）：s + r &lt; M 的分支剪去（剩余全选也凑不够 M）。</li></ul>
+          </div>
+<h4 id="例题完整搜索树">例题完整搜索树</h4>
+<div class="note note-warning">
+            <p>深度优先、先 x = 1 后 x = 0 的完整搜索树（✗ 处为 s &gt; M 剪枝；★ 为答案状态）：</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs text">(0,0,73)<br>├─x0=1─ (5,1,68)<br>│   ├─x1=1─ (15,2,58)<br>│   │   ├─x2=1─ (27,3,46)<br>│   │   │   ├─x3=1─ 40&gt;30 ✗<br>│   │   │   └─x3=0─ (27,4,33)<br>│   │   │       ├─x4=1─ 42&gt;30 ✗<br>│   │   │       └─x4=0─ (27,5,18)<br>│   │   │           ├─x5=1─ 45&gt;30 ✗<br>│   │   │           └─x5=0─ s=27≠30 ✗<br>│   │   └─x2=0─ (15,3,46)<br>│   │       ├─x3=1─ (28,4,33)<br>│   │       │   ├─x4=1─ 43&gt;30 ✗<br>│   │       │   └─x4=0─ (28,5,18)<br>│   │       │       ├─x5=1─ 46&gt;30 ✗<br>│   │       │       └─x5=0─ s=28≠30 ✗<br>│   │       └─x3=0─ (15,4,33)<br>│   │           ├─x4=1─ (30,5,18) ★A {5,10,15}<br>│   │           └─x4=0─ (15,5,18)<br>│   │               ├─x5=1─ 33&gt;30 ✗<br>│   │               └─x5=0─ s=15≠30 ✗<br>│   └─x1=0─ (5,2,58)<br>│       ├─x2=1─ (17,3,46)<br>│       │   ├─x3=1─ (30,4,33) ★B {5,12,13}<br>│       │   └─x3=0─ (17,4,33)<br>│       │       ├─x4=1─ 32&gt;30 ✗<br>│       │       └─x4=0─ (17,5,18)<br>│       │           ├─x5=1─ 35&gt;30 ✗<br>│       │           └─x5=0─ s=17≠30 ✗<br>│       └─x2=0─ (5,3,46) ─ 后续 18、20 等 ≤30 但凑不出 30，全部死结点<br>└─x0=0─ (0,1,68)<br>    ├─x1=1─ (10,2,58) ─ 后续 22、23、25、28 等 ≤30 但凑不出 30，全部死结点<br>    └─x1=0─ (0,2,58)<br>        ├─x2=1─ (12,3,46)<br>        │   ├─x3=1─ (25,4,33)<br>        │   │   ├─x4=1─ 40&gt;30 ✗<br>        │   │   └─x4=0─ (25,5,18)<br>        │   │       ├─x5=1─ 43&gt;30 ✗<br>        │   │       └─x5=0─ s=25≠30 ✗<br>        │   └─x3=0─ (12,4,33)<br>        │       ├─x4=1─ (27,5,18)<br>        │       │   ├─x5=1─ 45&gt;30 ✗<br>        │       │   └─x5=0─ s=27≠30 ✗<br>        │       └─x4=0─ (12,5,18)<br>        │           └─x5=1─ (30) ★C {12,18}<br>        └─x2=0─ (0,3,46) ─ 后续 13、15、18 等 ≤30 但凑不出 30，全部死结点<br></code></pre></td></tr></tbody></table></figure><p><strong>A、B、C 为三个答案状态（可行解）</strong>：</p><table><thead><tr><th style="text-align:center">答案</th><th style="text-align:center">子集</th><th style="text-align:left">决策向量 x</th></tr></thead><tbody><tr><td style="text-align:center">A</td><td style="text-align:center">{5, 10, 15}</td><td style="text-align:left">(1, 1, 0, 0, 1, 0)</td></tr><tr><td style="text-align:center">B</td><td style="text-align:center">{5, 12, 13}</td><td style="text-align:left">(1, 0, 1, 1, 0, 0)</td></tr><tr><td style="text-align:center">C</td><td style="text-align:center">{12, 18}</td><td style="text-align:left">(0, 0, 1, 0, 0, 1)</td></tr></tbody></table><p>若再加上限界 s + r &lt; M（如结点 (5, 5, 18)：5+18 = 23 &lt; 30），右侧这类"注定凑不齐"的结点可以更早剪掉。</p>
+          </div>
+<hr>
+<h3 id="5-2-小结与考点（回溯法）">5.2 小结与考点（回溯法）</h3>
+<h4 id="已整理题目对比">已整理题目对比</h4>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th style="text-align:center">解空间树</th>
+<th>约束函数</th>
+<th>限界函数</th>
+<th style="text-align:center">复杂度（最坏）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-1 背包（搜索过程）</td>
+<td style="text-align:center">子集树</td>
+<td>Cr ≥ wᵢ（装得下）</td>
+<td>（例3：bp = cp + rp &gt; bestp）</td>
+<td style="text-align:center">O(2ⁿ)</td>
+</tr>
+<tr>
+<td>装载问题</td>
+<td style="text-align:center">子集树</td>
+<td>cw + wᵢ ≤ c₁</td>
+<td>cw + r &gt; bestw</td>
+<td style="text-align:center">O(2ⁿ)</td>
+</tr>
+<tr>
+<td>批处理作业调度</td>
+<td style="text-align:center">排列树</td>
+<td>同顺序完成</td>
+<td>（完成时间和比较）</td>
+<td style="text-align:center">O(n!)</td>
+</tr>
+<tr>
+<td>图的 m 着色</td>
+<td style="text-align:center">m 叉树</td>
+<td>相邻异色 Ok</td>
+<td>无（判定问题）</td>
+<td style="text-align:center">O(n·mⁿ)</td>
+</tr>
+<tr>
+<td>N 皇后</td>
+<td style="text-align:center">排列树</td>
+<td>不同列、不同对角线</td>
+<td>无</td>
+<td style="text-align:center">O(n!)</td>
+</tr>
+<tr>
+<td>TSP</td>
+<td style="text-align:center">排列树</td>
+<td>城市不重复</td>
+<td>部分费用 &lt; 当前最优</td>
+<td style="text-align:center">O((n−1)!)</td>
+</tr>
+<tr>
+<td>子集和</td>
+<td style="text-align:center">子集树</td>
+<td>s ≤ M</td>
+<td>s + r ≥ M（加强）</td>
+<td style="text-align:center">O(2ⁿ)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="画树-画表要求">画树/画表要求</h4>
+<div class="note note-info">
+            <ol><li>先答<strong>解空间树的类型</strong>（子集树 / 排列树 / m 叉树）与<strong>解向量形式</strong>；</li><li>树上每个结点标注关键状态（回溯背包：Cr、V；装载：cw、r；子集和：(s, i, r)；TSP：部分费用）；</li><li>剪枝处标 <strong>✗</strong> 并写明理由（约束：超出容量/同列同对角线/同色相邻；限界：上界不超过当前最优）；</li><li>叶结点标出<strong>回答状态</strong>的解向量与目标值，最优者标 ★；</li><li>上界函数要<strong>逐结点验算</strong>（如 0-1 背包的 bp = cp + rp 表）。</li></ol>
+          </div>
+<h4 id="易错点">易错点</h4>
+<div class="note note-warning">
+            <ul><li><strong>解空间树类型别写混</strong>：0/1 选择类（背包、装载、子集和）是<strong>子集树</strong>（2ⁿ 叶）；排列类（TSP、作业调度、皇后）是<strong>排列树</strong>（n! 叶）；图着色是 m 叉树（每层 m 选一，课件参考答案亦称子集树）。</li><li><strong>扩展结点 / 活结点 / 死结点</strong>的定义要背：扩展结点正在产生儿子；活结点儿子未生成完；死结点不可再向纵深移动。</li><li>0-1 背包回溯的前置条件：<strong>物品按 pᵢ/wᵢ 非增排序</strong>；限界函数 bp = cp + rp 中 rp 只统计<strong>尚未决策</strong>的物品（已决策为 0 的物品不再计入，如结点 11110 的 rp 从物品 5 算起）。</li><li>装载问题的上界是 <strong>cw + r &gt; bestw</strong>（r 为剩余全部重量，“剩余全装也超不过"才剪）；它与背包的<strong>散装贪心上界</strong>不同——装载没有价值概念，上界更"粗”。</li><li>4-皇后的两个解 (1, 3, 0, 2) 与 (2, 0, 3, 1) 关于棋盘<strong>左右对称</strong>；画部分搜索树时被剪结点要标 B 并注明原因（同列或同对角线）。</li><li>批处理作业调度的递推：F₂ⱼ = <strong>max(F₁ⱼ, F₂ⱼ₋₁) + t₂sⱼ</strong>——机器 2 既要等本作业离开机器 1（F₁ⱼ），又要等机器 2 空出来（F₂ⱼ₋₁），两者取大。</li><li>结点 111010 的上界课件按物品 7 散装计算（rp = 44×65/55 = 52，bp = 158 剪枝）；若严格按单位价值应选物品 6 散装（bp = 159.78，会多搜两个无害叶结点）——两种口径最终最优值都是 159，答题跟课件口径即可。</li><li>回溯法最坏复杂度仍是 O(2ⁿ) / O(n!)——剪枝改进实际搜索量，不改变最坏阶。</li></ul>
+          </div>
+<hr>
+<h2 id="第6章-分支限界法">第6章 分支限界法</h2>
+<p><strong>学习要求</strong>：理解分支限界法的<strong>剪枝搜索策略</strong>；掌握分支限界法的算法框架——(1) 队列式 (FIFO) 分支限界法、(2) 优先队列式分支限界法；通过应用范例学习分支限界法的设计策略。</p>
+<h3 id="6-1-分支限界法的算法框架">6.1 分支限界法的算法框架</h3>
+<h4 id="与回溯法的区别">与回溯法的区别</h4>
+<div class="note note-info">
+            <p>分支限界法与回溯法类似：也是在问题的<strong>解空间树</strong>（子集树 / 排列树）上搜索问题的解。区别在于<strong>对解空间的搜索方式不同</strong>——核心是<strong>对活结点的扩充方式</strong>不同：</p><ul><li><strong>回溯法</strong>：深度优先。从根出发，扩展结点<strong>一次只产生一个儿子</strong>，向纵深推进；行不通就回溯到最近生成的活结点；</li><li><strong>分支限界法</strong>：<strong>广度优先</strong>或<strong>最小耗费（最大收益）优先</strong>。扩展结点<strong>一次性生成其所有儿子</strong>，从中抛弃不可能导出（最优）可行解的结点，其余加入<strong>活结点表</strong>；然后从活结点表中取下一个结点作为当前扩展结点，<strong>直到找到解或活结点表为空</strong>。</li></ul><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">回溯法（一条路走到底）              分支限界法（逐层扩展）<br>        A                                  A<br>      1/ \0                              1/ \0<br>     B   C                              B   C     ← A 的所有儿子一次生成<br>    1/ \0                              1/ \0<br>   D   E                              D   E     ← 从活结点表取下一个扩展<br>  （先 A→B→D，行不通再回头）        （活结点表：[B C] → [D E] → …）<br></code></pre></td></tr></tbody></table></figure>
+          </div>
+<h4 id="队列式与优先队列式">队列式与优先队列式</h4>
+<div class="note note-info">
+            <p>选择下一个扩展结点的两种常用方法：</p><ol><li><strong>队列式 (FIFO)</strong>：将活结点表组织成<strong>队列</strong>，按<strong>先进先出</strong>原则选取下一个结点作为当前扩展结点（广度优先）；</li><li><strong>优先队列式</strong>：每个活结点都有一个对应的<strong>耗费或收益</strong>（优先级，通常由<strong>上界函数</strong>算出），按<strong>优先级</strong>选取下一个结点作为当前扩展结点——追求最优解时优先扩展最有希望的结点。</li></ol>
+          </div>
+<div class="note note-info">
+            <p><strong>补充知识：优先队列与堆</strong>。优先队列常用<strong>堆</strong>实现：求最大收益用<strong>最大堆</strong>（如 0-1 背包的 uprofit 优先级），求最小耗费用<strong>最小堆</strong>（如 TSP 的部分费用优先级）。堆的插入/取最值均为 O(log n)，堆排序即利用这一结构。</p>
+          </div>
+<p><strong>剪枝函数</strong>：与回溯法类似——限界函数给出每一个可行结点相应子树可能获得的最大价值（或最小耗费）的<strong>上界（下界）</strong>；若这个界不比当前最优值更好，说明相应子树中不含问题的（最优）解，剪去。</p>
+<hr>
+<h3 id="例1：0-1背包的队列式分支限界">例1：0-1背包的队列式分支限界</h3>
+<h4 id="例题完整搜索过程">例题完整搜索过程</h4>
+<div class="note note-warning">
+            <p><strong>例</strong>：n = 3，w = [20, 15, 15]，v = [45, 25, 25]，c = 30。解空间为子集树，结点标注当前 (cw, v)。<strong>一次生成所有儿子</strong>，不可行儿子直接抛弃：</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">A(0, 0)<br>├─1─ B(20, 45)<br>│    ├─1─ D ✗ 20+15=35&gt;30（不满足约束，不入队）<br>│    └─0─ E(20, 45)<br>│         ├─1─ J ✗ 20+15=35&gt;30<br>│         └─0─ K ● 叶：v=45<br>└─0─ C(0, 0)<br>     ├─1─ F(15, 25)<br>     │    ├─1─ L ● 叶：cw=30，v=50 ★<br>     │    └─0─ M ● 叶：v=25<br>     └─0─ G(0, 0)<br>          ├─1─ N ● 叶：v=25<br>          └─0─ O ● 叶：v=0<br></code></pre></td></tr></tbody></table></figure><p><strong>活结点队列演化（FIFO 策略）</strong>：</p><table><thead><tr><th style="text-align:center">步骤</th><th style="text-align:center">取出扩展结点</th><th style="text-align:left">生成儿子</th><th style="text-align:left">活结点队列</th></tr></thead><tbody><tr><td style="text-align:center">0</td><td style="text-align:center">—</td><td style="text-align:left">—</td><td style="text-align:left">[A]</td></tr><tr><td style="text-align:center">1</td><td style="text-align:center">A</td><td style="text-align:left">B(20,45)，C(0,0)</td><td style="text-align:left">[B C]</td></tr><tr><td style="text-align:center">2</td><td style="text-align:center">B</td><td style="text-align:left">D ✗，E(20,45)</td><td style="text-align:left">[C E]</td></tr><tr><td style="text-align:center">3</td><td style="text-align:center">C</td><td style="text-align:left">F(15,25)，G(0,0)</td><td style="text-align:left">[E F G]</td></tr><tr><td style="text-align:center">4</td><td style="text-align:center">E</td><td style="text-align:left">J ✗，K 叶(45)</td><td style="text-align:left">[F G]</td></tr><tr><td style="text-align:center">5</td><td style="text-align:center">F</td><td style="text-align:left">L 叶(50)，M 叶(25)</td><td style="text-align:left">[G]</td></tr><tr><td style="text-align:center">6</td><td style="text-align:center">G</td><td style="text-align:left">N 叶(25)，O 叶(0)</td><td style="text-align:left">[ ]</td></tr></tbody></table><p>扩展结点顺序：<strong>A B C E F G</strong>；队列变空，算法结束。</p><p><strong>最优值 50，最优解 x = (0, 1, 1)</strong>（叶结点 L，cw = 30 恰好装满）。</p>
+          </div>
+<hr>
+<h3 id="例2：0-1背包的优先队列式分支限界">例2：0-1背包的优先队列式分支限界</h3>
+<h4 id="例题完整搜索过程-v2">例题完整搜索过程</h4>
+<div class="note note-warning">
+            <p>同一实例（n = 3，w = [20, 15, 15]，v = [45, 25, 25]，c = 30），改用<strong>优先队列</strong>——优先级取结点的<strong>当前价值</strong>，价值最大的活结点先扩展：</p><table><thead><tr><th style="text-align:center">步骤</th><th style="text-align:center">取出扩展结点（优先级）</th><th style="text-align:left">生成儿子</th><th style="text-align:left">活结点优先队列（按当前价值降序）</th></tr></thead><tbody><tr><td style="text-align:center">0</td><td style="text-align:center">—</td><td style="text-align:left">—</td><td style="text-align:left">[A(0)]</td></tr><tr><td style="text-align:center">1</td><td style="text-align:center">A</td><td style="text-align:left">B 当前价值 45，C 当前价值 0</td><td style="text-align:left">[B(45) C(0)]</td></tr><tr><td style="text-align:center">2</td><td style="text-align:center"><strong>B(45)</strong></td><td style="text-align:left">D ✗，E 当前价值 45</td><td style="text-align:left">[E(45) C(0)]</td></tr><tr><td style="text-align:center">3</td><td style="text-align:center"><strong>E(45)</strong></td><td style="text-align:left">J ✗，K 叶(45)</td><td style="text-align:left">[C(0)]</td></tr><tr><td style="text-align:center">4</td><td style="text-align:center"><strong>C(0)</strong></td><td style="text-align:left">F 价值 25，G 价值 0</td><td style="text-align:left">[F(25) G(0)]</td></tr><tr><td style="text-align:center">5</td><td style="text-align:center"><strong>F(25)</strong></td><td style="text-align:left">L 叶(50)，M 叶(25)</td><td style="text-align:left">[G(0)]</td></tr><tr><td style="text-align:center">6</td><td style="text-align:center"><strong>G(0)</strong></td><td style="text-align:left">N 叶(25)，O 叶(0)</td><td style="text-align:left">[ ]</td></tr></tbody></table><p>扩展结点顺序：<strong>A B E C F G</strong>——高价值分支被优先扩展，更早逼近最优值。</p><p><strong>最优值 50，最优解 x = (0, 1, 1)</strong>，与队列式结果一致。</p>
+          </div>
+<hr>
+<h3 id="例3：带上界函数的优先队列式分支限界">例3：带上界函数的优先队列式分支限界</h3>
+<h4 id="上界函数">上界函数</h4>
+<div class="note note-info">
+            <p>优先队列中结点元素的<strong>优先级由上界函数计算出的 uprofit 给出</strong>。设当前位于结点 X，已考察若干物品，背包容量 c、当前重量 cw、当前价值 cp，则</p><p>$$<br>uprofit = cp + rp<br>$$</p><p>其中 rp：用<strong>贪心法</strong>计算"剩余载重 c − cw 与剩余物品构成的一般背包问题（可散装）"的最大收益。用<strong>最大堆</strong>实现活结点优先队列，以 uprofit 作为优先级；<strong>达到叶结点时（叶成为最大优先级元素被取出）即找到最优值</strong>。</p>
+          </div>
+<h4 id="例题完整搜索过程-v3">例题完整搜索过程</h4>
+<div class="note note-warning">
+            <p><strong>例</strong>：n = 4，w = [4, 7, 5, 3]，p = [40, 42, 25, 12]，c = 10（物品已按单位价值 10, 6, 5, 4 递减排好）。</p><table><thead><tr><th style="text-align:center">结点（y 前缀）</th><th style="text-align:center">cw</th><th style="text-align:center">cp</th><th style="text-align:center">剩余容量</th><th style="text-align:left">rp</th><th style="text-align:center">up = cp + rp</th></tr></thead><tbody><tr><td style="text-align:center">∅</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">10</td><td style="text-align:left">40 + 6×42/7 = 76</td><td style="text-align:center"><strong>76</strong></td></tr><tr><td style="text-align:center">1</td><td style="text-align:center">4</td><td style="text-align:center">40</td><td style="text-align:center">6</td><td style="text-align:left">6×42/7 = 36</td><td style="text-align:center"><strong>76</strong></td></tr><tr><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">0</td><td style="text-align:center">10</td><td style="text-align:left">42 + 3×25/5 = 57</td><td style="text-align:center"><strong>57</strong></td></tr><tr><td style="text-align:center">10</td><td style="text-align:center">4</td><td style="text-align:center">40</td><td style="text-align:center">6</td><td style="text-align:left">25 + 1×12/3 = 29</td><td style="text-align:center"><strong>69</strong></td></tr><tr><td style="text-align:center">101</td><td style="text-align:center">9</td><td style="text-align:center">65</td><td style="text-align:center">1</td><td style="text-align:left">1×12/3 = 4</td><td style="text-align:center"><strong>69</strong></td></tr><tr><td style="text-align:center">100</td><td style="text-align:center">4</td><td style="text-align:center">40</td><td style="text-align:center">6</td><td style="text-align:left">12</td><td style="text-align:center"><strong>52</strong></td></tr><tr><td style="text-align:center">叶 1010</td><td style="text-align:center">9</td><td style="text-align:center"><strong>65</strong></td><td style="text-align:center">—</td><td style="text-align:left">—</td><td style="text-align:center"><strong>65 = bestp</strong></td></tr></tbody></table><p>搜索树（✗ = 约束剪枝）：</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">A(up=76)  bestp=0<br>├─1─ B(cp=40, up=76)<br>│    ├─1─ ✗ cw=4+7=11&gt;10（约束剪枝）<br>│    └─0─ E(cp=40, up=69)<br>│         ├─1─ F(cp=65, up=69)<br>│         │    ├─1─ ✗ cw=9+3=12&gt;10<br>│         │    └─0─ ● 叶 cp=65 → bestp=65 ★<br>│         └─0─ G(cp=40, up=52 ≤ 65，剪枝)<br>└─0─ C(cp=0, up=57 ≤ 65，剪枝)<br></code></pre></td></tr></tbody></table></figure><p>优先队列演化：[A(76)] → [B(76) C(57)] → [C(57) E(69)]（B 扩展后）→ [C(57) F(69) G(52)]（E 扩展后）→ 取出 F(69) → 叶 cp=65 → <strong>bestp = 65</strong> → 队列中剩余结点的 up（57、52）均 ≤ 65，全部剪掉，算法结束。</p><p><strong>最优值 65，最优解 x = (1, 0, 1, 0)</strong>（装物品 1、3：重量 4+5 = 9 ≤ 10，价值 40+25 = 65）。</p>
+          </div>
+<hr>
+<h3 id="例4：装载问题的队列式分支限界">例4：装载问题的队列式分支限界</h3>
+<h4 id="例题完整搜索过程-v4">例题完整搜索过程</h4>
+<div class="note note-warning">
+            <p><strong>例</strong>：n = 4，c₁ = 12，c₂ = 8，W = {8, 6, 3, 2}（总重 19）。求第一艘船的最大装载。结点标注 ew（当前装载重量），一次生成全部儿子、约束不满足的直接不入队：</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs text">A(ew=0)<br>├─1─ B(8)<br>│    ├─1─ D ✗ ew+w₂=8+6=14&gt;12（不满足约束条件）<br>│    └─0─ E(8)<br>│         ├─1─ J(11)<br>│         │    ├─1─ T ✗ ew+w₄=11+2=13&gt;12（不可行的叶结点）<br>│         │    └─0─ U ● 可行的叶结点：ew=11 → bestw=11 ★ x=(1,0,1,0)<br>│         └─0─ K(8)<br>│              ├─1─ V ● 可行的叶结点：ew=10<br>│              └─0─ W ● 可行的叶结点：ew=8<br>└─0─ C(0)<br>     ├─1─ F(6)<br>     │    ├─1─ L(9) ─ 1: ● 11（并列，不更新）／ 0: ● 9<br>     │    └─0─ M(6) ─ 1: ● 8 ／ 0: ● 6<br>     └─0─ G(0)<br>          ├─1─ N(3) ─ 1: ● 5 ／ 0: ● 3<br>          └─0─ O(0) ─ 1: ● 2 ／ 0: ● 0<br></code></pre></td></tr></tbody></table></figure><p><strong>活结点队列演化（FIFO 策略）</strong>：</p><table><thead><tr><th style="text-align:center">步骤</th><th style="text-align:center">取出扩展结点</th><th style="text-align:left">生成儿子</th><th style="text-align:left">活结点队列</th></tr></thead><tbody><tr><td style="text-align:center">0</td><td style="text-align:center">—</td><td style="text-align:left">—</td><td style="text-align:left">[A]</td></tr><tr><td style="text-align:center">1</td><td style="text-align:center">A</td><td style="text-align:left">B(8)，C(0)</td><td style="text-align:left">[B C]</td></tr><tr><td style="text-align:center">2</td><td style="text-align:center">B</td><td style="text-align:left">D ✗，E(8)</td><td style="text-align:left">[C E]</td></tr><tr><td style="text-align:center">3</td><td style="text-align:center">C</td><td style="text-align:left">F(6)，G(0)</td><td style="text-align:left">[E F G]</td></tr><tr><td style="text-align:center">4</td><td style="text-align:center">E</td><td style="text-align:left">J(11)，K(8)</td><td style="text-align:left">[F G J K]</td></tr><tr><td style="text-align:center">5</td><td style="text-align:center">F</td><td style="text-align:left">L(9)，M(6)</td><td style="text-align:left">[G J K L M]</td></tr><tr><td style="text-align:center">6</td><td style="text-align:center">G</td><td style="text-align:left">N(3)，O(0)</td><td style="text-align:left">[J K L M N O]</td></tr><tr><td style="text-align:center">7</td><td style="text-align:center">J</td><td style="text-align:left">T ✗(13&gt;12)，U(11) 可行</td><td style="text-align:left">[K L M N O] bestw=11</td></tr><tr><td style="text-align:center">8</td><td style="text-align:center">K</td><td style="text-align:left">V(10)，W(8)</td><td style="text-align:left">[L M N O]</td></tr><tr><td style="text-align:center">9</td><td style="text-align:center">L</td><td style="text-align:left">11（并列），9</td><td style="text-align:left">[M N O]</td></tr><tr><td style="text-align:center">10</td><td style="text-align:center">M</td><td style="text-align:left">8，6</td><td style="text-align:left">[N O]</td></tr><tr><td style="text-align:center">11</td><td style="text-align:center">N</td><td style="text-align:left">5，3</td><td style="text-align:left">[O]</td></tr><tr><td style="text-align:center">12</td><td style="text-align:center">O</td><td style="text-align:left">2，0</td><td style="text-align:left">[ ]</td></tr></tbody></table><p><strong>最优解 X = (1, 0, 1, 0)，bestw = 11</strong>——装上箱 1、3（8+3 = 11）；剩余箱子重 19 − 11 = <strong>8</strong>，恰好等于 c₂ = 8，全部装上第二艘船 ✓。</p>
+          </div>
+<hr>
+<h3 id="例5：装载问题的优先队列式分支限界">例5：装载问题的优先队列式分支限界</h3>
+<h4 id="优先级的定义">优先级的定义</h4>
+<div class="note note-info">
+            <p>用<strong>最大优先队列</strong>存储活结点表。优先级定义：<strong>un = ew + r</strong>——已经装载的重量 ew 加上剩余集装箱重量 r 的<strong>上界</strong>（剩余的全装上也不过如此）。优先队列中优先级最大的活结点成为下一个扩展结点。约束条件：ew + wᵢ ≤ c₁ 才能生成"装入"儿子。</p>
+          </div>
+<h4 id="例题完整搜索过程-v5">例题完整搜索过程</h4>
+<div class="note note-warning">
+            <p>同一实例：n = 4，c₁ = 12，W = {8, 6, 3, 2}（r 在结点处 = 尚未决策的箱子重量和）：</p><table><thead><tr><th style="text-align:center">步骤</th><th style="text-align:center">取出扩展结点（un 最大）</th><th style="text-align:left">生成儿子</th><th style="text-align:left">活结点优先队列</th></tr></thead><tbody><tr><td style="text-align:center">0</td><td style="text-align:center">—</td><td style="text-align:left">—</td><td style="text-align:left">[A: un=0+19=19]</td></tr><tr><td style="text-align:center">1</td><td style="text-align:center">A</td><td style="text-align:left">B(ew=8, un=8+11=19)，C(ew=0, un=0+11=11)</td><td style="text-align:left">[B(19) C(11)]</td></tr><tr><td style="text-align:center">2</td><td style="text-align:center">B(19)</td><td style="text-align:left">D ✗（ew=14&gt;12，不满足约束条件），E(ew=8, un=8+5=13)</td><td style="text-align:left">[E(13) C(11)]</td></tr><tr><td style="text-align:center">3</td><td style="text-align:center">E(13)</td><td style="text-align:left">J(ew=11, un=11+2=13)，K(ew=8, un=8+2=10)</td><td style="text-align:left">[J(13) C(11) K(10)]</td></tr><tr><td style="text-align:center">4</td><td style="text-align:center">J(13)</td><td style="text-align:left">x₄=1 ✗（ew=13&gt;12 约束剪枝）；U(ew=11) 叶，un=11+0=11</td><td style="text-align:left">[C(11) U(11) K(10)]</td></tr><tr><td style="text-align:center">5</td><td style="text-align:center">C(11)</td><td style="text-align:left">F(ew=6, un=6+5=11)，G(ew=0, un=0+5=5)</td><td style="text-align:left">[U(11) F(11) K(10) G(5)]</td></tr><tr><td style="text-align:center">6</td><td style="text-align:center"><strong>U(11)</strong>（叶结点）</td><td style="text-align:left">—</td><td style="text-align:left"><strong>叶结点成为扩展结点 → 得到最优解</strong></td></tr></tbody></table><p><strong>关键终止条件</strong>：叶结点 U 的 ew = 11 ≥ 队列中其余所有活结点的上界 un（F=11、K=10、G=5）——再扩展任何活结点也得不到超过 11 的装载，<strong>最优值 bestw = 11，最优解 x = (1, 0, 1, 0)</strong>，算法结束。</p>
+          </div>
+<hr>
+<h3 id="例6：TSP-的分支限界求解">例6：TSP 的分支限界求解</h3>
+<h4 id="例题：队列式（FIFO）">例题：队列式（FIFO）</h4>
+<div class="note note-warning">
+            <p>同一张 4 城市完全图（1-2=30，1-3=6，1-4=4，2-3=5，2-4=10，3-4=20），从城市 1 出发的排列树（B = 首城 1；结点标注部分线路费用）。剪枝：<strong>当前扩展结点的部分费用超过当前最优回路费用时，其子树剪去</strong>。</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">B（起点 1）<br>├─2─ C=(1,2)  部分费用 30<br>│    ├─3─ F=(1,2,3)  35 ─4─ (1,2,3,4) 回路 59<br>│    └─4─ G=(1,2,4)  40 ─3─ ✗ 部分 60 &gt; 59 剪枝<br>├─3─ D=(1,3)  部分费用 6<br>│    ├─2─ H=(1,3,2)  11 ─4─ (1,3,2,4) 回路 25 ★<br>│    └─4─ I=(1,3,4)  26 ✗ 部分 26 &gt; 25 剪枝<br>└─4─ E=(1,4)  部分费用 4<br>     ├─2─ J=(1,4,2)  14 ─3─ (1,4,2,3) 回路 25 ★<br>     └─3─ K=(1,4,3)  24 ─2─ (1,4,3,2) 回路 59<br></code></pre></td></tr></tbody></table></figure><p><strong>活结点队列演化</strong>：</p><table><thead><tr><th style="text-align:center">步骤</th><th style="text-align:center">取出扩展</th><th style="text-align:left">生成儿子</th><th style="text-align:left">活结点队列</th><th style="text-align:left">备注</th></tr></thead><tbody><tr><td style="text-align:center">0</td><td style="text-align:center">—</td><td style="text-align:left">—</td><td style="text-align:left">[B]</td><td style="text-align:left"></td></tr><tr><td style="text-align:center">1</td><td style="text-align:center">B</td><td style="text-align:left">C(30)，D(6)，E(4)</td><td style="text-align:left">[C D E]</td><td style="text-align:left"></td></tr><tr><td style="text-align:center">2</td><td style="text-align:center">C</td><td style="text-align:left">F(35)，G(40)</td><td style="text-align:left">[D E F G]</td><td style="text-align:left"></td></tr><tr><td style="text-align:center">3</td><td style="text-align:center">D</td><td style="text-align:left">H(11)，I(26)</td><td style="text-align:left">[E F G H I]</td><td style="text-align:left"></td></tr><tr><td style="text-align:center">4</td><td style="text-align:center">E</td><td style="text-align:left">J(14)，K(24)</td><td style="text-align:left">[F G H I J K]</td><td style="text-align:left"></td></tr><tr><td style="text-align:center">5</td><td style="text-align:center">F</td><td style="text-align:left">叶 (1,2,3,4) 回路 59</td><td style="text-align:left">[G H I J K]</td><td style="text-align:left">best=59</td></tr><tr><td style="text-align:center">6</td><td style="text-align:center">G</td><td style="text-align:left">(1,2,4,3) 部分 60 &gt; 59 ✗</td><td style="text-align:left">[H I J K]</td><td style="text-align:left">剪枝</td></tr><tr><td style="text-align:center">7</td><td style="text-align:center">H</td><td style="text-align:left">叶 (1,3,2,4) 回路 <strong>25</strong></td><td style="text-align:left">[I J K]</td><td style="text-align:left">best=25</td></tr><tr><td style="text-align:center">8</td><td style="text-align:center">I</td><td style="text-align:left">部分 26 &gt; 25 ✗</td><td style="text-align:left">[J K]</td><td style="text-align:left">剪枝</td></tr><tr><td style="text-align:center">9</td><td style="text-align:center">J</td><td style="text-align:left">叶 (1,4,2,3) 回路 25</td><td style="text-align:left">[K]</td><td style="text-align:left"></td></tr><tr><td style="text-align:center">10</td><td style="text-align:center">K</td><td style="text-align:left">叶 (1,4,3,2) 回路 59</td><td style="text-align:left">[ ]</td><td style="text-align:left"></td></tr></tbody></table><p><strong>最优回路费用 25</strong>（1→3→2→4→1 与 1→4→2→3→1 两条）。</p>
+          </div>
+<h4 id="例题：优先队列式">例题：优先队列式</h4>
+<div class="note note-warning">
+            <p>改用<strong>最小堆优先队列</strong>——优先级取<strong>部分线路费用</strong>，费用最小的活结点先扩展（更早找到好回路，剪枝更狠）：</p><table><thead><tr><th style="text-align:center">步骤</th><th style="text-align:center">取出扩展（部分费用最小）</th><th style="text-align:left">生成儿子</th><th style="text-align:left">优先队列</th><th style="text-align:left">备注</th></tr></thead><tbody><tr><td style="text-align:center">0</td><td style="text-align:center">—</td><td style="text-align:left">—</td><td style="text-align:left">[B]</td><td style="text-align:left"></td></tr><tr><td style="text-align:center">1</td><td style="text-align:center">B</td><td style="text-align:left">C(30)，D(6)，E(4)</td><td style="text-align:left">[E(4) D(6) C(30)]</td><td style="text-align:left"></td></tr><tr><td style="text-align:center">2</td><td style="text-align:center">E(4)</td><td style="text-align:left">J(14)，K(24)</td><td style="text-align:left">[D(6) J(14) K(24) C(30)]</td><td style="text-align:left"></td></tr><tr><td style="text-align:center">3</td><td style="text-align:center">D(6)</td><td style="text-align:left">H(11)，I(26)</td><td style="text-align:left">[H(11) J(14) K(24) I(26) C(30)]</td><td style="text-align:left"></td></tr><tr><td style="text-align:center">4</td><td style="text-align:center">H(11)</td><td style="text-align:left">叶 (1,3,2,4) 回路 <strong>25</strong></td><td style="text-align:left">[J(14) K(24) I(26) C(30)]</td><td style="text-align:left">best=25</td></tr><tr><td style="text-align:center">5</td><td style="text-align:center">J(14)</td><td style="text-align:left">叶 (1,4,2,3) 回路 25</td><td style="text-align:left">[K(24) I(26) C(30)]</td><td style="text-align:left"></td></tr><tr><td style="text-align:center">6</td><td style="text-align:center">K(24)</td><td style="text-align:left">(1,4,3,2) 部分 29 &gt; 25 ✗</td><td style="text-align:left">[I(26) C(30)]</td><td style="text-align:left">剪枝</td></tr><tr><td style="text-align:center">7</td><td style="text-align:center">I(26)</td><td style="text-align:left">部分 26 &gt; 25 ✗</td><td style="text-align:left">[C(30)]</td><td style="text-align:left">剪枝</td></tr><tr><td style="text-align:center">8</td><td style="text-align:center">C(30)</td><td style="text-align:left">部分 30 &gt; 25 ✗</td><td style="text-align:left">[ ]</td><td style="text-align:left">剪枝</td></tr></tbody></table><p><strong>最优回路费用 25</strong>。与 FIFO 对比：优先队列第 4 步就找到 25 的回路，随后 K、I、C 三个活结点全部被"部分费用 &gt; 25"剪掉，避免了大量无效扩展——<strong>越早拿到好的当前最优解，剪枝越有力</strong>，这正是优先队列式的价值。</p>
+          </div>
+<hr>
+<h3 id="6-2-回溯法与分支限界法对比">6.2 回溯法与分支限界法对比</h3>
+<div class="note note-primary">
+            <table><thead><tr><th>对比维度</th><th>回溯法</th><th>分支限界法</th></tr></thead><tbody><tr><td><strong>搜索方式</strong></td><td>深度优先 DFS</td><td>广度优先 BFS 或最优优先（最小耗费/最大收益）</td></tr><tr><td><strong>扩展结点</strong></td><td>一次产生<strong>一个</strong>儿子，向纵深推进</td><td><strong>一次性生成全部</strong>儿子</td></tr><tr><td><strong>活结点的存放</strong></td><td>隐式的递归栈（当前路径）</td><td>显式的<strong>活结点表</strong>（队列 / 优先队列）</td></tr><tr><td><strong>回退方式</strong></td><td>行不通逐级<strong>回溯</strong></td><td>不回溯——丢弃不可行的结点，取下一个活结点</td></tr><tr><td><strong>求解目标</strong></td><td>找出一个解或<strong>所有</strong>解</td><td>通常找<strong>一个（最优）解</strong></td></tr><tr><td><strong>内存</strong></td><td>O(树深)，很省</td><td>活结点表可能很大（指数级），较费</td></tr><tr><td><strong>剪枝</strong></td><td>约束函数 + 限界函数</td><td>限界函数（配合优先级，越早逼近最优剪得越狠）</td></tr><tr><td><strong>典型终止</strong></td><td>搜索完解空间 / 找到全部解</td><td>活结点表为空，或（优先队列式）叶结点成为扩展结点</td></tr></tbody></table>
+          </div>
+<hr>
+<h2 id="小结与考点">小结与考点</h2>
+<h3 id="两章题目速查">两章题目速查</h3>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th style="text-align:center">方法</th>
+<th style="text-align:center">解空间树</th>
+<th>结点标注</th>
+<th>剪枝要点</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-1 背包 n=3</td>
+<td style="text-align:center">回溯（无剪枝）</td>
+<td style="text-align:center">子集树</td>
+<td>Cr, V</td>
+<td>—（演示机制）</td>
+<td style="text-align:center">x=(0,1,1)，V=50</td>
+</tr>
+<tr>
+<td>装载 n=4</td>
+<td style="text-align:center">回溯 + 上界</td>
+<td style="text-align:center">子集树</td>
+<td>cw, r</td>
+<td>cw+w≤c；cw+r&gt;bestw</td>
+<td style="text-align:center">x=(1,0,0,1)，11</td>
+</tr>
+<tr>
+<td>0-1 背包 n=8</td>
+<td style="text-align:center">回溯 + 限界</td>
+<td style="text-align:center">子集树</td>
+<td>cw, cp, bp</td>
+<td>bp=cp+rp（散装贪心）</td>
+<td style="text-align:center">x=(1,1,1,0,1,1,0,0)，159</td>
+</tr>
+<tr>
+<td>批处理作业调度 n=3</td>
+<td style="text-align:center">回溯</td>
+<td style="text-align:center">排列树</td>
+<td>F₁ⱼ, F₂ⱼ</td>
+<td>同顺序完成</td>
+<td style="text-align:center">(1,3,2)，18</td>
+</tr>
+<tr>
+<td>图 m 着色 n=4</td>
+<td style="text-align:center">回溯 + 约束</td>
+<td style="text-align:center">m 叉树</td>
+<td>xᵢ</td>
+<td>相邻异色</td>
+<td style="text-align:center">6 个 3-着色，首解 (1,2,1,3)</td>
+</tr>
+<tr>
+<td>N 皇后 n=4</td>
+<td style="text-align:center">回溯 + 约束</td>
+<td style="text-align:center">排列树</td>
+<td>xᵢ</td>
+<td>不同列不同对角线</td>
+<td style="text-align:center">(1,3,0,2)、(2,0,3,1)</td>
+</tr>
+<tr>
+<td>TSP n=4</td>
+<td style="text-align:center">回溯 + 限界</td>
+<td style="text-align:center">排列树</td>
+<td>部分费用</td>
+<td>部分费用 ≥ 最优则剪</td>
+<td style="text-align:center">25</td>
+</tr>
+<tr>
+<td>子集和</td>
+<td style="text-align:center">回溯 + 约束</td>
+<td style="text-align:center">子集树</td>
+<td>(s, i, r)</td>
+<td>s&gt;M 剪；（s+r&lt;M 剪）</td>
+<td style="text-align:center">{5,10,15}、{5,12,13}、{12,18}</td>
+</tr>
+<tr>
+<td>0-1 背包 n=3</td>
+<td style="text-align:center">分支限界 FIFO</td>
+<td style="text-align:center">子集树</td>
+<td>cw, v</td>
+<td>约束不入队</td>
+<td style="text-align:center">x=(0,1,1)，50</td>
+</tr>
+<tr>
+<td>0-1 背包 n=3</td>
+<td style="text-align:center">分支限界优先队列</td>
+<td style="text-align:center">子集树</td>
+<td>当前价值</td>
+<td>价值最大先扩展</td>
+<td style="text-align:center">x=(0,1,1)，50</td>
+</tr>
+<tr>
+<td>0-1 背包 n=4</td>
+<td style="text-align:center">优先队列 + 上界</td>
+<td style="text-align:center">子集树</td>
+<td>cp, up</td>
+<td>up ≤ bestp 剪</td>
+<td style="text-align:center">x=(1,0,1,0)，65</td>
+</tr>
+<tr>
+<td>装载 n=4</td>
+<td style="text-align:center">分支限界 FIFO</td>
+<td style="text-align:center">子集树</td>
+<td>ew</td>
+<td>约束不入队</td>
+<td style="text-align:center">x=(1,0,1,0)，11</td>
+</tr>
+<tr>
+<td>装载 n=4</td>
+<td style="text-align:center">优先队列 un=ew+r</td>
+<td style="text-align:center">子集树</td>
+<td>ew, un</td>
+<td>叶成为扩展结点即最优</td>
+<td style="text-align:center">x=(1,0,1,0)，11</td>
+</tr>
+<tr>
+<td>TSP n=4</td>
+<td style="text-align:center">FIFO / 优先队列</td>
+<td style="text-align:center">排列树</td>
+<td>部分费用</td>
+<td>部分 ≥ 最优则剪</td>
+<td style="text-align:center">25</td>
+</tr>
+</tbody>
+</table>
+<h3 id="考点清单">考点清单</h3>
+<ol>
+<li><strong>回溯法解题三步骤</strong>：定义问题的解空间 → 确定易于搜索的解空间结构（子集树/排列树）→ 以深度优先方式搜索解空间，并用剪枝函数避免无效搜索；</li>
+<li><strong>两类剪枝函数</strong>的区分：约束函数（可行性——不满足约束的子树）vs 限界函数（最优性——得不到更优解的子树）；</li>
+<li><strong>子集树 O(2ⁿ) 与排列树 O(n!)</strong> 的识别与框架代码（子集树枚举 0/1；排列树 swap 换位、回溯时换回）；</li>
+<li>回溯 vs 分支限界的<strong>五点区别</strong>（搜索方式、儿子生成方式、活结点存放、求解目标、内存）；</li>
+<li><strong>队列式 vs 优先队列式</strong>的选取规则与终止条件（优先队列式：叶结点成为扩展结点时即得最优）；</li>
+<li>各例题的<strong>搜索树与活结点表演化</strong>要能手画（尤其 0-1 背包 n=8 的 bp 验算表、装载问题的 13 步队列演化）。</li>
+</ol>
+<h3 id="易错点-v2">易错点</h3>
+<div class="note note-warning">
+            <ul><li>分支限界法扩展结点时是<strong>一次性生成全部儿子</strong>——画搜索树时别按回溯法的"走一步画一步"来画，儿子要么全部入队、要么因约束/限界直接舍弃；</li><li>队列式按 <strong>FIFO</strong> 取扩展结点：注意"取出 → 生成儿子 → 入队尾"的顺序，队列演化表要一步一步写，不能跳步；</li><li>优先队列式分支限界中，优先级是<strong>上界</strong>（up = cp + rp / un = ew + r）而不是当前值——只有当叶结点（真实值）成为最大优先级元素时才能宣布最优；比较时用"叶的真实值 ≥ 其余活结点的上界"；</li><li>TSP 剪枝条件是<strong>部分费用已超过当前最优</strong>（≥），不是"等于"才算——部分费用只会继续增大；</li><li>装载问题优先队列的 un = ew + <strong>r</strong>，r 是<strong>尚未决策</strong>的箱子重量和，进入每层前先扣掉本层箱重（B 的 un = 8+11，C 的 un = 0+11，两者 r 相同）；</li><li>图着色练习的解空间树：课件参考答案写"子集树"，严格说是 m 叉树（每层 m 选一）——答题时按课件口径写，注明"每层在 m 种颜色中选择"；</li><li>4-皇后第一个解 (1,3,0,2) 与第二个解 (2,0,3,1) <strong>左右对称</strong>；8 皇后解有 92 个（n ≤ 13 时可枚举）；</li><li>批处理作业调度：F₂ⱼ 取 <strong>max</strong> 而不是相加——机器 2 有两个等待来源（本作业的机器 1 完成时刻、机器 2 上一作业完成时刻）；</li><li>分支限界法的活结点表在最坏情况下可能达到指数规模——这是它用<strong>空间换早停</strong>的代价，与回溯法的 O(树深) 内存对比是简答题常客。</li></ul>
+          </div>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Review/" class="category-chain-item">Review</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Review/" class="print-no-link">#Review</a>
+      
+        <a href="/tags/Algorithm-Design-and-Analysis/" class="print-no-link">#Algorithm Design and Analysis</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Algorithm Design and Analysis: Backtracking and Branch-and-Bound</div>
+      <div>http://example.com/2026/11/13/Review/Algorithm-Design-and-Analysis-Backtracking-BnB/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 13, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>November 14, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/11/16/Review/Algorithm-Design-and-Analysis-Past-Exams/" title="Algorithm Design and Analysis: Past Exams">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Algorithm Design and Analysis: Past Exams</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/10/23/Review/Algorithm-Design-and-Analysis/" title="Algorithm Design and Analysis">
+                        <span class="hidden-mobile">Algorithm Design and Analysis</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

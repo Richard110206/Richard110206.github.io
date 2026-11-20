@@ -1,0 +1,1632 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/cover/c35d915a-f8ee-46b6-aa42-36eece9aff64.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Li Qinxuan">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本文整理《算法设计与分析》四份历年真题（2024 秋、2025 春、2025 秋算法导论卷（人智专业同卷）、2026 夏信安卷）的答卷式解析：先用一张表说清题型分布与高频考点，再逐卷给出每道真题的完整题面、方法、计算过程（搜索树 &#x2F; DP 状态转移表）与 C++ 伪代码——每题按考试要写的四件套（策略 → 伪代码 → 实例计算 → 复杂度）作答，树状图用等宽字符画出（✗c &#x3D; 约束剪枝，✗b &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorithm Design and Analysis: Past Exams">
+<meta property="og:url" content="http://example.com/2026/11/16/Review/Algorithm-Design-and-Analysis-Past-Exams/index.html">
+<meta property="og:site_name" content="Welcome To Li Qinxuan&#39;s Blog！">
+<meta property="og:description" content="本文整理《算法设计与分析》四份历年真题（2024 秋、2025 春、2025 秋算法导论卷（人智专业同卷）、2026 夏信安卷）的答卷式解析：先用一张表说清题型分布与高频考点，再逐卷给出每道真题的完整题面、方法、计算过程（搜索树 &#x2F; DP 状态转移表）与 C++ 伪代码——每题按考试要写的四件套（策略 → 伪代码 → 实例计算 → 复杂度）作答，树状图用等宽字符画出（✗c &#x3D; 约束剪枝，✗b &#x3D;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-11-16T12:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-17T03:55:12.635Z">
+<meta property="article:author" content="Li Qinxuan">
+<meta property="article:tag" content="Review">
+<meta property="article:tag" content="Algorithm Design and Analysis">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Algorithm Design and Analysis: Past Exams - Welcome To Li Qinxuan&#39;s Blog！</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/_data/styles.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LQX&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://richard110206.github.io/2025/06/04/other/About%20Me%20and%20My%20Blog/" target="_self">
+                <i class="iconfont icon-addrcard"></i>
+                <span>Introduction</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-books"></i>
+                <span>Else</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/" target="_self">
+                    
+                    <span>主题博客</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/guide/" target="_self">
+                    
+                    <span>配置指南</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://hexo.fluid-dev.com/docs/icon/" target="_self">
+                    
+                    <span>图标用法</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/07/14/other/life-musings/" target="_self">
+                    
+                    <span>精进日记</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="https://richard110206.github.io/2025/08/13/other/Casual-Chronicles/" target="_self">
+                    
+                    <span>生活杂谈</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/banner_img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Algorithm Design and Analysis: Past Exams"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-11-16 20:00" pubdate>
+          November 16, 2026 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          83 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Algorithm Design and Analysis: Past Exams</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>本文整理《算法设计与分析》四份历年真题（2024 秋、2025 春、2025 秋算法导论卷（人智专业同卷）、2026 夏信安卷）的<strong>答卷式解析</strong>：先用一张表说清<strong>题型分布与高频考点</strong>，再逐卷给出每道真题的<strong>完整题面、方法、计算过程（搜索树 / DP 状态转移表）与 C++ 伪代码</strong>——每题按考试要写的四件套（策略 → 伪代码 → 实例计算 → 复杂度）作答，树状图用等宽字符画出（✗c = 约束剪枝，✗b = 限界剪枝），重点难点使用 Hexo <code>note</code> 标签标注。知识点讲解见前三篇：<a href="/2026/10/23/Review/Algorithm-Design-and-Analysis/">Algorithm Design and Analysis</a>（第 1、2 章）、<a href="/2026/10/23/Review/Algorithm-Design-and-Analysis-DP/">Algorithm Design and Analysis: Dynamic Programming</a>（第 3 章）、<a href="/2026/11/13/Review/Algorithm-Design-and-Analysis-Backtracking-BnB/">Algorithm Design and Analysis: Backtracking and Branch-and-Bound</a>（第 5、6 章）。</p>
+</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul>
+<li><a href="#%E8%80%83%E6%83%85%E9%80%9F%E8%A7%88">考情速览</a></li>
+<li><a href="#2024-%E7%A7%8B">2024 秋</a>
+<ul>
+<li><a href="#T1-%E9%80%92%E5%BD%92%E6%96%B9%E7%A8%8B%E6%B1%82%E8%A7%A3">T1 递归方程求解</a></li>
+<li><a href="#T2-%E9%87%91%E5%9D%97%E9%97%AE%E9%A2%98">T2 金块问题</a></li>
+<li><a href="#T3-%E4%B8%80%E7%BB%B4%E6%9C%80%E5%A4%A7%E5%AD%90%E6%AE%B5%E5%92%8C">T3 一维最大子段和</a></li>
+<li><a href="#T4-%E6%8E%92%E9%98%9F%E6%8E%A5%E6%B0%B4%EF%BC%88%E8%B4%AA%E5%BF%83%EF%BC%89">T4 排队接水（贪心）</a></li>
+<li><a href="#T5-%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9%EF%BC%88%E7%AE%97%E6%B3%95%E6%8F%8F%E8%BF%B0%EF%BC%89">T5 图像压缩（算法描述）</a></li>
+<li><a href="#T6-%E5%9B%9E%E6%BA%AF%E6%B3%95%E8%83%8C%E5%8C%85">T6 回溯法背包</a></li>
+</ul>
+</li>
+<li><a href="#2025-%E6%98%A5">2025 春</a>
+<ul>
+<li><a href="#T1-%E6%B1%89%E8%AF%BA%E5%A1%94%E7%9A%84%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90">T1 汉诺塔的复杂度分析</a></li>
+<li><a href="#T2-%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F">T2 归并排序</a></li>
+<li><a href="#T3-%E7%9F%A9%E9%98%B5%E8%BF%9E%E4%B9%98">T3 矩阵连乘</a></li>
+<li><a href="#T4-%E6%8E%92%E9%98%9F%E5%8A%9E%E7%90%86%E4%B8%9A%E5%8A%A1%EF%BC%88%E6%9C%80%E7%9F%AD%E5%B9%B3%E5%9D%87%E7%AD%89%E5%BE%85%E6%97%B6%E9%97%B4%EF%BC%89">T4 排队办理业务（最短平均等待时间）</a></li>
+<li><a href="#T5-%E5%9B%9E%E6%BA%AF%E6%B3%95-0-1-%E8%83%8C%E5%8C%85%EF%BC%88%E8%BD%BD%E8%B4%A7%E9%87%8F-7%EF%BC%89">T5 回溯法 0-1 背包（载货量 7）</a></li>
+<li><a href="#T6-%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E5%BC%8F%E5%88%86%E6%94%AF%E9%99%90%E7%95%8C-TSP">T6 优先队列式分支限界 TSP</a></li>
+</ul>
+</li>
+<li><a href="#2025-%E7%A7%8B%EF%BC%88%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E5%8D%B7%EF%BC%89">2025 秋（算法导论卷）</a>
+<ul>
+<li><a href="#T1-%E6%B1%89%E8%AF%BA%E5%A1%94%EF%BC%88%E9%80%92%E6%8E%A8%E5%85%AC%E5%BC%8F%E4%B8%8E%E4%B8%8A%E7%95%8C%EF%BC%89">T1 汉诺塔（递推公式与上界）</a></li>
+<li><a href="#T2-%E7%BA%BF%E6%80%A7%E6%97%B6%E9%97%B4%E9%80%89%E6%8B%A9%E8%BE%93%E5%87%BA%E5%89%8D-k-%E5%A4%A7">T2 线性时间选择输出前 k 大</a></li>
+<li><a href="#T3-%E5%83%8F%E7%B4%A0%E5%88%86%E5%89%B2%EF%BC%88%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9%EF%BC%89">T3 像素分割（图像压缩）</a></li>
+<li><a href="#T4-%E5%8F%98%E4%BD%93%E8%B7%B3%E5%8F%B0%E9%98%B6%EF%BC%88DP%EF%BC%89">T4 变体跳台阶（DP）</a></li>
+<li><a href="#T5-%E9%A3%9F%E5%A0%82%E6%89%93%E9%A5%AD%E6%8E%92%E9%98%9F%EF%BC%88%E8%B4%AA%E5%BF%83%EF%BC%89">T5 食堂打饭排队（贪心）</a></li>
+<li><a href="#T6-%E6%97%A0%E8%BF%9E%E7%BB%AD-1-%E7%9A%84-n-%E4%BD%8D%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%B2%EF%BC%88%E5%9B%9E%E6%BA%AF%EF%BC%89">T6 无连续 1 的 n 位二进制串（回溯）</a></li>
+<li><a href="#T7-%E6%9C%80%E5%B0%91%E5%8C%BA%E9%97%B4%E8%A6%86%E7%9B%96%EF%BC%88%E8%B4%AA%E5%BF%83%EF%BC%89">T7 最少区间覆盖（贪心）</a></li>
+</ul>
+</li>
+<li><a href="#2026-%E5%A4%8F%EF%BC%88%E4%BF%A1%E5%AE%89%E5%8D%B7%EF%BC%89">2026 夏（信安卷）</a>
+<ul>
+<li><a href="#T1-%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2">T1 二分搜索</a></li>
+<li><a href="#T2-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F">T2 快速排序</a></li>
+<li><a href="#T3-%E6%9C%80%E5%A4%A7%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%AE%B5%E5%92%8C%EF%BC%88DP-%E8%A1%A8%EF%BC%89">T3 最大连续子段和（DP 表）</a></li>
+<li><a href="#T4-%E6%9C%80%E7%9F%AD%E5%B9%B3%E5%9D%87%E7%AD%89%E5%BE%85%E6%97%B6%E9%97%B4">T4 最短平均等待时间</a></li>
+<li><a href="#T5-%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%EF%BC%88%E5%9B%9B%E9%97%AE%EF%BC%89">T5 背包问题（四问）</a></li>
+<li><a href="#T6-%E5%AD%90%E9%9B%86%E5%92%8C%E9%97%AE%E9%A2%98%EF%BC%88%E5%9B%9B%E9%97%AE%EF%BC%89">T6 子集和问题（四问）</a></li>
+</ul>
+</li>
+<li><a href="#%E8%80%83%E5%89%8D%E6%B8%85%E5%8D%95">考前清单</a></li>
+</ul>
+<hr>
+<h2 id="考情速览">考情速览</h2>
+<div class="note note-info">
+            <p><strong>题量与分值</strong>：每卷 <strong>6 道大题</strong>（2025 秋 7 道），每题 <strong>15 分</strong>上下，题内小问各占 5～10 分。伪代码一律 C++ 风格；回溯题用 <code>class + Backtrack</code> 类框架书写。</p>
+          </div>
+<h3 id="题型分布表">题型分布表</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">题型</th>
+<th style="text-align:center">考频</th>
+<th style="text-align:left">历年考过的题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>复杂度分析（递归方程）</strong></td>
+<td style="text-align:center">4/4 卷必考</td>
+<td style="text-align:left">汉诺塔（2025 春、2025 秋）、二分搜索（2026 夏）、T(n)=2T(n/2)+5n²（2024 秋）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>贪心</strong></td>
+<td style="text-align:center">4/4 卷必考</td>
+<td style="text-align:left">排队接水 / 办业务 / 食堂打饭——<strong>同一道题三年四考</strong>；区间覆盖（2025 秋）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>回溯法</strong></td>
+<td style="text-align:center">4/4 卷必考</td>
+<td style="text-align:left">0-1 背包 / 装载（2024 秋、2025 春、2026 夏）、子集和（2026 夏）、无连续 1 二进制串（2025 秋）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>动态规划</strong></td>
+<td style="text-align:center">4/4 卷必考</td>
+<td style="text-align:left">矩阵连乘（2025 春）、最大子段和（2024 秋、2026 夏）、图像压缩 / 像素分割（2024 秋、2025 秋）、跳台阶变体（2025 秋）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>分治</strong></td>
+<td style="text-align:center">3/4 卷</td>
+<td style="text-align:left">归并排序（2025 春）、快速排序（2026 夏）、金块问题（2024 秋）、线性时间选择（2025 秋）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>分支限界（优先队列）</strong></td>
+<td style="text-align:center">2025 春</td>
+<td style="text-align:left">TSP：4 个地点周游一圈回到原点</td>
+</tr>
+</tbody>
+</table>
+<h3 id="三条固定套路">三条固定套路</h3>
+<div class="note note-primary">
+            <ol><li><strong>复杂度题</strong>：给一段递归代码 → 写递推方程 → 迭代展开求上界 → 写出 O(…) 结论。高频三式：T(n)=2T(n−1)+1 = <strong>O(2ⁿ)</strong>（汉诺塔）；T(n)=T(n/2)+1 = <strong>O(log n)</strong>（二分）；T(n)=2T(n/2)+cn = <strong>O(n log n)</strong>（归并 / 快排）。</li><li><strong>DP / 贪心大题固定四件套</strong>：策略一句话 → 伪代码 → 给定数据的<strong>实例计算（填表 / 求最优序列）</strong> → 复杂度分析。</li><li><strong>回溯大题固定四问</strong>：画<strong>空间树</strong> → 写<strong>优化策略</strong>（约束函数 + 限界函数各一句）→ 画<strong>优化后的空间树</strong>（剪枝处标注原因）→ 给<strong>最优解</strong>（解向量 + 最优值）。</li></ol>
+          </div>
+<hr>
+<h2 id="2024-秋">2024 秋</h2>
+<h3 id="T1-递归方程求解">T1 递归方程求解</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：解递归方程</p><p>$$<br>T(n) = \begin{cases}<br>7, &amp; n = 1 \\<br>2T(n/2) + 5n^2, &amp; n &gt; 1<br>\end{cases}<br>$$</p><p>求 T(n) 的时间复杂度上界。</p>
+          </div>
+<div class="note note-info">
+            <p><strong>方法</strong>：迭代展开（递归树法）。每层递归：子问题数 ×2，规模 ÷2，新增代价 5n²。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>解</strong>：迭代展开 k 次（k = log₂n 时规模降到 1）：</p><p>$$<br>T(n) = 2^k T(n/2^k) + \sum_{i=0}^{k-1} 2^i \cdot 5\left(\frac{n}{2^i}\right)^2<br>= nT(1) + 5n^2 \sum_{i=0}^{k-1}\left(\frac{1}{2}\right)^i<br>&lt; 7n + 10n^2<br>$$</p><p>几何级数和 Σ(1/2)ⁱ &lt; 2，故 <strong>T(n) = O(n²)</strong>。</p><p>主定理验证：a=2, b=2，n^(log₂2) = n，f(n) = 5n² = Ω(n^(1+ε)) 且满足正则条件 2f(n/2) = 2.5n² ≤ cf(n)，故 <strong>T(n) = Θ(n²)</strong>。</p>
+          </div>
+<hr>
+<h3 id="T2-金块问题">T2 金块问题</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：n 块金块重量不同，用分治法找出<strong>最重与最轻</strong>的金块。<br>（1）写伪代码；（2）给出具体例子，按第一问的算法写出具体步骤；（3）给出时间上限。</p>
+          </div>
+<div class="note note-info">
+            <p><strong>方法</strong>：分治。规模 1 时最大最小相同；规模 2 时一次比较定胜负；一般情形对半分，两半各自求出 (max, min)，再各比较一次合并——<strong>2 次比较 + 2 次递归</strong>。</p>
+          </div>
+<p><strong>（1）伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MaxMin</span><span class="hljs-params">(Type a[], <span class="hljs-type">int</span> i, <span class="hljs-type">int</span> j,</span></span><br><span class="hljs-params"><span class="hljs-function">            Type &amp;max, Type &amp;min)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-keyword">if</span> (i == j) {                 <span class="hljs-comment">// 只有一块</span><br>        max = min = a[i];  <span class="hljs-keyword">return</span>;<br>    }<br>    <span class="hljs-keyword">if</span> (i == j - <span class="hljs-number">1</span>) {             <span class="hljs-comment">// 两块：1 次比较</span><br>        <span class="hljs-keyword">if</span> (a[i] &lt; a[j]) { max = a[j]; min = a[i]; }<br>        <span class="hljs-keyword">else</span>             { max = a[i]; min = a[j]; }<br>        <span class="hljs-keyword">return</span>;<br>    }<br>    <span class="hljs-type">int</span> m = (i + j) / <span class="hljs-number">2</span>;          <span class="hljs-comment">// 对半分</span><br>    Type lmax, lmin, rmax, rmin;<br>    <span class="hljs-built_in">MaxMin</span>(a, i, m, lmax, lmin);      <span class="hljs-comment">// 左半</span><br>    <span class="hljs-built_in">MaxMin</span>(a, m + <span class="hljs-number">1</span>, j, rmax, rmin);  <span class="hljs-comment">// 右半</span><br>    max = lmax &gt; rmax ? lmax : rmax;  <span class="hljs-comment">// 合并 2 次</span><br>    min = lmin &lt; rmin ? lmin : rmin;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>（2）实例步骤</strong>（8 块金块 [5, 12, 3, 9, 21, 7, 30, 1]）：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">[5 12 3 9 21 7 30 1]<br>├─ [5 12 3 9]<br>│  ├─ [5 12] → max 12, min 5<br>│  └─ [3 9]  → max 9,  min 3<br>│  合并：max = max(12,9) = 12, min = min(5,3) = 3<br>└─ [21 7 30 1]<br>   ├─ [21 7] → max 21, min 7<br>   └─ [30 1] → max 30, min 1<br>   合并：max = max(21,30) = 30, min = min(7,1) = 1<br>最终：max = max(12,30) = 30, min = min(3,1) = 1<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-primary">
+            <p><strong>（3）复杂度</strong>：递推方程 T(n) = 2T(n/2) + 2，T(2) = 1，解得 <strong>T(n) = 3n/2 − 2</strong> 次比较（n = 8 时 10 次），时间上限 <strong>O(n)</strong>——这是找最大最小比较次数最少的算法。</p>
+          </div>
+<hr>
+<h3 id="T3-一维最大子段和">T3 一维最大子段和</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：给定 n 个整数（可能为负）组成的序列 a[1…n]，求<strong>连续子段和的最大值</strong>并指出对应子段。以 a = {−2, 11, −4, 13, −5, −2} 为例。（1）写算法策略；（2）写伪代码；（3）分析复杂度。</p>
+          </div>
+<div class="note note-info">
+            <p><strong>（1）策略（动态规划）</strong>：设 b[j] = <strong>以 a[j] 结尾</strong>的最大子段和，转移：b[j] = max{ b[j−1] + a[j], a[j] }——前缀子段和为正就接上，为负就丢掉、从 a[j] 重新开段；答案 = max{b[j]}。序列的完整 DP 逐位推导见下文 2026 夏 T3 的 DP 表。</p>
+          </div>
+<p><strong>（2）伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">MaxSum</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> a[])</span>      <span class="hljs-comment">// 动态规划 O(n)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;         <span class="hljs-comment">// b 即 b[j]</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) {<br>        <span class="hljs-comment">// b[j] = max{ b[j-1]+a[j], a[j] }</span><br>        b = (b &gt; <span class="hljs-number">0</span>) ? b + a[j] : a[j];<br>        <span class="hljs-keyword">if</span> (b &gt; sum) sum = b;   <span class="hljs-comment">// 全局最大</span><br>    }<br>    <span class="hljs-keyword">return</span> sum;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>实例</strong>：a = {−2, 11, −4, 13, −5, −2} 时 b[] = {−2, 11, 7, 20, 15, 13}，最大子段和 = <strong>20</strong>，对应子段 a[2…4] = {11, −4, 13}。</p>
+<div class="note note-primary">
+            <p><strong>（3）复杂度</strong>：一遍扫描，时间 <strong>O(n)</strong>、空间 <strong>O(1)</strong>。</p>
+          </div>
+<hr>
+<h3 id="T4-排队接水（贪心）">T4 排队接水（贪心）</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：n 个人排队接水，第 i 个人的接水（服务）时间为 t[i]，求一种排队顺序使<strong>平均等待时间最短</strong>（本人接水时间不计入自己的等待时间）。（1）给出策略并证明；（2）写伪代码。</p>
+          </div>
+<div class="note note-info">
+            <p><strong>（1）策略（贪心）：服务时间短的人优先</strong>。设排序后第 j 位的服务时间为 t(j)，他的等待时间是前 j−1 人服务时间之和，总等待时间</p><p>$$<br>W = \sum_{j=1}^{n} (n-j)\ t(j)<br>$$</p><p>t(j) 越小乘的系数 (n−j) 越大，故升序排列使 W 最小。<strong>交换论证</strong>：若相邻两人 tᵢ &gt; tᵢ₊₁，交换后总等待减少 tᵢ − tᵢ₊₁ &gt; 0，故任何逆序都可改进，升序即最优。</p>
+          </div>
+<p><strong>（2）伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">AvgWait</span><span class="hljs-params">(<span class="hljs-type">int</span> t[], <span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-built_in">sort</span>(t, t + n);    <span class="hljs-comment">// 贪心：短任务优先</span><br>    <span class="hljs-type">double</span> total = <span class="hljs-number">0</span>, pre = <span class="hljs-number">0</span>;   <span class="hljs-comment">// pre: 前i人和</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {<br>        total += pre;  <span class="hljs-comment">// 第 i+1 位等 pre</span><br>        pre += t[i];<br>    }<br>    <span class="hljs-keyword">return</span> total / n;  <span class="hljs-comment">// 平均等待时间</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>7 个客户的完整算例（最优次序与平均等待时间的计算）见下文 2025 春 T4。</p>
+<hr>
+<h3 id="T5-图像压缩（算法描述）">T5 图像压缩（算法描述）</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：灰度图像的一行像素 p[1…n]，0 ≤ p[i] ≤ 255。将序列<strong>分段压缩</strong>：每段长度 ≤ 256，段内所有像素用相同位数 b（b = 段内最大像素值的二进制位数）存储，每段头部开销 11 位（8 位段长 + 3 位位数 b）。给出使总存储位数最少的压缩算法描述。</p>
+          </div>
+<div class="note note-info">
+            <p><strong>算法描述（动态规划）</strong>：设 s[i] = p[1…i] 的最小存储位数，状态转移——枚举最后一段 p[k…i]（长度 ≤ 256，段内位数 b(k,i) = 段内最大像素位数）：</p><p>$$<br>s[i] = \min_{1 \le k \le i,\ \ i-k+1 \le 256} \lbrace\ s[k-1] + (i-k+1)\ b(k,i) + 11\ \rbrace<br>$$</p><p>按 i 从小到大递推，s[n] 即最优值；用 l[i]、b[i] 记录分段方式回溯出分段方案。完整的状态转移过程与伪代码见下文 2025 秋 T3（像素分割，含 9 像素算例）。</p>
+          </div>
+<hr>
+<h3 id="T6-回溯法背包">T6 回溯法背包</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：用回溯法解 0-1 背包：载货量（容量）c = 7，四件货物重量 w = {3, 5, 2, 1}，价值 p = {9, 10, 7, 4}，要求<strong>总价值最高</strong>。<br>（1）画解空间树；（2）给出优化策略；（3）画优化后的空间树；（4）给出最优解。</p>
+          </div>
+<p><strong>四问作答要点</strong>（完整树图与伪代码见下文 2025 春 T5，两题数据相同、解法一致）：</p>
+<div class="note note-primary">
+            <ol><li><strong>解空间树</strong>：子集树。每件货物 装（xᵢ=1）/ 不装（xᵢ=0），共 2⁴ = 16 个叶结点、31 个结点；结点标注当前重量 cw、当前价值 cp。</li><li><strong>优化策略</strong>：<strong>约束函数</strong> cw + wᵢ ≤ c 才进左子树（装不下不装）；<strong>限界函数</strong> ub = cp + r ≤ bestp 时剪右子树（r = 尚未决策物品的价值总和，全装也超不过当前最优）。</li><li><strong>优化后的树</strong>：只生成 10 个结点；✗c 剪去 x₂=1（3+5=8&gt;7）、x₄=1（7+1=8&gt;7）等不可行分支；✗b 剪去 ub = 13、14、11 ≤ 20 的三棵右子树。</li><li><strong>最优解 x = (1, 0, 1, 1)</strong>：装货物 1、3、4，重量 3+2+1 = 6 ≤ 7，最优价值 = 9+7+4 = <strong>20</strong>。</li></ol>
+          </div>
+<hr>
+<h2 id="2025-春">2025 春</h2>
+<h3 id="T1-汉诺塔的复杂度分析">T1 汉诺塔的复杂度分析</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：给出汉诺塔的递归代码，求其<strong>递推方程</strong>与<strong>时间复杂度</strong>。</p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// hanoi(n, a, b, c): 将 a 柱 n 个盘借 b 移到 c</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">hanoi</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> c)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">1</span>) {<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d -&gt; %d\n"</span>, a, c);<br>        <span class="hljs-keyword">return</span>;<br>    }<br>    <span class="hljs-built_in">hanoi</span>(n - <span class="hljs-number">1</span>, a, c, b);   <span class="hljs-comment">// 上 n-1 个盘移到 b</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d -&gt; %d\n"</span>, a, c);  <span class="hljs-comment">// 最大盘 a-&gt;c</span><br>    <span class="hljs-built_in">hanoi</span>(n - <span class="hljs-number">1</span>, b, a, c);   <span class="hljs-comment">// b 上 n-1 个盘移到 c</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+          </div>
+<div class="note note-info">
+            <p><strong>递推方程</strong>：一次调用 = 移 n−1 个盘（两次递归）+ 移最大盘 1 次：</p><p>$$<br>T(n) = 2T(n-1) + 1, \qquad T(1) = 1<br>$$</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>解</strong>：迭代展开 k 次：</p><p>$$<br>T(n) = 2^k T(n-k) + 2^{k-1} + \cdots + 2 + 1<br>$$</p><p>取 k = n−1：</p><p>$$<br>T(n) = 2^{n-1}T(1) + (2^{n-1} - 1) = 2^{n-1} + 2^{n-1} - 1 = \boxed{2^n - 1}<br>$$</p><p>故时间复杂度 <strong>O(2ⁿ)</strong>。</p>
+          </div>
+<hr>
+<h3 id="T2-归并排序">T2 归并排序</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：（1）写归并排序伪代码；（2）对给定的 8 个数 <strong>49, 38, 65, 97, 76, 13, 27, 50</strong> 写出排序步骤；（3）分析算法复杂度上界 O。</p>
+          </div>
+<p><strong>（1）伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 合并 c[l..m] 与 c[m+1..r]（各自有序）入 d</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Merge</span><span class="hljs-params">(Type c[], Type d[],</span></span><br><span class="hljs-params"><span class="hljs-function">           <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> m, <span class="hljs-type">int</span> r)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-type">int</span> i = l, j = m + <span class="hljs-number">1</span>, k = l;<br>    <span class="hljs-keyword">while</span> (i &lt;= m &amp;&amp; j &lt;= r)   <span class="hljs-comment">// 取头部较小者</span><br>        d[k++] = (c[i] &lt;= c[j])<br>                   ? c[i++] : c[j++];<br>    <span class="hljs-keyword">while</span> (i &lt;= m) d[k++] = c[i++];  <span class="hljs-comment">// 左段剩余</span><br>    <span class="hljs-keyword">while</span> (j &lt;= r) d[k++] = c[j++];  <span class="hljs-comment">// 右段剩余</span><br>}<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MergeSort</span><span class="hljs-params">(Type a[], <span class="hljs-type">int</span> left, <span class="hljs-type">int</span> right)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-keyword">if</span> (left &lt; right) {<br>        <span class="hljs-type">int</span> i = (left + right) / <span class="hljs-number">2</span>;   <span class="hljs-comment">// 取中点</span><br>        <span class="hljs-built_in">MergeSort</span>(a, left, i);   <span class="hljs-comment">// 左半排序</span><br>        <span class="hljs-built_in">MergeSort</span>(a, i + <span class="hljs-number">1</span>, right);  <span class="hljs-comment">// 右半排序</span><br>        <span class="hljs-built_in">Merge</span>(a, b, left, i, right);  <span class="hljs-comment">// 合并入 b</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = left; k &lt;= right; k++)<br>            a[k] = b[k];   <span class="hljs-comment">// 写回原数组</span><br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>（2）排序步骤</strong>（自顶向下分，自底向上归）：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">趟</th>
+<th style="text-align:center">段长</th>
+<th style="text-align:left">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">初始</td>
+<td style="text-align:center">1</td>
+<td style="text-align:left">[49] [38] [65] [97] [76] [13] [27] [50]</td>
+</tr>
+<tr>
+<td style="text-align:center">第 1 趟归并</td>
+<td style="text-align:center">2</td>
+<td style="text-align:left">[38 49] [65 97] [13 76] [27 50]</td>
+</tr>
+<tr>
+<td style="text-align:center">第 2 趟归并</td>
+<td style="text-align:center">4</td>
+<td style="text-align:left">[38 49 65 97] [13 27 50 76]</td>
+</tr>
+<tr>
+<td style="text-align:center">第 3 趟归并</td>
+<td style="text-align:center">8</td>
+<td style="text-align:left">[13 27 38 49 50 65 76 97]</td>
+</tr>
+</tbody>
+</table>
+<div class="note note-primary">
+            <p><strong>（3）复杂度</strong>：递推方程 T(n) = 2T(n/2) + O(n)。展开 k = log₂n 次：</p><p>$$<br>T(n) = 2^k T(n/2^k) + k\cdot cn = nT(1) + cn\log_2 n<br>$$</p><p>上界 <strong>O(n log n)</strong>。</p>
+          </div>
+<hr>
+<h3 id="T3-矩阵连乘">T3 矩阵连乘</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：求矩阵连乘积 A₁A₂A₃A₄ 的最优计算次序，各矩阵维数 p = [10, 20, 5, 25, 80]，即 A₁: 10×20，A₂: 20×5，A₃: 5×25，A₄: 25×80。<br>（1）写出详细计算过程；（2）给出最优计算次序；（3）给出最优相乘次数。</p>
+          </div>
+<div class="note note-info">
+            <p><strong>方法（动态规划）</strong>：记 m[i][j] = AᵢAᵢ₊₁⋯Aⱼ 的最少数乘次数，转移——枚举断开点 k：</p><p>$$<br>m[i][j] = \min_{i \le k &lt; j} \lbrace\ m[i][k] + m[k+1][j] + p_{i-1} p_k p_j\ \rbrace, \qquad m[i][i] = 0<br>$$</p><p><strong>按链长从 2 到 n 填表</strong>；同时记录断点 s[i][j] = k 用于构造最优次序。复杂度 O(n³)。</p>
+          </div>
+<p><strong>（1）详细计算过程</strong>：</p>
+<div class="note note-primary">
+            <p><strong>链长 2</strong>：m[i][i+1] = pᵢ₋₁·pᵢ·pᵢ₊₁</p><ul><li>m[1][2] = 10×20×5 = <strong>1000</strong></li><li>m[2][3] = 20×5×25 = <strong>2500</strong></li><li>m[3][4] = 5×25×80 = <strong>10000</strong></li></ul><p><strong>链长 3</strong>：</p><ul><li>m[1][3]：k=1：0 + m[2][3] + 10×20×25 = 2500 + 5000 = 7500；k=2：m[1][2] + 0 + 10×5×25 = 1000 + 1250 = <strong>2250</strong> → m[1][3] = 2250，s[1][3] = 2</li><li>m[2][4]：k=2：0 + m[3][4] + 20×5×80 = 10000 + 8000 = <strong>18000</strong>；k=3：m[2][3] + 0 + 20×25×80 = 2500 + 40000 = 42500 → m[2][4] = 18000，s[2][4] = 2</li></ul><p><strong>链长 4</strong>（m[1][4]）：</p><ul><li>k=1：m[1][1] + m[2][4] + 10×20×80 = 0 + 18000 + 16000 = 34000</li><li>k=2：m[1][2] + m[3][4] + 10×5×80 = 1000 + 10000 + 4000 = <strong>15000</strong> ★</li><li>k=3：m[1][3] + m[4][4] + 10×25×80 = 2250 + 0 + 20000 = 22250</li></ul>
+          </div>
+<p><strong>m[i][j] 表</strong>：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">m[i][j]</th>
+<th style="text-align:center">j=1</th>
+<th style="text-align:center">j=2</th>
+<th style="text-align:center">j=3</th>
+<th style="text-align:center">j=4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>i=1</strong></td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1000</td>
+<td style="text-align:center">2250</td>
+<td style="text-align:center"><strong>15000</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>i=2</strong></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">2500</td>
+<td style="text-align:center">18000</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>i=3</strong></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">10000</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>i=4</strong></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>s[i][j] 表</strong>：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">s[i][j]</th>
+<th style="text-align:center">j=2</th>
+<th style="text-align:center">j=3</th>
+<th style="text-align:center">j=4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>i=1</strong></td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>i=2</strong></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>i=3</strong></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">3</td>
+</tr>
+</tbody>
+</table>
+<div class="note note-primary">
+            <p><strong>（2）最优次序</strong>：s[1][4] = 2 → (A₁A₂)(A₃A₄)。</p><p><strong>（3）最优相乘次数 = 15000</strong>。验证：(A₁A₂) 花 1000 次得 10×5；(A₃A₄) 花 10000 次得 5×80；(10×5)·(5×80) 花 4000 次；1000 + 10000 + 4000 = 15000。</p>
+          </div>
+<p><strong>伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">MatrixChain</span><span class="hljs-params">(<span class="hljs-type">int</span> *p, <span class="hljs-type">int</span> n, <span class="hljs-type">int</span> **m, <span class="hljs-type">int</span> **s)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) m[i][i] = <span class="hljs-number">0</span>;<br>    <span class="hljs-comment">// 链长 len 从 2 到 n，按链长递增填表</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> len = <span class="hljs-number">2</span>; len &lt;= n; len++)<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n - len + <span class="hljs-number">1</span>; i++) {<br>            <span class="hljs-type">int</span> j = i + len - <span class="hljs-number">1</span>;<br>            m[i][j] = m[i<span class="hljs-number">+1</span>][j] + p[i<span class="hljs-number">-1</span>]*p[i]*p[j];<br>            s[i][j] = i;            <span class="hljs-comment">// 先取 k = i</span><br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = i + <span class="hljs-number">1</span>; k &lt; j; k++) {<br>                <span class="hljs-type">int</span> t = m[i][k] + m[k<span class="hljs-number">+1</span>][j]<br>                      + p[i<span class="hljs-number">-1</span>]*p[k]*p[j];<br>                <span class="hljs-keyword">if</span> (t &lt; m[i][j]) {<br>                    m[i][j] = t;<br>                    s[i][j] = k;<br>                }<br>            }<br>        }<br>}<br></code></pre></td></tr></tbody></table></figure>
+<hr>
+<h3 id="T4-排队办理业务（最短平均等待时间）">T4 排队办理业务（最短平均等待时间）</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：7 位客户排队办理业务，服务时间分别为 <strong>{10, 5, 8, 20, 3, 15, 12}</strong>（分钟）。<br>（1）写伪代码；（2）写出最优办理次序与平均等待时间。</p>
+          </div>
+<div class="note note-info">
+            <p><strong>策略（贪心）</strong>：服务时间<strong>短者优先</strong>（升序排列）。总等待时间 W = Σ(n−j)·t(j)，短任务乘大系数使 W 最小（交换论证见 2024 秋 T4）。</p>
+          </div>
+<p><strong>（1）伪代码</strong>：见 2024 秋 T4 的 <code>AvgWait</code>（sort + 一遍累加）。</p>
+<p><strong>（2）实例计算</strong>：升序排列 3, 5, 8, 10, 12, 15, 20，逐位累加等待：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名次 j</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">服务时间 t(j)</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">12</td>
+<td style="text-align:center">15</td>
+<td style="text-align:center">20</td>
+</tr>
+<tr>
+<td style="text-align:left">等待时间（前面人之和）</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">16</td>
+<td style="text-align:center">26</td>
+<td style="text-align:center">38</td>
+<td style="text-align:center">53</td>
+</tr>
+</tbody>
+</table>
+<p>总等待 = 0+3+8+16+26+38+53 = <strong>144</strong>（用公式验证：6×3 + 5×5 + 4×8 + 3×10 + 2×12 + 1×15 + 0×20 = 18+25+32+30+24+15 = 144）。</p>
+<div class="note note-primary">
+            <p><strong>最优次序</strong>：3, 5, 8, 10, 12, 15, 20 分钟的客户依次办理；<strong>平均等待时间 = 144/7 ≈ 20.57 分钟</strong>。</p>
+          </div>
+<hr>
+<h3 id="T5-回溯法-0-1-背包（载货量-7）">T5 回溯法 0-1 背包（载货量 7）</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：回溯法解背包问题，载货量 c = 7，四件货物重量 w = {3, 5, 2, 1}，价值 p = {9, 10, 7, 4}，要求<strong>总价值最高</strong>。<br>（1）画解空间树；（2）给出优化策略；（3）画优化后的空间树；（4）给出最优解。</p>
+          </div>
+<h4 id="第一问：解空间树">第一问：解空间树</h4>
+<div class="note note-info">
+            <p>解空间为<strong>子集树</strong>：每个货物装（xᵢ=1）/不装（xᵢ=0），共 2⁴ = 16 个叶结点、2⁵−1 = 31 个结点。结点标注 <strong>cw（当前重量）、cp（当前价值）</strong>，深度优先、先 1 后 0 搜索（✗c = 约束剪枝）：</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs text">A(cw=0, cp=0)<br>├─x1=1─ B(cw=3, cp=9)<br>│       ├─x2=1─ ✗c cw+w2 = 8 &gt; 7 回溯<br>│       └─x2=0─ E(cw=3, cp=9)<br>│            ├─x3=1─ H(cw=5, cp=16)<br>│            │   ├─x4=1─ N ● x=(1,0,1,1)<br>│            │   │   cw=6, cp=20<br>│            │   └─x4=0─ O ● x=(1,0,1,0) cp=16<br>│            └─x3=0─ I(cw=3, cp=9)<br>│                ├─x4=1─ P ● x=(1,0,0,1) cp=13<br>│                └─x4=0─ Q ● x=(1,0,0,0) cp=9<br>└─x1=0─ C(cw=0, cp=0)<br>     ├─x2=1─ F(cw=5, cp=10)<br>     │    ├─x3=1─ J(cw=7, cp=17)<br>     │    │   ├─x4=1─ ✗c cw+w4 = 8 &gt; 7 回溯<br>     │    │   └─x4=0─ S ● x=(0,1,1,0) cp=17<br>     │    └─x3=0─ K(cw=5, cp=10)<br>     │        ├─x4=1─ T ● x=(0,1,0,1) cp=14<br>     │        └─x4=0─ U ● x=(0,1,0,0) cp=10<br>     └─x2=0─ G(cw=0, cp=0)<br>         ├─x3=1─ L(cw=2, cp=7)<br>         │   ├─x4=1─ V ● x=(0,0,1,1) cp=11<br>         │   └─x4=0─ W ● x=(0,0,1,0) cp=7<br>         └─x3=0─ M(cw=0, cp=0)<br>             ├─x4=1─ X ● x=(0,0,0,1) cp=4<br>             └─x4=0─ Y ● x=(0,0,0,0) cp=0<br></code></pre></td></tr></tbody></table></figure>
+          </div>
+<h4 id="第二问：优化策略">第二问：优化策略</h4>
+<div class="note note-primary">
+            <ul><li><strong>约束函数</strong>（剪左子树）：只有 cw + wᵢ ≤ c 时才进入 xᵢ = 1 分支——装不下就不装；</li><li><strong>限界函数</strong>（剪右子树）：进入 xᵢ = 0 分支前计算上界 <strong>ub = cp + r</strong>（r = 尚未决策物品的价值总和），ub ≤ bestp 时该子树不可能产生更优解，整棵剪去。</li></ul><p>伪代码中 <code>Bound(i+1) = cp + Σ_{j≥i+1} p[j]</code>。</p>
+          </div>
+<h4 id="第三问：优化后的空间树">第三问：优化后的空间树</h4>
+<p>✗c = 约束剪枝（装不下），✗b = 限界剪枝（ub ≤ bestp）：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs text">A(cw=0, cp=0, r=30)   ub = 0+30 = 30<br>├─x1=1─ B(cw=3, cp=9, r=21)   ub = 30<br>│       ├─x2=1─ ✗c 3+5 = 8 &gt; 7<br>│       └─x2=0─ E(cw=3, cp=9, r=11)<br>│           ├─x3=1─ H(cw=5, cp=16, r=4)<br>│           │   ├─x4=1─ N ● cp=20<br>│           │   │   bestp=20 ★ x=(1,0,1,1)<br>│           │   └─x4=0─ O ● cp=16 &lt; 20<br>│           └─x3=0─ ✗b ub = 9+4 = 13 ≤ 20<br>└─x1=0─ C(cw=0, cp=0, r=21)   ub = 21 &gt; 20<br>    ├─x2=1─ F(cw=5, cp=10, r=11)  ub = 21<br>    │   ├─x3=1─ J(cw=7, cp=17, r=4)<br>    │   │   ├─x4=1─ ✗c 7+1 = 8 &gt; 7<br>    │   │   └─x4=0─ S ● cp=17 &lt; 20<br>    │   └─x3=0─ ✗b ub = 10+4 = 14 ≤ 20<br>    └─x2=0─ ✗b ub = 0+11 = 11 ≤ 20 剪去G<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="第四问：最优解">第四问：最优解</h4>
+<div class="note note-primary">
+            <p><strong>最优解 x = (1, 0, 1, 1)</strong>：装货物 1、3、4，重量 3+2+1 = 6 ≤ 7，<strong>最优价值 = 9+7+4 = 20</strong>。</p><p>31 个结点的子集树实际只生成 10 个结点（D、I、K、G、R 所在分支被约束/限界剪去）。</p>
+          </div>
+<p><strong>伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Knap</span> {<br>    <span class="hljs-type">int</span>  n;               <span class="hljs-comment">// 物品数</span><br>    Type c, *w, *p;       <span class="hljs-comment">// 容量/重量/价值</span><br>    Type cw, cp, bestp;   <span class="hljs-comment">// 当前值与最优值</span><br>    <span class="hljs-type">int</span>  *x, *bestx;      <span class="hljs-comment">// 当前解 / 最优解</span><br>    <span class="hljs-function">Type <span class="hljs-title">Bound</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span></span>;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span></span>;<br>};<br><br><span class="hljs-comment">// 上界函数：cp + 尚未决策物品的价值总和</span><br><span class="hljs-function">Type <span class="hljs-title">Knap::Bound</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span></span><br><span class="hljs-function"></span>{<br>    Type r = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i; j &lt;= n; j++) r += p[j];<br>    <span class="hljs-keyword">return</span> cp + r;<br>}<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Knap::Backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span>  <span class="hljs-comment">// 搜索第 i 层</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-keyword">if</span> (i &gt; n) {             <span class="hljs-comment">// 叶：更新最优解</span><br>        bestp = cp;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++)<br>            bestx[j] = x[j];<br>        <span class="hljs-keyword">return</span>;<br>    }<br>    <span class="hljs-comment">// 约束函数：装得下才进左子树 x[i]=1</span><br>    <span class="hljs-keyword">if</span> (cw + w[i] &lt;= c) {<br>        x[i] = <span class="hljs-number">1</span>;  cw += w[i];  cp += p[i];<br>        <span class="hljs-built_in">Backtrack</span>(i + <span class="hljs-number">1</span>);<br>        cw -= w[i];  cp -= p[i];<br>    }<br>    <span class="hljs-comment">// 限界函数：右子树可能更优才搜索</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Bound</span>(i + <span class="hljs-number">1</span>) &gt; bestp) {<br>        x[i] = <span class="hljs-number">0</span>;<br>        <span class="hljs-built_in">Backtrack</span>(i + <span class="hljs-number">1</span>);<br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+<hr>
+<h3 id="T6-优先队列式分支限界-TSP">T6 优先队列式分支限界 TSP</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：4 个地点两两之间有距离，从地点 1 出发<strong>每个地点都走一遍并回到原点</strong>，求最短路线。距离矩阵：</p><table><thead><tr><th style="text-align:center">g</th><th style="text-align:center">1</th><th style="text-align:center">2</th><th style="text-align:center">3</th><th style="text-align:center">4</th></tr></thead><tbody><tr><td style="text-align:center"><strong>1</strong></td><td style="text-align:center">0</td><td style="text-align:center">30</td><td style="text-align:center">6</td><td style="text-align:center">4</td></tr><tr><td style="text-align:center"><strong>2</strong></td><td style="text-align:center">30</td><td style="text-align:center">0</td><td style="text-align:center">5</td><td style="text-align:center">10</td></tr><tr><td style="text-align:center"><strong>3</strong></td><td style="text-align:center">6</td><td style="text-align:center">5</td><td style="text-align:center">0</td><td style="text-align:center">20</td></tr><tr><td style="text-align:center"><strong>4</strong></td><td style="text-align:center">4</td><td style="text-align:center">10</td><td style="text-align:center">20</td><td style="text-align:center">0</td></tr></tbody></table><p>（1）画空间树；（2）给出优化策略；（3）画优化后的空间树；（4）给出最优解。</p>
+          </div>
+<h4 id="第一问：空间树">第一问：空间树</h4>
+<div class="note note-info">
+            <p>解空间为<strong>排列树</strong>：起点固定为 1，中间城市的全排列共 (4−1)! = 6 条周游路径。结点标注 <strong>cc（已走路径费用）</strong>，cc = 路径上各边距离之和；叶结点费用 = cc + 回到起点的边：</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs text">1<br>├─→2─ (1,2) cc=30<br>│     ├─→3─ (1,2,3) cc=35<br>│     │     └─→4─ cc=55 叶 55+4=59<br>│     └─→4─ (1,2,4) cc=40<br>│           └─→3─ cc=60 叶 60+6=66<br>├─→3─ (1,3) cc=6<br>│     ├─→2─ (1,3,2) cc=11<br>│     │     └─→4─ cc=21 叶 21+4=25 ★<br>│     └─→4─ (1,3,4) cc=26<br>│           └─→2─ cc=36 叶 36+30=66<br>└─→4─ (1,4) cc=4<br>      ├─→2─ (1,4,2) cc=14<br>      │     └─→3─ cc=19 叶 19+6=25<br>      └─→3─ (1,4,3) cc=24<br>            └─→2─ cc=29 叶 29+30=59<br></code></pre></td></tr></tbody></table></figure>
+          </div>
+<h4 id="第二问：优化策略-v2">第二问：优化策略</h4>
+<div class="note note-primary">
+            <ul><li><strong>下界函数</strong>：lb = cc + Σ minout(u)，其中 minout(u) 为城市 u 的<strong>最小出边</strong>费用——剩余每个未访问城市至少要走一条出边。各城 minout：minout(1)=4，minout(2)=5，minout(3)=5，minout(4)=4；</li><li><strong>优先队列</strong>：活结点按 lb 从小到大出队，<strong>每次扩展下界最小的结点</strong>；</li><li><strong>限界剪枝</strong>：出队时 lb ≥ bestc 则剪去（优先队列保证后面不会有更小下界）；子结点 lb ≥ bestc 不进队。</li></ul>
+          </div>
+<h4 id="第三问：优化后的空间树（优先队列搜索过程）">第三问：优化后的空间树（优先队列搜索过程）</h4>
+<div class="note note-warning">
+            <p>队列演化（每次取 lb 最小者扩展）：</p><table><thead><tr><th style="text-align:center">步骤</th><th style="text-align:left">出队结点</th><th style="text-align:center">lb</th><th style="text-align:left">动作</th></tr></thead><tbody><tr><td style="text-align:center">1</td><td style="text-align:left">(1,4)</td><td style="text-align:center">14</td><td style="text-align:left">扩展：(1,4,2) lb=19、(1,4,3) lb=29 入队</td></tr><tr><td style="text-align:center">2</td><td style="text-align:left">(1,3)</td><td style="text-align:center">15</td><td style="text-align:left">扩展：(1,3,2) lb=15、(1,3,4) lb=31 入队</td></tr><tr><td style="text-align:center">3</td><td style="text-align:left">(1,3,2)</td><td style="text-align:center">15</td><td style="text-align:left">扩展叶结点：21+4 = 25 → <strong>bestc = 25 ★</strong></td></tr><tr><td style="text-align:center">4</td><td style="text-align:left">(1,4,2)</td><td style="text-align:center">19</td><td style="text-align:left">扩展叶结点：19+6 = 25 ≥ 25，不更新</td></tr><tr><td style="text-align:center">5</td><td style="text-align:left">(1,4,3)</td><td style="text-align:center">29</td><td style="text-align:left">29 ≥ 25 → <strong>剪去</strong></td></tr><tr><td style="text-align:center">6</td><td style="text-align:left">(1,2)</td><td style="text-align:center">39</td><td style="text-align:left">39 ≥ 25 → <strong>整棵子树剪去</strong></td></tr><tr><td style="text-align:center">7</td><td style="text-align:left">(1,3,4)</td><td style="text-align:center">31</td><td style="text-align:left">31 ≥ 25 → <strong>剪去</strong></td></tr></tbody></table><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs text">1  初始下界 = minout(2)+minout(3)+minout(4) = 14<br>├─→2─ lb=39 ✗ 出队 39 ≥ 25 整棵剪去<br>├─→3─ lb=15<br>│     ├─→2─ lb=15<br>│     │     └─→4─ 叶 21+4=25 → bestc=25 ★<br>│     │        路径 1→3→2→4→1<br>│     └─→4─ lb=31 ✗ 31 ≥ 25 剪去<br>└─→4─ lb=14<br>      ├─→2─ lb=19<br>      │     └─→3─ 叶 19+6=25 不更新<br>      └─→3─ lb=29 ✗ 29 ≥ 25 剪去<br></code></pre></td></tr></tbody></table></figure>
+          </div>
+<h4 id="第四问：最优解-v2">第四问：最优解</h4>
+<div class="note note-primary">
+            <p><strong>最优路线 1 → 3 → 2 → 4 → 1</strong>（反向 1 → 4 → 2 → 3 → 1 等价），<strong>最短周游费用 = 6 + 5 + 10 + 4 = 25</strong>。</p>
+          </div>
+<p><strong>伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span> {<br>    <span class="hljs-type">int</span>  path[N];   <span class="hljs-comment">// 已走城市序列</span><br>    <span class="hljs-type">int</span>  k;         <span class="hljs-comment">// 已走城市数</span><br>    Type cc;        <span class="hljs-comment">// 已走费用</span><br>    Type lb;        <span class="hljs-comment">// 下界 = cc + Σ minout</span><br>};<br><span class="hljs-comment">// 小根堆：lb 小的先出队</span><br><span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span>&lt;(Node a, Node b)<br>{ <span class="hljs-keyword">return</span> a.lb &gt; b.lb; }<br><br><span class="hljs-function">Type <span class="hljs-title">TSP</span><span class="hljs-params">()</span>          <span class="hljs-comment">// 优先队列分支限界，起点 1</span></span><br><span class="hljs-function"></span>{<br>    priority_queue&lt;Node&gt; Q;<br>    bestc = INF;<br>    <span class="hljs-comment">// 根结点 lb = 4城minout(2,3,4) = 14</span><br>    根结点 path={<span class="hljs-number">1</span>}, k=<span class="hljs-number">1</span>, cc=<span class="hljs-number">0</span> 入队;<br>    <span class="hljs-keyword">while</span> (!Q.<span class="hljs-built_in">empty</span>()) {<br>        Node e = Q.<span class="hljs-built_in">top</span>();  Q.<span class="hljs-built_in">pop</span>();<br>        <span class="hljs-keyword">if</span> (e.lb &gt;= bestc) <span class="hljs-keyword">continue</span>;   <span class="hljs-comment">// 限界剪枝</span><br>        <span class="hljs-keyword">if</span> (e.k == n) {    <span class="hljs-comment">// 叶结点：补回边</span><br>            <span class="hljs-keyword">if</span> (e.cc + g[e.path[n]][<span class="hljs-number">1</span>] &lt; bestc) {<br>                bestc = e.cc + g[e.path[n]][<span class="hljs-number">1</span>];<br>                记录 e.path 为最优路线;<br>            }<br>            <span class="hljs-keyword">continue</span>;<br>        }<br>        <span class="hljs-keyword">for</span> (每个未访问城市 u) {   <span class="hljs-comment">// 分支</span><br>            Node c = e;<br>            c.path[++c.k] = u;<br>            c.cc += g[e.path[e.k]][u];<br>            c.lb = c.cc + Σ 剩余 minout;<br>            <span class="hljs-keyword">if</span> (c.lb &lt; bestc) Q.<span class="hljs-built_in">push</span>(c);<br>        }<br>    }<br>    <span class="hljs-keyword">return</span> bestc;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<hr>
+<h2 id="2025-秋（算法导论卷）">2025 秋（算法导论卷）</h2>
+<blockquote>
+<p>本卷共 7 题，人智专业《算法设计与分析》同卷。</p>
+</blockquote>
+<h3 id="T1-汉诺塔（递推公式与上界）">T1 汉诺塔（递推公式与上界）</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：标准汉诺塔，给出递归代码。（1）写递推公式（5 分）；（2）详细计算求出上界（5 分）。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>解</strong>：与 2025 春 T1 相同。</p><p><strong>（1）递推公式</strong>：T(n) = 2T(n−1) + 1，T(1) = 1（移 n−1 个盘两次 + 移最大盘一次）。</p><p><strong>（2）详细计算</strong>：迭代展开 k 次，T(n) = 2ᵏT(n−k) + (2ᵏ⁻¹ + ⋯ + 2 + 1)；取 k = n−1：</p><p>$$<br>T(n) = 2^{n-1} + (2^{n-1} - 1) = \boxed{2^n - 1}<br>$$</p><p>上界 <strong>O(2ⁿ)</strong>。</p>
+          </div>
+<hr>
+<h3 id="T2-线性时间选择输出前-k-大">T2 线性时间选择输出前 k 大</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：输出一个数列里<strong>最大的前 k 个数</strong>（不要求有序）。<br>（1）写伪代码（10 分）；（2）分析平均时间复杂度（5 分）。</p>
+          </div>
+<div class="note note-info">
+            <p><strong>方法（线性时间选择）</strong>：用随机划分 RandomizedSelect 找出<strong>第 k 大元素</strong>（即第 n−k+1 小），划分保证它右边的元素都不小于它；再一遍线性扫描输出所有 ≥ 它的数。排序是 O(n log n)，此法平均 <strong>O(n)</strong>。</p>
+          </div>
+<p><strong>（1）伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 随机选基准，划分为 &lt; x | x | &gt; x 三段</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">RandomizedPartition</span><span class="hljs-params">(Type a[],</span></span><br><span class="hljs-params"><span class="hljs-function">                        <span class="hljs-type">int</span> p, <span class="hljs-type">int</span> r)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-type">int</span> i = <span class="hljs-built_in">Random</span>(p, r);   <span class="hljs-comment">// 随机选基准</span><br>    <span class="hljs-built_in">swap</span>(a[p], a[i]);       <span class="hljs-comment">// 换到 a[p]</span><br>    i = p;  <span class="hljs-type">int</span> j = r + <span class="hljs-number">1</span>;<br>    Type x = a[p];<br>    <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) {<br>        <span class="hljs-keyword">while</span> (a[++i] &lt; x &amp;&amp; i &lt; r);<br>        <span class="hljs-keyword">while</span> (a[--j] &gt; x);<br>        <span class="hljs-keyword">if</span> (i &gt;= j) <span class="hljs-keyword">break</span>;<br>        <span class="hljs-built_in">swap</span>(a[i], a[j]);<br>    }<br>    a[p] = a[j];  a[j] = x;   <span class="hljs-comment">// 基准归位</span><br>    <span class="hljs-keyword">return</span> j;<br>}<br><br><span class="hljs-comment">// 找 a[p..r] 中第 k 小的元素</span><br><span class="hljs-function">Type <span class="hljs-title">RandomizedSelect</span><span class="hljs-params">(Type a[], <span class="hljs-type">int</span> p,</span></span><br><span class="hljs-params"><span class="hljs-function">                      <span class="hljs-type">int</span> r, <span class="hljs-type">int</span> k)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-keyword">if</span> (p == r) <span class="hljs-keyword">return</span> a[p];<br>    <span class="hljs-type">int</span> i = <span class="hljs-built_in">RandomizedPartition</span>(a, p, r);<br>    <span class="hljs-type">int</span> j = i - p + <span class="hljs-number">1</span>;        <span class="hljs-comment">// a[i] 第 j 小</span><br>    <span class="hljs-keyword">if</span> (k &lt;= j)<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">RandomizedSelect</span>(a, p, i, k);<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">RandomizedSelect</span>(a, i<span class="hljs-number">+1</span>, r, k-j);<br>}<br><br><span class="hljs-comment">// 输出最大的前 k 个数（不要求有序）</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">TopK</span><span class="hljs-params">(Type a[], <span class="hljs-type">int</span> n, <span class="hljs-type">int</span> k)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-comment">// 第 n-k+1 小 = 第 k 大元素 m</span><br>    Type m = <span class="hljs-built_in">RandomizedSelect</span>(a, <span class="hljs-number">1</span>, n, n-k<span class="hljs-number">+1</span>);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)   <span class="hljs-comment">// O(n) 扫描</span><br>        <span class="hljs-keyword">if</span> (a[i] &gt;= m) cout &lt;&lt; a[i] &lt;&lt; <span class="hljs-string">" "</span>;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>算例</strong>：a = {2, 7, 1, 8, 5, 3}，k = 3。第 n−k+1 = 4 小元素为 5，输出所有 ≥ 5 的数：<strong>8, 7, 5</strong>。</p>
+<div class="note note-primary">
+            <p><strong>（2）平均复杂度</strong>：随机基准期望把规模降到 ≤ 3n/4，</p><p>$$<br>E[T(n)] \le cn + \tfrac{3}{4}\left(c\cdot\tfrac{3n}{4} + \cdots\right) \le cn\sum_{i\ge0}\left(\tfrac{3}{4}\right)^i = 4cn<br>$$</p><p>即期望 <strong>O(n)</strong>；加最终 O(n) 扫描，总平均时间复杂度 <strong>O(n)</strong>（最坏 O(n²)）。</p>
+          </div>
+<hr>
+<h3 id="T3-像素分割（图像压缩）">T3 像素分割（图像压缩）</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：n = 9，像素位数数组 a = {2, 4, 4, 4, 8, 7, 8, 1, 2}。分段压缩：每段长度 ≤ 256、段内统一用 b 位存储（b = 段内最大像素的位数）、每段头开销 11 位。<br>（1）写出 dp[9] 的详细推导过程（6 分）；（2）写出分段方式（3 分）；（3）写伪代码（6 分）。</p>
+          </div>
+<div class="note note-info">
+            <p><strong>方法（动态规划）</strong>：设 s[i] = a[1…i] 的最小存储位数。枚举最后一段 a[k…i]，段内位数 b(k,i) = ⌈log₂(max{a[k…i]}+1)⌉：</p><p>$$<br>s[i] = \min_{1 \le k \le i} \lbrace\ s[k-1] + (i-k+1)\ b(k,i) + 11\ \rbrace, \qquad s[0] = 0<br>$$</p><p>关键 b 值（位数）：2→2 位，4→3 位，8→4 位，7→3 位，1→1 位。</p>
+          </div>
+<p><strong>（1）dp 详细推导</strong>（每行枚举最后一段长 k）：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">i</th>
+<th style="text-align:left">候选：s[i−k] + k·b(i−k+1, i) + 11</th>
+<th style="text-align:center">k*</th>
+<th style="text-align:center">s[i]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left">k=1: 0+1·2+11 = 13</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center"><strong>13</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:left">k=1: 13+1·3+11 = 27；k=2: 0+2·3+11 = 17</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center"><strong>17</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:left">k=1: 17+3+11 = 31；k=2: 13+6+11 = 30；k=3: 0+9+11 = 20</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center"><strong>20</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:left">k=1: 20+3+11 = 34；k=2: 17+6+11 = 34；k=3: 13+9+11 = 33；k=4: 0+12+11 = 23</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center"><strong>23</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:left">k=1: 23+4+11 = 38；k=2: 20+8+11 = 39；k=3: 17+12+11 = 40；k=4: 13+16+11 = 40；k=5: 0+20+11 = 31</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center"><strong>31</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:left">k=1: 31+3+11 = 45；k=2: 23+8+11 = 42；k=3: 20+12+11 = 43；k=4: 17+16+11 = 44；k=5: 13+20+11 = 44；k=6: 0+24+11 = 35</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center"><strong>35</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:left">k=1: 35+4+11 = 50；k=2: 31+8+11 = 50；k=3: 23+12+11 = 46；k=4: 20+16+11 = 47；k=5: 17+20+11 = 48；k=6: 13+24+11 = 48；k=7: 0+28+11 = 39</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center"><strong>39</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:left">k=1: 39+1+11 = 51；k=2: 35+8+11 = 54；k=3: 31+12+11 = 54；k=4: 23+16+11 = 50；k=5: 20+20+11 = 51；k=6: 17+24+11 = 52；k=7: 13+28+11 = 52；k=8: 0+32+11 = 43</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center"><strong>43</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:left">k=1: 43+2+11 = 56；k=2: 39+4+11 = 54；k=3: 35+12+11 = 58；k=4: 31+16+11 = 58；k=5: 23+20+11 = 54；k=6: 20+24+11 = 55；k=7: 17+28+11 = 56；k=8: 13+32+11 = 56；k=9: 0+36+11 = <strong>47</strong></td>
+<td style="text-align:center">9</td>
+<td style="text-align:center"><strong>47</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="note note-primary">
+            <p><strong>（2）分段方式</strong>：s[9] 的最优 k* = 9，即 <strong>a[1…9] 整个一段</strong>，段内位数 b = 4（段内最大值 8），存储位数 = 9×4 + 11 = <strong>47 位</strong>。</p>
+          </div>
+<p><strong>（3）伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// bits(x)：存值 x 需要的位数 ⌈log₂(x+1)⌉</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">bits</span><span class="hljs-params">(<span class="hljs-type">int</span> x)</span> </span>{<br>    <span class="hljs-type">int</span> c = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> ((<span class="hljs-number">1</span> &lt;&lt; c) &lt;= x) c++;<br>    <span class="hljs-keyword">return</span> c;<br>}<br><br><span class="hljs-comment">// s[i]: p[1..i] 最少位数；l[i]: 段长；b[i]: 段位数</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Compress</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> p[],</span></span><br><span class="hljs-params"><span class="hljs-function">              <span class="hljs-type">int</span> s[], <span class="hljs-type">int</span> l[], <span class="hljs-type">int</span> b[])</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-type">const</span> <span class="hljs-type">int</span> Lmax = <span class="hljs-number">256</span>, header = <span class="hljs-number">11</span>;<br>    s[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {<br>        s[i] = INT_MAX;  l[i] = <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> seg = <span class="hljs-number">0</span>;    <span class="hljs-comment">// 最后一段的最大位数</span><br>        <span class="hljs-comment">// 段向左扩到 p[k..i]，长 ≤ Lmax</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = i;<br>             k &gt;= <span class="hljs-number">1</span> &amp;&amp; i - k + <span class="hljs-number">1</span> &lt;= Lmax; k--) {<br>            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">bits</span>(p[k]) &gt; seg)<br>                seg = <span class="hljs-built_in">bits</span>(p[k]);<br>            <span class="hljs-type">int</span> t = s[k<span class="hljs-number">-1</span>] + (i-k<span class="hljs-number">+1</span>)*seg + header;<br>            <span class="hljs-keyword">if</span> (t &lt; s[i]) {<br>                s[i] = t;<br>                l[i] = i - k + <span class="hljs-number">1</span>;<br>                b[i] = seg;<br>            }<br>        }<br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>时间复杂度：内层最多回退 256 位，<strong>O(n·min{n, 256})</strong>。</p>
+<hr>
+<h3 id="T4-变体跳台阶（DP）">T4 变体跳台阶（DP）</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：爬 n 阶楼梯，每次可跳 1、2 或 3 阶；每次跳 j 阶消耗 j 点体力，<strong>每次跳到某阶还要额外花费 extra(该阶)</strong> 体力。设计算法求到达第 n 阶的最少体力消耗，给出伪代码或步骤，并求<strong>最坏情况下的时间复杂度</strong>（15 分）。</p>
+          </div>
+<div class="note note-info">
+            <p><strong>方法（动态规划）</strong>：dp[i] = 到达第 i 阶的最少体力。最后一步从 i−j（j ∈ {1,2,3}）跳 j 阶上来，消耗 j + extra(i)：</p><p>$$<br>dp[i] = \min_{j \in \lbrace 1,2,3 \rbrace} \lbrace\ dp[i-j] + j + extra(i)\ \rbrace, \qquad dp[0] = 0<br>$$</p><p>按 i 从小到大递推。</p>
+          </div>
+<p><strong>伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// dp[i]：到第 i 阶的最少体力</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Climb</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> extra[])</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-type">int</span> dp[N];<br>    dp[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {<br>        dp[i] = INT_MAX;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= <span class="hljs-number">3</span> &amp;&amp; i - j &gt;= <span class="hljs-number">0</span>; j++) {<br>            <span class="hljs-type">int</span> t = dp[i-j] + j + extra[i];<br>            <span class="hljs-keyword">if</span> (t &lt; dp[i]) dp[i] = t;<br>        }<br>    }<br>    <span class="hljs-keyword">return</span> dp[n];<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>实例计算</strong>（n = 6，extra = [2, 3, 1, 4, 2, 5]）：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">i</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">extra(i)</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:left">dp[i]</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center"><strong>9</strong></td>
+<td style="text-align:center"><strong>8</strong></td>
+<td style="text-align:center"><strong>12</strong></td>
+</tr>
+</tbody>
+</table>
+<p>推导：dp[1] = 0+1+2 = 3；dp[2] = min(3+1+3, 0+2+3) = 5；dp[3] = min(5+1+1, 3+2+1, 0+3+1) = 4；dp[4] = min(4+1+4, 5+2+4, 3+3+4) = 9；dp[5] = min(9+1+2, 4+2+2, 5+3+2) = 8；dp[6] = min(8+1+5, 9+2+5, 4+3+5) = 12。</p>
+<div class="note note-primary">
+            <p><strong>最坏情况时间复杂度 O(n)</strong>：每阶只做 3 次转移、常数开销，空间 O(n)。</p>
+          </div>
+<hr>
+<h3 id="T5-食堂打饭排队（贪心）">T5 食堂打饭排队（贪心）</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：n 名学生去食堂打饭，第 i 名学生打饭时间为 tᵢ，求安排顺序使<strong>等待时间最少</strong>（打饭时间不算在等待时间内）。（1）使用哪种策略；（2）给出等待时间最少的学生序列；（3）求出最少等待时间（15 分）。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>（1）策略：贪心——打饭时间短的学生排前面</strong>（与 2025 春 T4、2024 秋 T4 同题）。总等待 W = Σ(n−j)·t(j)，短任务乘大系数 (n−j) 使 W 最小；交换论证：相邻逆序两人交换必减少等待，故升序最优。</p><p><strong>（2）最优序列</strong>：将 tᵢ <strong>升序排列</strong>。</p><p><strong>（3）最少等待时间</strong> = 升序后的 Σ(n−j)·t(j)，平均等待再除以 n。</p>
+          </div>
+<p><strong>算例</strong>：t = {4, 2, 8, 5, 3}（n = 5）。升序得最优序列 <strong>2, 3, 4, 5, 8</strong>；逐位等待 0, 2, 5, 9, 14，最少总等待 = 30（验证：4×2 + 3×3 + 2×4 + 1×5 = 8+9+8+5 = 30），平均等待 30/5 = <strong>6</strong>。</p>
+<hr>
+<h3 id="T6-无连续-1-的-n-位二进制串（回溯）">T6 无连续 1 的 n 位二进制串（回溯）</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：输出<strong>全部 n 位二进制数，其中不能出现连续的 1</strong>（如 110 不合法）。<br>（1）设计算法给出伪代码或步骤；（2）画出 n = 4 时的子集树（15 分）。</p>
+          </div>
+<p><strong>（1）伪代码（回溯 + 约束剪枝）</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> n, x[N];<br><br><span class="hljs-comment">// last：第 t-1 位是否为 1</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> t, <span class="hljs-type">int</span> last)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-keyword">if</span> (t &gt; n) {    <span class="hljs-comment">// 到叶：输出合法串</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>            cout &lt;&lt; x[i];<br>        cout &lt;&lt; endl;<br>        <span class="hljs-keyword">return</span>;<br>    }<br>    x[t] = <span class="hljs-number">0</span>;  <span class="hljs-built_in">Backtrack</span>(t + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);  <span class="hljs-comment">// 放0总可行</span><br>    <span class="hljs-comment">// 约束：不能出现连续的 1</span><br>    <span class="hljs-keyword">if</span> (last == <span class="hljs-number">0</span>) {<br>        x[t] = <span class="hljs-number">1</span>;  <span class="hljs-built_in">Backtrack</span>(t + <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);<br>    }<br>}<br><span class="hljs-comment">// 调用 Backtrack(1, 0)</span><br></code></pre></td></tr></tbody></table></figure>
+<p><strong>（2）n = 4 的子集树</strong>（✗ 为约束剪枝；合法串共 8 个）：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs text">∅<br>├─0─ 0<br>│    ├─0─ 00<br>│    │    ├─0─ 000<br>│    │    │   ├─0─ 0000 ●<br>│    │    │   └─1─ 0001 ●<br>│    │    └─1─ 001<br>│    │        ├─0─ 0010 ●<br>│    │        └─1─ 0011 ✗ 连续1 剪去<br>│    └─1─ 01<br>│        ├─0─ 010<br>│        │   ├─0─ 0100 ●<br>│        │   └─1─ 0101 ●<br>│        └─1─ ✗ 前一位是 1 剪去<br>└─1─ 1<br>     ├─0─ 10<br>     │    ├─0─ 100<br>     │    │   ├─0─ 1000 ●<br>     │    │   └─1─ 1001 ●<br>     │    └─1─ 101<br>     │        ├─0─ 1010 ●<br>     │        └─1─ ✗ 剪去<br>     └─1─ ✗ 前一位是 1 剪去<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-primary">
+            <p>输出：0000, 0001, 0010, 0100, 0101, 1000, 1001, 1010，共 <strong>8</strong> 个（满足 f(n) = f(n−1) + f(n−2)，f(4) = 8）。</p>
+          </div>
+<hr>
+<h3 id="T7-最少区间覆盖（贪心）">T7 最少区间覆盖（贪心）</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：给定常量 start、end 与区间数组 a[n]（每元素有左界 l、右界 r，满足 start ≤ l &lt; r ≤ end）。选取<strong>最少</strong>个小区间<strong>完全覆盖 [start, end]</strong>；能覆盖输出区间个数，否则输出 −1。<br>（1）设计算法给出伪代码或步骤（10 分）；（2）求最坏情况下的时间复杂度（5 分）。</p>
+          </div>
+<div class="note note-info">
+            <p><strong>策略（贪心）</strong>：维护当前已覆盖到的位置 cur（初值 start）。每轮在所有<strong>左端点 l ≤ cur</strong> 的区间中选<strong>右端点 r 最大</strong>者，把 cur 推进到该 r；若某轮没有任何区间能接上（l &gt; cur 或 r 不前进），输出 −1。cur ≥ end 时结束。</p>
+          </div>
+<p><strong>（1）伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">MinCover</span><span class="hljs-params">(Interval a[], <span class="hljs-type">int</span> n,</span></span><br><span class="hljs-params"><span class="hljs-function">             <span class="hljs-type">int</span> start, <span class="hljs-type">int</span> end)</span></span><br><span class="hljs-function"></span>{<br>    sort by l ascending;   <span class="hljs-comment">// 按左端点升序</span><br>    <span class="hljs-type">int</span> cur = start, cnt = <span class="hljs-number">0</span>, i = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (cur &lt; end) {<br>        <span class="hljs-keyword">if</span> (i &gt;= n || a[i].l &gt; cur)<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;     <span class="hljs-comment">// 接不上，有空隙</span><br>        <span class="hljs-comment">// 贪心：能接上的区间里选 r 最大</span><br>        <span class="hljs-type">int</span> reach = cur;<br>        <span class="hljs-keyword">while</span> (i &lt; n &amp;&amp; a[i].l &lt;= cur)<br>            reach = <span class="hljs-built_in">max</span>(reach, a[i++].r);<br>        cur = reach;  cnt++;   <span class="hljs-comment">// 选定一个区间</span><br>    }<br>    <span class="hljs-keyword">return</span> cnt;<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>实例计算</strong>：start = 0，end = 10，区间 {[0,2], [1,5], [2,4], [3,7], [6,10], [8,12]}：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">轮</th>
+<th style="text-align:center">cur</th>
+<th style="text-align:left">候选（l ≤ cur）</th>
+<th style="text-align:left">选定（r 最大）</th>
+<th style="text-align:center">cur 更新</th>
+<th style="text-align:center">cnt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:left">[0,2]</td>
+<td style="text-align:left">[0,2]</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+<td style="text-align:left">[1,5], [2,4]</td>
+<td style="text-align:left">[1,5]</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">5</td>
+<td style="text-align:left">[3,7]</td>
+<td style="text-align:left">[3,7]</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">7</td>
+<td style="text-align:left">[6,10]</td>
+<td style="text-align:left">[6,10]</td>
+<td style="text-align:center">10 ≥ 10 结束</td>
+<td style="text-align:center">4</td>
+</tr>
+</tbody>
+</table>
+<p>输出 <strong>4</strong>（选中 [0,2]、[1,5]、[3,7]、[6,10]，无缝覆盖 [0,10]）。</p>
+<div class="note note-primary">
+            <p><strong>（2）最坏时间复杂度 O(n log n)</strong>（排序 O(n log n) + 扫描 O(n)；区间已有序时为 O(n)）。</p>
+          </div>
+<hr>
+<h2 id="2026-夏（信安卷）">2026 夏（信安卷）</h2>
+<h3 id="T1-二分搜索">T1 二分搜索</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：给二分搜索的递归代码，写<strong>递归方程</strong>并做<strong>时间复杂度分析</strong>。示例：在有序数组 a = {3, 8, 12, 17, 25, 42} 中查找 x = 17。</p>
+          </div>
+<p><strong>伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">BinarySearch</span><span class="hljs-params">(Type a[], <span class="hljs-type">int</span> left,</span></span><br><span class="hljs-params"><span class="hljs-function">                 <span class="hljs-type">int</span> right, Type x)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-keyword">if</span> (left &gt; right) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;   <span class="hljs-comment">// 找不到</span><br>    <span class="hljs-type">int</span> mid = (left + right) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (x == a[mid]) <span class="hljs-keyword">return</span> mid;<br>    <span class="hljs-keyword">if</span> (x &lt; a[mid])<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">BinarySearch</span>(a, left, mid<span class="hljs-number">-1</span>, x);<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">BinarySearch</span>(a, mid<span class="hljs-number">+1</span>, right, x);<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>实例</strong>：left=1, right=6 → mid=3，a[3]=12 &lt; 17 → 查右半；left=4, right=6 → mid=5，a[5]=25 &gt; 17 → 查左半；left=4, right=4 → mid=4，a[4]=<strong>17 命中</strong>。共 <strong>3 次比较</strong>。</p>
+<div class="note note-primary">
+            <p><strong>递归方程</strong>：每次调用做 O(1) 次比较后规模减半：T(n) = T(n/2) + O(1)，T(1) = O(1)。</p><p>展开 k 次：T(n) = T(n/2ᵏ) + kc，取 k = log₂n：T(n) = T(1) + c·log₂n = <strong>O(log n)</strong>。</p>
+          </div>
+<hr>
+<h3 id="T2-快速排序">T2 快速排序</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：写快速排序伪代码，并对 <strong>49, 38, 65, 97, 76, 13, 27</strong> 写出排序结果。</p>
+          </div>
+<p><strong>伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 以 a[p] 为基准划分，返回基准最终位置</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">Partition</span><span class="hljs-params">(Type a[], <span class="hljs-type">int</span> p, <span class="hljs-type">int</span> r)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-type">int</span> i = p, j = r + <span class="hljs-number">1</span>;<br>    Type x = a[p];<br>    <span class="hljs-comment">// i 右扫越过 &lt; x；j 左扫越过 &gt; x</span><br>    <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) {<br>        <span class="hljs-keyword">while</span> (a[++i] &lt; x &amp;&amp; i &lt; r);<br>        <span class="hljs-keyword">while</span> (a[--j] &gt; x);<br>        <span class="hljs-keyword">if</span> (i &gt;= j) <span class="hljs-keyword">break</span>;<br>        <span class="hljs-built_in">swap</span>(a[i], a[j]);   <span class="hljs-comment">// 交换逆序对</span><br>    }<br>    a[p] = a[j];  a[j] = x;   <span class="hljs-comment">// 基准归位</span><br>    <span class="hljs-keyword">return</span> j;<br>}<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">QuickSort</span><span class="hljs-params">(Type a[], <span class="hljs-type">int</span> p, <span class="hljs-type">int</span> r)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-keyword">if</span> (p &lt; r) {<br>        <span class="hljs-type">int</span> q = <span class="hljs-built_in">Partition</span>(a, p, r);<br>        <span class="hljs-built_in">QuickSort</span>(a, p, q - <span class="hljs-number">1</span>);   <span class="hljs-comment">// 左半</span><br>        <span class="hljs-built_in">QuickSort</span>(a, q + <span class="hljs-number">1</span>, r);   <span class="hljs-comment">// 右半</span><br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+<p><strong>第一次划分过程</strong>（基准 x = 49）：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">步骤</th>
+<th style="text-align:center">i</th>
+<th style="text-align:center">j</th>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">数组</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">初始</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">7</td>
+<td style="text-align:left">—</td>
+<td style="text-align:left">[49 38 65 97 76 13 27]</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">6</td>
+<td style="text-align:left">a[2]=65&gt;49，a[6]=27&lt;49，交换</td>
+<td style="text-align:left">[49 38 27 97 76 13 65]</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">5</td>
+<td style="text-align:left">a[3]=97&gt;49，a[5]=13&lt;49，交换</td>
+<td style="text-align:left">[49 38 27 13 76 97 65]</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">3</td>
+<td style="text-align:left">i ≥ j，基准归位 a[3]=49</td>
+<td style="text-align:left">[13 38 27 49 76 97 65]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>递归划分</strong>：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">[49 38 65 97 76 13 27]<br>  │ 49 归位 q=3<br>  ├─ 左 [13 38 27] → 13 归位 → [27 38]<br>  └─ 右 [76 97 65] → 76 归位 → [65 | 97]<br></code></pre></td></tr></tbody></table></figure>
+<div class="note note-primary">
+            <p><strong>排序结果：[13, 27, 38, 49, 65, 76, 97]</strong>。平均复杂度 O(n log n)，最坏 O(n²)。</p>
+          </div>
+<hr>
+<h3 id="T3-最大连续子段和（DP-表）">T3 最大连续子段和（DP 表）</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：求最大连续子段和。要求写出<strong>算法策略</strong>，按给定条件计算（<strong>DP 表</strong>），并分析时间复杂度。取 a = {−2, 11, −4, 13, −5, −2}。</p>
+          </div>
+<div class="note note-info">
+            <p><strong>策略（动态规划）</strong>：b[j] = 以 a[j] 结尾的最大子段和，b[j] = max{ b[j−1] + a[j], a[j] }；答案 = max{b[j]}。伪代码见 2024 秋 T3。</p>
+          </div>
+<p><strong>DP 表</strong>：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">j</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">a[j]</td>
+<td style="text-align:center">−2</td>
+<td style="text-align:center">11</td>
+<td style="text-align:center">−4</td>
+<td style="text-align:center">13</td>
+<td style="text-align:center">−5</td>
+<td style="text-align:center">−2</td>
+</tr>
+<tr>
+<td style="text-align:left">b[j] = max{b[j−1]+a[j], a[j]}</td>
+<td style="text-align:center">−2</td>
+<td style="text-align:center"><strong>11</strong></td>
+<td style="text-align:center">7</td>
+<td style="text-align:center"><strong>20</strong></td>
+<td style="text-align:center">15</td>
+<td style="text-align:center">13</td>
+</tr>
+</tbody>
+</table>
+<p>推导：b[1] = −2；b[2] = max(−2+11, 11) = 11（前缀为负，重新开段）；b[3] = max(11−4, −4) = 7；b[4] = max(7+13, 13) = 20；b[5] = max(20−5, −5) = 15；b[6] = max(15−2, −2) = 13。</p>
+<div class="note note-primary">
+            <p><strong>最大子段和 = 20</strong>，对应子段 a[2…4] = {11, −4, 13}。时间复杂度 <strong>O(n)</strong>。</p>
+          </div>
+<hr>
+<h3 id="T4-最短平均等待时间">T4 最短平均等待时间</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：7 位客户办理业务，服务时间 t = {10, 5, 8, 20, 3, 15, 12}（分钟）。求<strong>最短平均等待时间</strong>：写出算法策略与伪代码，计算最优次序及平均等待时间。</p>
+          </div>
+<div class="note note-primary">
+            <p><strong>策略</strong>：贪心——<strong>服务时间短者优先</strong>（升序排列），交换论证保证最优（见 2024 秋 T4）。</p><p><strong>伪代码</strong>：<code>AvgWait</code>（sort + 一遍累加，见 2024 秋 T4）。</p><p><strong>实例计算</strong>：升序得最优次序 <strong>3, 5, 8, 10, 12, 15, 20</strong>；总等待</p><table><thead><tr><th style="text-align:left">名次 j</th><th style="text-align:center">1</th><th style="text-align:center">2</th><th style="text-align:center">3</th><th style="text-align:center">4</th><th style="text-align:center">5</th><th style="text-align:center">6</th><th style="text-align:center">7</th></tr></thead><tbody><tr><td style="text-align:left">服务时间 t(j)</td><td style="text-align:center">3</td><td style="text-align:center">5</td><td style="text-align:center">8</td><td style="text-align:center">10</td><td style="text-align:center">12</td><td style="text-align:center">15</td><td style="text-align:center">20</td></tr><tr><td style="text-align:left">等待时间</td><td style="text-align:center">0</td><td style="text-align:center">3</td><td style="text-align:center">8</td><td style="text-align:center">16</td><td style="text-align:center">26</td><td style="text-align:center">38</td><td style="text-align:center">53</td></tr></tbody></table><p>总等待 = 144（验证：6×3 + 5×5 + 4×8 + 3×10 + 2×12 + 1×15 = 144），<strong>平均等待时间 = 144/7 ≈ 20.57 分钟</strong>。</p>
+          </div>
+<hr>
+<h3 id="T5-背包问题（四问）">T5 背包问题（四问）</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：用回溯法解 0-1 背包：容量 c = 7，物品重量 w = {3, 5, 2, 1}，价值 p = {9, 10, 7, 4}。<br>（1）画状态空间树；（2）给出优化策略；（3）画优化后的状态空间树；（4）给出最优结果。</p>
+          </div>
+<p><strong>（1）状态空间树</strong>：子集树，每件物品 取（xᵢ=1）/不取（xᵢ=0），2⁴ = 16 个叶结点、31 个结点，结点标注 cw（当前重量）、cp（当前价值）。完整树图见 2025 春 T5 第一问。</p>
+<p><strong>（2）优化策略</strong>：</p>
+<div class="note note-primary">
+            <ul><li><strong>约束函数</strong>：cw + wᵢ ≤ c 才进左子树 xᵢ = 1——装不下不装；</li><li><strong>限界函数</strong>：进右子树 xᵢ = 0 前算上界 ub = cp + r（r = 剩余物品价值总和），ub ≤ bestp 整棵剪去。</li></ul>
+          </div>
+<p><strong>（3）优化后的状态空间树</strong>（✗c 约束剪枝，✗b 限界剪枝）：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs text">A(cw=0, cp=0, r=30)   ub = 0+30 = 30<br>├─x1=1─ B(cw=3, cp=9, r=21)   ub = 30<br>│       ├─x2=1─ ✗c 3+5 = 8 &gt; 7<br>│       └─x2=0─ E(cw=3, cp=9, r=11)<br>│           ├─x3=1─ H(cw=5, cp=16, r=4)<br>│           │   ├─x4=1─ N ● cp=20<br>│           │   │   bestp=20 ★ x=(1,0,1,1)<br>│           │   └─x4=0─ O ● cp=16 &lt; 20<br>│           └─x3=0─ ✗b ub = 9+4 = 13 ≤ 20<br>└─x1=0─ C(cw=0, cp=0, r=21)   ub = 21 &gt; 20<br>    ├─x2=1─ F(cw=5, cp=10, r=11)  ub = 21<br>    │   ├─x3=1─ J(cw=7, cp=17, r=4)<br>    │   │   ├─x4=1─ ✗c 7+1 = 8 &gt; 7<br>    │   │   └─x4=0─ S ● cp=17 &lt; 20<br>    │   └─x3=0─ ✗b ub = 10+4 = 14 ≤ 20<br>    └─x2=0─ ✗b ub = 0+11 = 11 ≤ 20 剪去G<br></code></pre></td></tr></tbody></table></figure>
+<p>31 个结点只生成 10 个。</p>
+<p><strong>（4）最优结果</strong>：</p>
+<div class="note note-primary">
+            <p><strong>最优解 x = (1, 0, 1, 1)</strong>：装物品 1、3、4，重量 3+2+1 = 6 ≤ 7，<strong>最优价值 = 9+7+4 = 20</strong>。回溯类框架伪代码见 2025 春 T5。</p>
+          </div>
+<hr>
+<h3 id="T6-子集和问题（四问）">T6 子集和问题（四问）</h3>
+<div class="note note-info">
+            <p><strong>题目</strong>：集合 W = {5, 10, 12, 13, 15, 18}，整数 M = 30，求 W 中<strong>元素之和为 M 的子集</strong>。<br>（1）画状态空间树；（2）给出优化策略；（3）画优化后的状态空间树；（4）给出符合条件的子集。</p>
+          </div>
+<h4 id="第一问：状态空间树">第一问：状态空间树</h4>
+<div class="note note-info">
+            <p><strong>子集树</strong>：对每个元素做 取（xᵢ=1）/ 不取（xᵢ=0）二分决策，共 2⁶ = 64 个叶结点、127 个结点。结点标注 <strong>(s, i, r)</strong>：s = 已选元素和，i = 即将决策的元素下标，r = 剩余元素和（根为 (0, 0, 73)，73 = 全部元素之和）：</p><figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">(0,0,73)<br>├─x0=1─ (5,1,68)<br>└─x0=0─ (0,1,68)<br></code></pre></td></tr></tbody></table></figure><p>每个结点继续对 x₁…x₅ 做 0/1 决策展开。</p>
+          </div>
+<h4 id="第二问：优化策略-v3">第二问：优化策略</h4>
+<div class="note note-primary">
+            <ul><li><strong>约束函数</strong>（剪 xᵢ = 1 分支）：s + wᵢ &gt; M 时剪去——元素全为正数，和只会越加越大；</li><li><strong>限界函数</strong>（剪 xᵢ = 0 分支）：s + r &lt; M 时剪去——剩余元素<strong>全部选上</strong>也凑不到 M。</li></ul>
+          </div>
+<h4 id="第三问：优化后的状态空间树">第三问：优化后的状态空间树</h4>
+<p>图例：✗c = 约束剪枝（s + wᵢ &gt; M），✗b = 限界剪枝（s + r &lt; M），✗s = 叶结点 s ≠ M 非解，★ = 找到的解：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs text">(0,0,73)<br>├─x0=1─ (5,1,68)<br>│   ├─x1=1─ (15,2,58)<br>│   │   ├─x2=1─ (27,3,46)<br>│   │   │   ├─x3=1─ 40 &gt; 30 ✗c<br>│   │   │   └─x3=0─ (27,4,33)<br>│   │   │       ├─x4=1─ 42 &gt; 30 ✗c<br>│   │   │       └─x4=0─ (27,5,18)<br>│   │   │           叶 s=27 ≠ 30 ✗s<br>│   │   └─x2=0─ (15,3,46)<br>│   │       ├─x3=1─ (28,4,33)<br>│   │       │   x4=1: 43&gt;30 ✗c；叶 s=28 ✗s<br>│   │       └─x3=0─ (15,4,33)<br>│   │           ├─x4=1─ (30,5,18) ★ {5,10,15}<br>│   │           └─x4=0─ (15,5,18) 叶 s=15 ✗s<br>│   └─x1=0─ (5,2,58)<br>│       ├─x2=1─ (17,3,46)<br>│       │   ├─x3=1─ (30,4,33) ★ {5,12,13}<br>│       │   └─x3=0─ (17,4,33) 叶 s=17 ✗s<br>│       └─x2=0─ (5,3,46)<br>│           ├─x3=1─ (18,4,33) 叶 s=18 ✗s<br>│           └─x3=0─ (5,4,33)<br>│               ├─x4=1─ (20,5,18) 叶 s=20 ✗s<br>│               └─x4=0─ ✗b 5+18 = 23 &lt; 30<br>└─x0=0─ (0,1,68)<br>    ├─x1=1─ (10,2,58)<br>    │   ├─x2=1─ (22,3,46)<br>    │   │   x3=1: 35&gt;30 ✗c；叶 s=22 ✗s<br>    │   └─x2=0─ (10,3,46)<br>    │       ├─x3=1─ (23,4,33) 叶 s=23 ✗s<br>    │       └─x3=0─ (10,4,33)<br>    │           ├─x4=1─ (25,5,18) 叶 s=25 ✗s<br>    │           └─x4=0─ ✗b 10+18 = 28 &lt; 30<br>    └─x1=0─ (0,2,58)<br>        ├─x2=1─ (12,3,46)<br>        │   ├─x3=1─ (25,4,33) 叶 s=25 ✗s<br>        │   └─x3=0─ (12,4,33)<br>        │       ├─x4=1─ (27,5,18) 叶 s=27 ✗s<br>        │       └─x4=0─ (12,5,18)<br>        │           x5=1 → 30 ★ {12,18}<br>        └─x2=0─ (0,3,46)<br>            ├─x3=1─ (13,4,33) 叶 s=13 ✗s<br>            └─x3=0─ (0,4,33)<br>                ├─x4=1─ (15,5,18) 叶 s=15 ✗s<br>                └─x4=0─ ✗b 0+18 = 18 &lt; 30<br></code></pre></td></tr></tbody></table></figure>
+<h4 id="第四问：符合条件的子集">第四问：符合条件的子集</h4>
+<div class="note note-primary">
+            <p>共 <strong>3</strong> 个：<strong>{5, 10, 15}</strong>（5+10+15 = 30）、<strong>{5, 12, 13}</strong>（5+12+13 = 30）、<strong>{12, 18}</strong>（12+18 = 30）。</p>
+          </div>
+<p><strong>伪代码</strong>：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">SubsetSum</span> {<br>    <span class="hljs-type">int</span>  n;        <span class="hljs-comment">// 元素个数</span><br>    Type M, *w;    <span class="hljs-comment">// 目标和、元素（正数）</span><br>    Type s, r;     <span class="hljs-comment">// 已选和 / 剩余元素和</span><br>    <span class="hljs-type">int</span>  *x;       <span class="hljs-comment">// 解向量</span><br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span></span>;<br>};<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">SubsetSum::Backtrack</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span></span><br><span class="hljs-function"></span>{<br>    <span class="hljs-keyword">if</span> (i &gt; n) {         <span class="hljs-comment">// 叶结点</span><br>        <span class="hljs-keyword">if</span> (s == M) {    <span class="hljs-comment">// 找到解</span><br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++)<br>                cout &lt;&lt; x[j] &lt;&lt; <span class="hljs-string">" "</span>;<br>            cout &lt;&lt; endl;<br>        }<br>        <span class="hljs-keyword">return</span>;<br>    }<br>    r -= w[i];<br>    <span class="hljs-comment">// 约束：选 w[i] 后不超 M 才进左子树</span><br>    <span class="hljs-keyword">if</span> (s + w[i] &lt;= M) {<br>        x[i] = <span class="hljs-number">1</span>;  s += w[i];<br>        <span class="hljs-built_in">Backtrack</span>(i + <span class="hljs-number">1</span>);<br>        s -= w[i];<br>    }<br>    <span class="hljs-comment">// 限界：剩余全选够 M 才搜右子树</span><br>    <span class="hljs-keyword">if</span> (s + r &gt;= M) {<br>        x[i] = <span class="hljs-number">0</span>;<br>        <span class="hljs-built_in">Backtrack</span>(i + <span class="hljs-number">1</span>);<br>    }<br>    r += w[i];     <span class="hljs-comment">// 回溯恢复 r</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<hr>
+<h2 id="考前清单">考前清单</h2>
+<div class="note note-warning">
+            <p><strong>四类大题的答题模板</strong>：</p><ol><li><strong>复杂度题</strong>：递推方程 → 迭代展开 k 步 → 代入 k = log₂n（或 n−1）→ 结论。必背三个结果：汉诺塔 2ⁿ−1（O(2ⁿ)）、二分 O(log n)、归并/快排 O(n log n)、T(n)=2T(n/2)+cn² → O(n²)。</li><li><strong>DP 题</strong>：定义状态含义 → 转移方程（"最后一步"决策）→ 边界 → 按<strong>链长 / 下标从小到大</strong>填表 → 给出表中最优值与解。矩阵连乘按链长填下三角；最大子段和一行 b[]；图像压缩逐位枚举最后一段。</li><li><strong>贪心题</strong>：策略一句话（<strong>短任务优先</strong> / <strong>区间 r 最大</strong>）→ 伪代码 → 按数据算出序列与总和。排队题最后写"总等待 = Σ(n−j)·t(j)"。</li><li><strong>回溯 / 分支限界题</strong>：空间树（子集树 2ⁿ 叶 / 排列树 (n−1)! 叶，结点标注变量）→ 优化策略两条（<strong>约束函数</strong>剪左，<strong>限界函数</strong>剪右 / 下界优先队列）→ 优化后树（✗ 处写清是约束还是限界）→ 最优解向量与最优值。</li></ol><p><strong>必背六个伪代码</strong>：Merge/MergeSort、Partition/QuickSort、BinarySearch、MaxSum（Kadane）、MatrixChain、Knap::Backtrack（含 Bound）。</p>
+          </div>
+<hr>
+<blockquote>
+<p>相关文章：<a href="/2026/10/23/Review/Algorithm-Design-and-Analysis/">Algorithm Design and Analysis</a>（第 1、2 章）｜<a href="/2026/10/23/Review/Algorithm-Design-and-Analysis-DP/">Dynamic Programming</a>（第 3 章）｜<a href="/2026/11/13/Review/Algorithm-Design-and-Analysis-Backtracking-BnB/">Backtracking and Branch-and-Bound</a>（第 5、6 章）</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Review/" class="category-chain-item">Review</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Review/" class="print-no-link">#Review</a>
+      
+        <a href="/tags/Algorithm-Design-and-Analysis/" class="print-no-link">#Algorithm Design and Analysis</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Algorithm Design and Analysis: Past Exams</div>
+      <div>http://example.com/2026/11/16/Review/Algorithm-Design-and-Analysis-Past-Exams/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Li Qinxuan</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 16, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Updated on</div>
+          <div>November 17, 2026</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/11/13/Review/Algorithm-Design-and-Analysis-Backtracking-BnB/" title="Algorithm Design and Analysis: Backtracking and Branch-and-Bound">
+                        <span class="hidden-mobile">Algorithm Design and Analysis: Backtracking and Branch-and-Bound</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"OGCRi4cotr0KPl7RSThRHEBJ-gzGzoHsz","appKey":"fYsoDcUYqzS4whhS2JzSEcBG","path":"window.location.pathname","placeholder":"欢迎留言~（支持 Markdown）","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://ogcri4co.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
